@@ -46,6 +46,12 @@ DEFAULT_POLICY: dict[str, object] = {
     "block_hidden_bash_writes": True,
     "run_quality_gate_on_stop": True,
     "fail_on_quality_warnings": False,
+    # max_design_markers: 4 (was 2): requires all 4 DESIGN_RE categories to
+    # match. Calibrated against Pydantic's _generate_schema.py (2922 lines,
+    # density 1.4/100, was firing as FP). Combined with density gating >= 3.0
+    # for files >= 100 lines, allows typing-heavy frameworks while still
+    # flagging gratuitous abstraction in small surfaces (4 markers in 7 lines
+    # = 57/100 density still trips the small-file branch).
     "max_design_markers": 4,
     "max_design_marker_density_per_100_lines": 3.0,
     "allowed_broad_globs": ["src/**", "lib/**", "app/**", "tests/**", "test/**"],

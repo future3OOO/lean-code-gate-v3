@@ -493,8 +493,10 @@ def test_pretool_blocks_high_density_abstraction_in_small_file() -> None:
 def test_pretool_allows_low_density_abstraction_in_large_file() -> None:
     with repo_fixture() as repo:
         declare_valid(repo)
-        # ~200-line file with the same 4 distinct design markers ->
-        # density = 4/200 * 100 = 2.0/100, below the 3.0 default threshold.
+        # 7 + 192 = 199 lines, density = 4/199*100 = 2.01/100, below the 3.0
+        # threshold. Since line_count >= 100, the small-file bypass is false
+        # AND density < threshold — no fire. Exercises the negative case of
+        # the density branch.
         body = "\n".join(f"value_{i} = {i}" for i in range(192))
         result = run_gate(repo, "pretool", payload={
             "tool_name": "Edit", "tool_input": {"file_path": "src/app.py", "new_string": _HIGH_DENSITY_TEXT + body + "\n"}
@@ -505,10 +507,11 @@ def test_pretool_allows_low_density_abstraction_in_large_file() -> None:
 def test_pretool_blocks_at_density_threshold_in_large_file() -> None:
     with repo_fixture() as repo:
         declare_valid(repo)
-        # ~100-line file with 4 distinct design markers -> density = 4.0/100,
-        # at-or-above the 3.0 threshold. This exercises the density-firing
-        # branch the prior test (low-density) cannot reach.
-        body = "\n".join(f"value_{i} = {i}" for i in range(92))
+        # 7 + 94 = 101 lines, density = 4/101*100 = 3.96/100, >= 3.0.
+        # line_count >= 100 disables the small-file bypass, so the test
+        # actually exercises the density-firing branch (greptile P1 on PR #9
+        # caught that range(92) gave 99 lines and fired via line_count<100).
+        body = "\n".join(f"value_{i} = {i}" for i in range(94))
         result = run_gate(repo, "pretool", payload={
             "tool_name": "Edit", "tool_input": {"file_path": "src/app.py", "new_string": _HIGH_DENSITY_TEXT + body + "\n"}
         })
