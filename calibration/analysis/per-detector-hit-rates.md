@@ -142,7 +142,7 @@ Per-PR matrix at `analysis/pr-matrix.csv`. Aggregate:
 | pydantic | 5 | 1 | 1 | 0 | 0 |
 | sentry | 5 | 2 | 2 | 0 | 0 |
 | typescript | 5 | 0 | 0 | 2 | 0 |
-| **total** | **42** | **11** | **15** | **52** | **0** |
+| **total** | **42** | **11** | **15** | **50** | **0** |
 
 **Headline: 11 of 42 merged PRs (26%) produced gate errors.** Every one of those 15 errors falls into a calibration class already identified by the 50-commit-window analysis above:
 

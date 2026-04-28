@@ -107,7 +107,7 @@
     }
   },
   "ok": true,
-  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_aws-sdk-js_pr7957",
+  "repo": "aws-sdk-js/_wt_pr7957",
   "reuseFindings": [],
   "sourceFilesCount": 1,
   "version": "3.0.0",

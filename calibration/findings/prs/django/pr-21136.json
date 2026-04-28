@@ -318,7 +318,7 @@
     }
   },
   "ok": false,
-  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_django_pr21136",
+  "repo": "django/_wt_pr21136",
   "reuseFindings": [],
   "sourceFilesCount": 24,
   "version": "3.0.0",

@@ -96,7 +96,7 @@
     }
   },
   "ok": true,
-  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_grpc_pr42124",
+  "repo": "grpc/_wt_pr42124",
   "reuseFindings": [],
   "sourceFilesCount": 1,
   "version": "3.0.0",

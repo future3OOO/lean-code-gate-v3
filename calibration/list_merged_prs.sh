@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Print recent merged human-authored code PR numbers for a target repo.
 # Usage: list_merged_prs.sh <repo-key> [count]
-# Filters: excludes dependabot/pre-commit-ci/renovate; keeps PRs with
-# at least 3 changed files OR >=50 added lines OR a non-trivial title.
+# Filters: excludes dependabot/pre-commit-ci/renovate and pure docs/sponsor
+# noise by title; keeps PRs with >=1 changed file AND >=5 added lines.
 set -uo pipefail
 
 KEY="${1:?repo key required}"

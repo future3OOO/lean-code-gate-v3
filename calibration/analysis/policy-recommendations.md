@@ -140,7 +140,7 @@ Evidence base:
 
 | Rule | Field | Current | Proposed | Confidence |
 |---|---|---|---|---|
-| R-1 | `excluded_path_globs` (new) | (none) | 21 default globs | Established |
+| R-1 | `excluded_path_globs` (new) | (none) | 22 default globs | Established |
 | R-2 | `framework_override_names` (new) | (none) | ~50 default names | Established |
 | R-3 | `reuse_suppress_private_public_siblings` (new) | (none) | `true` | Established |
 | R-4 | `reuse_min_duplicate_count` (new) | (effectively 2) | 3 | Inferred |

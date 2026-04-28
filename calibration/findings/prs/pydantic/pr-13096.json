@@ -101,7 +101,7 @@
     }
   },
   "ok": false,
-  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_pydantic_pr13096",
+  "repo": "pydantic/_wt_pr13096",
   "reuseFindings": [],
   "sourceFilesCount": 1,
   "version": "3.0.0",

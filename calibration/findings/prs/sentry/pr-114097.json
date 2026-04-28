@@ -142,7 +142,7 @@
     }
   },
   "ok": true,
-  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_sentry_pr114097",
+  "repo": "sentry/_wt_pr114097",
   "reuseFindings": [],
   "sourceFilesCount": 6,
   "version": "3.0.0",

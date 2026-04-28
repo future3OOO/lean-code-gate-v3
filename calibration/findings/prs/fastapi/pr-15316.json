@@ -109,7 +109,7 @@
     }
   },
   "ok": true,
-  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_fastapi_pr15316",
+  "repo": "fastapi/_wt_pr15316",
   "reuseFindings": [],
   "sourceFilesCount": 0,
   "version": "3.0.0",
