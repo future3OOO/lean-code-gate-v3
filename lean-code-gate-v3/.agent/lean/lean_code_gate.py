@@ -64,6 +64,24 @@ DEFAULT_POLICY: dict[str, object] = {
     "reuse_detector_mode": "conservative",
     "reuse_error_score": 90,
     "reuse_warning_score": 45,
+    "reuse_suppress_private_public_siblings": True,
+    "framework_override_names": [
+        "validate", "clean", "save", "save_model", "save_formset",
+        "get_queryset", "get_form", "get_form_kwargs", "get_context_data",
+        "get_object", "get_serializer", "get_serializer_class",
+        "as_sql", "as_dict", "as_view",
+        "to_python", "to_internal_value", "to_representation",
+        "form_valid", "form_invalid",
+        "__init__", "__call__", "__enter__", "__exit__",
+        "__iter__", "__next__", "__len__", "__contains__",
+        "__getitem__", "__setitem__", "__delitem__",
+        "__set__", "__get__", "__delete__", "__set_name__",
+        "__hash__", "__eq__", "__lt__", "__gt__", "__le__", "__ge__",
+        "__repr__", "__str__", "__bool__",
+        "componentDidMount", "componentDidUpdate", "componentWillUnmount",
+        "render", "shouldComponentUpdate", "getDerivedStateFromProps",
+        "ngOnInit", "ngOnDestroy", "ngOnChanges",
+    ],
     "excluded_path_globs": [
         "**/migrations/**",
         "**/generated/**",
@@ -991,6 +1009,8 @@ def is_binary_path(path: str) -> bool:
 
 
 _active_excluded_globs: tuple[str, ...] = ()
+_active_framework_override_names: frozenset[str] = frozenset()
+_active_suppress_private_public_siblings: bool = False
 
 
 def is_excluded_path(path: str) -> bool:
@@ -1292,6 +1312,10 @@ def token_overlap(left: tuple[str, ...], right: tuple[str, ...]) -> float:
 
 
 def same_behavior_name(left: SymbolDef, right: SymbolDef) -> tuple[int, str]:
+    if _active_framework_override_names and left.name in _active_framework_override_names and right.name in _active_framework_override_names:
+        return 0, ""
+    if _active_suppress_private_public_siblings and left.tokens == right.tokens and left.tokens and left.name.strip("_") == right.name.strip("_") and left.name != right.name:
+        return 0, ""
     if left.name == right.name:
         return (35, "generic same symbol name") if left.name.lower() in GENERIC_SYMBOLS else (100, "same symbol name")
     if left.tokens == right.tokens and left.tokens:
@@ -1482,9 +1506,12 @@ def changed_file_failures(repo: Path, changed_files: set[str]) -> tuple[list[str
 
 
 def apply_active_policy(active_policy: dict[str, object]) -> None:
-    global _active_excluded_globs
-    raw = active_policy.get("excluded_path_globs")
-    _active_excluded_globs = tuple(g for g in raw if isinstance(g, str)) if isinstance(raw, list) else ()
+    global _active_excluded_globs, _active_framework_override_names, _active_suppress_private_public_siblings
+    raw_globs = active_policy.get("excluded_path_globs")
+    _active_excluded_globs = tuple(g for g in raw_globs if isinstance(g, str)) if isinstance(raw_globs, list) else ()
+    raw_names = active_policy.get("framework_override_names")
+    _active_framework_override_names = frozenset(n for n in raw_names if isinstance(n, str)) if isinstance(raw_names, list) else frozenset()
+    _active_suppress_private_public_siblings = bool(active_policy.get("reuse_suppress_private_public_siblings"))
 
 
 def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -> dict[str, object]:

@@ -469,6 +469,38 @@ def test_large_existing_file_big_growth_fails() -> None:
         assert data["hardRules"]["codeVolume"]["passed"] is False
 
 
+def test_framework_override_names_suppress_reuse_error() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "ser1.py").write_text(
+            "class S1:\n    def validate(self, attrs):\n        return attrs\n", encoding="utf-8"
+        )
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "ser1")
+        (repo / "src" / "ser2.py").write_text(
+            "class S2:\n    def validate(self, attrs):\n        return attrs\n", encoding="utf-8"
+        )
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert data["reuseFindings"] == []
+
+
+def test_private_public_sibling_pair_suppresses_reuse_error() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "admin.py").write_text(
+            "def save_formset(formset):\n    formset.save()\n", encoding="utf-8"
+        )
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "public sibling")
+        (repo / "src" / "admin.py").write_text(
+            "def save_formset(formset):\n    formset.save()\n\n"
+            "def _save_formset(formset):\n    formset.save()\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert data["reuseFindings"] == []
+
+
 def test_excluded_path_globs_skip_generated_sdk_files() -> None:
     with repo_fixture() as repo:
         (repo / "clients" / "client-test" / "src" / "commands").mkdir(parents=True)
@@ -538,6 +570,8 @@ TESTS = [
     test_reuse_detector_ignores_same_name_across_languages,
     test_large_existing_file_small_growth_warns_but_does_not_fail_by_default,
     test_large_existing_file_big_growth_fails,
+    test_framework_override_names_suppress_reuse_error,
+    test_private_public_sibling_pair_suppresses_reuse_error,
     test_excluded_path_globs_skip_generated_sdk_files,
     test_excluded_path_globs_match_first_component_path,
     test_excluded_path_globs_can_be_overridden_to_empty,
