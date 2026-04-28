@@ -1314,6 +1314,11 @@ def token_overlap(left: tuple[str, ...], right: tuple[str, ...]) -> float:
 def same_behavior_name(left: SymbolDef, right: SymbolDef) -> tuple[int, str]:
     if _active_framework_override_names and left.name in _active_framework_override_names and right.name in _active_framework_override_names:
         return 0, ""
+    # R-3 (private/public sibling): suppress at the candidate-evaluation
+    # stage. Structural blind spot — caller's `if base_score <= 0: continue`
+    # means body-similarity scoring is not reached for any _foo/foo pair,
+    # even genuine identical implementations. Calibrated tradeoff: prefer FN
+    # over FP given the observed FP rate in the 50-commit Django window.
     if _active_suppress_private_public_siblings and left.tokens == right.tokens and left.tokens and left.name.strip("_") == right.name.strip("_") and left.name != right.name:
         return 0, ""
     if left.name == right.name:

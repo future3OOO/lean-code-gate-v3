@@ -470,14 +470,24 @@ def test_large_existing_file_big_growth_fails() -> None:
 
 
 def test_framework_override_names_suppress_reuse_error() -> None:
+    # Use get_queryset, which is NOT in GENERIC_SYMBOLS. Without R-2 the pair
+    # would score 100 (exact-name match) and fire a reuse error. With R-2 in
+    # the framework_override_names allowlist, same_behavior_name returns
+    # (0, "") and best_existing_match filters the candidate.
+    # Original draft used `validate`, which IS in GENERIC_SYMBOLS — that test
+    # passed even with R-2 inactive (greptile P1).
     with repo_fixture() as repo:
-        (repo / "src" / "ser1.py").write_text(
-            "class S1:\n    def validate(self, attrs):\n        return attrs\n", encoding="utf-8"
+        (repo / "src" / "views1.py").write_text(
+            "class V1:\n    def get_queryset(self):\n"
+            "        return self.model.objects.filter(active=True)\n",
+            encoding="utf-8",
         )
         git(repo, "add", ".")
-        git(repo, "commit", "--no-gpg-sign", "-m", "ser1")
-        (repo / "src" / "ser2.py").write_text(
-            "class S2:\n    def validate(self, attrs):\n        return attrs\n", encoding="utf-8"
+        git(repo, "commit", "--no-gpg-sign", "-m", "v1")
+        (repo / "src" / "views2.py").write_text(
+            "class V2:\n    def get_queryset(self):\n"
+            "        return self.model.objects.filter(active=True)\n",
+            encoding="utf-8",
         )
         code, data = check_json(repo)
         assert code == 0, data
