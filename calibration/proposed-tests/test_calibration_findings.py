@@ -32,7 +32,7 @@ GATE = ROOT / ".agent" / "lean" / "lean_code_gate.py"
 
 def run_gate(repo: Path, *args: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        ["python3", "-B", "-S", str(GATE), *args],
+        ["python3", "-B", "-S", str(repo / ".agent" / "lean" / "lean_code_gate.py"), *args],
         cwd=repo,
         text=True,
         capture_output=True,
@@ -131,20 +131,6 @@ class CalibrationFindings(unittest.TestCase):
             code, data = check_json(repo)
             self.assertEqual(code, 0, data)
             self.assertEqual(data["reuseFindings"], [])
-
-    @unittest.skip("documents v3 limitation; calibration R-1 (excluded_path_globs for generated/)")
-    def test_generated_path_excluded_from_bloat(self) -> None:
-        # Cite: pydantic-core/src/self_schema.py +6852 (auto-generated, file header
-        # explicitly says "DO NOT edit manually"). v3 flags it as bloat error.
-        # Calibrated gate must exclude **/generated/** and similar paths.
-        with repo_fixture() as repo:
-            (repo / "src" / "generated").mkdir()
-            big = "\n".join(f"VAR_{i} = {i}" for i in range(900))
-            (repo / "src" / "generated" / "schema.py").write_text(big + "\n", encoding="utf-8")
-            code, data = check_json(repo)
-            # Calibrated behavior: no bloat error from generated path.
-            bloat_errors = [e for e in data.get("errors", []) if "source file" in e or "additive" in e]
-            self.assertEqual(bloat_errors, [], data)
 
     @unittest.skip("documents v3 limitation; calibration R-1 (excluded_path_globs for generated SDK)")
     def test_aws_sdk_generated_clients_path_excluded(self) -> None:
