@@ -8,7 +8,7 @@
 
 ## 6.1 Summary table
 
-50-commit window per repo (full data: `findings/<repo>.json`):
+50-commit window per repo (full data: `calibration/findings/<repo>.json`):
 
 | Repo | Lang | Errors | Warnings | Hard rules pass | Duration | Top FP class |
 |---|---|---|---|---|---|---|
@@ -21,7 +21,7 @@
 | aws-sdk-js | TS | 21 | 91 | 1/6 | 9 s | generated `clients/*/src/...` bloat |
 | grpc | Polyglot (mostly C++) | 2 | 1 | 2/6 | 1 s | per-package `python_version.py` duplicate |
 
-Merged-PR baseline (5–7 PRs per repo, total 42 PRs; data: `findings/prs/`, summary: `analysis/pr-matrix.csv`):
+Merged-PR baseline (5–7 PRs per repo, total 42 PRs; data: `calibration/findings/prs/`, summary: `calibration/analysis/pr-matrix.csv`):
 
 | Repo | PRs run | PRs that errored | Total errors |
 |---|---|---|---|
@@ -39,7 +39,7 @@ Merged-PR baseline (5–7 PRs per repo, total 42 PRs; data: `findings/prs/`, sum
 
 ## 6.2 Detector ranking by signal-to-noise
 
-Order: highest TP rate first, lowest last (qualitative — see `analysis/per-detector-hit-rates.md` for per-finding verdicts).
+Order: highest TP rate first, lowest last (qualitative — see `calibration/analysis/per-detector-hit-rates.md` for per-finding verdicts).
 
 1. **`no-merge-conflict-markers`** — never fired. Trivially correct. ✅
 2. **`no-temp-artifacts`** — never fired. Trivially correct. ✅
@@ -83,7 +83,7 @@ Ranked by impact × confidence. Each cites the data and the JSON delta.
 
 **Impact:** zeros out 5+ reuse-error-tier FPs (Django `validate`/`save_formset`/`as_sql`, DRF `validate`, Python dunders).
 
-**Delta:** ~50 default names — see `proposed-policy/policy.json`. Includes Django/DRF/forms/admin overrides, Python iterator/operator dunders, React/Angular lifecycle.
+**Delta:** ~50 default names — see `calibration/proposed-policy/policy.json`. Includes Django/DRF/forms/admin overrides, Python iterator/operator dunders, React/Angular lifecycle.
 
 **Implementation:** in `same_behavior_name()`, before returning score 90/100, check if both symbols' names are in the allowlist. If so, return 0.
 
@@ -98,7 +98,7 @@ Ranked by impact × confidence. Each cites the data and the JSON delta.
 "reuse_suppress_private_public_siblings": true
 ```
 
-**Implementation:** in `same_behavior_name()`, when `tokens == tokens` but raw names differ only by leading-underscore prefix(es) (regex `^_+` or `^__\w+__$`), return 0 instead of 90.
+**Implementation:** in `same_behavior_name()`, when `left.tokens == right.tokens` but the two raw names differ only by leading-underscore prefix(es) (`re.sub(r"^_+", "", name)` collapses them to the same string, including the dunder pattern `^__\w+__$`), return 0 instead of 90.
 
 **Confidence: Established.** 8+ direct FPs; the underscore convention is explicit "this is the private sibling" in Python and JS idiom.
 
@@ -160,7 +160,7 @@ The internal `subprocess.Popen` calls have 15 s individual timeouts; the symbol 
 
 ### OoS-5 — Dependabot/bot PRs dominate the recent-merged window
 
-Many target repos' last 50 closed PRs are dependabot lockfile bumps. Calibration extension via the search API filtered these out, but it required custom tooling and was rate-limited. If the gate is meant to inform a "merge-ready from first push" loop (per the user's followup tip), the gate must distinguish bot-routine PRs from human PRs and not waste reviewer attention on either.
+Many target repos' last 50 closed PRs are dependabot lockfile bumps. Calibration extension via the search API filtered these out, but it required custom tooling and was rate-limited. If the gate is meant to inform a "merge-ready from first push" loop (per the user's follow-up tip), the gate must distinguish bot-routine PRs from human PRs and not waste reviewer attention on either.
 
 **Disposition:** out of scope for v3 calibration. Belongs to a downstream hook layer.
 
