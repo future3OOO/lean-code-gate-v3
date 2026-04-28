@@ -476,12 +476,17 @@ class GateContext:
 
 def run_process(cmd: list[str], cwd: Path, timeout: int = 15) -> subprocess.CompletedProcess[str]:
     try:
+        # text=True implies strict utf-8 decoding which crashes when git diff
+        # output contains non-utf-8 bytes (e.g. binary patches in long
+        # multi-commit windows). Use encoding+errors='replace' instead so
+        # the gate can keep running and just lose offending bytes.
         process = subprocess.Popen(
             cmd,
             cwd=str(cwd),
-            text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            encoding="utf-8",
+            errors="replace",
             start_new_session=(os.name != "nt"),
         )
         stdout, stderr = process.communicate(timeout=timeout)
@@ -1460,6 +1465,16 @@ def score_reuse_candidates(candidates: list[SymbolDef], existing: list[SymbolDef
 def high_confidence_reuse(new_item: SymbolDef, existing_item: SymbolDef) -> bool:
     if new_item.kind == "block":
         return "dedupe" in set(new_item.tokens) and "dedupe" in set(existing_item.tokens) and same_reuse_neighborhood(new_item.path, existing_item.path, existing_item.context_boost)
+    # Defer to the calibrated suppression in same_behavior_name: when R-2
+    # (framework_override_names) or R-3 (private/public siblings) returns 0,
+    # the pair should not be promoted to high-confidence reuse either.
+    # In the production call path (score_reuse_candidates →
+    # best_existing_match), pairs with same_behavior_name == 0 are already
+    # filtered by the `if base_score <= 0: continue` guard, so this check
+    # is unreachable from there. Kept as defense-in-depth and to enforce
+    # the function's contract for direct callers (unit tests, future code).
+    if same_behavior_name(new_item, existing_item)[0] == 0:
+        return False
     if new_item.name == existing_item.name and new_item.name.lower() not in GENERIC_SYMBOLS:
         return True
     return new_item.tokens == existing_item.tokens and bool(new_item.tokens) and not set(new_item.tokens) <= GENERIC_SYMBOLS
