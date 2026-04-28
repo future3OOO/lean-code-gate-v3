@@ -335,6 +335,11 @@ def parse_group(value: str) -> str:
     raw = value.strip()
     normalized = raw.lower()
     return normalized.replace(" ", "-")
+
+def parse_role(value: str) -> str:
+    raw = value.strip()
+    normalized = raw.lower()
+    return normalized.replace(" ", "-")
 """
         (repo / "src" / "duplicate.py").write_text(duplicate, encoding="utf-8")
         code, data = check_json(repo)
@@ -447,7 +452,7 @@ def test_reuse_detector_ignores_same_name_across_languages() -> None:
 
 def test_large_existing_file_small_growth_warns_but_does_not_fail_by_default() -> None:
     with repo_fixture() as repo:
-        (repo / "src" / "large.py").write_text("\n".join(f"VALUE_{i} = {i}" for i in range(1201)) + "\n", encoding="utf-8")
+        (repo / "src" / "large.py").write_text("\n".join(f"VALUE_{i} = {i}" for i in range(1501)) + "\n", encoding="utf-8")
         git(repo, "add", ".")
         git(repo, "commit", "--no-gpg-sign", "-m", "large baseline")
         with (repo / "src" / "large.py").open("a", encoding="utf-8") as handle:
@@ -459,7 +464,7 @@ def test_large_existing_file_small_growth_warns_but_does_not_fail_by_default() -
 
 def test_large_existing_file_big_growth_fails() -> None:
     with repo_fixture() as repo:
-        (repo / "src" / "large.py").write_text("\n".join(f"VALUE_{i} = {i}" for i in range(1201)) + "\n", encoding="utf-8")
+        (repo / "src" / "large.py").write_text("\n".join(f"VALUE_{i} = {i}" for i in range(1501)) + "\n", encoding="utf-8")
         git(repo, "add", ".")
         git(repo, "commit", "--no-gpg-sign", "-m", "large baseline")
         with (repo / "src" / "large.py").open("a", encoding="utf-8") as handle:
@@ -478,6 +483,43 @@ _HIGH_DENSITY_TEXT = (
     "    plugin = True\n"
     "    pass\n"
 )
+
+
+def test_min_duplicate_count_suppresses_two_instance_hit() -> None:
+    with repo_fixture() as repo:
+        # Two identical blocks — under default reuse_min_duplicate_count=3 this
+        # MUST NOT fire; raises a calibration concern at N=2 (django pr-21152).
+        block = (
+            "def helper(x):\n"
+            "    raw = x.strip()\n"
+            "    normalized = raw.lower()\n"
+            "    return normalized.replace(\" \", \"-\")\n"
+        )
+        (repo / "src" / "twohit.py").write_text(block + "\n" + block.replace("def helper", "def helper2"), encoding="utf-8")
+        code, data = check_json(repo)
+        dup_check = next(c for c in data["checks"] if c["name"] == "no-duplicate-added-blocks")
+        assert dup_check["passed"] is True, data
+
+
+def _load_gate_module() -> object:
+    import importlib.util
+    import sys as _sys
+    spec = importlib.util.spec_from_file_location("gate_under_test", str(GATE))
+    assert spec and spec.loader
+    mod = importlib.util.module_from_spec(spec)
+    _sys.modules["gate_under_test"] = mod
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_design_re_catches_go_factory_function() -> None:
+    hits = _load_gate_module().design_hits("func NewWidgetFactory() *WidgetFactory { return nil }")
+    assert "pattern-named factory function" in hits
+
+
+def test_design_re_catches_rust_pub_type_alias() -> None:
+    hits = _load_gate_module().design_hits("pub type ScopedFieldNameState<'scope, 'a, 'py> = ScopedSetState<...>;")
+    assert "rust type-alias abstraction" in hits
 
 
 def test_pretool_blocks_high_density_abstraction_in_small_file() -> None:
@@ -616,6 +658,9 @@ TESTS = [
     test_reuse_detector_ignores_same_name_across_languages,
     test_large_existing_file_small_growth_warns_but_does_not_fail_by_default,
     test_large_existing_file_big_growth_fails,
+    test_min_duplicate_count_suppresses_two_instance_hit,
+    test_design_re_catches_go_factory_function,
+    test_design_re_catches_rust_pub_type_alias,
     test_pretool_blocks_high_density_abstraction_in_small_file,
     test_pretool_allows_low_density_abstraction_in_large_file,
     test_pretool_blocks_at_density_threshold_in_large_file,
