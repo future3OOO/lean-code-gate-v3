@@ -18,8 +18,9 @@ import sys
 from glob import glob
 from pathlib import Path
 
-PRS_DIR = Path("/home/prop_/projects/lean code/calibration/findings/prs")
-OUT = Path("/home/prop_/projects/lean code/calibration/findings/cleanup_commits.json")
+_HERE = Path(__file__).resolve().parent
+PRS_DIR = _HERE / "findings" / "prs"
+OUT = _HERE / "findings" / "cleanup_commits.json"
 
 GH_FOR = {
     "django": "django/django",
