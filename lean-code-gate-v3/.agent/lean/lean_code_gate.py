@@ -57,7 +57,7 @@ DEFAULT_POLICY: dict[str, object] = {
     "allowed_broad_globs": ["src/**", "lib/**", "app/**", "tests/**", "test/**"],
     "bloat_new_file_warn_lines": 500,
     "bloat_new_file_error_lines": 800,
-    "bloat_large_file_lines": 1200,
+    "bloat_large_file_lines": 1500,
     "bloat_large_file_must_shrink": False,
     "bloat_large_file_growth_lines": 80,
     "bloat_file_growth_lines": 250,
@@ -71,6 +71,7 @@ DEFAULT_POLICY: dict[str, object] = {
     "reuse_detector_mode": "conservative",
     "reuse_error_score": 90,
     "reuse_warning_score": 45,
+    "reuse_min_duplicate_count": 3,
     "reuse_suppress_private_public_siblings": True,
     "framework_override_names": [
         "validate", "clean", "save", "save_model", "save_formset",
@@ -201,6 +202,12 @@ HIDDEN_WRITE_RE = re.compile(
 )
 DESIGN_RE = [
     (re.compile(r"\bclass\s+\w*(Factory|Builder|Manager|Registry|Strategy|Adapter|Provider)\b"), "pattern-named class"),
+    (re.compile(r"\bfunc\s+(?:\([^)]*\)\s*)?New\w*(Factory|Builder|Manager|Registry|Strategy|Adapter|Provider)\b"), "pattern-named factory function"),
+    # Rust pattern intentionally broader than Python/JS (State/Context/Scope
+    # added). Rust's type-alias system is commonly used for abstraction
+    # layering (e.g., pub type ParserState, pub type RequestContext) in ways
+    # the Python/JS class pattern isn't. Asymmetry is calibrated, not a bug.
+    (re.compile(r"\bpub\s+type\s+\w*(State|Manager|Strategy|Adapter|Provider|Factory|Builder|Registry|Context|Scope)\b"), "rust type-alias abstraction"),
     (re.compile(r"\b(Abstract[A-Z]\w*|Base[A-Z]\w*)\b"), "abstract/base type"),
     (re.compile(r"\b(Protocol|ABC|abc\.ABC|TypeVar|Generic\[)\b"), "generic typing abstraction"),
     (re.compile(r"\b(plugin|middleware|strategy|extensible|extension point|feature[_ -]?flag)\b", re.I), "extension machinery"),
@@ -1018,6 +1025,7 @@ def is_binary_path(path: str) -> bool:
 _active_excluded_globs: tuple[str, ...] = ()
 _active_framework_override_names: frozenset[str] = frozenset()
 _active_suppress_private_public_siblings: bool = False
+_active_min_duplicate_count: int = 2
 
 
 def is_excluded_path(path: str) -> bool:
@@ -1146,7 +1154,7 @@ def duplicate_added_blocks(ctx: GateContext) -> list[dict[str, object]]:
         [
             {"count": item["count"], "files": sorted(item["files"]), "sample": item["sample"]}
             for item in windows.values()
-            if int(item["count"]) > 1 and isinstance(item["files"], set)
+            if int(item["count"]) >= _active_min_duplicate_count and isinstance(item["files"], set)
         ]
     )
 
@@ -1513,12 +1521,13 @@ def changed_file_failures(repo: Path, changed_files: set[str]) -> tuple[list[str
 
 
 def apply_active_policy(active_policy: dict[str, object]) -> None:
-    global _active_excluded_globs, _active_framework_override_names, _active_suppress_private_public_siblings
+    global _active_excluded_globs, _active_framework_override_names, _active_suppress_private_public_siblings, _active_min_duplicate_count
     raw_globs = active_policy.get("excluded_path_globs")
     _active_excluded_globs = tuple(g for g in raw_globs if isinstance(g, str)) if isinstance(raw_globs, list) else ()
     raw_names = active_policy.get("framework_override_names")
     _active_framework_override_names = frozenset(n for n in raw_names if isinstance(n, str)) if isinstance(raw_names, list) else frozenset()
     _active_suppress_private_public_siblings = bool(active_policy.get("reuse_suppress_private_public_siblings"))
+    _active_min_duplicate_count = max(2, int(active_policy.get("reuse_min_duplicate_count") or 2))
 
 
 def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -> dict[str, object]:

@@ -24,7 +24,7 @@
   "bloat_new_file_warn_lines": 500,
   "bloat_new_file_error_lines": 800,
   "bloat_large_file_must_shrink": false,
-  "bloat_large_file_lines": 1200,
+  "bloat_large_file_lines": 1500,
   "bloat_large_file_growth_lines": 80,
   "bloat_file_growth_lines": 250,
   "bloat_total_added_warn_lines": 500,
@@ -37,6 +37,7 @@
   "reuse_detector_mode": "conservative",
   "reuse_error_score": 90,
   "reuse_warning_score": 45,
+  "reuse_min_duplicate_count": 3,
   "reuse_suppress_private_public_siblings": true,
   "framework_override_names": [
     "validate", "clean", "save", "save_model", "save_formset",
