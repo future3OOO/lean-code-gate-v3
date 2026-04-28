@@ -1445,6 +1445,11 @@ def score_reuse_candidates(candidates: list[SymbolDef], existing: list[SymbolDef
 def high_confidence_reuse(new_item: SymbolDef, existing_item: SymbolDef) -> bool:
     if new_item.kind == "block":
         return "dedupe" in set(new_item.tokens) and "dedupe" in set(existing_item.tokens) and same_reuse_neighborhood(new_item.path, existing_item.path, existing_item.context_boost)
+    # Defer to the calibrated suppression in same_behavior_name: when R-2
+    # (framework_override_names) or R-3 (private/public siblings) returns 0,
+    # the pair should not be promoted to high-confidence reuse either.
+    if same_behavior_name(new_item, existing_item)[0] == 0:
+        return False
     if new_item.name == existing_item.name and new_item.name.lower() not in GENERIC_SYMBOLS:
         return True
     return new_item.tokens == existing_item.tokens and bool(new_item.tokens) and not set(new_item.tokens) <= GENERIC_SYMBOLS
