@@ -1,0 +1,9 @@
+repo: svelte
+github: sveltejs/svelte
+pr_number: 18059
+title: chore: generate markdown tables of CPU profiles
+base_sha: a9530e5330374fc95c06c2227a3ae7fe686b3033
+merge_sha: 206974a5cddce13106a8deb1bb977bb9a034e031
+merged_at: 2026-04-03T19:30:17Z
+exit_code: 2
+duration_seconds: 0

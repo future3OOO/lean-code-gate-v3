@@ -1,0 +1,133 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 81,
+        "baselineLines": null,
+        "currentLines": 81,
+        "deleted": 0,
+        "file": "benchmarking/compare/generate-report.js",
+        "netGrowth": 81
+      },
+      {
+        "added": 2,
+        "baselineLines": 154,
+        "currentLines": 88,
+        "deleted": 68,
+        "file": "benchmarking/compare/index.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 255,
+        "baselineLines": 80,
+        "currentLines": 333,
+        "deleted": 2,
+        "file": "benchmarking/utils.js",
+        "netGrowth": 253
+      }
+    ],
+    "totalAdded": 338,
+    "totalDeleted": 70
+  },
+  "changedFilesCount": 3,
+  "changedFilesSample": [
+    "benchmarking/compare/generate-report.js",
+    "benchmarking/compare/index.js",
+    "benchmarking/utils.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 6,
+          "files": [
+            "benchmarking/utils.js"
+          ],
+          "sample": "const callFrame = | node.callFrame && typeof node.callFrame === 'object' | ? /** @type {Record<string, unknown>} */ (node.callFrame)"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": false,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "duplicate added code blocks detected: 1",
+    "source file benchmarking/utils.js grew by 253 lines without same-directory shrink"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": false
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "svelte/_wt_pr18059",
+  "reuseFindings": [],
+  "sourceFilesCount": 3,
+  "version": "3.0.0",
+  "warnings": []
+}

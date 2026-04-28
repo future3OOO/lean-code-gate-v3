@@ -1,0 +1,132 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 20,
+        "baselineLines": 917,
+        "currentLines": 933,
+        "deleted": 4,
+        "file": "packages/runtime-dom/src/apiCustomElement.ts",
+        "netGrowth": 16
+      },
+      {
+        "added": 23,
+        "baselineLines": 366,
+        "currentLines": 357,
+        "deleted": 32,
+        "file": "packages/runtime-vapor/src/apiDefineCustomElement.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 6,
+        "baselineLines": 311,
+        "currentLines": 316,
+        "deleted": 1,
+        "file": "packages/runtime-vapor/src/componentSlots.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 4,
+        "baselineLines": 1257,
+        "currentLines": 1261,
+        "deleted": 0,
+        "file": "packages/runtime-vapor/src/fragment.ts",
+        "netGrowth": 4
+      }
+    ],
+    "totalAdded": 53,
+    "totalDeleted": 37
+  },
+  "changedFilesCount": 5,
+  "changedFilesSample": [
+    "packages/runtime-dom/src/apiCustomElement.ts",
+    "packages/runtime-vapor/__tests__/customElement.spec.ts",
+    "packages/runtime-vapor/src/apiDefineCustomElement.ts",
+    "packages/runtime-vapor/src/componentSlots.ts",
+    "packages/runtime-vapor/src/fragment.ts"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "vue3/_wt_pr14730",
+  "reuseFindings": [],
+  "sourceFilesCount": 4,
+  "version": "3.0.0",
+  "warnings": []
+}

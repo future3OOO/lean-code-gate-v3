@@ -1,0 +1,9 @@
+repo: vue3
+github: vuejs/core
+pr_number: 14752
+title: perf(hydration): add static template hydration fast path
+base_sha: 19a870d0f8607ae8598ac4fb0b268cee1ba73f6e
+merge_sha: a93ae86974133790af8cf2e2045c6ba35484bda4
+merged_at: 2026-04-23T09:36:44Z
+exit_code: 0
+duration_seconds: 0

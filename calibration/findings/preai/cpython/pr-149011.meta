@@ -1,0 +1,9 @@
+repo: cpython
+github: python/cpython
+pr_number: 149011
+title: [3.14] gh-146455: Fix O(N²) in add_const() after constant folding moved to CFG (GH-146456)
+base_sha: 5770df43dc6d8d23b66b843ee708e4b239af35a8
+merge_sha: 78c5e54b4fd5798d8b74b901c34539bb09a5a064
+merged_at: 2026-04-26T15:45:38Z
+exit_code: 0
+duration_seconds: 1

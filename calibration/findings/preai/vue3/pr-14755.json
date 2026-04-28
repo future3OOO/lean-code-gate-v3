@@ -1,0 +1,123 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 21,
+        "baselineLines": 732,
+        "currentLines": 730,
+        "deleted": 23,
+        "file": "packages/runtime-vapor/src/apiCreateFor.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 60,
+        "baselineLines": 327,
+        "currentLines": 380,
+        "deleted": 7,
+        "file": "packages/runtime-vapor/src/components/TransitionGroup.ts",
+        "netGrowth": 53
+      },
+      {
+        "added": 15,
+        "baselineLines": 469,
+        "currentLines": 477,
+        "deleted": 7,
+        "file": "packages/runtime-vapor/src/dom/hydration.ts",
+        "netGrowth": 8
+      }
+    ],
+    "totalAdded": 96,
+    "totalDeleted": 37
+  },
+  "changedFilesCount": 4,
+  "changedFilesSample": [
+    "packages/runtime-vapor/__tests__/hydration.spec.ts",
+    "packages/runtime-vapor/src/apiCreateFor.ts",
+    "packages/runtime-vapor/src/components/TransitionGroup.ts",
+    "packages/runtime-vapor/src/dom/hydration.ts"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "vue3/_wt_pr14755",
+  "reuseFindings": [],
+  "sourceFilesCount": 3,
+  "version": "3.0.0",
+  "warnings": []
+}

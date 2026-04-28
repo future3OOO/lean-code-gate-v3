@@ -1,0 +1,9 @@
+repo: svelte
+github: sveltejs/svelte
+pr_number: 18077
+title: chore: simplify parser
+base_sha: 8966601dcd14582cd46d4fbb7c5cf1b444292255
+merge_sha: 6b653b8d17c80b16659c5238875977f0941490c2
+merged_at: 2026-04-07T19:06:21Z
+exit_code: 2
+duration_seconds: 1

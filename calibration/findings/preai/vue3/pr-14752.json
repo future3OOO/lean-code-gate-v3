@@ -1,0 +1,189 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 1,
+        "baselineLines": 263,
+        "currentLines": 263,
+        "deleted": 1,
+        "file": "packages/compiler-vapor/src/generate.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 24,
+        "baselineLines": 154,
+        "currentLines": 165,
+        "deleted": 13,
+        "file": "packages/compiler-vapor/src/generators/template.ts",
+        "netGrowth": 11
+      },
+      {
+        "added": 16,
+        "baselineLines": 343,
+        "currentLines": 356,
+        "deleted": 3,
+        "file": "packages/compiler-vapor/src/ir/index.ts",
+        "netGrowth": 13
+      },
+      {
+        "added": 83,
+        "baselineLines": 445,
+        "currentLines": 517,
+        "deleted": 11,
+        "file": "packages/compiler-vapor/src/transform.ts",
+        "netGrowth": 72
+      },
+      {
+        "added": 1,
+        "baselineLines": 676,
+        "currentLines": 674,
+        "deleted": 3,
+        "file": "packages/compiler-vapor/src/transforms/transformElement.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 467,
+        "currentLines": 467,
+        "deleted": 1,
+        "file": "packages/runtime-vapor/src/dom/hydration.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 26,
+        "baselineLines": 38,
+        "currentLines": 59,
+        "deleted": 5,
+        "file": "packages/runtime-vapor/src/dom/template.ts",
+        "netGrowth": 21
+      },
+      {
+        "added": 10,
+        "baselineLines": 1261,
+        "currentLines": 1271,
+        "deleted": 0,
+        "file": "packages/runtime-vapor/src/fragment.ts",
+        "netGrowth": 10
+      }
+    ],
+    "totalAdded": 162,
+    "totalDeleted": 37
+  },
+  "changedFilesCount": 34,
+  "changedFilesSample": [
+    "packages/compiler-vapor/__tests__/__snapshots__/compile.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/__snapshots__/scopeId.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/__snapshots__/staticTemplate.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/compile.spec.ts",
+    "packages/compiler-vapor/__tests__/staticTemplate.spec.ts",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/TransformTransition.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/expression.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/logicalIndex.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/templateTransformAssetUrl.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/templateTransformSrcset.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/transformChildren.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/transformElement.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/transformKey.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/transformSlotOutlet.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/transformText.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/vBind.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/vIf.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/vOnce.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/vSlot.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/vText.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/transformElement.spec.ts",
+    "packages/compiler-vapor/__tests__/transforms/transformText.spec.ts",
+    "packages/compiler-vapor/__tests__/transforms/vIf.spec.ts",
+    "packages/compiler-vapor/src/generate.ts",
+    "packages/compiler-vapor/src/generators/template.ts",
+    "packages/compiler-vapor/src/ir/index.ts",
+    "packages/compiler-vapor/src/transform.ts",
+    "packages/compiler-vapor/src/transforms/transformElement.ts",
+    "packages/runtime-vapor/__tests__/components/Teleport.spec.ts",
+    "packages/runtime-vapor/__tests__/dom/mathML.spec.ts"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "vue3/_wt_pr14752",
+  "reuseFindings": [],
+  "sourceFilesCount": 8,
+  "version": "3.0.0",
+  "warnings": []
+}

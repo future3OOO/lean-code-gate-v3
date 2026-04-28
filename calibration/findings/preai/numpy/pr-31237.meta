@@ -1,0 +1,9 @@
+repo: numpy
+github: numpy/numpy
+pr_number: 31237
+title: BUG: Remove thread-local allocator cache implementation
+base_sha: 7a0dfadc88c7a21746d827767cad5296df765e6e
+merge_sha: 4a126b31f5d1c03d4cea052abc49d31b8667cff3
+merged_at: 2026-04-14T14:08:41Z
+exit_code: 0
+duration_seconds: 0

@@ -1,0 +1,157 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 2,
+        "baselineLines": 685,
+        "currentLines": 685,
+        "deleted": 2,
+        "file": "packages/compiler-vapor/src/generators/component.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 343,
+        "currentLines": 343,
+        "deleted": 1,
+        "file": "packages/compiler-vapor/src/ir/index.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 20,
+        "baselineLines": 139,
+        "currentLines": 159,
+        "deleted": 0,
+        "file": "packages/compiler-vapor/src/transforms/transformChildren.ts",
+        "netGrowth": 20
+      },
+      {
+        "added": 22,
+        "baselineLines": 661,
+        "currentLines": 676,
+        "deleted": 7,
+        "file": "packages/compiler-vapor/src/transforms/transformElement.ts",
+        "netGrowth": 15
+      },
+      {
+        "added": 93,
+        "baselineLines": 186,
+        "currentLines": 274,
+        "deleted": 5,
+        "file": "packages/compiler-vapor/src/transforms/transformText.ts",
+        "netGrowth": 88
+      },
+      {
+        "added": 28,
+        "baselineLines": 52,
+        "currentLines": 75,
+        "deleted": 5,
+        "file": "packages/compiler-vapor/src/transforms/vText.ts",
+        "netGrowth": 23
+      }
+    ],
+    "totalAdded": 166,
+    "totalDeleted": 20
+  },
+  "changedFilesCount": 14,
+  "changedFilesSample": [
+    "packages/compiler-vapor/__tests__/abbreviation.spec.ts",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/transformElement.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/transformText.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/__snapshots__/vText.spec.ts.snap",
+    "packages/compiler-vapor/__tests__/transforms/transformElement.spec.ts",
+    "packages/compiler-vapor/__tests__/transforms/transformText.spec.ts",
+    "packages/compiler-vapor/__tests__/transforms/vText.spec.ts",
+    "packages/compiler-vapor/src/generators/component.ts",
+    "packages/compiler-vapor/src/ir/index.ts",
+    "packages/compiler-vapor/src/transforms/transformChildren.ts",
+    "packages/compiler-vapor/src/transforms/transformElement.ts",
+    "packages/compiler-vapor/src/transforms/transformText.ts",
+    "packages/compiler-vapor/src/transforms/vText.ts",
+    "packages/runtime-vapor/__tests__/component.spec.ts"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "vue3/_wt_pr14744",
+  "reuseFindings": [],
+  "sourceFilesCount": 6,
+  "version": "3.0.0",
+  "warnings": []
+}

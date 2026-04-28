@@ -10,7 +10,9 @@
     "total_comments": 6,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-28T00:58:07Z",
+    "created_at": "2026-04-25T21:11:32Z"
   },
   {
     "repo": "django",
@@ -23,7 +25,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 3
+    "gate_source_files": 3,
+    "merged_at": "2026-04-27T19:49:14Z",
+    "created_at": "2026-04-25T19:48:41Z"
   },
   {
     "repo": "django",
@@ -36,7 +40,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-25T14:52:10Z",
+    "created_at": "2026-04-24T15:41:46Z"
   },
   {
     "repo": "django",
@@ -49,7 +55,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-24T15:46:54Z",
+    "created_at": "2026-04-24T15:04:42Z"
   },
   {
     "repo": "django",
@@ -62,7 +70,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-23T06:52:42Z",
+    "created_at": "2026-04-23T06:19:23Z"
   },
   {
     "repo": "django",
@@ -75,7 +85,9 @@
     "total_comments": 4,
     "gate_errors": 1,
     "gate_warnings": 4,
-    "gate_source_files": 12
+    "gate_source_files": 12,
+    "merged_at": "2026-04-22T21:28:36Z",
+    "created_at": "2026-04-22T16:01:31Z"
   },
   {
     "repo": "django",
@@ -88,7 +100,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-23T08:54:15Z",
+    "created_at": "2026-04-22T06:12:28Z"
   },
   {
     "repo": "django",
@@ -101,7 +115,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 1,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-19T19:28:13Z",
+    "created_at": "2026-04-19T13:38:42Z"
   },
   {
     "repo": "django",
@@ -114,7 +130,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-19T11:41:55Z",
+    "created_at": "2026-04-19T10:47:26Z"
   },
   {
     "repo": "django",
@@ -127,7 +145,9 @@
     "total_comments": 4,
     "gate_errors": 2,
     "gate_warnings": 0,
-    "gate_source_files": 24
+    "gate_source_files": 24,
+    "merged_at": "2026-04-19T10:45:56Z",
+    "created_at": "2026-04-19T08:36:08Z"
   },
   {
     "repo": "django",
@@ -140,7 +160,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-19T08:48:53Z",
+    "created_at": "2026-04-19T08:08:55Z"
   },
   {
     "repo": "fastapi",
@@ -153,7 +175,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-27T20:11:28Z",
+    "created_at": "2026-04-27T13:59:15Z"
   },
   {
     "repo": "fastapi",
@@ -166,7 +190,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-27T20:25:27Z",
+    "created_at": "2026-04-27T13:58:25Z"
   },
   {
     "repo": "fastapi",
@@ -179,7 +205,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-27T20:22:06Z",
+    "created_at": "2026-04-27T13:51:13Z"
   },
   {
     "repo": "fastapi",
@@ -192,7 +220,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-24T12:25:04Z",
+    "created_at": "2026-04-23T11:47:32Z"
   },
   {
     "repo": "fastapi",
@@ -205,7 +235,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-24T12:37:27Z",
+    "created_at": "2026-04-23T11:47:16Z"
   },
   {
     "repo": "fastapi",
@@ -218,7 +250,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-24T13:06:10Z",
+    "created_at": "2026-04-23T11:46:57Z"
   },
   {
     "repo": "fastapi",
@@ -231,7 +265,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-24T09:34:24Z",
+    "created_at": "2026-04-23T11:43:21Z"
   },
   {
     "repo": "fastapi",
@@ -244,7 +280,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-22T12:41:23Z",
+    "created_at": "2026-04-22T11:47:21Z"
   },
   {
     "repo": "fastapi",
@@ -257,7 +295,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-22T13:04:27Z",
+    "created_at": "2026-04-22T11:47:05Z"
   },
   {
     "repo": "fastapi",
@@ -270,7 +310,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-22T13:10:45Z",
+    "created_at": "2026-04-22T11:46:46Z"
   },
   {
     "repo": "fastapi",
@@ -283,7 +325,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-22T12:53:36Z",
+    "created_at": "2026-04-22T11:46:31Z"
   },
   {
     "repo": "fastapi",
@@ -296,7 +340,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-22T12:49:01Z",
+    "created_at": "2026-04-22T11:46:13Z"
   },
   {
     "repo": "fastapi",
@@ -309,7 +355,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-22T12:44:48Z",
+    "created_at": "2026-04-22T11:43:03Z"
   },
   {
     "repo": "fastapi",
@@ -322,7 +370,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-22T07:42:50Z",
+    "created_at": "2026-04-21T22:23:27Z"
   },
   {
     "repo": "fastapi",
@@ -335,7 +385,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-21T12:45:41Z",
+    "created_at": "2026-04-21T11:47:00Z"
   },
   {
     "repo": "fastapi",
@@ -348,7 +400,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-21T12:43:26Z",
+    "created_at": "2026-04-21T11:46:49Z"
   },
   {
     "repo": "fastapi",
@@ -361,7 +415,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-21T12:24:45Z",
+    "created_at": "2026-04-21T11:46:33Z"
   },
   {
     "repo": "pydantic",
@@ -374,7 +430,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-24T07:14:43Z",
+    "created_at": "2026-04-22T14:59:56Z"
   },
   {
     "repo": "pydantic",
@@ -387,7 +445,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-22T14:58:24Z",
+    "created_at": "2026-04-22T07:21:42Z"
   },
   {
     "repo": "pydantic",
@@ -400,7 +460,9 @@
     "total_comments": 4,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 5
+    "gate_source_files": 5,
+    "merged_at": "2026-04-22T14:11:26Z",
+    "created_at": "2026-04-22T07:11:18Z"
   },
   {
     "repo": "pydantic",
@@ -413,7 +475,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-24T07:32:49Z",
+    "created_at": "2026-04-21T21:05:54Z"
   },
   {
     "repo": "pydantic",
@@ -426,7 +490,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-20T14:29:00Z",
+    "created_at": "2026-04-20T14:10:32Z"
   },
   {
     "repo": "pydantic",
@@ -439,7 +505,9 @@
     "total_comments": 3,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-20T13:40:45Z",
+    "created_at": "2026-04-20T07:47:53Z"
   },
   {
     "repo": "pydantic",
@@ -452,7 +520,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-16T07:38:12Z",
+    "created_at": "2026-04-16T07:24:17Z"
   },
   {
     "repo": "pydantic",
@@ -465,7 +535,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 10
+    "gate_source_files": 10,
+    "merged_at": "2026-04-22T14:12:08Z",
+    "created_at": "2026-04-15T14:01:52Z"
   },
   {
     "repo": "pydantic",
@@ -478,7 +550,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-15T11:44:09Z",
+    "created_at": "2026-04-15T11:28:36Z"
   },
   {
     "repo": "pydantic",
@@ -491,7 +565,9 @@
     "total_comments": 4,
     "gate_errors": 5,
     "gate_warnings": 2,
-    "gate_source_files": 51
+    "gate_source_files": 51,
+    "merged_at": "2026-04-15T13:44:08Z",
+    "created_at": "2026-04-15T11:10:34Z"
   },
   {
     "repo": "pydantic",
@@ -504,7 +580,9 @@
     "total_comments": 8,
     "gate_errors": 4,
     "gate_warnings": 2,
-    "gate_source_files": 49
+    "gate_source_files": 49,
+    "merged_at": "2026-04-15T11:27:14Z",
+    "created_at": "2026-04-13T19:46:01Z"
   },
   {
     "repo": "pydantic",
@@ -517,7 +595,9 @@
     "total_comments": 3,
     "gate_errors": 1,
     "gate_warnings": 1,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-13T14:16:42Z",
+    "created_at": "2026-04-13T13:17:58Z"
   },
   {
     "repo": "pydantic",
@@ -530,7 +610,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-13T09:44:23Z",
+    "created_at": "2026-04-13T09:23:11Z"
   },
   {
     "repo": "pydantic",
@@ -543,7 +625,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-13T07:56:55Z",
+    "created_at": "2026-04-10T17:50:50Z"
   },
   {
     "repo": "pydantic",
@@ -556,7 +640,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-10T17:07:16Z",
+    "created_at": "2026-04-10T16:42:28Z"
   },
   {
     "repo": "typescript",
@@ -569,7 +655,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-27T19:32:50Z",
+    "created_at": "2026-04-27T16:43:07Z"
   },
   {
     "repo": "typescript",
@@ -582,7 +670,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-27T17:35:28Z",
+    "created_at": "2026-04-25T06:31:59Z"
   },
   {
     "repo": "typescript",
@@ -595,7 +685,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-17T18:18:28Z",
+    "created_at": "2026-04-17T17:52:45Z"
   },
   {
     "repo": "typescript",
@@ -608,7 +700,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-15T20:44:45Z",
+    "created_at": "2026-04-15T19:26:48Z"
   },
   {
     "repo": "typescript",
@@ -621,7 +715,9 @@
     "total_comments": 5,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-15T18:45:56Z",
+    "created_at": "2026-04-14T21:17:51Z"
   },
   {
     "repo": "typescript",
@@ -634,7 +730,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 1,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-07T17:24:50Z",
+    "created_at": "2026-04-07T17:06:27Z"
   },
   {
     "repo": "typescript",
@@ -647,7 +745,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 1,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-07T17:01:31Z",
+    "created_at": "2026-04-06T22:57:39Z"
   },
   {
     "repo": "typescript",
@@ -660,7 +760,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-06T20:29:39Z",
+    "created_at": "2026-04-06T19:57:49Z"
   },
   {
     "repo": "nextjs",
@@ -673,7 +775,9 @@
     "total_comments": 11,
     "gate_errors": 0,
     "gate_warnings": 1,
-    "gate_source_files": 10
+    "gate_source_files": 10,
+    "merged_at": "2026-04-27T16:31:05Z",
+    "created_at": "2026-04-27T14:00:59Z"
   },
   {
     "repo": "nextjs",
@@ -686,7 +790,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-27T12:29:50Z",
+    "created_at": "2026-04-27T11:47:20Z"
   },
   {
     "repo": "nextjs",
@@ -699,7 +805,9 @@
     "total_comments": 4,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 5
+    "gate_source_files": 5,
+    "merged_at": "2026-04-27T14:55:44Z",
+    "created_at": "2026-04-25T16:03:54Z"
   },
   {
     "repo": "nextjs",
@@ -712,7 +820,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-25T12:05:27Z",
+    "created_at": "2026-04-25T11:44:52Z"
   },
   {
     "repo": "nextjs",
@@ -725,7 +835,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-25T14:27:12Z",
+    "created_at": "2026-04-25T10:32:38Z"
   },
   {
     "repo": "nextjs",
@@ -738,7 +850,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-27T06:16:23Z",
+    "created_at": "2026-04-25T09:41:45Z"
   },
   {
     "repo": "nextjs",
@@ -751,7 +865,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 4
+    "gate_source_files": 4,
+    "merged_at": "2026-04-24T23:18:09Z",
+    "created_at": "2026-04-24T22:55:12Z"
   },
   {
     "repo": "nextjs",
@@ -764,7 +880,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-24T22:42:10Z",
+    "created_at": "2026-04-24T22:21:32Z"
   },
   {
     "repo": "nextjs",
@@ -777,7 +895,9 @@
     "total_comments": 6,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 6
+    "gate_source_files": 6,
+    "merged_at": "2026-04-27T20:01:53Z",
+    "created_at": "2026-04-24T21:48:39Z"
   },
   {
     "repo": "nextjs",
@@ -790,7 +910,9 @@
     "total_comments": 0,
     "gate_errors": 3,
     "gate_warnings": 3,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-24T21:51:36Z",
+    "created_at": "2026-04-24T21:20:06Z"
   },
   {
     "repo": "nextjs",
@@ -803,7 +925,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-24T21:30:44Z",
+    "created_at": "2026-04-24T21:11:04Z"
   },
   {
     "repo": "nextjs",
@@ -816,7 +940,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-24T21:06:32Z",
+    "created_at": "2026-04-24T20:46:37Z"
   },
   {
     "repo": "nextjs",
@@ -829,7 +955,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-24T20:38:54Z",
+    "created_at": "2026-04-24T20:08:26Z"
   },
   {
     "repo": "nextjs",
@@ -842,7 +970,9 @@
     "total_comments": 0,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 19
+    "gate_source_files": 19,
+    "merged_at": "2026-04-24T20:02:27Z",
+    "created_at": "2026-04-24T19:26:38Z"
   },
   {
     "repo": "nextjs",
@@ -855,7 +985,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 3
+    "gate_source_files": 3,
+    "merged_at": "2026-04-25T14:27:30Z",
+    "created_at": "2026-04-24T18:47:08Z"
   },
   {
     "repo": "nextjs",
@@ -868,7 +1000,9 @@
     "total_comments": 16,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-24T22:03:17Z",
+    "created_at": "2026-04-24T18:21:58Z"
   },
   {
     "repo": "nextjs",
@@ -881,7 +1015,9 @@
     "total_comments": 3,
     "gate_errors": 1,
     "gate_warnings": 1,
-    "gate_source_files": 8
+    "gate_source_files": 8,
+    "merged_at": "2026-04-24T16:42:05Z",
+    "created_at": "2026-04-24T15:17:58Z"
   },
   {
     "repo": "nextjs",
@@ -894,7 +1030,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-27T07:33:36Z",
+    "created_at": "2026-04-24T13:25:03Z"
   },
   {
     "repo": "nextjs",
@@ -907,7 +1045,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-24T14:04:42Z",
+    "created_at": "2026-04-24T13:18:26Z"
   },
   {
     "repo": "nextjs",
@@ -920,7 +1060,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-24T14:24:37Z",
+    "created_at": "2026-04-24T13:09:07Z"
   },
   {
     "repo": "sentry",
@@ -933,7 +1075,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 4
+    "gate_source_files": 4,
+    "merged_at": "2026-04-27T23:33:53Z",
+    "created_at": "2026-04-27T23:03:18Z"
   },
   {
     "repo": "sentry",
@@ -946,7 +1090,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-27T23:15:26Z",
+    "created_at": "2026-04-27T22:58:02Z"
   },
   {
     "repo": "sentry",
@@ -959,7 +1105,9 @@
     "total_comments": 6,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 3
+    "gate_source_files": 3,
+    "merged_at": "2026-04-27T23:32:32Z",
+    "created_at": "2026-04-27T22:34:09Z"
   },
   {
     "repo": "sentry",
@@ -972,7 +1120,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 6
+    "gate_source_files": 6,
+    "merged_at": "2026-04-27T22:18:06Z",
+    "created_at": "2026-04-27T22:09:02Z"
   },
   {
     "repo": "sentry",
@@ -985,7 +1135,9 @@
     "total_comments": 0,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 7
+    "gate_source_files": 7,
+    "merged_at": "2026-04-27T21:37:11Z",
+    "created_at": "2026-04-27T21:04:24Z"
   },
   {
     "repo": "sentry",
@@ -998,7 +1150,9 @@
     "total_comments": 6,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-27T21:20:13Z",
+    "created_at": "2026-04-27T20:17:41Z"
   },
   {
     "repo": "sentry",
@@ -1011,7 +1165,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-27T21:09:34Z",
+    "created_at": "2026-04-27T20:13:48Z"
   },
   {
     "repo": "sentry",
@@ -1024,7 +1180,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-27T20:01:38Z",
+    "created_at": "2026-04-27T19:05:00Z"
   },
   {
     "repo": "sentry",
@@ -1037,7 +1195,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 3
+    "gate_source_files": 3,
+    "merged_at": "2026-04-27T20:13:44Z",
+    "created_at": "2026-04-27T19:01:33Z"
   },
   {
     "repo": "sentry",
@@ -1050,7 +1210,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 1,
-    "gate_source_files": 3
+    "gate_source_files": 3,
+    "merged_at": "2026-04-27T20:49:17Z",
+    "created_at": "2026-04-27T18:56:36Z"
   },
   {
     "repo": "sentry",
@@ -1063,7 +1225,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-27T18:38:25Z",
+    "created_at": "2026-04-27T18:04:30Z"
   },
   {
     "repo": "sentry",
@@ -1076,7 +1240,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 55
+    "gate_source_files": 55,
+    "merged_at": "2026-04-27T18:17:24Z",
+    "created_at": "2026-04-27T17:39:01Z"
   },
   {
     "repo": "sentry",
@@ -1089,7 +1255,9 @@
     "total_comments": 0,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 4
+    "gate_source_files": 4,
+    "merged_at": "2026-04-27T21:33:50Z",
+    "created_at": "2026-04-27T17:29:19Z"
   },
   {
     "repo": "sentry",
@@ -1102,7 +1270,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-27T20:20:29Z",
+    "created_at": "2026-04-27T17:23:57Z"
   },
   {
     "repo": "sentry",
@@ -1115,7 +1285,9 @@
     "total_comments": 3,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 5
+    "gate_source_files": 5,
+    "merged_at": "2026-04-27T18:40:49Z",
+    "created_at": "2026-04-27T16:42:25Z"
   },
   {
     "repo": "sentry",
@@ -1128,7 +1300,9 @@
     "total_comments": 2,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 10
+    "gate_source_files": 10,
+    "merged_at": "2026-04-27T18:46:42Z",
+    "created_at": "2026-04-27T16:26:39Z"
   },
   {
     "repo": "sentry",
@@ -1141,7 +1315,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-27T16:39:20Z",
+    "created_at": "2026-04-27T16:23:41Z"
   },
   {
     "repo": "sentry",
@@ -1154,7 +1330,9 @@
     "total_comments": 0,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 6
+    "gate_source_files": 6,
+    "merged_at": "2026-04-27T16:11:01Z",
+    "created_at": "2026-04-27T15:55:00Z"
   },
   {
     "repo": "sentry",
@@ -1167,7 +1345,9 @@
     "total_comments": 1,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-27T17:15:23Z",
+    "created_at": "2026-04-27T15:51:02Z"
   },
   {
     "repo": "sentry",
@@ -1180,7 +1360,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-27T15:49:09Z",
+    "created_at": "2026-04-27T15:24:59Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1193,7 +1375,9 @@
     "total_comments": 0,
     "gate_errors": 2,
     "gate_warnings": 0,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-28T03:33:33Z",
+    "created_at": "2026-04-28T02:04:10Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1206,7 +1390,9 @@
     "total_comments": 0,
     "gate_errors": 2,
     "gate_warnings": 42,
-    "gate_source_files": 420
+    "gate_source_files": 420,
+    "merged_at": "2026-04-27T17:53:37Z",
+    "created_at": "2026-04-27T17:07:41Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1219,7 +1405,9 @@
     "total_comments": 4,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-27T17:24:26Z",
+    "created_at": "2026-04-27T16:27:25Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1232,7 +1420,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-23T20:43:55Z",
+    "created_at": "2026-04-23T17:18:00Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1245,7 +1435,9 @@
     "total_comments": 0,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 16
+    "gate_source_files": 16,
+    "merged_at": "2026-04-23T17:13:57Z",
+    "created_at": "2026-04-23T16:21:15Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1258,7 +1450,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-23T16:19:07Z",
+    "created_at": "2026-04-23T14:53:30Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1271,7 +1465,9 @@
     "total_comments": 1,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-23T15:25:12Z",
+    "created_at": "2026-04-22T17:18:36Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1284,7 +1480,9 @@
     "total_comments": 1,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 20
+    "gate_source_files": 20,
+    "merged_at": "2026-04-22T16:47:37Z",
+    "created_at": "2026-04-22T14:57:16Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1297,7 +1495,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-21T22:28:34Z",
+    "created_at": "2026-04-21T19:01:22Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1310,7 +1510,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 6
+    "gate_source_files": 6,
+    "merged_at": "2026-04-22T16:36:43Z",
+    "created_at": "2026-04-21T17:27:02Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1323,7 +1525,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-20T22:05:19Z",
+    "created_at": "2026-04-20T21:58:32Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1336,7 +1540,9 @@
     "total_comments": 0,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-20T20:46:57Z",
+    "created_at": "2026-04-20T19:59:09Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1349,7 +1555,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 1
+    "gate_source_files": 1,
+    "merged_at": "2026-04-20T20:25:23Z",
+    "created_at": "2026-04-20T17:58:14Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1362,7 +1570,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-21T22:28:55Z",
+    "created_at": "2026-04-20T17:01:39Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1375,7 +1585,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 5
+    "gate_source_files": 5,
+    "merged_at": "2026-04-19T23:57:00Z",
+    "created_at": "2026-04-17T21:16:57Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1388,7 +1600,9 @@
     "total_comments": 0,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 8
+    "gate_source_files": 8,
+    "merged_at": "2026-04-17T14:53:05Z",
+    "created_at": "2026-04-16T23:27:09Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1401,7 +1615,9 @@
     "total_comments": 0,
     "gate_errors": 1,
     "gate_warnings": 1,
-    "gate_source_files": 30
+    "gate_source_files": 30,
+    "merged_at": "2026-04-16T17:32:59Z",
+    "created_at": "2026-04-16T16:27:15Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1414,7 +1630,9 @@
     "total_comments": 0,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-15T18:10:55Z",
+    "created_at": "2026-04-15T18:07:03Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1427,7 +1645,9 @@
     "total_comments": 0,
     "gate_errors": 1,
     "gate_warnings": 0,
-    "gate_source_files": 2
+    "gate_source_files": 2,
+    "merged_at": "2026-04-15T18:10:25Z",
+    "created_at": "2026-04-15T16:19:50Z"
   },
   {
     "repo": "aws-sdk-js",
@@ -1440,7 +1660,9 @@
     "total_comments": 0,
     "gate_errors": 1,
     "gate_warnings": 1,
-    "gate_source_files": 7
+    "gate_source_files": 7,
+    "merged_at": "2026-04-16T16:06:41Z",
+    "created_at": "2026-04-15T15:44:01Z"
   },
   {
     "repo": "grpc",
@@ -1453,7 +1675,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-23T20:23:17Z",
+    "created_at": "2026-04-23T19:05:19Z"
   },
   {
     "repo": "grpc",
@@ -1466,7 +1690,9 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-23T04:01:54Z",
+    "created_at": "2026-04-23T01:38:15Z"
   },
   {
     "repo": "grpc",
@@ -1479,6 +1705,8 @@
     "total_comments": 0,
     "gate_errors": 0,
     "gate_warnings": 0,
-    "gate_source_files": 0
+    "gate_source_files": 0,
+    "merged_at": "2026-04-27T17:48:28Z",
+    "created_at": "2026-04-20T14:02:43Z"
   }
 ]

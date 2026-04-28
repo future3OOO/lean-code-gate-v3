@@ -1,0 +1,133 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 18,
+        "baselineLines": 103,
+        "currentLines": 120,
+        "deleted": 1,
+        "file": "benchmarking/compare/index.js",
+        "netGrowth": 17
+      },
+      {
+        "added": 6,
+        "baselineLines": 13,
+        "currentLines": 18,
+        "deleted": 1,
+        "file": "benchmarking/compare/runner.js",
+        "netGrowth": 5
+      },
+      {
+        "added": 8,
+        "baselineLines": 87,
+        "currentLines": 94,
+        "deleted": 1,
+        "file": "benchmarking/run.js",
+        "netGrowth": 7
+      },
+      {
+        "added": 37,
+        "baselineLines": 43,
+        "currentLines": 80,
+        "deleted": 0,
+        "file": "benchmarking/utils.js",
+        "netGrowth": 37
+      }
+    ],
+    "totalAdded": 69,
+    "totalDeleted": 3
+  },
+  "changedFilesCount": 6,
+  "changedFilesSample": [
+    ".github/workflows/ci.yml",
+    ".gitignore",
+    "benchmarking/compare/index.js",
+    "benchmarking/compare/runner.js",
+    "benchmarking/run.js",
+    "benchmarking/utils.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "svelte/_wt_pr18043",
+  "reuseFindings": [],
+  "sourceFilesCount": 4,
+  "version": "3.0.0",
+  "warnings": []
+}

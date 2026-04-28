@@ -1,0 +1,9 @@
+repo: vue3
+github: vuejs/core
+pr_number: 14725
+title: fix(compiler-sfc): handle nested :deep in selector pseudos
+base_sha: 60402cd4771be1b758cae759d27ffa6c01428364
+merge_sha: bb9d265d8dcdde2af824fc01b24f9a7b3169f5fa
+merged_at: 2026-04-22T06:26:22Z
+exit_code: 0
+duration_seconds: 0

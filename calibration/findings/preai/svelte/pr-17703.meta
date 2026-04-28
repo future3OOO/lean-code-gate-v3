@@ -1,0 +1,9 @@
+repo: svelte
+github: sveltejs/svelte
+pr_number: 17703
+title: fix: use symbols for encapsulated event delegation
+base_sha: 7b6755eaf68f2a46f88a0b6b09fc2efa44c163e0
+merge_sha: 220b526d3aac9db5ba06181165a9c24a663f178b
+merged_at: 2026-02-13T21:47:16Z
+exit_code: 2
+duration_seconds: 1

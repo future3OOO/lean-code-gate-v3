@@ -1,0 +1,233 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 3,
+        "baselineLines": 73,
+        "currentLines": 73,
+        "deleted": 3,
+        "file": "packages/svelte/src/internal/client/constants.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 258,
+        "currentLines": 258,
+        "deleted": 1,
+        "file": "packages/svelte/src/internal/client/context.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 7,
+        "baselineLines": 152,
+        "currentLines": 152,
+        "deleted": 7,
+        "file": "packages/svelte/src/internal/client/dom/blocks/svelte-element.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 32,
+        "currentLines": 33,
+        "deleted": 1,
+        "file": "packages/svelte/src/internal/client/dom/css.js",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 343,
+        "currentLines": 344,
+        "deleted": 1,
+        "file": "packages/svelte/src/internal/client/dom/elements/custom-element.js",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 98,
+        "currentLines": 98,
+        "deleted": 2,
+        "file": "packages/svelte/src/internal/client/dom/elements/customizable-select.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 471,
+        "currentLines": 471,
+        "deleted": 2,
+        "file": "packages/svelte/src/internal/client/dom/elements/transitions.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 9,
+        "baselineLines": 293,
+        "currentLines": 293,
+        "deleted": 9,
+        "file": "packages/svelte/src/internal/client/dom/operations.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 6,
+        "currentLines": 8,
+        "deleted": 1,
+        "file": "packages/svelte/src/internal/client/dom/reconciler.js",
+        "netGrowth": 2
+      },
+      {
+        "added": 3,
+        "baselineLines": 392,
+        "currentLines": 392,
+        "deleted": 3,
+        "file": "packages/svelte/src/internal/client/dom/template.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 116,
+        "currentLines": 116,
+        "deleted": 2,
+        "file": "packages/svelte/src/internal/client/error-handling.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 9,
+        "baselineLines": 1063,
+        "currentLines": 1062,
+        "deleted": 10,
+        "file": "packages/svelte/src/internal/client/reactivity/batch.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 51,
+        "baselineLines": 394,
+        "currentLines": 442,
+        "deleted": 3,
+        "file": "packages/svelte/src/internal/client/reactivity/deriveds.js",
+        "netGrowth": 48
+      },
+      {
+        "added": 2,
+        "baselineLines": 717,
+        "currentLines": 716,
+        "deleted": 3,
+        "file": "packages/svelte/src/internal/client/reactivity/effects.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 13,
+        "baselineLines": 843,
+        "currentLines": 851,
+        "deleted": 5,
+        "file": "packages/svelte/src/internal/client/runtime.js",
+        "netGrowth": 8
+      }
+    ],
+    "totalAdded": 111,
+    "totalDeleted": 53
+  },
+  "changedFilesCount": 18,
+  "changedFilesSample": [
+    ".changeset/ninety-emus-drop.md",
+    "packages/svelte/src/internal/client/constants.js",
+    "packages/svelte/src/internal/client/context.js",
+    "packages/svelte/src/internal/client/dom/blocks/svelte-element.js",
+    "packages/svelte/src/internal/client/dom/css.js",
+    "packages/svelte/src/internal/client/dom/elements/custom-element.js",
+    "packages/svelte/src/internal/client/dom/elements/customizable-select.js",
+    "packages/svelte/src/internal/client/dom/elements/transitions.js",
+    "packages/svelte/src/internal/client/dom/operations.js",
+    "packages/svelte/src/internal/client/dom/reconciler.js",
+    "packages/svelte/src/internal/client/dom/template.js",
+    "packages/svelte/src/internal/client/error-handling.js",
+    "packages/svelte/src/internal/client/reactivity/batch.js",
+    "packages/svelte/src/internal/client/reactivity/deriveds.js",
+    "packages/svelte/src/internal/client/reactivity/effects.js",
+    "packages/svelte/src/internal/client/runtime.js",
+    "packages/svelte/tests/runtime-runes/samples/effect-inside-derived-frozen/_config.js",
+    "packages/svelte/tests/runtime-runes/samples/effect-inside-derived-frozen/main.svelte"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "svelte/_wt_pr17682",
+  "reuseFindings": [],
+  "sourceFilesCount": 15,
+  "version": "3.0.0",
+  "warnings": []
+}

@@ -1,0 +1,9 @@
+repo: svelte
+github: sveltejs/svelte
+pr_number: 17811
+title: perf: optimize parser hot paths for ~18% faster compilation
+base_sha: dd5b587bd3808b988de6eb82cee3d7e0c5d43540
+merge_sha: efb651cd33cc8688602c5836c950b4030b297d79
+merged_at: 2026-02-26T20:01:21Z
+exit_code: 0
+duration_seconds: 0

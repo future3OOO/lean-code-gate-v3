@@ -1,0 +1,9 @@
+repo: numpy
+github: numpy/numpy
+pr_number: 31234
+title: BUG,DEP: Change logic for ``arr.view()`` to use ``_set_dtype``
+base_sha: 49d0be449e43a871a08ef1f991f0cf6cf419e4b6
+merge_sha: d3a73173a9ef321d014e10255b62ace2104af6f2
+merged_at: 2026-04-20T07:38:29Z
+exit_code: 0
+duration_seconds: 1

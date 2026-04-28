@@ -1,0 +1,114 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 151,
+        "baselineLines": 2397,
+        "currentLines": 2482,
+        "deleted": 66,
+        "file": "Lib/subprocess.py",
+        "netGrowth": 85
+      }
+    ],
+    "totalAdded": 151,
+    "totalDeleted": 66
+  },
+  "changedFilesCount": 2,
+  "changedFilesSample": [
+    "Lib/subprocess.py",
+    "Lib/test/test_subprocess.py"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "Lib/subprocess.py:397"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": false,
+      "warnings": [
+        "large source file Lib/subprocess.py grew by 85 lines"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 1 changed location(s)",
+    "large source file Lib/subprocess.py grew by 85 lines without same-directory shrink"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": false
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "cpython/_wt_pr149032",
+  "reuseFindings": [],
+  "sourceFilesCount": 1,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file Lib/subprocess.py grew by 85 lines"
+  ]
+}

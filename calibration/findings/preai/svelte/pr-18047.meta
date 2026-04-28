@@ -1,0 +1,9 @@
+repo: svelte
+github: sveltejs/svelte
+pr_number: 18047
+title: chore: agent hints for perf investigations
+base_sha: c93e251654a3193f294d6a4171d4087b4cb2fb80
+merge_sha: 704e3bb5f0ad25e759c97cf7c8f45be79314d4df
+merged_at: 2026-04-02T17:49:23Z
+exit_code: 0
+duration_seconds: 0

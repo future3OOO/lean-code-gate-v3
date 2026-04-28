@@ -1,0 +1,159 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 29,
+        "baselineLines": 326,
+        "currentLines": 348,
+        "deleted": 7,
+        "file": "packages/svelte/src/compiler/phases/1-parse/index.js",
+        "netGrowth": 22
+      },
+      {
+        "added": 1,
+        "baselineLines": 97,
+        "currentLines": 97,
+        "deleted": 1,
+        "file": "packages/svelte/src/compiler/phases/1-parse/read/script.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 8,
+        "baselineLines": 637,
+        "currentLines": 637,
+        "deleted": 8,
+        "file": "packages/svelte/src/compiler/phases/1-parse/read/style.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 23,
+        "baselineLines": 937,
+        "currentLines": 950,
+        "deleted": 10,
+        "file": "packages/svelte/src/compiler/phases/1-parse/state/element.js",
+        "netGrowth": 13
+      },
+      {
+        "added": 1,
+        "baselineLines": 751,
+        "currentLines": 751,
+        "deleted": 1,
+        "file": "packages/svelte/src/compiler/phases/1-parse/state/tag.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 23,
+        "currentLines": 23,
+        "deleted": 3,
+        "file": "packages/svelte/src/compiler/phases/1-parse/state/text.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 4,
+        "baselineLines": 213,
+        "currentLines": 215,
+        "deleted": 2,
+        "file": "packages/svelte/src/compiler/phases/1-parse/utils/bracket.js",
+        "netGrowth": 2
+      }
+    ],
+    "totalAdded": 69,
+    "totalDeleted": 32
+  },
+  "changedFilesCount": 8,
+  "changedFilesSample": [
+    ".changeset/fast-parser-hotpaths.md",
+    "packages/svelte/src/compiler/phases/1-parse/index.js",
+    "packages/svelte/src/compiler/phases/1-parse/read/script.js",
+    "packages/svelte/src/compiler/phases/1-parse/read/style.js",
+    "packages/svelte/src/compiler/phases/1-parse/state/element.js",
+    "packages/svelte/src/compiler/phases/1-parse/state/tag.js",
+    "packages/svelte/src/compiler/phases/1-parse/state/text.js",
+    "packages/svelte/src/compiler/phases/1-parse/utils/bracket.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "svelte/_wt_pr17811",
+  "reuseFindings": [],
+  "sourceFilesCount": 7,
+  "version": "3.0.0",
+  "warnings": []
+}

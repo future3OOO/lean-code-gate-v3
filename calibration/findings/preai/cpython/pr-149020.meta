@@ -1,0 +1,9 @@
+repo: cpython
+github: python/cpython
+pr_number: 149020
+title: gh-149017: Upgrade bundled Expat to 2.8.0
+base_sha: fc829e88753858c8ac669594bf0093f44948c0f4
+merge_sha: 005555a3f0ae20ee8154eb4ee172e1e355144c8c
+merged_at: 2026-04-27T20:22:35Z
+exit_code: 0
+duration_seconds: 1

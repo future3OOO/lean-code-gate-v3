@@ -1,0 +1,9 @@
+repo: vue3
+github: vuejs/core
+pr_number: 14744
+title: fix(compiler-vapor): use createElement path for plain template
+base_sha: 05426e0fca4ef8a519228a9d7212f1daae1c3883
+merge_sha: 19a870d0f8607ae8598ac4fb0b268cee1ba73f6e
+merged_at: 2026-04-22T01:49:14Z
+exit_code: 0
+duration_seconds: 1

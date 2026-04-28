@@ -1,0 +1,9 @@
+repo: svelte
+github: sveltejs/svelte
+pr_number: 18112
+title: chore: enhance download script to ask for folder
+base_sha: 7fddfbdbbde8813ee107d56f70f5ea6c3d3abbc3
+merge_sha: 6a149666c1772b443c0db9385ee7521275b27487
+merged_at: 2026-04-15T11:34:30Z
+exit_code: 0
+duration_seconds: 1

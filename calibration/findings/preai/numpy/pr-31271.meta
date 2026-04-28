@@ -1,0 +1,9 @@
+repo: numpy
+github: numpy/numpy
+pr_number: 31271
+title: MAINT: use new dtype in view creation rather than going through two views
+base_sha: a253537e7a06e8e41a96d17b3f0ece62d93071ad
+merge_sha: f1b52e3697db0662c7a2cc86d199aa02ab4c7f5e
+merged_at: 2026-04-23T14:38:34Z
+exit_code: 0
+duration_seconds: 0

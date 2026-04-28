@@ -1,0 +1,9 @@
+repo: svelte
+github: sveltejs/svelte
+pr_number: 17674
+title: fix: re-run non-render-bound deriveds on the server
+base_sha: be24b0dca70e3959b38c1264077f5ac3a31f1e6c
+merge_sha: 09c4cb5084acb6962f33561e7368097491001a80
+merged_at: 2026-02-18T20:56:44Z
+exit_code: 2
+duration_seconds: 1

@@ -1,0 +1,146 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 42,
+        "baselineLines": 207,
+        "currentLines": 225,
+        "deleted": 24,
+        "file": "packages/svelte/src/compiler/phases/1-parse/acorn.js",
+        "netGrowth": 18
+      },
+      {
+        "added": 0,
+        "baselineLines": 348,
+        "currentLines": 338,
+        "deleted": 10,
+        "file": "packages/svelte/src/compiler/phases/1-parse/index.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 25,
+        "baselineLines": 114,
+        "currentLines": 110,
+        "deleted": 29,
+        "file": "packages/svelte/src/compiler/phases/1-parse/read/context.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 59,
+        "currentLines": 59,
+        "deleted": 1,
+        "file": "packages/svelte/src/compiler/phases/1-parse/read/expression.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 97,
+        "currentLines": 90,
+        "deleted": 8,
+        "file": "packages/svelte/src/compiler/phases/1-parse/read/script.js",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 69,
+    "totalDeleted": 72
+  },
+  "changedFilesCount": 5,
+  "changedFilesSample": [
+    "packages/svelte/src/compiler/phases/1-parse/acorn.js",
+    "packages/svelte/src/compiler/phases/1-parse/index.js",
+    "packages/svelte/src/compiler/phases/1-parse/read/context.js",
+    "packages/svelte/src/compiler/phases/1-parse/read/expression.js",
+    "packages/svelte/src/compiler/phases/1-parse/read/script.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "packages/svelte/src/compiler/phases/1-parse/acorn.js:33",
+        "packages/svelte/src/compiler/phases/1-parse/acorn.js:62",
+        "packages/svelte/src/compiler/phases/1-parse/acorn.js:67"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 3 changed location(s)"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": false,
+  "repo": "svelte/_wt_pr18077",
+  "reuseFindings": [],
+  "sourceFilesCount": 5,
+  "version": "3.0.0",
+  "warnings": []
+}

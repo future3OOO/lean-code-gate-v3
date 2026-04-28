@@ -1,0 +1,117 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 15,
+        "baselineLines": 8994,
+        "currentLines": 9001,
+        "deleted": 8,
+        "file": "numpy/ma/core.py",
+        "netGrowth": 7
+      }
+    ],
+    "totalAdded": 15,
+    "totalDeleted": 8
+  },
+  "changedFilesCount": 10,
+  "changedFilesSample": [
+    "numpy/_core/src/multiarray/convert.c",
+    "numpy/_core/src/multiarray/getset.c",
+    "numpy/_core/src/multiarray/multiarraymodule.c",
+    "numpy/_core/src/multiarray/npy_static_data.c",
+    "numpy/_core/src/multiarray/npy_static_data.h",
+    "numpy/_core/tests/test_deprecations.py",
+    "numpy/_core/tests/test_multiarray.py",
+    "numpy/ma/core.py",
+    "numpy/ma/tests/test_core.py",
+    "numpy/ma/tests/test_deprecations.py"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file numpy/ma/core.py grew by 7 lines"
+      ]
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "numpy/_wt_pr31234",
+  "reuseFindings": [],
+  "sourceFilesCount": 1,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file numpy/ma/core.py grew by 7 lines"
+  ]
+}

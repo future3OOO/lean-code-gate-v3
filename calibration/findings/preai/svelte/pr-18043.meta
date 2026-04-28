@@ -1,0 +1,9 @@
+repo: svelte
+github: sveltejs/svelte
+pr_number: 18043
+title: chore: generate CPU profiles when running benchmarks
+base_sha: edcbb0e6403e5b90e72c3ef1f46a938a52cc2d53
+merge_sha: 99b1467ba4d48de9eb85beec4dbc329b98b94d71
+merged_at: 2026-04-01T15:58:18Z
+exit_code: 0
+duration_seconds: 1

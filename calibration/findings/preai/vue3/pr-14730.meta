@@ -1,0 +1,9 @@
+repo: vue3
+github: vuejs/core
+pr_number: 14730
+title: refactor(runtime-vapor): simplify slot fallback ownership
+base_sha: e972bcc4bd554af5748e9b8e8e53f8760ebd8d46
+merge_sha: 324aacc2b7b5b2317b8c0a27b73a8024317a9db3
+merged_at: 2026-04-21T06:49:57Z
+exit_code: 0
+duration_seconds: 0

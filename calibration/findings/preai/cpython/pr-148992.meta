@@ -1,0 +1,9 @@
+repo: cpython
+github: python/cpython
+pr_number: 148992
+title: gh-148991: Add colour to `tokenize` CLI output
+base_sha: 5d416324c56cd6f262fa123f41b97b48631bea79
+merge_sha: 1e7dfbce930d6abd4e5453961c4f0fe4c6ade08e
+merged_at: 2026-04-26T19:14:33Z
+exit_code: 2
+duration_seconds: 3

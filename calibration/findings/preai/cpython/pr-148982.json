@@ -1,0 +1,117 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 15,
+        "baselineLines": 568,
+        "currentLines": 583,
+        "deleted": 0,
+        "file": "Lib/_colorize.py",
+        "netGrowth": 15
+      },
+      {
+        "added": 38,
+        "baselineLines": 694,
+        "currentLines": 716,
+        "deleted": 16,
+        "file": "Lib/ast.py",
+        "netGrowth": 22
+      }
+    ],
+    "totalAdded": 53,
+    "totalDeleted": 16
+  },
+  "changedFilesCount": 6,
+  "changedFilesSample": [
+    "Doc/library/ast.rst",
+    "Doc/whatsnew/3.15.rst",
+    "Lib/_colorize.py",
+    "Lib/ast.py",
+    "Lib/test/test_ast/test_ast.py",
+    "Misc/NEWS.d/next/Library/2026-04-25-12-50-46.gh-issue-148981.YMM4Y9.rst"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "cpython/_wt_pr148982",
+  "reuseFindings": [],
+  "sourceFilesCount": 2,
+  "version": "3.0.0",
+  "warnings": []
+}

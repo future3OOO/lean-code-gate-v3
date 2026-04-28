@@ -1,0 +1,9 @@
+repo: vue3
+github: vuejs/core
+pr_number: 14755
+title: fix(runtime-vapor): hydrate transition-group tag v-for anchors
+base_sha: 5920e7716f628662235b7d0b430dadc3ddc20b35
+merge_sha: d3a584dfabfb13e280bd44627c3e37f4e3270817
+merged_at: 2026-04-27T06:06:21Z
+exit_code: 0
+duration_seconds: 0

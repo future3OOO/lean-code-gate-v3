@@ -1,0 +1,9 @@
+repo: cpython
+github: python/cpython
+pr_number: 149032
+title: gh-47798: Refactor the POSIX subprocess.Popen._communicate selector loop into helpers
+base_sha: 1e7dfbce930d6abd4e5453961c4f0fe4c6ade08e
+merge_sha: 2754e9a615de298b0c3a97e0bfd65a7506ebf657
+merged_at: 2026-04-27T00:40:20Z
+exit_code: 2
+duration_seconds: 4

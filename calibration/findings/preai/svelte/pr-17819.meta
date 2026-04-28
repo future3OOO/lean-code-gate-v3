@@ -1,0 +1,9 @@
+repo: svelte
+github: sveltejs/svelte
+pr_number: 17819
+title: fix: preserve each items that are needed by pending batches
+base_sha: d4c78292ed66c7117b28a0babdd3e589ec5b5497
+merge_sha: 7717ba01b42625f2022b7034063a25d8507560d7
+merged_at: 2026-03-02T20:46:22Z
+exit_code: 2
+duration_seconds: 0

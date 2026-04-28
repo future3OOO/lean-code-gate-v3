@@ -1,0 +1,114 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 15,
+        "baselineLines": 79,
+        "currentLines": 91,
+        "deleted": 3,
+        "file": "Modules/expat/refresh.sh",
+        "netGrowth": 12
+      }
+    ],
+    "totalAdded": 15,
+    "totalDeleted": 3
+  },
+  "changedFilesCount": 11,
+  "changedFilesSample": [
+    "Misc/NEWS.d/next/Security/2026-04-26-17-49-58.gh-issue-149017.EiVFPo.rst",
+    "Misc/sbom.spdx.json",
+    "Modules/expat/expat.h",
+    "Modules/expat/expat_config.h",
+    "Modules/expat/expat_external.h",
+    "Modules/expat/internal.h",
+    "Modules/expat/refresh.sh",
+    "Modules/expat/xmlparse.c",
+    "Modules/expat/xmlrole.c",
+    "Modules/expat/xmltok.c",
+    "Modules/expat/xmltok_ns.c"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "cpython/_wt_pr149020",
+  "reuseFindings": [],
+  "sourceFilesCount": 1,
+  "version": "3.0.0",
+  "warnings": []
+}

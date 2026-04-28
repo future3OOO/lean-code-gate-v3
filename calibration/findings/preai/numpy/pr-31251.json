@@ -1,0 +1,108 @@
+{
+  "bloat": {
+    "files": [],
+    "totalAdded": 0,
+    "totalDeleted": 0
+  },
+  "changedFilesCount": 14,
+  "changedFilesSample": [
+    "numpy/_core/src/multiarray/convert_datatype.c",
+    "numpy/_core/src/multiarray/ctors.c",
+    "numpy/_core/src/multiarray/descriptor.c",
+    "numpy/_core/src/multiarray/dtype_transfer.c",
+    "numpy/_core/src/multiarray/dtypemeta.c",
+    "numpy/_core/src/multiarray/iterators.c",
+    "numpy/_core/src/multiarray/nditer_api.c",
+    "numpy/_core/src/multiarray/nditer_constr.c",
+    "numpy/_core/src/multiarray/stringdtype/dtype.c",
+    "numpy/_core/src/multiarray/stringdtype/static_string.c",
+    "numpy/_core/src/multiarray/textreading/field_types.c",
+    "numpy/_core/src/umath/stringdtype_ufuncs.cpp",
+    "numpy/_core/src/umath/ufunc_object.c",
+    "numpy/_core/src/umath/wrapping_array_method.c"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "numpy/_wt_pr31251",
+  "reuseFindings": [],
+  "sourceFilesCount": 0,
+  "version": "3.0.0",
+  "warnings": []
+}

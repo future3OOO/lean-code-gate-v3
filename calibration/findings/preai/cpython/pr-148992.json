@@ -1,0 +1,143 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 12,
+        "baselineLines": 583,
+        "currentLines": 595,
+        "deleted": 0,
+        "file": "Lib/_colorize.py",
+        "netGrowth": 12
+      },
+      {
+        "added": 54,
+        "baselineLines": 598,
+        "currentLines": 644,
+        "deleted": 8,
+        "file": "Lib/tokenize.py",
+        "netGrowth": 46
+      }
+    ],
+    "totalAdded": 66,
+    "totalDeleted": 8
+  },
+  "changedFilesCount": 6,
+  "changedFilesSample": [
+    "Doc/library/tokenize.rst",
+    "Doc/whatsnew/3.15.rst",
+    "Lib/_colorize.py",
+    "Lib/test/test_tokenize.py",
+    "Lib/tokenize.py",
+    "Misc/NEWS.d/next/Library/2026-04-25-18-09-16.gh-issue-148991.AZ64Et.rst"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": false,
+      "sample": [
+        {
+          "existingFile": "Lib/gettext.py",
+          "existingLine": 71,
+          "existingSymbol": "_tokenize",
+          "newFile": "Lib/_colorize.py",
+          "newLine": 390,
+          "newSymbol": "Tokenize",
+          "reason": "same name tokens",
+          "score": 100,
+          "severity": "error"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "new code appears to reimplement existing helpers or loops: 1"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "cpython/_wt_pr148992",
+  "reuseFindings": [
+    {
+      "existingFile": "Lib/gettext.py",
+      "existingLine": 71,
+      "existingSymbol": "_tokenize",
+      "newFile": "Lib/_colorize.py",
+      "newLine": 390,
+      "newSymbol": "Tokenize",
+      "reason": "same name tokens",
+      "score": 100,
+      "severity": "error"
+    }
+  ],
+  "sourceFilesCount": 2,
+  "version": "3.0.0",
+  "warnings": []
+}

@@ -1,0 +1,168 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 15,
+        "baselineLines": 981,
+        "currentLines": 954,
+        "deleted": 42,
+        "file": "packages/svelte/src/compiler/phases/2-analyze/visitors/shared/a11y/index.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 8,
+        "baselineLines": 167,
+        "currentLines": 175,
+        "deleted": 0,
+        "file": "packages/svelte/src/compiler/state.js",
+        "netGrowth": 8
+      },
+      {
+        "added": 3,
+        "baselineLines": 107,
+        "currentLines": 106,
+        "deleted": 4,
+        "file": "packages/svelte/src/compiler/utils/compile_diagnostic.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 13,
+        "baselineLines": 500,
+        "currentLines": 509,
+        "deleted": 4,
+        "file": "packages/svelte/src/internal/client/dev/debug.js",
+        "netGrowth": 9
+      },
+      {
+        "added": 51,
+        "baselineLines": 723,
+        "currentLines": 761,
+        "deleted": 13,
+        "file": "packages/svelte/src/internal/client/dom/blocks/each.js",
+        "netGrowth": 38
+      },
+      {
+        "added": 5,
+        "baselineLines": 1066,
+        "currentLines": 1071,
+        "deleted": 0,
+        "file": "packages/svelte/src/internal/client/reactivity/batch.js",
+        "netGrowth": 5
+      },
+      {
+        "added": 3,
+        "baselineLines": 203,
+        "currentLines": 206,
+        "deleted": 0,
+        "file": "packages/svelte/src/internal/client/types.d.ts",
+        "netGrowth": 3
+      }
+    ],
+    "totalAdded": 98,
+    "totalDeleted": 63
+  },
+  "changedFilesCount": 11,
+  "changedFilesSample": [
+    ".changeset/calm-clouds-wave.md",
+    ".changeset/spicy-teeth-tan.md",
+    "packages/svelte/src/compiler/phases/2-analyze/visitors/shared/a11y/index.js",
+    "packages/svelte/src/compiler/state.js",
+    "packages/svelte/src/compiler/utils/compile_diagnostic.js",
+    "packages/svelte/src/internal/client/dev/debug.js",
+    "packages/svelte/src/internal/client/dom/blocks/each.js",
+    "packages/svelte/src/internal/client/reactivity/batch.js",
+    "packages/svelte/src/internal/client/types.d.ts",
+    "packages/svelte/tests/runtime-runes/samples/async-each-preserve-pending/_config.js",
+    "packages/svelte/tests/runtime-runes/samples/async-each-preserve-pending/main.svelte"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "packages/svelte/src/internal/client/dom/blocks/each.js:211",
+        "packages/svelte/src/internal/client/reactivity/batch.js:82",
+        "packages/svelte/src/internal/client/types.d.ts:89"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 3 changed location(s)"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": false,
+  "repo": "svelte/_wt_pr17819",
+  "reuseFindings": [],
+  "sourceFilesCount": 7,
+  "version": "3.0.0",
+  "warnings": []
+}
