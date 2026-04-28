@@ -1000,8 +1000,16 @@ def is_excluded_path(path: str) -> bool:
     lowered = f"/{norm_path(path).lower()}"
     if any(marker in lowered for marker in ("/.codex/quality/logs/", "/.agent/lean/", "/logs/")):
         return True
-    normalized = norm_path(path)
-    return any(fnmatch.fnmatch(normalized, glob) for glob in _active_excluded_globs)
+    if not _active_excluded_globs:
+        return False
+    normalized = norm_path(path).lower()
+    # fnmatch treats ** as a single * (no multi-segment semantics). To match
+    # globs like "**/migrations/**" against first-component paths like
+    # "migrations/0001.py", check both the bare path and a /-prefixed variant.
+    candidates = (normalized, "/" + normalized)
+    return any(
+        fnmatch.fnmatch(c, glob.lower()) for glob in _active_excluded_globs for c in candidates
+    )
 
 
 def is_test_like_path(path: str) -> bool:
@@ -1473,11 +1481,15 @@ def changed_file_failures(repo: Path, changed_files: set[str]) -> tuple[list[str
     return conflict_files, temp_files
 
 
-def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -> dict[str, object]:
-    active_policy = policy(repo)
+def apply_active_policy(active_policy: dict[str, object]) -> None:
     global _active_excluded_globs
     raw = active_policy.get("excluded_path_globs")
     _active_excluded_globs = tuple(g for g in raw if isinstance(g, str)) if isinstance(raw, list) else ()
+
+
+def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -> dict[str, object]:
+    active_policy = policy(repo)
+    apply_active_policy(active_policy)
     ctx = collect_scope(repo, base_ref)
     changed_files = set(ctx.changed_files)
     errors: list[str] = []
@@ -1843,6 +1855,7 @@ def pretool(payload: dict[str, object]) -> None:
         return
     current_contract = contract(root)
     active_policy = policy(root)
+    apply_active_policy(active_policy)
     errors = contract_errors(current_contract, active_policy)
     if errors:
         deny("PreToolUse", "Lean Code Gate blocked mutation before contract:\n- " + "\n- ".join(errors))

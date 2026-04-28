@@ -479,6 +479,19 @@ def test_excluded_path_globs_skip_generated_sdk_files() -> None:
         assert all("clients/client-test/src/commands/BigCmd.ts" not in error for error in data["errors"])
 
 
+def test_excluded_path_globs_match_first_component_path() -> None:
+    # Regression: fnmatch treats ** as a single *, so "**/migrations/**" must
+    # also match a path whose FIRST component is the excluded directory
+    # (e.g. "migrations/0001_initial.py"), not just nested cases.
+    with repo_fixture() as repo:
+        (repo / "migrations").mkdir()
+        big = "\n".join(f"OP_{i} = None" for i in range(900))
+        (repo / "migrations" / "0001_initial.py").write_text(big + "\n", encoding="utf-8")
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert all("migrations/0001_initial.py" not in error for error in data["errors"])
+
+
 def test_excluded_path_globs_can_be_overridden_to_empty() -> None:
     with repo_fixture() as repo:
         (repo / ".agent" / "lean" / "policy.json").write_text(
@@ -526,6 +539,7 @@ TESTS = [
     test_large_existing_file_small_growth_warns_but_does_not_fail_by_default,
     test_large_existing_file_big_growth_fails,
     test_excluded_path_globs_skip_generated_sdk_files,
+    test_excluded_path_globs_match_first_component_path,
     test_excluded_path_globs_can_be_overridden_to_empty,
     test_gate_check_creates_no_repo_artifacts,
 ]
