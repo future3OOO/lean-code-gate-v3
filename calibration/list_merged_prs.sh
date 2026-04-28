@@ -40,6 +40,10 @@ case "$KEY" in
   lodash) GH="lodash/lodash" ;;
   eslint) GH="eslint/eslint" ;;
   svelte) GH="sveltejs/svelte" ;;
+  # 2019-2020 TypeScript-heavy projects (pre-Copilot dominant codebase)
+  vue3) GH="vuejs/core" ;;
+  vite) GH="vitejs/vite" ;;
+  ts-eslint) GH="typescript-eslint/typescript-eslint" ;;
   *) echo "unknown repo key $KEY" >&2; exit 2 ;;
 esac
 

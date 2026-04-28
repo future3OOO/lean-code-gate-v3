@@ -34,9 +34,11 @@ I queried `repos/<gh>/pulls?state=closed&per_page=30` for each candidate and cou
 | `rust-lang/cargo` | Rust | 2014 | 28 | ✅ qualified |
 | `prometheus/prometheus` | Go | 2012 | 24 | ✅ qualified |
 
-## Final pre-AI benchmark set (11 repos, 4 languages)
+## Final pre-AI benchmark set (14 repos, 4 languages)
 
-User feedback: JS/TS was missing — that's what most web devs work in. Added 5 mature JS/TS repos.
+User feedback (round 1): JS/TS was missing — that's what most web devs work in. Added 5 mature JS/TS repos.
+
+User feedback (round 2): "Born 2020 is okay. There was hardly any AI code then." Re-included three 2019–2020 projects I had originally excluded as "borderline AI-era." Reasoning: Copilot launched June 2021 and ChatGPT was November 2022; a project born in 2020 had ~3 years of dominantly human authoring before AI assistance became a meaningful contributor, so the bulk of the surviving conventions are still human-shaped.
 
 ### Backend / systems / data (6)
 
@@ -49,7 +51,9 @@ User feedback: JS/TS was missing — that's what most web devs work in. Added 5 
 | `cargo` | `rust-lang/cargo` | Rust | 2014 | Rust's package manager; rust-lang core team review. |
 | `prometheus` | `prometheus/prometheus` | Go | 2012 | Mature Go monitoring infrastructure. |
 
-### Web / JS+TS (5)
+### Web / JS+TS (8)
+
+Older JS / mixed:
 
 | Key | Repo | Lang | Born | Why |
 |---|---|---|---|---|
@@ -59,16 +63,22 @@ User feedback: JS/TS was missing — that's what most web devs work in. Added 5 
 | `eslint` | `eslint/eslint` | JS | 2013 | Linter for the language; review-heavy contributor culture. |
 | `svelte` | `sveltejs/svelte` | TS+JS | 2016 | Compiler-and-framework core predates Copilot; uses TypeScript. |
 
+TypeScript-heavy 2019–2020 (added per user round 2 feedback):
+
+| Key | Repo | Lang | Born | Why |
+|---|---|---|---|---|
+| `vue3` | `vuejs/core` | TS | 2020 | Vue 3 reactivity + compiler core; ~3 years of human-only authoring before Copilot/ChatGPT. |
+| `vite` | `vitejs/vite` | TS | 2020 | Modern build tool; pre-Copilot core, active ESM-era TypeScript. |
+| `ts-eslint` | `typescript-eslint/typescript-eslint` | TS | 2019 | TypeScript linter; review-heavy by design (its job is enforcing TS rules). |
+
 ### Audited as not-suitable
 
 | Repo | Reason |
 |---|---|
 | `golang/go` | Uses Gerrit, not GitHub PRs |
 | `vuejs/vue` (Vue 2) | LTS only; 0 merged PRs in last 30 closed |
-| `vuejs/core` (Vue 3) | Born 2020 — too AI-era |
-| `vitejs/vite` | Born 2020 — borderline AI-era |
 
-`list_merged_prs.sh` has all 11 aliased.
+`list_merged_prs.sh` has all 14 aliased.
 
 ## What this benchmark will show
 
