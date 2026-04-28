@@ -35,5 +35,30 @@
   "quality_max_index_symbols": 25000,
   "reuse_detector_mode": "conservative",
   "reuse_error_score": 90,
-  "reuse_warning_score": 45
+  "reuse_warning_score": 45,
+  "excluded_path_globs": [
+    "**/migrations/**",
+    "**/generated/**",
+    "**/__generated__/**",
+    "**/_generated/**",
+    "**/*.pb.go",
+    "**/*.pb.cc",
+    "**/*.pb.h",
+    "**/*.pb.py",
+    "**/*_pb2.py",
+    "**/*_pb2_grpc.py",
+    "**/*.generated.*",
+    "**/dist-cjs/**",
+    "**/dist-es/**",
+    "**/dist-types/**",
+    "clients/*/src/commands/**",
+    "clients/*/src/models/**",
+    "clients/*/src/schemas/**",
+    "clients/*/src/protocols/**",
+    "clients/*/src/waiters/**",
+    "**/admin/static/admin/**",
+    "**/static/admin/**",
+    "docs_src/**",
+    "**/python_version.py"
+  ]
 }
