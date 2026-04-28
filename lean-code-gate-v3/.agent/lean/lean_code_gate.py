@@ -1448,6 +1448,11 @@ def high_confidence_reuse(new_item: SymbolDef, existing_item: SymbolDef) -> bool
     # Defer to the calibrated suppression in same_behavior_name: when R-2
     # (framework_override_names) or R-3 (private/public siblings) returns 0,
     # the pair should not be promoted to high-confidence reuse either.
+    # In the production call path (score_reuse_candidates →
+    # best_existing_match), pairs with same_behavior_name == 0 are already
+    # filtered by the `if base_score <= 0: continue` guard, so this check
+    # is unreachable from there. Kept as defense-in-depth and to enforce
+    # the function's contract for direct callers (unit tests, future code).
     if same_behavior_name(new_item, existing_item)[0] == 0:
         return False
     if new_item.name == existing_item.name and new_item.name.lower() not in GENERIC_SYMBOLS:
