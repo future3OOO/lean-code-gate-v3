@@ -197,6 +197,10 @@ HIDDEN_WRITE_RE = re.compile(
 DESIGN_RE = [
     (re.compile(r"\bclass\s+\w*(Factory|Builder|Manager|Registry|Strategy|Adapter|Provider)\b"), "pattern-named class"),
     (re.compile(r"\bfunc\s+(?:\([^)]*\)\s*)?New\w*(Factory|Builder|Manager|Registry|Strategy|Adapter|Provider)\b"), "pattern-named factory function"),
+    # Rust pattern intentionally broader than Python/JS (State/Context/Scope
+    # added). Rust's type-alias system is commonly used for abstraction
+    # layering (e.g., pub type ParserState, pub type RequestContext) in ways
+    # the Python/JS class pattern isn't. Asymmetry is calibrated, not a bug.
     (re.compile(r"\bpub\s+type\s+\w*(State|Manager|Strategy|Adapter|Provider|Factory|Builder|Registry|Context|Scope)\b"), "rust type-alias abstraction"),
     (re.compile(r"\b(Abstract[A-Z]\w*|Base[A-Z]\w*)\b"), "abstract/base type"),
     (re.compile(r"\b(Protocol|ABC|abc\.ABC|TypeVar|Generic\[)\b"), "generic typing abstraction"),
