@@ -211,21 +211,27 @@ class CalibrationFindings(unittest.TestCase):
         # Cite: django pr-21152 (UniqueConstraint adjustment). v3 fires
         # no-duplicate-added-blocks at N=2. Reviewers shipped the PR.
         # Pins current behavior; will need to flip when R-4 (min count = 3) lands.
+        # Fixture mirrors v3's test_quality_check_detects_duplicate_added_blocks:
+        # two distinct functions in one file with identical body lines.
         with repo_fixture() as repo:
-            block = (
-                "def helper():\n"
-                "    blank_choice = []\n"
-                "    if blank_choice is None:\n"
-                "        blank_choice = [(\"\", \"---\")]\n"
-                "    return blank_choice\n"
+            duplicate = (
+                "def parse_user(value: str) -> str:\n"
+                "    raw = value.strip()\n"
+                "    normalized = raw.lower()\n"
+                "    return normalized.replace(\" \", \"-\")\n"
+                "\n"
+                "def parse_group(value: str) -> str:\n"
+                "    raw = value.strip()\n"
+                "    normalized = raw.lower()\n"
+                "    return normalized.replace(\" \", \"-\")\n"
             )
-            (repo / "src" / "a.py").write_text(block, encoding="utf-8")
-            (repo / "src" / "b.py").write_text(block.replace("def helper", "def helper2"), encoding="utf-8")
+            (repo / "src" / "duplicate.py").write_text(duplicate, encoding="utf-8")
             code, data = check_json(repo)
-            # Current v3 behavior: at least one duplicate-added-blocks check appears
-            # in the result. R-4 will demote N=2 hits below the error threshold; a
-            # follow-up will flip this to assert the calibrated suppression.
-            self.assertIn("no-duplicate-added-blocks", {c["name"] for c in data["checks"]})
+            # Pin v3 behavior: the no-duplicate-added-blocks check FAILS at N=2.
+            # R-4 (reuse_min_duplicate_count=3) will flip this when it ships.
+            dup_check = next(c for c in data["checks"] if c["name"] == "no-duplicate-added-blocks")
+            self.assertEqual(code, 2, data)
+            self.assertFalse(dup_check["passed"], data)
 
 
 if __name__ == "__main__":
