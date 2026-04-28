@@ -1,0 +1,313 @@
+{
+  "totals": {
+    "prs_analyzed": 42,
+    "prs_with_cleanup": 5,
+    "cleanup_commits_total": 6,
+    "cleanup_pct": 11.9
+  },
+  "by_repo": {
+    "aws-sdk-js": [
+      {
+        "pr": 7957,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 7958,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 7964,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 7965,
+        "total_commits": 2,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 7968,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      }
+    ],
+    "django": [
+      {
+        "pr": 21136,
+        "total_commits": 3,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 21150,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 21152,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 21177,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 21178,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      }
+    ],
+    "fastapi": [
+      {
+        "pr": 15165,
+        "total_commits": 5,
+        "cleanup_count": 1,
+        "cleanup_commits": [
+          {
+            "sha": "9cf6205c",
+            "msg": "\ud83c\udfa8 Auto format",
+            "author": "github-actions[bot]"
+          }
+        ]
+      },
+      {
+        "pr": 15172,
+        "total_commits": 6,
+        "cleanup_count": 1,
+        "cleanup_commits": [
+          {
+            "sha": "383f2c66",
+            "msg": "\ud83c\udfa8 Auto format",
+            "author": "github-actions[bot]"
+          }
+        ]
+      },
+      {
+        "pr": 15274,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 15280,
+        "total_commits": 2,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 15316,
+        "total_commits": 31,
+        "cleanup_count": 1,
+        "cleanup_commits": [
+          {
+            "sha": "0e1f26b2",
+            "msg": "Revert \"Introduce issue to test zizmor\"",
+            "author": "YuriiMotov"
+          }
+        ]
+      },
+      {
+        "pr": 15436,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 15439,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      }
+    ],
+    "grpc": [
+      {
+        "pr": 42124,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 42144,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 42159,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 42215,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 42221,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      }
+    ],
+    "nextjs": [
+      {
+        "pr": 93235,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 93236,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 93241,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 93245,
+        "total_commits": 4,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 93285,
+        "total_commits": 3,
+        "cleanup_count": 2,
+        "cleanup_commits": [
+          {
+            "sha": "f5ebf3b7",
+            "msg": "check tag existence before cleanup",
+            "author": "ztanner"
+          },
+          {
+            "sha": "b7bcd9c7",
+            "msg": "tweaks from PR feedback",
+            "author": "ztanner"
+          }
+        ]
+      }
+    ],
+    "pydantic": [
+      {
+        "pr": 13081,
+        "total_commits": 2,
+        "cleanup_count": 1,
+        "cleanup_commits": [
+          {
+            "sha": "f20a472e",
+            "msg": "tidy up accessor type aliases",
+            "author": "davidhewitt"
+          }
+        ]
+      },
+      {
+        "pr": 13084,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 13096,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 13098,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 13108,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      }
+    ],
+    "sentry": [
+      {
+        "pr": 114077,
+        "total_commits": 2,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 114084,
+        "total_commits": 3,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 114088,
+        "total_commits": 5,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 114097,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 114099,
+        "total_commits": 6,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      }
+    ],
+    "typescript": [
+      {
+        "pr": 63366,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 63368,
+        "total_commits": 2,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 63372,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 63401,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      },
+      {
+        "pr": 63407,
+        "total_commits": 1,
+        "cleanup_count": 0,
+        "cleanup_commits": []
+      }
+    ]
+  }
+}
