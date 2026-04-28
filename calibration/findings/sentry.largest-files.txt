@@ -1,0 +1,50 @@
+  304676 total
+  294924 total
+  290975 total
+ 211953 total
+ 201406 total
+ 194743 total
+ 184258 total
+ 183897 total
+ 179632 total
+ 177202 total
+ 175800 total
+ 163441 total
+ 156151 total
+ 142977 total
+ 100424 total
+  24569 /home/prop_/projects/lean code/calibration/repos/sentry/src/sentry/api/helpers/android_models.py
+   9102 /home/prop_/projects/lean code/calibration/repos/sentry/src/sentry/migrations/0001_squashed_0904_onboarding_task_project_id_idx.py
+    7446 /home/prop_/projects/lean code/calibration/repos/sentry/tests/snuba/api/endpoints/test_organization_events.py
+    7318 /home/prop_/projects/lean code/calibration/repos/sentry/tests/snuba/api/endpoints/test_organization_events_span_indexed.py
+   6214 /home/prop_/projects/lean code/calibration/repos/sentry/static/app/components/searchQueryBuilder/index.spec.tsx
+    5177 /home/prop_/projects/lean code/calibration/repos/sentry/tests/js/getsentry-test/fixtures/am2Plans.ts
+    5043 /home/prop_/projects/lean code/calibration/repos/sentry/tests/sentry/dashboards/endpoints/test_organization_dashboard_details.py
+   4954 /home/prop_/projects/lean code/calibration/repos/sentry/src/sentry/static/sentry/vendor/jquery.2.2.4.min.js
+    4524 /home/prop_/projects/lean code/calibration/repos/sentry/tests/sentry/issues/endpoints/test_organization_group_index.py
+    4501 /home/prop_/projects/lean code/calibration/repos/sentry/tests/sentry/event_manager/test_event_manager.py
+    4441 /home/prop_/projects/lean code/calibration/repos/sentry/tests/sentry/tasks/test_post_process.py
+   4267 /home/prop_/projects/lean code/calibration/repos/sentry/src/sentry/testutils/cases.py
+   4159 /home/prop_/projects/lean code/calibration/repos/sentry/src/sentry/options/defaults.py
+    4138 /home/prop_/projects/lean code/calibration/repos/sentry/tests/snuba/search/test_backend.py
+    4112 /home/prop_/projects/lean code/calibration/repos/sentry/tests/snuba/api/endpoints/test_organization_events_mep.py
+    3977 /home/prop_/projects/lean code/calibration/repos/sentry/tests/snuba/api/endpoints/test_organization_events_stats.py
+   3909 /home/prop_/projects/lean code/calibration/repos/sentry/src/sentry/api/urls.py
+   3896 /home/prop_/projects/lean code/calibration/repos/sentry/static/app/utils/discover/eventView.spec.tsx
+   3813 /home/prop_/projects/lean code/calibration/repos/sentry/static/gsAdmin/views/customerDetails.spec.tsx
+    3715 /home/prop_/projects/lean code/calibration/repos/sentry/tests/sentry/incidents/test_logic.py
+    3703 /home/prop_/projects/lean code/calibration/repos/sentry/tests/sentry/seer/explorer/test_tools.py
+   3688 /home/prop_/projects/lean code/calibration/repos/sentry/static/app/utils/fields/index.ts
+    3655 /home/prop_/projects/lean code/calibration/repos/sentry/tests/sentry/search/events/builder/test_metrics.py
+   3597 /home/prop_/projects/lean code/calibration/repos/sentry/fixtures/github.py
+    3526 /home/prop_/projects/lean code/calibration/repos/sentry/tests/js/getsentry-test/fixtures/am3Plans.ts
+    3453 /home/prop_/projects/lean code/calibration/repos/sentry/tests/sentry/snuba/test_discover_query.py
+   3340 /home/prop_/projects/lean code/calibration/repos/sentry/src/sentry/conf/server.py
+   3312 /home/prop_/projects/lean code/calibration/repos/sentry/static/app/utils/theme/scraps/tokens/color.tsx
+    3169 /home/prop_/projects/lean code/calibration/repos/sentry/tests/sentry/snuba/test_transactions.py
+    3132 /home/prop_/projects/lean code/calibration/repos/sentry/tests/sentry/api/endpoints/test_organization_releases.py
+   3021 /home/prop_/projects/lean code/calibration/repos/sentry/static/app/router/routes.tsx
+   2961 /home/prop_/projects/lean code/calibration/repos/sentry/static/app/views/performance/newTraceDetails/traceModels/traceTree.spec.tsx
+    2869 /home/prop_/projects/lean code/calibration/repos/sentry/tests/sentry/incidents/endpoints/test_organization_alert_rule_details.py
+   2867 /home/prop_/projects/lean code/calibration/repos/sentry/src/sentry/testutils/factories.py
+    2828 /home/prop_/projects/lean code/calibration/repos/sentry/tests/sentry/relocation/tasks/test_process.py

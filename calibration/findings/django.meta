@@ -1,0 +1,8 @@
+repo: django
+url: https://github.com/django/django.git
+exit_code: 2
+duration_seconds: 23
+clone_depth: 50
+actual_depth: 50
+base_ref: HEAD~49
+gate_version: 3.0.0

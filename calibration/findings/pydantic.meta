@@ -1,0 +1,8 @@
+repo: pydantic
+url: https://github.com/pydantic/pydantic.git
+exit_code: 2
+duration_seconds: 2
+clone_depth: 50
+actual_depth: 50
+base_ref: HEAD~49
+gate_version: 3.0.0
