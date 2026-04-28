@@ -1140,6 +1140,15 @@ def multiline_added_hits(added_by_file: dict[str, list[tuple[int, str]]]) -> lis
 
 
 def duplicate_added_blocks(ctx: GateContext) -> list[dict[str, object]]:
+    return _duplicate_added_blocks_at_count(ctx, _active_min_duplicate_count)
+
+
+def duplicate_added_blocks_all(ctx: GateContext) -> list[dict[str, object]]:
+    """All raw duplicate windows (count>=2), no threshold filter. For telemetry."""
+    return _duplicate_added_blocks_at_count(ctx, 2)
+
+
+def _duplicate_added_blocks_at_count(ctx: GateContext, min_count: int) -> list[dict[str, object]]:
     windows: dict[str, dict[str, object]] = {}
     added_by_file = ctx.added_lines_with_untracked(production_only=True)
     for rel_path, lines in added_by_file.items():
@@ -1159,7 +1168,7 @@ def duplicate_added_blocks(ctx: GateContext) -> list[dict[str, object]]:
         [
             {"count": item["count"], "files": sorted(item["files"]), "sample": item["sample"]}
             for item in windows.values()
-            if int(item["count"]) >= _active_min_duplicate_count and isinstance(item["files"], set)
+            if int(item["count"]) >= min_count and isinstance(item["files"], set)
         ]
     )
 
@@ -1560,6 +1569,7 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     conflict_files, temp_files = changed_file_failures(repo, changed_files)
     quality_escapes = scan_quality_escapes(ctx)
     duplicates = duplicate_added_blocks(ctx)
+    duplicates_all = duplicate_added_blocks_all(ctx)
     bloat_errors, bloat_warnings, bloat_details = evaluate_bloat(ctx, active_policy)
     reuse_findings = detect_reuse_issues(ctx, active_policy)
     reuse_errors = [finding for finding in reuse_findings if finding.severity == "error"]
@@ -1595,6 +1605,8 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
         "warnings": warnings,
         "bloat": bloat_details,
         "reuseFindings": [finding.as_dict() for finding in reuse_findings],
+        "qualityEscapeLocations": list(quality_escapes),
+        "duplicateBlockCandidates": [{"count": int(d["count"]), "files": list(d["files"])} for d in duplicates_all],
     }
 
 
