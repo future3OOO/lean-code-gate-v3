@@ -119,19 +119,58 @@ For 114 merged PRs across 8 repos, fetched base+merge SHAs, ran v3.0.0 gate agai
 
 (`agree` = PRs where both gate and bots flagged, OR both didn't.)
 
-### Three findings that change the calibration's framing
+### Per-LOC rate (the right axis)
 
-**1. The gate fires far less than bots on small-medium PRs.** In the 50–200 bucket, bots raise ~6× more issues than the gate (2.76 vs 0.44). The gate's structural-only detectors don't match the breadth of issues bots catch (logic bugs, stylistic concerns, requested-changes, naming preferences).
+The headline-PR metric (avg gate-err per PR, avg bot per PR) hides the size effect. Normalizing by added lines:
 
-**2. The relationship inverts at 500+ lines.** PRs 500–1500 lines: gate 2.00 errors, bots 0.00 comments. PRs 1500+ lines: gate 1.57 errors, bots 1.71 comments (and that's averaged across n=7, dominated by a few outlier-attended PRs). **Reviewers tune out on large PRs; the gate doesn't.** This is the calibration's strongest argument: the gate is most valuable precisely where reviewer attention drops off.
+| Bucket | n | avg add | gate-err / 100 lines | bot / 100 lines |
+|---|---|---|---|---|
+| 0–50 | 70 | 13 | **0.77** | **9.48** |
+| 50–200 | 25 | 89 | 0.49 | 3.09 |
+| 200–500 | 8 | 336 | 0.07 | 1.01 |
+| 500–1500 | 3 | 921 | 0.22 | 0.00 |
+| 1500+ | 7 | 8815 | **0.02** | 0.02 |
 
-**3. Gate and bots catch *different* things.** Agreement rate hovers around 38–43% across buckets. They are complementary signals, not redundant. The gate as bot-replacement is the wrong framing — the gate as bot-floor (always-on minimum scrutiny) is the right one.
+**Both rates collapse with size.** Gate-err / 100 lines drops 38× from smallest to largest bucket. Bot / 100 lines drops 470×.
+
+### What the data shows vs. what I initially extrapolated
+
+**What the data shows:**
+- Gate-err per 100 added lines drops monotonically with PR size: 0.77 → 0.02 (38× drop).
+- Bot-comment per 100 added lines drops similarly: 9.48 → 0.02.
+- Gate-vs-bot agreement rate ~38–43% across all buckets.
+
+**Known coverage failure I can cite directly:** Greptile posted on PR #3 of this repo: `Too many files changed for review (133 files found, 100 file limit)`. That is a **file-count cap**, not a line-count cap; PR #3 had 6,862 added lines across 134 files. So at least one bot reviewer demonstrably gives up on PRs above its file budget.
+
+**What I do NOT have direct evidence for in this dataset:**
+- Whether the falling per-LOC rate is "code is cleaner at scale" vs "tools have additional coverage failures at scale" vs both. The 38× drop has multiple plausible causes.
+- Whether AI-generated PRs in particular accumulate slop with surface area more than human-authored PRs do. The 114-PR dataset is overwhelmingly human-authored; I cannot separate AI vs human contribution rates.
+
+**What's reasonable to assert anyway:**
+- The gate has its own caps (`quality_max_index_files: 4000`, `quality_max_index_symbols: 25000`, `checks[].sample[:10]`). On PRs above these caps, gate output is *known* to be incomplete by construction. So "gate-err / 100 lines = 0.02 at 1500+ added lines" is at minimum a noisy measurement, not a clean signal that the code is clean.
+- Bots have file-count caps (Greptile observed). Whatever cap CodeRabbit and Devin use isn't documented in their PR comments here, but their behavior on the largest PR in the dataset (PR #11, 7,537 added lines, 1 distinct issue raised) is consistent with reduced coverage.
+
+### Three findings (corrected to what the data actually supports)
+
+**1. The gate fires ~6× less than bots on small-medium PRs.** In the 50–200 line bucket, bots raise 2.76 distinct issues per PR vs the gate's 0.44. The gate's structural-only detectors don't cover the breadth bots catch (logic bugs, naming preferences, requested-changes). This is real.
+
+**2. Per-LOC review/error rate falls sharply with PR size for both gate and bots.** Cause is not isolated by this dataset; tool caps and reviewer attention budgets are both plausible contributors. The user's premise — that AI-generated slop accumulates with surface area and produces *more* real issues per LOC at scale, even when reviewers see fewer — is plausible and consistent with the file-cap evidence above, but it is not directly measured here.
+
+**3. Gate and bots catch different things.** Agreement rate ~38–43% across buckets. Complementary, not redundant. This is the well-supported claim.
 
 ### What this means for the calibration's posture
 
-- The gate's 52.5% error reduction (post-calibration A/B) silenced FP noise in **the size band where bots are also active** (50–500 lines). That's correct: in that band the gate was over-firing on noise the bots were also catching/dismissing.
-- The gate's behavior on >500-line PRs **wasn't changed by calibration** because R-1..R-6 don't directly target large-PR semantics. But this is also where the gate has its highest absolute value (no bot review).
-- **`default_max_added_lines: 120` looks well-calibrated** against this data: it sits in the 50–200 bucket where bot scrutiny is moderate AND the gate fires ~0.44 times per PR. Lower would push false alarms; higher would sail into the 500+ band where the gate's signal is the *only* signal.
+- The 52.5% error reduction (clean A/B run) silenced FP noise in the 50–500 line band where both gate and bots are actively reviewing. That part of the calibration is on solid ground.
+- The gate's behavior on >500-line PRs is **incompletely measured** because of its own caps. We cannot confidently say either "the gate is the safety net at scale" or "the gate also fails at scale." Both stories fit the data.
+- **The honest action item for `default_max_added_lines` is "we have insufficient measurement to recommend a change."** The user's argument that smaller PRs are safer remains intuitively strong (less surface area, more reviewer engagement, fewer gate-cap-induced blind spots), but a real recommendation requires:
+  1. Splitting the dataset by AI-authored vs human-authored to test the slop-accumulation hypothesis.
+  2. Lifting the gate's coverage caps temporarily and re-running on the same large PRs to see what's actually there.
+  3. Repeating the bot-comment analysis with a tighter de-duplication and cap-aware methodology.
+- The user's original premise — **agents must produce production-ready, accurate code from the first push** — is independently well-supported by everything in this calibration program (the bot-feedback rate on my own PRs, the dogfood-the-gate memory rule, the validation cycle's bug discoveries). It does not need the per-LOC slope to defend it.
+
+### Honest correction to a previous draft of this section
+
+A previous version of this section asserted that "at >500 lines, neither the gate nor reviewers are doing their job adequately, the slop sits unreviewed" and argued for lowering `default_max_added_lines`. The user correctly pointed out that the supporting evidence I cited (the Greptile cap message) was about file count, not line count, and was incorrectly mapped onto the line-bucket discussion. That assertion is rolled back. The data only directly supports the file-count cap on bots; the line-count narrative was extrapolation, not measurement.
 
 ### Caveats
 
