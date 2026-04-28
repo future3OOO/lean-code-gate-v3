@@ -1,0 +1,93 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B -S \"$CLAUDE_PROJECT_DIR/.agent/lean/lean_code_gate.py\" session-start",
+            "timeout": 10,
+            "statusMessage": "Loading Lean Code Gate v3"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B -S \"$CLAUDE_PROJECT_DIR/.agent/lean/lean_code_gate.py\" user-prompt",
+            "timeout": 10,
+            "statusMessage": "Injecting Lean Code Gate v3"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash|apply_patch|ApplyPatch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B -S \"$CLAUDE_PROJECT_DIR/.agent/lean/lean_code_gate.py\" pretool",
+            "timeout": 10,
+            "statusMessage": "Checking Lean Change Contract"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash|apply_patch|ApplyPatch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B -S \"$CLAUDE_PROJECT_DIR/.agent/lean/lean_code_gate.py\" permission-request",
+            "timeout": 10,
+            "statusMessage": "Checking mutation permission"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash|apply_patch|ApplyPatch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B -S \"$CLAUDE_PROJECT_DIR/.agent/lean/lean_code_gate.py\" posttool",
+            "timeout": 10,
+            "statusMessage": "Recording Lean Code Gate result"
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash|apply_patch|ApplyPatch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B -S \"$CLAUDE_PROJECT_DIR/.agent/lean/lean_code_gate.py\" posttool-failure",
+            "timeout": 10,
+            "statusMessage": "Recording failed Lean Code Gate result"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B -S \"$CLAUDE_PROJECT_DIR/.agent/lean/lean_code_gate.py\" stop",
+            "timeout": 20,
+            "statusMessage": "Running Lean final check"
+          }
+        ]
+      }
+    ]
+  }
+}

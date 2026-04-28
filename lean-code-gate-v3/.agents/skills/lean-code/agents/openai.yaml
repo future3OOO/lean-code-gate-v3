@@ -1,0 +1,4 @@
+interface:
+  display_name: Lean Code Gate
+  short_description: Minimal production-code contract and quality gate.
+  default_prompt: Use this skill before code mutation. Declare a Lean Change Contract, keep the diff surgical, verify, then allow the quality gate to pass.
