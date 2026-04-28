@@ -1,0 +1,8 @@
+repo: aws-sdk-js
+url: https://github.com/aws/aws-sdk-js-v3.git
+exit_code: 2
+duration_seconds: 9
+clone_depth: 50
+actual_depth: 50
+base_ref: HEAD~49
+gate_version: 3.0.0
