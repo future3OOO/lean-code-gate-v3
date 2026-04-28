@@ -469,6 +469,29 @@ def test_large_existing_file_big_growth_fails() -> None:
         assert data["hardRules"]["codeVolume"]["passed"] is False
 
 
+def test_excluded_path_globs_skip_generated_sdk_files() -> None:
+    with repo_fixture() as repo:
+        (repo / "clients" / "client-test" / "src" / "commands").mkdir(parents=True)
+        big = "\n".join(f"export const CMD_{i} = {{}};" for i in range(900))
+        (repo / "clients" / "client-test" / "src" / "commands" / "BigCmd.ts").write_text(big + "\n", encoding="utf-8")
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert all("clients/client-test/src/commands/BigCmd.ts" not in error for error in data["errors"])
+
+
+def test_excluded_path_globs_can_be_overridden_to_empty() -> None:
+    with repo_fixture() as repo:
+        (repo / ".agent" / "lean" / "policy.json").write_text(
+            json.dumps({"excluded_path_globs": []}), encoding="utf-8"
+        )
+        (repo / "clients" / "client-test" / "src" / "commands").mkdir(parents=True)
+        big = "\n".join(f"export const CMD_{i} = {{}};" for i in range(900))
+        (repo / "clients" / "client-test" / "src" / "commands" / "BigCmd.ts").write_text(big + "\n", encoding="utf-8")
+        code, data = check_json(repo)
+        assert code == 2, data
+        assert any("clients/client-test/src/commands/BigCmd.ts" in error for error in data["errors"])
+
+
 def test_gate_check_creates_no_repo_artifacts() -> None:
     with repo_fixture() as repo:
         before = snapshot_paths(repo)
@@ -502,6 +525,8 @@ TESTS = [
     test_reuse_detector_ignores_same_name_across_languages,
     test_large_existing_file_small_growth_warns_but_does_not_fail_by_default,
     test_large_existing_file_big_growth_fails,
+    test_excluded_path_globs_skip_generated_sdk_files,
+    test_excluded_path_globs_can_be_overridden_to_empty,
     test_gate_check_creates_no_repo_artifacts,
 ]
 

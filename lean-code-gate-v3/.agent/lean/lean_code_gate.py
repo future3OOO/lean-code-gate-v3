@@ -64,6 +64,31 @@ DEFAULT_POLICY: dict[str, object] = {
     "reuse_detector_mode": "conservative",
     "reuse_error_score": 90,
     "reuse_warning_score": 45,
+    "excluded_path_globs": [
+        "**/migrations/**",
+        "**/generated/**",
+        "**/__generated__/**",
+        "**/_generated/**",
+        "**/*.pb.go",
+        "**/*.pb.cc",
+        "**/*.pb.h",
+        "**/*.pb.py",
+        "**/*_pb2.py",
+        "**/*_pb2_grpc.py",
+        "**/*.generated.*",
+        "**/dist-cjs/**",
+        "**/dist-es/**",
+        "**/dist-types/**",
+        "clients/*/src/commands/**",
+        "clients/*/src/models/**",
+        "clients/*/src/schemas/**",
+        "clients/*/src/protocols/**",
+        "clients/*/src/waiters/**",
+        "**/admin/static/admin/**",
+        "**/static/admin/**",
+        "docs_src/**",
+        "**/python_version.py",
+    ],
 }
 
 MUTATING_TOOLS = {"Edit", "MultiEdit", "Write", "NotebookEdit", "apply_patch", "ApplyPatch"}
@@ -965,12 +990,18 @@ def is_binary_path(path: str) -> bool:
     return Path(path).suffix.lower() in BINARY_EXTENSIONS
 
 
+_active_excluded_globs: tuple[str, ...] = ()
+
+
 def is_excluded_path(path: str) -> bool:
     parts = [part.lower() for part in norm_path(path).split("/") if part]
     if any(part in EXCLUDE_DIRS for part in parts):
         return True
     lowered = f"/{norm_path(path).lower()}"
-    return any(marker in lowered for marker in ("/.codex/quality/logs/", "/.agent/lean/", "/logs/"))
+    if any(marker in lowered for marker in ("/.codex/quality/logs/", "/.agent/lean/", "/logs/")):
+        return True
+    normalized = norm_path(path)
+    return any(fnmatch.fnmatch(normalized, glob) for glob in _active_excluded_globs)
 
 
 def is_test_like_path(path: str) -> bool:
@@ -1444,6 +1475,9 @@ def changed_file_failures(repo: Path, changed_files: set[str]) -> tuple[list[str
 
 def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -> dict[str, object]:
     active_policy = policy(repo)
+    global _active_excluded_globs
+    raw = active_policy.get("excluded_path_globs")
+    _active_excluded_globs = tuple(g for g in raw if isinstance(g, str)) if isinstance(raw, list) else ()
     ctx = collect_scope(repo, base_ref)
     changed_files = set(ctx.changed_files)
     errors: list[str] = []
