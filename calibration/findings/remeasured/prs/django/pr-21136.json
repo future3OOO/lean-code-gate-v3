@@ -1,0 +1,141 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 106,
+        "baselineLines": 283,
+        "currentLines": 333,
+        "deleted": 56,
+        "file": "django/contrib/gis/static/gis/js/OLMapWidget.js",
+        "netGrowth": 50
+      },
+      {
+        "added": 32,
+        "baselineLines": 577,
+        "currentLines": 596,
+        "deleted": 13,
+        "file": "django/core/serializers/xml_serializer.py",
+        "netGrowth": 19
+      }
+    ],
+    "totalAdded": 138,
+    "totalDeleted": 69
+  },
+  "changedFilesCount": 40,
+  "changedFilesSample": [
+    ".pre-commit-config.yaml",
+    "biome.json",
+    "django/contrib/admin/static/admin/js/SelectBox.js",
+    "django/contrib/admin/static/admin/js/SelectFilter2.js",
+    "django/contrib/admin/static/admin/js/actions.js",
+    "django/contrib/admin/static/admin/js/admin/DateTimeShortcuts.js",
+    "django/contrib/admin/static/admin/js/admin/RelatedObjectLookups.js",
+    "django/contrib/admin/static/admin/js/autocomplete.js",
+    "django/contrib/admin/static/admin/js/calendar.js",
+    "django/contrib/admin/static/admin/js/cancel.js",
+    "django/contrib/admin/static/admin/js/change_form.js",
+    "django/contrib/admin/static/admin/js/core.js",
+    "django/contrib/admin/static/admin/js/filters.js",
+    "django/contrib/admin/static/admin/js/inlines.js",
+    "django/contrib/admin/static/admin/js/jquery.init.js",
+    "django/contrib/admin/static/admin/js/nav_sidebar.js",
+    "django/contrib/admin/static/admin/js/popup_response.js",
+    "django/contrib/admin/static/admin/js/prepopulate.js",
+    "django/contrib/admin/static/admin/js/prepopulate_init.js",
+    "django/contrib/admin/static/admin/js/theme.js",
+    "django/contrib/admin/static/admin/js/urlify.js",
+    "django/contrib/gis/static/gis/js/OLMapWidget.js",
+    "django/core/serializers/xml_serializer.py",
+    "docs/internals/contributing/writing-code/javascript.txt",
+    "docs/spelling_wordlist",
+    "eslint-recommended.js",
+    "eslint.config.mjs",
+    "globals.js",
+    "js_tests/admin/DateTimeShortcuts.test.js",
+    "js_tests/admin/RelatedObjectLookups.test.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "django/_wt_pr21136",
+  "reuseFindings": [],
+  "sourceFilesCount": 5,
+  "version": "3.0.0",
+  "warnings": []
+}

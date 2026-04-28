@@ -15,8 +15,8 @@ import re
 import sys
 from pathlib import Path
 
-PRS_DIR = Path(__file__).parent / "findings" / "prs"
-WT_RE = re.compile(r"_wt_(?P<key>[\w-]+)_pr(?P<pr>\d+)$")
+FINDINGS_DIR = Path(__file__).parent / "findings"
+WT_RE = re.compile(r"_wt_(?P<key>[\w-]+)_pr(?P<pr>\d+)(?:_\d+)?$")
 
 
 def sanitize_one(path: Path) -> bool:
@@ -25,14 +25,12 @@ def sanitize_one(path: Path) -> bool:
     if not isinstance(repo, str) or not repo.startswith("/"):
         return False
     m = WT_RE.search(repo)
-    if not m:
-        # Fallback: derive from path.parts
-        parts = path.parts
-        repo_key = parts[-2] if len(parts) >= 2 else "unknown"
-        pr_num = path.stem.replace("pr-", "")
-        replacement = f"{repo_key}/_wt_pr{pr_num}"
-    else:
+    if m:
         replacement = f"{m.group('key')}/_wt_pr{m.group('pr')}"
+    elif path.stem.startswith("pr-"):
+        replacement = f"{path.parts[-2]}/_wt_pr{path.stem[3:]}"
+    else:
+        replacement = f"{path.stem}/_50commit_window"
     data["repo"] = replacement
     path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return True
@@ -41,7 +39,10 @@ def sanitize_one(path: Path) -> bool:
 def main() -> int:
     changed = 0
     total = 0
-    for path in sorted(PRS_DIR.rglob("pr-*.json")):
+    for path in sorted(FINDINGS_DIR.rglob("*.json")):
+        # Skip the cleanup_commits.json analysis aggregate (no `repo` field)
+        if path.name == "cleanup_commits.json":
+            continue
         total += 1
         if sanitize_one(path):
             changed += 1

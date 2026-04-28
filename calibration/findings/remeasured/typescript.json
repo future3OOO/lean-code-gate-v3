@@ -1,0 +1,187 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 3,
+        "baselineLines": 3913,
+        "currentLines": 3916,
+        "deleted": 0,
+        "file": "src/compiler/binder.ts",
+        "netGrowth": 3
+      },
+      {
+        "added": 6,
+        "baselineLines": 415,
+        "currentLines": 416,
+        "deleted": 5,
+        "file": "src/jsTyping/jsTyping.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 1,
+        "baselineLines": 579,
+        "currentLines": 579,
+        "deleted": 1,
+        "file": "src/lib/es2015.core.d.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 4583,
+        "currentLines": 4583,
+        "deleted": 2,
+        "file": "src/lib/es5.d.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 20,
+        "baselineLines": 59,
+        "currentLines": 79,
+        "deleted": 0,
+        "file": "src/testRunner/unittests/tsserver/codeFix.ts",
+        "netGrowth": 20
+      },
+      {
+        "added": 12,
+        "baselineLines": 2741,
+        "currentLines": 2742,
+        "deleted": 11,
+        "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 16,
+        "baselineLines": 546,
+        "currentLines": 562,
+        "deleted": 0,
+        "file": "src/typingsInstallerCore/typingsInstaller.ts",
+        "netGrowth": 16
+      }
+    ],
+    "totalAdded": 60,
+    "totalDeleted": 19
+  },
+  "changedFilesCount": 47,
+  "changedFilesSample": [
+    "CLAUDE.md",
+    "CONTRIBUTING.md",
+    "src/compiler/binder.ts",
+    "src/compiler/diagnosticMessages.json",
+    "src/jsTyping/jsTyping.ts",
+    "src/lib/es2015.core.d.ts",
+    "src/lib/es5.d.ts",
+    "src/testRunner/unittests/tsserver/codeFix.ts",
+    "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+    "src/typingsInstallerCore/typingsInstaller.ts",
+    "tests/baselines/reference/ambientWithStatements(alwaysstrict=true).errors.txt",
+    "tests/baselines/reference/classPropertyInferenceFromBroaderTypeConst.js",
+    "tests/baselines/reference/classPropertyInferenceFromBroaderTypeConst.symbols",
+    "tests/baselines/reference/classPropertyInferenceFromBroaderTypeConst.types",
+    "tests/baselines/reference/completionsStringMethods.baseline",
+    "tests/baselines/reference/constDeclarations-invalidContexts(alwaysstrict=true).errors.txt",
+    "tests/baselines/reference/constDeclarations-scopes(alwaysstrict=true).errors.txt",
+    "tests/baselines/reference/constDeclarations-validContexts(alwaysstrict=true).errors.txt",
+    "tests/baselines/reference/invalidDoWhileBreakStatements.errors.txt",
+    "tests/baselines/reference/invalidDoWhileContinueStatements.errors.txt",
+    "tests/baselines/reference/invalidForBreakStatements.errors.txt",
+    "tests/baselines/reference/invalidForContinueStatements.errors.txt",
+    "tests/baselines/reference/invalidForInBreakStatements.errors.txt",
+    "tests/baselines/reference/invalidForInContinueStatements.errors.txt",
+    "tests/baselines/reference/invalidWhileBreakStatements.errors.txt",
+    "tests/baselines/reference/invalidWhileContinueStatements.errors.txt",
+    "tests/baselines/reference/jsFileCompilationBindReachabilityErrors(alwaysstrict=true).errors.txt",
+    "tests/baselines/reference/labeledStatementDeclarationListInLoopNoCrash1(target=es2015).errors.txt",
+    "tests/baselines/reference/labeledStatementDeclarationListInLoopNoCrash2(target=es2015).errors.txt",
+    "tests/baselines/reference/labeledStatementDeclarationListInLoopNoCrash3(target=es2015).errors.txt"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file src/compiler/binder.ts grew by 3 lines",
+        "large source file src/testRunner/unittests/tsserver/typingsInstaller.ts grew by 1 lines"
+      ]
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "typescript/_50commit_window",
+  "reuseFindings": [],
+  "sourceFilesCount": 7,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file src/compiler/binder.ts grew by 3 lines",
+    "large source file src/testRunner/unittests/tsserver/typingsInstaller.ts grew by 1 lines"
+  ]
+}

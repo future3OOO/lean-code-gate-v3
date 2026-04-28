@@ -1,0 +1,115 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 0,
+        "baselineLines": 31,
+        "currentLines": 29,
+        "deleted": 2,
+        "file": "packages-internal/xml-builder/src/xml-parser.ts",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 0,
+    "totalDeleted": 2
+  },
+  "changedFilesCount": 12,
+  "changedFilesSample": [
+    "clients/client-transcribe-streaming/package.json",
+    "clients/client-transcribe-streaming/test/TranscribeStreaming.e2e.spec.ts",
+    "clients/client-transcribe-streaming/test/index.e2e.spec.ts",
+    "packages-internal/xml-builder/package.json",
+    "packages-internal/xml-builder/src/xml-parser.spec.ts",
+    "packages-internal/xml-builder/src/xml-parser.ts",
+    "private/aws-protocoltests-restxml-schema/package.json",
+    "private/aws-protocoltests-restxml-schema/test/functional/restxml.spec.ts",
+    "private/aws-protocoltests-restxml/package.json",
+    "private/aws-protocoltests-restxml/test/functional/restxml.spec.ts",
+    "tests/canary/canary-runner.js",
+    "yarn.lock"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "aws-sdk-js/_wt_pr7957",
+  "reuseFindings": [],
+  "sourceFilesCount": 1,
+  "version": "3.0.0",
+  "warnings": []
+}

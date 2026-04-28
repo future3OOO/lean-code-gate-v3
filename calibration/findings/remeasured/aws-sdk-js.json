@@ -1,0 +1,145 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 465,
+        "baselineLines": null,
+        "currentLines": 465,
+        "deleted": 0,
+        "file": "packages-internal/xml-builder/src/xml-external/nodable_entities.ts",
+        "netGrowth": 465
+      },
+      {
+        "added": 1,
+        "baselineLines": 74,
+        "currentLines": 70,
+        "deleted": 5,
+        "file": "packages-internal/xml-builder/src/xml-parser.ts",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 466,
+    "totalDeleted": 5
+  },
+  "changedFilesCount": 990,
+  "changedFilesSample": [
+    "CHANGELOG.md",
+    "benchmark/size/report-bundlers.md",
+    "clients/client-accessanalyzer/CHANGELOG.md",
+    "clients/client-accessanalyzer/package.json",
+    "clients/client-account/CHANGELOG.md",
+    "clients/client-account/package.json",
+    "clients/client-acm-pca/CHANGELOG.md",
+    "clients/client-acm-pca/package.json",
+    "clients/client-acm/CHANGELOG.md",
+    "clients/client-acm/package.json",
+    "clients/client-aiops/CHANGELOG.md",
+    "clients/client-aiops/package.json",
+    "clients/client-amp/CHANGELOG.md",
+    "clients/client-amp/package.json",
+    "clients/client-amplify/CHANGELOG.md",
+    "clients/client-amplify/package.json",
+    "clients/client-amplifybackend/CHANGELOG.md",
+    "clients/client-amplifybackend/package.json",
+    "clients/client-amplifyuibuilder/CHANGELOG.md",
+    "clients/client-amplifyuibuilder/package.json",
+    "clients/client-api-gateway/CHANGELOG.md",
+    "clients/client-api-gateway/package.json",
+    "clients/client-apigatewaymanagementapi/CHANGELOG.md",
+    "clients/client-apigatewaymanagementapi/package.json",
+    "clients/client-apigatewayv2/CHANGELOG.md",
+    "clients/client-apigatewayv2/package.json",
+    "clients/client-app-mesh/CHANGELOG.md",
+    "clients/client-app-mesh/package.json",
+    "clients/client-appconfig/CHANGELOG.md",
+    "clients/client-appconfig/package.json"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "packages-internal/xml-builder/src/xml-external/nodable_entities.ts:277"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 1 changed location(s)"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": false,
+  "repo": "aws-sdk-js/_50commit_window",
+  "reuseFindings": [],
+  "sourceFilesCount": 2,
+  "version": "3.0.0",
+  "warnings": []
+}

@@ -1,0 +1,575 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 4,
+        "baselineLines": 620,
+        "currentLines": 621,
+        "deleted": 3,
+        "file": "clients/client-acm-pca/src/ACMPCA.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 459,
+        "currentLines": 460,
+        "deleted": 1,
+        "file": "clients/client-acm/src/ACM.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 8,
+        "baselineLines": 1167,
+        "currentLines": 1169,
+        "deleted": 6,
+        "file": "clients/client-amp/src/Amp.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 3,
+        "baselineLines": 1345,
+        "currentLines": 1346,
+        "deleted": 2,
+        "file": "clients/client-appconfig/src/AppConfig.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 3,
+        "baselineLines": 2178,
+        "currentLines": 2179,
+        "deleted": 2,
+        "file": "clients/client-appstream/src/AppStream.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 3,
+        "baselineLines": 632,
+        "currentLines": 633,
+        "deleted": 2,
+        "file": "clients/client-arc-region-switch/src/ARCRegionSwitch.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 4,
+        "baselineLines": 1770,
+        "currentLines": 1771,
+        "deleted": 3,
+        "file": "clients/client-auto-scaling/src/AutoScaling.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 785,
+        "currentLines": 786,
+        "deleted": 1,
+        "file": "clients/client-b2bi/src/B2bi.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 8,
+        "baselineLines": 2748,
+        "currentLines": 2750,
+        "deleted": 6,
+        "file": "clients/client-bedrock-agentcore-control/src/BedrockAgentCoreControl.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 2,
+        "baselineLines": 251,
+        "currentLines": 252,
+        "deleted": 1,
+        "file": "clients/client-cloudcontrol/src/CloudControl.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 11,
+        "baselineLines": 2564,
+        "currentLines": 2565,
+        "deleted": 10,
+        "file": "clients/client-cloudformation/src/CloudFormation.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 5,
+        "baselineLines": 4173,
+        "currentLines": 4174,
+        "deleted": 4,
+        "file": "clients/client-cloudfront/src/CloudFront.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 4,
+        "baselineLines": 1276,
+        "currentLines": 1277,
+        "deleted": 3,
+        "file": "clients/client-cloudwatch/src/CloudWatch.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 1301,
+        "currentLines": 1302,
+        "deleted": 1,
+        "file": "clients/client-codedeploy/src/CodeDeploy.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 3,
+        "baselineLines": 440,
+        "currentLines": 441,
+        "deleted": 2,
+        "file": "clients/client-codeguru-reviewer/src/CodeGuruReviewer.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 10,
+        "baselineLines": 3467,
+        "currentLines": 3469,
+        "deleted": 8,
+        "file": "clients/client-database-migration-service/src/DatabaseMigrationService.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 12,
+        "baselineLines": 3297,
+        "currentLines": 3299,
+        "deleted": 10,
+        "file": "clients/client-deadline/src/Deadline.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 2,
+        "baselineLines": 2089,
+        "currentLines": 2090,
+        "deleted": 1,
+        "file": "clients/client-directory-service/src/DirectoryService.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 4,
+        "baselineLines": 1500,
+        "currentLines": 1502,
+        "deleted": 2,
+        "file": "clients/client-docdb/src/DocDB.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 4,
+        "baselineLines": 342,
+        "currentLines": 344,
+        "deleted": 2,
+        "file": "clients/client-dsql/src/DSQL.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 8,
+        "baselineLines": 1496,
+        "currentLines": 1498,
+        "deleted": 6,
+        "file": "clients/client-dynamodb/src/DynamoDB.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 44,
+        "baselineLines": 20569,
+        "currentLines": 20570,
+        "deleted": 43,
+        "file": "clients/client-ec2/src/EC2.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 3,
+        "baselineLines": 1492,
+        "currentLines": 1493,
+        "deleted": 2,
+        "file": "clients/client-ecr/src/ECR.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 10,
+        "baselineLines": 2000,
+        "currentLines": 2001,
+        "deleted": 9,
+        "file": "clients/client-ecs/src/ECS.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 10,
+        "baselineLines": 1804,
+        "currentLines": 1806,
+        "deleted": 8,
+        "file": "clients/client-eks/src/EKS.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 4,
+        "baselineLines": 1234,
+        "currentLines": 1235,
+        "deleted": 3,
+        "file": "clients/client-elastic-beanstalk/src/ElasticBeanstalk.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 7,
+        "baselineLines": 1408,
+        "currentLines": 1410,
+        "deleted": 5,
+        "file": "clients/client-elastic-load-balancing-v2/src/ElasticLoadBalancingV2.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 5,
+        "baselineLines": 763,
+        "currentLines": 765,
+        "deleted": 3,
+        "file": "clients/client-elastic-load-balancing/src/ElasticLoadBalancing.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 6,
+        "baselineLines": 2074,
+        "currentLines": 2076,
+        "deleted": 4,
+        "file": "clients/client-elasticache/src/ElastiCache.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 3,
+        "baselineLines": 275,
+        "currentLines": 277,
+        "deleted": 1,
+        "file": "clients/client-elementalinference/src/ElementalInference.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 4,
+        "baselineLines": 1603,
+        "currentLines": 1604,
+        "deleted": 3,
+        "file": "clients/client-emr/src/EMR.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 7,
+        "baselineLines": 694,
+        "currentLines": 696,
+        "deleted": 5,
+        "file": "clients/client-gameliftstreams/src/GameLiftStreams.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 4,
+        "baselineLines": 891,
+        "currentLines": 893,
+        "deleted": 2,
+        "file": "clients/client-glacier/src/Glacier.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 3,
+        "baselineLines": 1102,
+        "currentLines": 1103,
+        "deleted": 2,
+        "file": "clients/client-groundstation/src/GroundStation.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 5,
+        "baselineLines": 416,
+        "currentLines": 417,
+        "deleted": 4,
+        "file": "clients/client-healthlake/src/HealthLake.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 5,
+        "baselineLines": 4561,
+        "currentLines": 4562,
+        "deleted": 4,
+        "file": "clients/client-iam/src/IAM.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 3,
+        "baselineLines": 391,
+        "currentLines": 392,
+        "deleted": 2,
+        "file": "clients/client-interconnect/src/Interconnect.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 8,
+        "baselineLines": 2888,
+        "currentLines": 2890,
+        "deleted": 6,
+        "file": "clients/client-iotsitewise/src/IoTSiteWise.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 4,
+        "baselineLines": 982,
+        "currentLines": 984,
+        "deleted": 2,
+        "file": "clients/client-kinesis/src/Kinesis.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 7,
+        "baselineLines": 2254,
+        "currentLines": 2255,
+        "deleted": 6,
+        "file": "clients/client-lambda/src/Lambda.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 9,
+        "baselineLines": 2960,
+        "currentLines": 2961,
+        "deleted": 8,
+        "file": "clients/client-lex-models-v2/src/LexModelsV2.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 1622,
+        "currentLines": 1623,
+        "deleted": 1,
+        "file": "clients/client-location/src/Location.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 5,
+        "baselineLines": 768,
+        "currentLines": 769,
+        "deleted": 4,
+        "file": "clients/client-machine-learning/src/MachineLearning.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 2154,
+        "currentLines": 2155,
+        "deleted": 1,
+        "file": "clients/client-macie2/src/Macie2.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 13,
+        "baselineLines": 2173,
+        "currentLines": 2175,
+        "deleted": 11,
+        "file": "clients/client-mediaconnect/src/MediaConnect.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 23,
+        "baselineLines": 3439,
+        "currentLines": 3440,
+        "deleted": 22,
+        "file": "clients/client-medialive/src/MediaLive.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 782,
+        "currentLines": 783,
+        "deleted": 1,
+        "file": "clients/client-mediapackagev2/src/MediaPackageV2.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 13,
+        "baselineLines": 998,
+        "currentLines": 1000,
+        "deleted": 11,
+        "file": "clients/client-neptune-graph/src/NeptuneGraph.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 4,
+        "baselineLines": 1899,
+        "currentLines": 1901,
+        "deleted": 2,
+        "file": "clients/client-neptune/src/Neptune.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 20,
+        "baselineLines": 3009,
+        "currentLines": 3011,
+        "deleted": 18,
+        "file": "clients/client-omics/src/Omics.ts",
+        "netGrowth": 2
+      }
+    ],
+    "totalAdded": 500,
+    "totalDeleted": 352
+  },
+  "changedFilesCount": 880,
+  "changedFilesSample": [
+    "clients/client-accessanalyzer/package.json",
+    "clients/client-account/package.json",
+    "clients/client-acm-pca/package.json",
+    "clients/client-acm-pca/src/ACMPCA.ts",
+    "clients/client-acm-pca/src/waiters/waitForAuditReportCreated.ts",
+    "clients/client-acm-pca/src/waiters/waitForCertificateAuthorityCSRCreated.ts",
+    "clients/client-acm-pca/src/waiters/waitForCertificateIssued.ts",
+    "clients/client-acm/package.json",
+    "clients/client-acm/src/ACM.ts",
+    "clients/client-acm/src/waiters/waitForCertificateValidated.ts",
+    "clients/client-aiops/package.json",
+    "clients/client-amp/package.json",
+    "clients/client-amp/src/Amp.ts",
+    "clients/client-amp/src/waiters/waitForAnomalyDetectorActive.ts",
+    "clients/client-amp/src/waiters/waitForAnomalyDetectorDeleted.ts",
+    "clients/client-amp/src/waiters/waitForScraperActive.ts",
+    "clients/client-amp/src/waiters/waitForScraperDeleted.ts",
+    "clients/client-amp/src/waiters/waitForWorkspaceActive.ts",
+    "clients/client-amp/src/waiters/waitForWorkspaceDeleted.ts",
+    "clients/client-amplify/package.json",
+    "clients/client-amplifybackend/package.json",
+    "clients/client-amplifyuibuilder/package.json",
+    "clients/client-api-gateway/package.json",
+    "clients/client-apigatewaymanagementapi/package.json",
+    "clients/client-apigatewayv2/package.json",
+    "clients/client-app-mesh/package.json",
+    "clients/client-appconfig/package.json",
+    "clients/client-appconfig/src/AppConfig.ts",
+    "clients/client-appconfig/src/waiters/waitForDeploymentComplete.ts",
+    "clients/client-appconfig/src/waiters/waitForEnvironmentReadyForDeployment.ts"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "packages-internal/xml-builder/src/xml-parser.ts:1",
+        "packages-internal/xml-builder/src/xml-parser.ts:6"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file clients/client-appstream/src/AppStream.ts grew by 1 lines",
+        "large source file clients/client-auto-scaling/src/AutoScaling.ts grew by 1 lines",
+        "large source file clients/client-bedrock-agentcore-control/src/BedrockAgentCoreControl.ts grew by 2 lines",
+        "large source file clients/client-cloudformation/src/CloudFormation.ts grew by 1 lines",
+        "large source file clients/client-cloudfront/src/CloudFront.ts grew by 1 lines",
+        "large source file clients/client-database-migration-service/src/DatabaseMigrationService.ts grew by 2 lines",
+        "large source file clients/client-deadline/src/Deadline.ts grew by 2 lines",
+        "large source file clients/client-directory-service/src/DirectoryService.ts grew by 1 lines",
+        "large source file clients/client-ec2/src/EC2.ts grew by 1 lines",
+        "large source file clients/client-ecs/src/ECS.ts grew by 1 lines"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 2 changed location(s)"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": false,
+  "repo": "aws-sdk-js/_wt_pr7965",
+  "reuseFindings": [],
+  "sourceFilesCount": 70,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file clients/client-appstream/src/AppStream.ts grew by 1 lines",
+    "large source file clients/client-auto-scaling/src/AutoScaling.ts grew by 1 lines",
+    "large source file clients/client-bedrock-agentcore-control/src/BedrockAgentCoreControl.ts grew by 2 lines",
+    "large source file clients/client-cloudformation/src/CloudFormation.ts grew by 1 lines",
+    "large source file clients/client-cloudfront/src/CloudFront.ts grew by 1 lines",
+    "large source file clients/client-database-migration-service/src/DatabaseMigrationService.ts grew by 2 lines",
+    "large source file clients/client-deadline/src/Deadline.ts grew by 2 lines",
+    "large source file clients/client-directory-service/src/DirectoryService.ts grew by 1 lines",
+    "large source file clients/client-ec2/src/EC2.ts grew by 1 lines",
+    "large source file clients/client-ecs/src/ECS.ts grew by 1 lines",
+    "large source file clients/client-eks/src/EKS.ts grew by 2 lines",
+    "large source file clients/client-elasticache/src/ElastiCache.ts grew by 2 lines",
+    "large source file clients/client-emr/src/EMR.ts grew by 1 lines",
+    "large source file clients/client-iam/src/IAM.ts grew by 1 lines",
+    "large source file clients/client-iotsitewise/src/IoTSiteWise.ts grew by 2 lines",
+    "large source file clients/client-lambda/src/Lambda.ts grew by 1 lines",
+    "large source file clients/client-lex-models-v2/src/LexModelsV2.ts grew by 1 lines",
+    "large source file clients/client-location/src/Location.ts grew by 1 lines",
+    "large source file clients/client-macie2/src/Macie2.ts grew by 1 lines",
+    "large source file clients/client-mediaconnect/src/MediaConnect.ts grew by 2 lines",
+    "large source file clients/client-medialive/src/MediaLive.ts grew by 1 lines",
+    "large source file clients/client-neptune/src/Neptune.ts grew by 2 lines",
+    "large source file clients/client-omics/src/Omics.ts grew by 2 lines",
+    "large source file clients/client-proton/src/Proton.ts grew by 2 lines",
+    "large source file clients/client-rds/src/RDS.ts grew by 7 lines",
+    "large source file clients/client-redshift/src/Redshift.ts grew by 2 lines",
+    "large source file clients/client-rekognition/src/Rekognition.ts grew by 1 lines",
+    "large source file clients/client-route-53/src/Route53.ts grew by 1 lines",
+    "large source file clients/client-s3/src/S3.ts grew by 2 lines",
+    "large source file clients/client-sagemaker/src/SageMaker.ts grew by 1 lines",
+    "large source file clients/client-ses/src/SES.ts grew by 1 lines",
+    "large source file clients/client-ssm/src/SSM.ts grew by 1 lines",
+    "large source file clients/client-transfer/src/Transfer.ts grew by 1 lines"
+  ]
+}

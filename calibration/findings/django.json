@@ -616,7 +616,7 @@
     }
   },
   "ok": false,
-  "repo": "/home/prop_/projects/lean code/calibration/repos/django",
+  "repo": "django/_50commit_window",
   "reuseFindings": [
     {
       "existingFile": "django/contrib/admin/options.py",

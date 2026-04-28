@@ -1,0 +1,146 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 18,
+        "baselineLines": 270,
+        "currentLines": 278,
+        "deleted": 10,
+        "file": "django/conf/__init__.py",
+        "netGrowth": 8
+      },
+      {
+        "added": 19,
+        "baselineLines": 393,
+        "currentLines": 412,
+        "deleted": 0,
+        "file": "django/contrib/auth/__init__.py",
+        "netGrowth": 19
+      },
+      {
+        "added": 20,
+        "baselineLines": 342,
+        "currentLines": 347,
+        "deleted": 15,
+        "file": "django/contrib/auth/backends.py",
+        "netGrowth": 5
+      },
+      {
+        "added": 2,
+        "baselineLines": 66,
+        "currentLines": 58,
+        "deleted": 10,
+        "file": "django/contrib/auth/handlers/modwsgi.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 79,
+        "baselineLines": 331,
+        "currentLines": 410,
+        "deleted": 0,
+        "file": "django/utils/deprecation.py",
+        "netGrowth": 79
+      }
+    ],
+    "totalAdded": 138,
+    "totalDeleted": 35
+  },
+  "changedFilesCount": 11,
+  "changedFilesSample": [
+    "django/conf/__init__.py",
+    "django/contrib/auth/__init__.py",
+    "django/contrib/auth/backends.py",
+    "django/contrib/auth/handlers/modwsgi.py",
+    "django/utils/deprecation.py",
+    "package.json",
+    "tests/auth_tests/models/custom_user.py",
+    "tests/auth_tests/test_auth_backends.py",
+    "tests/deprecation/internal.py",
+    "tests/deprecation/test_warn_about_external_use.py",
+    "tests/queries/tests.py"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "django/_50commit_window",
+  "reuseFindings": [],
+  "sourceFilesCount": 5,
+  "version": "3.0.0",
+  "warnings": []
+}

@@ -1,0 +1,115 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 45,
+        "baselineLines": 29,
+        "currentLines": 74,
+        "deleted": 0,
+        "file": "packages-internal/xml-builder/src/xml-parser.ts",
+        "netGrowth": 45
+      }
+    ],
+    "totalAdded": 45,
+    "totalDeleted": 0
+  },
+  "changedFilesCount": 7,
+  "changedFilesSample": [
+    "clients/client-s3/test/e2e/s3-object-features.e2e.spec.ts",
+    "packages-internal/xml-builder/package.json",
+    "packages-internal/xml-builder/src/xml-parser.spec.ts",
+    "packages-internal/xml-builder/src/xml-parser.ts",
+    "private/aws-protocoltests-restxml-schema/package.json",
+    "private/aws-protocoltests-restxml/package.json",
+    "yarn.lock"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "packages-internal/xml-builder/src/xml-parser.ts:1",
+        "packages-internal/xml-builder/src/xml-parser.ts:6"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 2 changed location(s)"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": false,
+  "repo": "aws-sdk-js/_wt_pr7964",
+  "reuseFindings": [],
+  "sourceFilesCount": 1,
+  "version": "3.0.0",
+  "warnings": []
+}

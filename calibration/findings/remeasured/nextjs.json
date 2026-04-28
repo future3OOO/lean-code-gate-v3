@@ -1,0 +1,361 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 1,
+        "baselineLines": 125,
+        "currentLines": 119,
+        "deleted": 7,
+        "file": "crates/next-core/src/next_client/transforms.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 263,
+        "currentLines": 257,
+        "deleted": 9,
+        "file": "crates/next-core/src/next_server/transforms.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 15,
+        "baselineLines": 55,
+        "currentLines": 59,
+        "deleted": 11,
+        "file": "crates/next-core/src/next_shared/transforms/next_debug_instant_stack.rs",
+        "netGrowth": 4
+      },
+      {
+        "added": 2,
+        "baselineLines": 112,
+        "currentLines": 113,
+        "deleted": 1,
+        "file": "crates/next-core/src/next_shared/transforms/next_strip_page_exports.rs",
+        "netGrowth": 1
+      },
+      {
+        "added": 3,
+        "baselineLines": 491,
+        "currentLines": 491,
+        "deleted": 3,
+        "file": "crates/next-custom-transforms/src/chain_transforms.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 38,
+        "baselineLines": 168,
+        "currentLines": 183,
+        "deleted": 23,
+        "file": "crates/next-custom-transforms/src/transforms/debug_instant_stack.rs",
+        "netGrowth": 15
+      },
+      {
+        "added": 351,
+        "baselineLines": 422,
+        "currentLines": 693,
+        "deleted": 80,
+        "file": "crates/next-error-code-swc-plugin/src/lib.rs",
+        "netGrowth": 271
+      },
+      {
+        "added": 8,
+        "baselineLines": 995,
+        "currentLines": 1003,
+        "deleted": 0,
+        "file": "packages/next/src/client/index.tsx",
+        "netGrowth": 8
+      },
+      {
+        "added": 9,
+        "baselineLines": 70,
+        "currentLines": 79,
+        "deleted": 0,
+        "file": "packages/next/src/server/dev/node-stack-frames.ts",
+        "netGrowth": 9
+      },
+      {
+        "added": 2,
+        "baselineLines": 1641,
+        "currentLines": 1643,
+        "deleted": 0,
+        "file": "packages/next/src/server/render.tsx",
+        "netGrowth": 2
+      },
+      {
+        "added": 1,
+        "baselineLines": 472,
+        "currentLines": 473,
+        "deleted": 0,
+        "file": "packages/next/src/shared/lib/utils.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 40,
+        "baselineLines": 118,
+        "currentLines": 158,
+        "deleted": 0,
+        "file": "packages/next/types/global.d.ts",
+        "netGrowth": 40
+      },
+      {
+        "added": 6,
+        "baselineLines": 232,
+        "currentLines": 236,
+        "deleted": 2,
+        "file": "scripts/check-backport-canary-release.js",
+        "netGrowth": 4
+      },
+      {
+        "added": 15,
+        "baselineLines": 130,
+        "currentLines": 132,
+        "deleted": 13,
+        "file": "scripts/create-release-branch.js",
+        "netGrowth": 2
+      },
+      {
+        "added": 6,
+        "baselineLines": 219,
+        "currentLines": 223,
+        "deleted": 2,
+        "file": "scripts/publish-release.js",
+        "netGrowth": 4
+      },
+      {
+        "added": 349,
+        "baselineLines": null,
+        "currentLines": 349,
+        "deleted": 0,
+        "file": "scripts/release-github-api.js",
+        "netGrowth": 349
+      },
+      {
+        "added": 74,
+        "baselineLines": null,
+        "currentLines": 74,
+        "deleted": 0,
+        "file": "scripts/release-github-auth.js",
+        "netGrowth": 74
+      },
+      {
+        "added": 48,
+        "baselineLines": 93,
+        "currentLines": 113,
+        "deleted": 28,
+        "file": "scripts/start-release.js",
+        "netGrowth": 20
+      },
+      {
+        "added": 53,
+        "baselineLines": 923,
+        "currentLines": 973,
+        "deleted": 3,
+        "file": "turbopack/crates/turbopack-ecmascript/src/references/import_meta_glob.rs",
+        "netGrowth": 50
+      },
+      {
+        "added": 64,
+        "baselineLines": null,
+        "currentLines": 64,
+        "deleted": 0,
+        "file": "turbopack/crates/turbopack-trace-server/src/lazy_sorted_vec.rs",
+        "netGrowth": 64
+      },
+      {
+        "added": 1,
+        "baselineLines": 413,
+        "currentLines": 414,
+        "deleted": 0,
+        "file": "turbopack/crates/turbopack-trace-server/src/lib.rs",
+        "netGrowth": 1
+      },
+      {
+        "added": 1,
+        "baselineLines": 48,
+        "currentLines": 49,
+        "deleted": 0,
+        "file": "turbopack/crates/turbopack-trace-server/src/main.rs",
+        "netGrowth": 1
+      },
+      {
+        "added": 57,
+        "baselineLines": 561,
+        "currentLines": 605,
+        "deleted": 13,
+        "file": "turbopack/crates/turbopack-trace-server/src/reader/turbopack.rs",
+        "netGrowth": 44
+      },
+      {
+        "added": 58,
+        "baselineLines": 182,
+        "currentLines": 235,
+        "deleted": 5,
+        "file": "turbopack/crates/turbopack-trace-server/src/span.rs",
+        "netGrowth": 53
+      },
+      {
+        "added": 65,
+        "baselineLines": 605,
+        "currentLines": 613,
+        "deleted": 57,
+        "file": "turbopack/crates/turbopack-trace-server/src/span_ref.rs",
+        "netGrowth": 8
+      },
+      {
+        "added": 26,
+        "baselineLines": 459,
+        "currentLines": 458,
+        "deleted": 27,
+        "file": "turbopack/crates/turbopack-trace-server/src/store.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 1300,
+        "currentLines": 1298,
+        "deleted": 3,
+        "file": "turbopack/crates/turbopack-trace-server/src/viewer.rs",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 1297,
+    "totalDeleted": 287
+  },
+  "changedFilesCount": 78,
+  "changedFilesSample": [
+    ".github/workflows/build_and_deploy.yml",
+    ".github/workflows/create_release_branch.yml",
+    ".github/workflows/sync_backport_canary_release.yml",
+    ".github/workflows/trigger_release.yml",
+    "Cargo.lock",
+    "crates/next-core/src/next_client/transforms.rs",
+    "crates/next-core/src/next_server/transforms.rs",
+    "crates/next-core/src/next_shared/transforms/next_debug_instant_stack.rs",
+    "crates/next-core/src/next_shared/transforms/next_strip_page_exports.rs",
+    "crates/next-custom-transforms/src/chain_transforms.rs",
+    "crates/next-custom-transforms/src/transforms/debug_instant_stack.rs",
+    "crates/next-custom-transforms/tests/fixture.rs",
+    "crates/next-error-code-swc-plugin/src/lib.rs",
+    "docs/01-app/02-guides/migrating/from-vite.mdx",
+    "docs/01-app/03-api-reference/08-turbopack.mdx",
+    "docs/02-pages/03-building-your-application/06-configuring/12-error-handling.mdx",
+    "lerna.json",
+    "packages/create-next-app/package.json",
+    "packages/eslint-config-next/package.json",
+    "packages/eslint-plugin-internal/package.json",
+    "packages/eslint-plugin-next/package.json",
+    "packages/font/package.json",
+    "packages/next-bundle-analyzer/package.json",
+    "packages/next-codemod/package.json",
+    "packages/next-env/package.json",
+    "packages/next-mdx/package.json",
+    "packages/next-playwright/package.json",
+    "packages/next-plugin-storybook/package.json",
+    "packages/next-polyfill-module/package.json",
+    "packages/next-polyfill-nomodule/package.json"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "packages/next/src/server/dev/node-stack-frames.ts:47"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 3,
+          "files": [
+            "crates/next-error-code-swc-plugin/src/lib.rs"
+          ],
+          "sample": "Object.defineProperty(this, \"__NEXT_ERROR_CODE\", { | value: \"E7\" | enumerable: false"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": false,
+      "warnings": [
+        "large source file packages/next/src/server/render.tsx grew by 2 lines",
+        "changed source diff is additive: added=1297 deleted=287"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 1 changed location(s)",
+    "duplicate added code blocks detected: 1",
+    "source file crates/next-error-code-swc-plugin/src/lib.rs grew by 271 lines without same-directory shrink"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": false
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "nextjs/_50commit_window",
+  "reuseFindings": [],
+  "sourceFilesCount": 27,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file packages/next/src/server/render.tsx grew by 2 lines",
+    "changed source diff is additive: added=1297 deleted=287"
+  ]
+}

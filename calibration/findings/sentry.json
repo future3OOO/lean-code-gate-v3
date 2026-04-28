@@ -599,7 +599,7 @@
     }
   },
   "ok": false,
-  "repo": "/home/prop_/projects/lean code/calibration/repos/sentry",
+  "repo": "sentry/_50commit_window",
   "reuseFindings": [
     {
       "existingFile": "src/sentry/sentry_apps/token_exchange/grant_exchanger.py",

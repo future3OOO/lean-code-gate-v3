@@ -583,7 +583,7 @@
     }
   },
   "ok": false,
-  "repo": "/home/prop_/projects/lean code/calibration/repos/pydantic",
+  "repo": "pydantic/_50commit_window",
   "reuseFindings": [
     {
       "existingFile": "pydantic-core/src/serializers/type_serializers/generator.rs",

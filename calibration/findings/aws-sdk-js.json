@@ -661,7 +661,7 @@
     }
   },
   "ok": false,
-  "repo": "/home/prop_/projects/lean code/calibration/repos/aws-sdk-js",
+  "repo": "aws-sdk-js/_50commit_window",
   "reuseFindings": [
     {
       "existingFile": "clients/client-athena/src/commands/GetResourceDashboardCommand.ts",

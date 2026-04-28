@@ -1,0 +1,311 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 64,
+        "baselineLines": 280,
+        "currentLines": 344,
+        "deleted": 0,
+        "file": "src/sentry/integrations/services/repository/impl.py",
+        "netGrowth": 64
+      },
+      {
+        "added": 17,
+        "baselineLines": 131,
+        "currentLines": 148,
+        "deleted": 0,
+        "file": "src/sentry/integrations/services/repository/service.py",
+        "netGrowth": 17
+      },
+      {
+        "added": 43,
+        "baselineLines": 461,
+        "currentLines": 499,
+        "deleted": 5,
+        "file": "src/sentry/integrations/source_code_management/sync_repos.py",
+        "netGrowth": 38
+      },
+      {
+        "added": 2,
+        "baselineLines": 1109,
+        "currentLines": 1110,
+        "deleted": 1,
+        "file": "src/sentry/sentry_apps/tasks/sentry_apps.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 53,
+        "currentLines": 55,
+        "deleted": 0,
+        "file": "static/app/components/commandPalette/types.tsx",
+        "netGrowth": 2
+      },
+      {
+        "added": 59,
+        "baselineLines": 162,
+        "currentLines": 194,
+        "deleted": 27,
+        "file": "static/app/components/commandPalette/ui/cmdk.tsx",
+        "netGrowth": 32
+      },
+      {
+        "added": 87,
+        "baselineLines": 692,
+        "currentLines": 772,
+        "deleted": 7,
+        "file": "static/app/components/commandPalette/ui/commandPaletteGlobalActions.tsx",
+        "netGrowth": 80
+      },
+      {
+        "added": 8,
+        "baselineLines": 865,
+        "currentLines": 862,
+        "deleted": 11,
+        "file": "static/app/components/events/autofix/useExplorerAutofix.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 40,
+        "currentLines": 40,
+        "deleted": 1,
+        "file": "static/app/components/events/autofix/v2/utils.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 128,
+        "currentLines": 128,
+        "deleted": 1,
+        "file": "static/app/components/events/autofix/v3/codeChangesCard.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 426,
+        "currentLines": 426,
+        "deleted": 5,
+        "file": "static/app/components/events/autofix/v3/nextStep.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 98,
+        "currentLines": 98,
+        "deleted": 1,
+        "file": "static/app/components/events/autofix/v3/solutionCard.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 237,
+        "currentLines": 239,
+        "deleted": 0,
+        "file": "static/app/views/explore/spans/content.tsx",
+        "netGrowth": 2
+      },
+      {
+        "added": 173,
+        "baselineLines": null,
+        "currentLines": 173,
+        "deleted": 0,
+        "file": "static/app/views/explore/spans/spansCommandPaletteActions.tsx",
+        "netGrowth": 173
+      },
+      {
+        "added": 2,
+        "baselineLines": 189,
+        "currentLines": 189,
+        "deleted": 2,
+        "file": "static/app/views/issueDetails/actions/seerCommandPaletteActions.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 258,
+        "currentLines": 259,
+        "deleted": 0,
+        "file": "static/app/views/issueDetails/streamline/header/assigneeSelector.tsx",
+        "netGrowth": 1
+      },
+      {
+        "added": 1,
+        "baselineLines": 216,
+        "currentLines": 216,
+        "deleted": 1,
+        "file": "static/app/views/issueDetails/streamline/instrumentationFixSection.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 27,
+        "baselineLines": 369,
+        "currentLines": 393,
+        "deleted": 3,
+        "file": "static/app/views/issueList/issueListCommandPaletteActions.tsx",
+        "netGrowth": 24
+      },
+      {
+        "added": 33,
+        "baselineLines": 826,
+        "currentLines": 820,
+        "deleted": 39,
+        "file": "static/app/views/seerExplorer/components/blockComponents.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 38,
+        "currentLines": 39,
+        "deleted": 2,
+        "file": "static/app/views/seerExplorer/hooks/useExplorerSessions.tsx",
+        "netGrowth": 1
+      },
+      {
+        "added": 5,
+        "baselineLines": 70,
+        "currentLines": 73,
+        "deleted": 2,
+        "file": "static/app/views/seerExplorer/hooks/useSeerExplorerPolling.tsx",
+        "netGrowth": 3
+      },
+      {
+        "added": 10,
+        "baselineLines": 1063,
+        "currentLines": 1068,
+        "deleted": 5,
+        "file": "static/app/views/seerExplorer/utils.tsx",
+        "netGrowth": 5
+      }
+    ],
+    "totalAdded": 547,
+    "totalDeleted": 113
+  },
+  "changedFilesCount": 30,
+  "changedFilesSample": [
+    "pyproject.toml",
+    "src/sentry/integrations/services/repository/impl.py",
+    "src/sentry/integrations/services/repository/service.py",
+    "src/sentry/integrations/source_code_management/sync_repos.py",
+    "src/sentry/sentry_apps/tasks/sentry_apps.py",
+    "static/app/components/commandPalette/types.tsx",
+    "static/app/components/commandPalette/ui/cmdk.tsx",
+    "static/app/components/commandPalette/ui/commandPaletteGlobalActions.tsx",
+    "static/app/components/events/autofix/useExplorerAutofix.tsx",
+    "static/app/components/events/autofix/v2/utils.tsx",
+    "static/app/components/events/autofix/v3/codeChangesCard.tsx",
+    "static/app/components/events/autofix/v3/nextStep.spec.tsx",
+    "static/app/components/events/autofix/v3/nextStep.tsx",
+    "static/app/components/events/autofix/v3/solutionCard.tsx",
+    "static/app/views/explore/spans/content.tsx",
+    "static/app/views/explore/spans/spansCommandPaletteActions.tsx",
+    "static/app/views/issueDetails/actions/seerCommandPaletteActions.tsx",
+    "static/app/views/issueDetails/streamline/header/assigneeSelector.tsx",
+    "static/app/views/issueDetails/streamline/instrumentationFixSection.tsx",
+    "static/app/views/issueList/issueListCommandPaletteActions.tsx",
+    "static/app/views/seerExplorer/components/blockComponents.tsx",
+    "static/app/views/seerExplorer/components/drawer/explorerDrawerContent.spec.tsx",
+    "static/app/views/seerExplorer/components/drawer/useSeerExplorerDrawer.spec.tsx",
+    "static/app/views/seerExplorer/components/panel/explorerFAB.spec.tsx",
+    "static/app/views/seerExplorer/hooks/useExplorerSessions.tsx",
+    "static/app/views/seerExplorer/hooks/useSeerExplorer.spec.tsx",
+    "static/app/views/seerExplorer/hooks/useSeerExplorerPolling.tsx",
+    "static/app/views/seerExplorer/utils.tsx",
+    "tests/sentry/integrations/source_code_management/test_sync_repos.py",
+    "uv.lock"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "static/app/components/commandPalette/ui/commandPaletteGlobalActions.tsx:436",
+        "static/app/views/explore/spans/spansCommandPaletteActions.tsx:115",
+        "static/app/views/explore/spans/spansCommandPaletteActions.tsx:74"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "changed source diff is additive: added=547 deleted=113"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 3 changed location(s)"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": false,
+  "repo": "sentry/_50commit_window",
+  "reuseFindings": [],
+  "sourceFilesCount": 22,
+  "version": "3.0.0",
+  "warnings": [
+    "changed source diff is additive: added=547 deleted=113"
+  ]
+}

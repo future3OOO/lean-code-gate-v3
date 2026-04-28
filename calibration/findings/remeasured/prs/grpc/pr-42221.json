@@ -1,0 +1,99 @@
+{
+  "bloat": {
+    "files": [],
+    "totalAdded": 0,
+    "totalDeleted": 0
+  },
+  "changedFilesCount": 5,
+  "changedFilesSample": [
+    "tools/internal_ci/linux/pull_request/grpc_bazel_rbe_asan.cfg",
+    "tools/internal_ci/linux/pull_request/grpc_bazel_rbe_dbg.cfg",
+    "tools/internal_ci/linux/pull_request/grpc_bazel_rbe_msan.cfg",
+    "tools/internal_ci/linux/pull_request/grpc_bazel_rbe_tsan.cfg",
+    "tools/internal_ci/linux/pull_request/grpc_bazel_rbe_ubsan.cfg"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "grpc/_wt_pr42221",
+  "reuseFindings": [],
+  "sourceFilesCount": 0,
+  "version": "3.0.0",
+  "warnings": []
+}

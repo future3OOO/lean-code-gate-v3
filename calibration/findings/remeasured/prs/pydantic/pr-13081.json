@@ -1,0 +1,185 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 2,
+        "baselineLines": 737,
+        "currentLines": 737,
+        "deleted": 2,
+        "file": "pydantic-core/src/url.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 681,
+        "currentLines": 679,
+        "deleted": 7,
+        "file": "pydantic-core/src/validators/dataclass.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 8,
+        "baselineLines": 583,
+        "currentLines": 583,
+        "deleted": 8,
+        "file": "pydantic-core/src/validators/function.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 6,
+        "baselineLines": 367,
+        "currentLines": 367,
+        "deleted": 6,
+        "file": "pydantic-core/src/validators/generator.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 4,
+        "baselineLines": 876,
+        "currentLines": 865,
+        "deleted": 15,
+        "file": "pydantic-core/src/validators/mod.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 394,
+        "currentLines": 394,
+        "deleted": 2,
+        "file": "pydantic-core/src/validators/model.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 701,
+        "currentLines": 701,
+        "deleted": 5,
+        "file": "pydantic-core/src/validators/model_fields.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 391,
+        "currentLines": 391,
+        "deleted": 2,
+        "file": "pydantic-core/src/validators/typed_dict.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 43,
+        "baselineLines": 276,
+        "currentLines": 306,
+        "deleted": 13,
+        "file": "pydantic-core/src/validators/validation_state.rs",
+        "netGrowth": 30
+      },
+      {
+        "added": 1,
+        "baselineLines": 236,
+        "currentLines": 236,
+        "deleted": 1,
+        "file": "pydantic-core/src/validators/with_default.rs",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 78,
+    "totalDeleted": 61
+  },
+  "changedFilesCount": 10,
+  "changedFilesSample": [
+    "pydantic-core/src/url.rs",
+    "pydantic-core/src/validators/dataclass.rs",
+    "pydantic-core/src/validators/function.rs",
+    "pydantic-core/src/validators/generator.rs",
+    "pydantic-core/src/validators/mod.rs",
+    "pydantic-core/src/validators/model.rs",
+    "pydantic-core/src/validators/model_fields.rs",
+    "pydantic-core/src/validators/typed_dict.rs",
+    "pydantic-core/src/validators/validation_state.rs",
+    "pydantic-core/src/validators/with_default.rs"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "pydantic/_wt_pr13081",
+  "reuseFindings": [],
+  "sourceFilesCount": 10,
+  "version": "3.0.0",
+  "warnings": []
+}
