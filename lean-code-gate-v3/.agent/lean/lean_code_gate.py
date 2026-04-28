@@ -46,11 +46,18 @@ DEFAULT_POLICY: dict[str, object] = {
     "block_hidden_bash_writes": True,
     "run_quality_gate_on_stop": True,
     "fail_on_quality_warnings": False,
-    "max_design_markers": 2,
+    # max_design_markers: 4 (was 2): requires all 4 DESIGN_RE categories to
+    # match. Calibrated against Pydantic's _generate_schema.py (2922 lines,
+    # density 1.4/100, was firing as FP). Combined with density gating >= 3.0
+    # for files >= 100 lines, allows typing-heavy frameworks while still
+    # flagging gratuitous abstraction in small surfaces (4 markers in 7 lines
+    # = 57/100 density still trips the small-file branch).
+    "max_design_markers": 4,
+    "max_design_marker_density_per_100_lines": 3.0,
     "allowed_broad_globs": ["src/**", "lib/**", "app/**", "tests/**", "test/**"],
     "bloat_new_file_warn_lines": 500,
     "bloat_new_file_error_lines": 800,
-    "bloat_large_file_lines": 1200,
+    "bloat_large_file_lines": 1500,
     "bloat_large_file_must_shrink": False,
     "bloat_large_file_growth_lines": 80,
     "bloat_file_growth_lines": 250,
@@ -64,6 +71,25 @@ DEFAULT_POLICY: dict[str, object] = {
     "reuse_detector_mode": "conservative",
     "reuse_error_score": 90,
     "reuse_warning_score": 45,
+    "reuse_min_duplicate_count": 3,
+    "reuse_suppress_private_public_siblings": True,
+    "framework_override_names": [
+        "validate", "clean", "save", "save_model", "save_formset",
+        "get_queryset", "get_form", "get_form_kwargs", "get_context_data",
+        "get_object", "get_serializer", "get_serializer_class",
+        "as_sql", "as_dict", "as_view",
+        "to_python", "to_internal_value", "to_representation",
+        "form_valid", "form_invalid",
+        "__init__", "__call__", "__enter__", "__exit__",
+        "__iter__", "__next__", "__len__", "__contains__",
+        "__getitem__", "__setitem__", "__delitem__",
+        "__set__", "__get__", "__delete__", "__set_name__",
+        "__hash__", "__eq__", "__lt__", "__gt__", "__le__", "__ge__",
+        "__repr__", "__str__", "__bool__",
+        "componentDidMount", "componentDidUpdate", "componentWillUnmount",
+        "render", "shouldComponentUpdate", "getDerivedStateFromProps",
+        "ngOnInit", "ngOnDestroy", "ngOnChanges",
+    ],
     "excluded_path_globs": [
         "**/migrations/**",
         "**/generated/**",
@@ -176,6 +202,12 @@ HIDDEN_WRITE_RE = re.compile(
 )
 DESIGN_RE = [
     (re.compile(r"\bclass\s+\w*(Factory|Builder|Manager|Registry|Strategy|Adapter|Provider)\b"), "pattern-named class"),
+    (re.compile(r"\bfunc\s+(?:\([^)]*\)\s*)?New\w*(Factory|Builder|Manager|Registry|Strategy|Adapter|Provider)\b"), "pattern-named factory function"),
+    # Rust pattern intentionally broader than Python/JS (State/Context/Scope
+    # added). Rust's type-alias system is commonly used for abstraction
+    # layering (e.g., pub type ParserState, pub type RequestContext) in ways
+    # the Python/JS class pattern isn't. Asymmetry is calibrated, not a bug.
+    (re.compile(r"\bpub\s+type\s+\w*(State|Manager|Strategy|Adapter|Provider|Factory|Builder|Registry|Context|Scope)\b"), "rust type-alias abstraction"),
     (re.compile(r"\b(Abstract[A-Z]\w*|Base[A-Z]\w*)\b"), "abstract/base type"),
     (re.compile(r"\b(Protocol|ABC|abc\.ABC|TypeVar|Generic\[)\b"), "generic typing abstraction"),
     (re.compile(r"\b(plugin|middleware|strategy|extensible|extension point|feature[_ -]?flag)\b", re.I), "extension machinery"),
@@ -991,6 +1023,9 @@ def is_binary_path(path: str) -> bool:
 
 
 _active_excluded_globs: tuple[str, ...] = ()
+_active_framework_override_names: frozenset[str] = frozenset()
+_active_suppress_private_public_siblings: bool = False
+_active_min_duplicate_count: int = 2
 
 
 def is_excluded_path(path: str) -> bool:
@@ -1119,7 +1154,7 @@ def duplicate_added_blocks(ctx: GateContext) -> list[dict[str, object]]:
         [
             {"count": item["count"], "files": sorted(item["files"]), "sample": item["sample"]}
             for item in windows.values()
-            if int(item["count"]) > 1 and isinstance(item["files"], set)
+            if int(item["count"]) >= _active_min_duplicate_count and isinstance(item["files"], set)
         ]
     )
 
@@ -1292,6 +1327,15 @@ def token_overlap(left: tuple[str, ...], right: tuple[str, ...]) -> float:
 
 
 def same_behavior_name(left: SymbolDef, right: SymbolDef) -> tuple[int, str]:
+    if _active_framework_override_names and left.name in _active_framework_override_names and right.name in _active_framework_override_names:
+        return 0, ""
+    # R-3 (private/public sibling): suppress at the candidate-evaluation
+    # stage. Structural blind spot — caller's `if base_score <= 0: continue`
+    # means body-similarity scoring is not reached for any _foo/foo pair,
+    # even genuine identical implementations. Calibrated tradeoff: prefer FN
+    # over FP given the observed FP rate in the 50-commit Django window.
+    if _active_suppress_private_public_siblings and left.tokens == right.tokens and left.tokens and left.name.strip("_") == right.name.strip("_") and left.name != right.name:
+        return 0, ""
     if left.name == right.name:
         return (35, "generic same symbol name") if left.name.lower() in GENERIC_SYMBOLS else (100, "same symbol name")
     if left.tokens == right.tokens and left.tokens:
@@ -1482,9 +1526,13 @@ def changed_file_failures(repo: Path, changed_files: set[str]) -> tuple[list[str
 
 
 def apply_active_policy(active_policy: dict[str, object]) -> None:
-    global _active_excluded_globs
-    raw = active_policy.get("excluded_path_globs")
-    _active_excluded_globs = tuple(g for g in raw if isinstance(g, str)) if isinstance(raw, list) else ()
+    global _active_excluded_globs, _active_framework_override_names, _active_suppress_private_public_siblings, _active_min_duplicate_count
+    raw_globs = active_policy.get("excluded_path_globs")
+    _active_excluded_globs = tuple(g for g in raw_globs if isinstance(g, str)) if isinstance(raw_globs, list) else ()
+    raw_names = active_policy.get("framework_override_names")
+    _active_framework_override_names = frozenset(n for n in raw_names if isinstance(n, str)) if isinstance(raw_names, list) else frozenset()
+    _active_suppress_private_public_siblings = bool(active_policy.get("reuse_suppress_private_public_siblings"))
+    _active_min_duplicate_count = max(2, int(active_policy.get("reuse_min_duplicate_count") or 2))
 
 
 def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -> dict[str, object]:
@@ -1697,9 +1745,14 @@ def check_change(change_facts: dict[str, object], current_contract: dict[str, ob
     configs = [path for path in paths if path_type(path) == "config"]
     if configs and active_policy["block_config_changes_without_flag"] and not current_contract.get("allow_config_changes"):
         errors.append("Undeclared config change: " + ", ".join(configs))
-    hits = design_hits(str(change_facts.get("text") or ""))
+    text = str(change_facts.get("text") or "")
+    hits = design_hits(text)
     if len(hits) >= int(active_policy["max_design_markers"]) and not current_contract.get("allow_abstractions"):
-        errors.append("Possible abstraction bloat: " + ", ".join(sorted(set(hits))) + ". Prefer direct code or redeclare with --allow-abstractions --reason.")
+        line_count = len(text.splitlines())
+        density_threshold = float(active_policy.get("max_design_marker_density_per_100_lines") or 0.0)
+        density = (len(hits) / line_count * 100) if line_count else 0.0
+        if line_count < 100 or density_threshold <= 0 or density >= density_threshold:
+            errors.append("Possible abstraction bloat: " + ", ".join(sorted(set(hits))) + ". Prefer direct code or redeclare with --allow-abstractions --reason.")
     quality_hits = proposed_quality_hits(str(change_facts.get("text") or ""), paths)
     if quality_hits:
         errors.append("Proposed change contains quality escapes: " + ", ".join(quality_hits[:6]))
