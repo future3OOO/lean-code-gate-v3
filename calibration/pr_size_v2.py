@@ -125,6 +125,9 @@ def main() -> int:
         r2["gate_errors"] = errs
         r2["gate_warnings"] = warns
         r2["gate_source_files"] = src
+        # Date stamps for pre-AI vs post-AI bucket research
+        r2["merged_at"] = detail.get("merged_at")
+        r2["created_at"] = detail.get("created_at")
         enriched.append(r2)
         if i % 5 == 0:
             print(f"  [{i}/{len(rows)}] {r['repo']}/pr-{r['pr']}: gate=({errs},{warns},{src}) bot={r['total_comments']}", flush=True)

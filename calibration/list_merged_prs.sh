@@ -47,7 +47,27 @@ case "$KEY" in
   *) echo "unknown repo key $KEY" >&2; exit 2 ;;
 esac
 
-gh api "search/issues?q=repo:$GH+is:pr+is:merged+-author:app/dependabot+-author:app/pre-commit-ci+-author:app/renovate&sort=created&order=desc&per_page=50" 2>/dev/null \
+SEARCH_Q="repo:$GH+is:pr+is:merged+-author:app/dependabot+-author:app/pre-commit-ci+-author:app/renovate"
+{
+  gh api "search/issues?q=$SEARCH_Q&sort=created&order=desc&per_page=100&page=1" 2>/dev/null
+  gh api "search/issues?q=$SEARCH_Q&sort=created&order=desc&per_page=100&page=2" 2>/dev/null
+} | python3 -c "
+import json, sys
+# Two GitHub-search responses concatenated. Split on the JSON boundary
+# and merge their items[] arrays.
+raw = sys.stdin.read()
+chunks = raw.split('}\n{', 1)
+items = []
+for chunk in chunks:
+    if not chunk.strip(): continue
+    if not chunk.startswith('{'): chunk = '{' + chunk
+    if not chunk.endswith('}'): chunk = chunk + '}'
+    try:
+        items.extend(json.loads(chunk).get('items', []))
+    except json.JSONDecodeError:
+        continue
+print(json.dumps({'items': items}))
+" \
   | python3 -c "
 import sys, json, subprocess
 from pathlib import Path
@@ -101,7 +121,7 @@ for it in items:
     if not isinstance(files, list):
         continue
     src_files = [f for f in files if is_production_source(f.get('filename', ''))]
-    if len(src_files) < 3:
+    if len(src_files) < 1:
         continue
     src_added = sum(int(f.get('additions', 0)) for f in src_files)
     if src_added < 50:
