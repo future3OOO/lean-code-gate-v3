@@ -466,12 +466,17 @@ class GateContext:
 
 def run_process(cmd: list[str], cwd: Path, timeout: int = 15) -> subprocess.CompletedProcess[str]:
     try:
+        # text=True implies strict utf-8 decoding which crashes when git diff
+        # output contains non-utf-8 bytes (e.g. binary patches in long
+        # multi-commit windows). Use encoding+errors='replace' instead so
+        # the gate can keep running and just lose offending bytes.
         process = subprocess.Popen(
             cmd,
             cwd=str(cwd),
-            text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            encoding="utf-8",
+            errors="replace",
             start_new_session=(os.name != "nt"),
         )
         stdout, stderr = process.communicate(timeout=timeout)
