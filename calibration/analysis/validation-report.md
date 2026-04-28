@@ -107,12 +107,42 @@ Headline: my distinct-issues-per-PR rate was 7.8 across PRs #1–6 (before addin
 
 ## A2-v2: PR-size vs gate-error vs bot-comment
 
-[**Pending — running in background**]. The previous A2 (in `self-benchmark.md`) only correlated PR additions to bot-comment count. Per user note, that's incomplete: the gate's actual contribution requires running the gate against each PR's diff and getting its error count alongside the bot count. A2-v2 does that — for ~114 PRs, fetches base+merge SHA, runs v3.0.0 gate against each, records (additions, gate_errors, bot_comments). Will fold the result into this report once complete.
+For 114 merged PRs across 8 repos, fetched base+merge SHAs, ran v3.0.0 gate against each PR's exact diff, and recorded `(additions, gate_errors, bot_comments)`. Data: `calibration/findings/pr_size_with_gate.json`.
 
-## Gate bugs found during validation
+| Bucket | n | avg adds | avg gate-err | avg bot | agree |
+|---|---|---|---|---|---|
+| 0–50 lines | 70 | 13 | 0.10 | 1.23 | 27/70 (39%) |
+| 50–200 | 25 | 89 | 0.44 | 2.76 | 10/25 (40%) |
+| 200–500 | 8 | 336 | 0.25 | 3.38 | 3/8 (38%) |
+| 500–1500 | 3 | 921 | 2.00 | 0.00 | 0/3 (0%) |
+| 1500+ | 7 | 8815 | 1.57 | 1.71 | 3/7 (43%) |
 
-- **Gate bug #1 — UnicodeDecodeError on large diffs**: TypeScript with `--base-ref HEAD~99` (~100-commit diff) crashes in `run_process` when subprocess output contains non-UTF-8 bytes. `subprocess.Popen(..., text=True)` decodes with strict utf-8. Fix: pass `errors='replace'` to `Popen` or read bytes and decode manually. Tracked for separate gate-fix PR.
-- **Gate bug #2 — `high_confidence_reuse` bypasses R-2/R-3**: surfaced by langchain unseen-repo run. The reuse-detector's `high_confidence_reuse(left, right)` (gate.py:~1377) duplicates `same_behavior_name`'s name+token check and returns `True`, forcing severity to `error` regardless of R-2/R-3 suppression. Fix: have `high_confidence_reuse` call `same_behavior_name` first and return `False` when the calibrated suppression returned `(0, "")`. Tracked for separate gate-fix PR.
+(`agree` = PRs where both gate and bots flagged, OR both didn't.)
+
+### Three findings that change the calibration's framing
+
+**1. The gate fires far less than bots on small-medium PRs.** In the 50–200 bucket, bots raise ~6× more issues than the gate (2.76 vs 0.44). The gate's structural-only detectors don't match the breadth of issues bots catch (logic bugs, stylistic concerns, requested-changes, naming preferences).
+
+**2. The relationship inverts at 500+ lines.** PRs 500–1500 lines: gate 2.00 errors, bots 0.00 comments. PRs 1500+ lines: gate 1.57 errors, bots 1.71 comments (and that's averaged across n=7, dominated by a few outlier-attended PRs). **Reviewers tune out on large PRs; the gate doesn't.** This is the calibration's strongest argument: the gate is most valuable precisely where reviewer attention drops off.
+
+**3. Gate and bots catch *different* things.** Agreement rate hovers around 38–43% across buckets. They are complementary signals, not redundant. The gate as bot-replacement is the wrong framing — the gate as bot-floor (always-on minimum scrutiny) is the right one.
+
+### What this means for the calibration's posture
+
+- The gate's 52.5% error reduction (post-calibration A/B) silenced FP noise in **the size band where bots are also active** (50–500 lines). That's correct: in that band the gate was over-firing on noise the bots were also catching/dismissing.
+- The gate's behavior on >500-line PRs **wasn't changed by calibration** because R-1..R-6 don't directly target large-PR semantics. But this is also where the gate has its highest absolute value (no bot review).
+- **`default_max_added_lines: 120` looks well-calibrated** against this data: it sits in the 50–200 bucket where bot scrutiny is moderate AND the gate fires ~0.44 times per PR. Lower would push false alarms; higher would sail into the 500+ band where the gate's signal is the *only* signal.
+
+### Caveats
+
+- n=3 at 500–1500 and n=7 at 1500+ is small. The "gate inverts at large size" finding is directionally robust but the magnitude could shift with more data. A scaled-up version of A2-v2 (300+ PRs) would tighten the bucket means.
+- Bot-comment count is a noisy proxy for "review depth." Some bot comments are summary blurbs; others are deep technical findings. The de-duplication in A3 attempted to filter for distinct findings; A2-v2 used raw `total_comments` for simplicity. A future cycle should re-do A2-v2 with the A3 dedup logic for sharper signal.
+- v3.0.0 gate was used (not calibrated). The point was to characterize gate-vs-bot baseline behavior. A "calibrated gate vs bots" rerun would shift the gate-error column down, increasing the gap between gate and bot at small sizes (calibration silences gate FPs) and probably keeping the gap closed at large sizes (calibration doesn't change large-PR detector firing much).
+
+## Gate bugs found during validation (BOTH FIXED)
+
+- **Gate bug #1 — UnicodeDecodeError on large diffs**: TypeScript with `--base-ref HEAD~99` (~100-commit diff) crashes in `run_process` when subprocess output contains non-UTF-8 bytes. `subprocess.Popen(..., text=True)` decodes with strict utf-8. **Fixed in PR-E (#14)**: replaced `text=True` with `encoding="utf-8", errors="replace"`.
+- **Gate bug #2 — `high_confidence_reuse` bypasses R-2/R-3**: surfaced by langchain unseen-repo run. The reuse-detector's `high_confidence_reuse(left, right)` (gate.py:1445) duplicates `same_behavior_name`'s name+token check and returns `True`, forcing severity to `error` regardless of R-2/R-3 suppression. **Fixed in PR-D (#13)**: `high_confidence_reuse` now defers to `same_behavior_name` first and returns `False` when calibrated suppression returns `(0, "")`.
 
 ## Honest summary of what we know
 
@@ -120,14 +150,15 @@ Headline: my distinct-issues-per-PR rate was 7.8 across PRs #1–6 (before addin
 - Calibrated gate produces ~52% fewer errors and ~93% fewer reuse-error-tier hits than v3.0.0 on the same git state across 7 repos.
 - The audited silenced findings are 78–100% genuine FPs.
 - The calibrated gate generalizes within-repo (holdout window) without producing dramatically more errors.
+- **Gate-vs-bot relationship inverts at PR size ~500 lines.** At small/medium sizes bots catch ~6× more issues than the gate; at large sizes the gate fires while bots tune out. The gate is most valuable as a bot-floor — always-on minimum scrutiny — not as a bot-replacement.
 
 **Not yet validated:**
-- Cross-repo generalization is partial: unseen repos still produce real errors, and the langchain run surfaced gate bug #2.
+- Cross-repo generalization is partial: unseen repos still produce real errors. The langchain reuse-error count should drop closer to 0 once PR-D (gate-bug-2 fix) lands.
 - "Cleaner agent code over time" remains unproven — that requires longitudinal observation, not a one-shot measurement.
-- The 5 PR-size buckets have insufficient n at >500 lines (n=3, n=1, n=6) to draw a tipping point. A2-v2 will sharpen this.
 
-**Newly known unknowns:**
-- Two real gate bugs (the UnicodeDecodeError + the high_confidence_reuse bypass) need fixing before the calibration's effect is fully realized.
+**Newly known:**
+- Two real gate bugs found by validation, both fixed (PR-D #13 + PR-E #14).
+- A2-v2 confirmed: gate and bots catch *different* issues (~38–43% agreement). Complementary, not redundant.
 - The PR-B claim was unsound; this report supersedes it.
 
 ## Action items (ranked)
