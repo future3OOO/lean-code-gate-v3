@@ -28,6 +28,18 @@ case "$KEY" in
   vue) GH="vuejs/core" ;;
   jest) GH="jestjs/jest" ;;
   zed) GH="zed-industries/zed" ;;
+  # A10 pre-AI / mature benchmark set
+  cpython) GH="python/cpython" ;;
+  numpy) GH="numpy/numpy" ;;
+  airflow) GH="apache/airflow" ;;
+  tokio) GH="tokio-rs/tokio" ;;
+  prometheus) GH="prometheus/prometheus" ;;
+  # Pre-AI JS/TS additions
+  jquery) GH="jquery/jquery" ;;
+  react) GH="facebook/react" ;;
+  lodash) GH="lodash/lodash" ;;
+  eslint) GH="eslint/eslint" ;;
+  svelte) GH="sveltejs/svelte" ;;
   *) echo "unknown repo key $KEY" >&2; exit 2 ;;
 esac
 
