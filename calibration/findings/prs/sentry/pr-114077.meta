@@ -1,0 +1,9 @@
+repo: sentry
+github: getsentry/sentry
+pr_number: 114077
+title: ref(cmdk) padding tlc
+base_sha: cb0c9eb4fe97e38ed8cb0c2a1bb4ca25bf12e29d
+merge_sha: 9059077838ceea52f20bca5e55c2066a18c8fa5f
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

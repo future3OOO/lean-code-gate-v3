@@ -1,0 +1,9 @@
+repo: typescript
+github: microsoft/TypeScript
+pr_number: 63407
+title: 🤖 Pick PR #63401 (Also check package name validity in...) into release-6.0
+base_sha: ad1c695fada682764bb510dd680e8f175ae54094
+merge_sha: eeae9dd0f17aa494658e4ec079dc002e02dd625e
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

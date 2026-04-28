@@ -1,0 +1,9 @@
+repo: pydantic
+github: pydantic/pydantic
+pr_number: 13084
+title: Fix `ValidationInfo.field_name` missing with `model_validate_json()`
+base_sha: b7e81cfc9f3ebc7d42a0ee5c85bf28db181a38f7
+merge_sha: a6bf50b721c2dd1ed609c8bb402076e8ec0c43f3
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

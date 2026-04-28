@@ -1,0 +1,618 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 4,
+        "baselineLines": 620,
+        "currentLines": 621,
+        "deleted": 3,
+        "file": "clients/client-acm-pca/src/ACMPCA.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 8,
+        "baselineLines": 68,
+        "currentLines": 70,
+        "deleted": 6,
+        "file": "clients/client-acm-pca/src/waiters/waitForAuditReportCreated.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 9,
+        "baselineLines": 56,
+        "currentLines": 58,
+        "deleted": 7,
+        "file": "clients/client-acm-pca/src/waiters/waitForCertificateAuthorityCSRCreated.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 13,
+        "baselineLines": 53,
+        "currentLines": 58,
+        "deleted": 8,
+        "file": "clients/client-acm-pca/src/waiters/waitForCertificateIssued.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 2,
+        "baselineLines": 459,
+        "currentLines": 460,
+        "deleted": 1,
+        "file": "clients/client-acm/src/ACM.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 8,
+        "baselineLines": 90,
+        "currentLines": 92,
+        "deleted": 6,
+        "file": "clients/client-acm/src/waiters/waitForCertificateValidated.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 8,
+        "baselineLines": 1167,
+        "currentLines": 1169,
+        "deleted": 6,
+        "file": "clients/client-amp/src/Amp.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 7,
+        "baselineLines": 73,
+        "currentLines": 75,
+        "deleted": 5,
+        "file": "clients/client-amp/src/waiters/waitForAnomalyDetectorActive.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 9,
+        "baselineLines": 60,
+        "currentLines": 63,
+        "deleted": 6,
+        "file": "clients/client-amp/src/waiters/waitForAnomalyDetectorDeleted.ts",
+        "netGrowth": 3
+      },
+      {
+        "added": 11,
+        "baselineLines": 62,
+        "currentLines": 67,
+        "deleted": 6,
+        "file": "clients/client-amp/src/waiters/waitForScraperActive.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 13,
+        "baselineLines": 57,
+        "currentLines": 63,
+        "deleted": 7,
+        "file": "clients/client-amp/src/waiters/waitForScraperDeleted.ts",
+        "netGrowth": 6
+      },
+      {
+        "added": 11,
+        "baselineLines": 70,
+        "currentLines": 75,
+        "deleted": 6,
+        "file": "clients/client-amp/src/waiters/waitForWorkspaceActive.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 13,
+        "baselineLines": 57,
+        "currentLines": 63,
+        "deleted": 7,
+        "file": "clients/client-amp/src/waiters/waitForWorkspaceDeleted.ts",
+        "netGrowth": 6
+      },
+      {
+        "added": 3,
+        "baselineLines": 1345,
+        "currentLines": 1346,
+        "deleted": 2,
+        "file": "clients/client-appconfig/src/AppConfig.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 11,
+        "baselineLines": 70,
+        "currentLines": 75,
+        "deleted": 6,
+        "file": "clients/client-appconfig/src/waiters/waitForDeploymentComplete.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 11,
+        "baselineLines": 70,
+        "currentLines": 75,
+        "deleted": 6,
+        "file": "clients/client-appconfig/src/waiters/waitForEnvironmentReadyForDeployment.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 3,
+        "baselineLines": 2178,
+        "currentLines": 2179,
+        "deleted": 2,
+        "file": "clients/client-appstream/src/AppStream.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 11,
+        "baselineLines": 90,
+        "currentLines": 95,
+        "deleted": 6,
+        "file": "clients/client-appstream/src/waiters/waitForFleetStarted.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 11,
+        "baselineLines": 90,
+        "currentLines": 95,
+        "deleted": 6,
+        "file": "clients/client-appstream/src/waiters/waitForFleetStopped.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 3,
+        "baselineLines": 632,
+        "currentLines": 633,
+        "deleted": 2,
+        "file": "clients/client-arc-region-switch/src/ARCRegionSwitch.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 7,
+        "baselineLines": 73,
+        "currentLines": 75,
+        "deleted": 5,
+        "file": "clients/client-arc-region-switch/src/waiters/waitForPlanEvaluationStatusPassed.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 11,
+        "baselineLines": 86,
+        "currentLines": 91,
+        "deleted": 6,
+        "file": "clients/client-arc-region-switch/src/waiters/waitForPlanExecutionCompleted.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 4,
+        "baselineLines": 1770,
+        "currentLines": 1771,
+        "deleted": 3,
+        "file": "clients/client-auto-scaling/src/AutoScaling.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 7,
+        "baselineLines": 65,
+        "currentLines": 67,
+        "deleted": 5,
+        "file": "clients/client-auto-scaling/src/waiters/waitForGroupExists.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 7,
+        "baselineLines": 87,
+        "currentLines": 89,
+        "deleted": 5,
+        "file": "clients/client-auto-scaling/src/waiters/waitForGroupInService.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 7,
+        "baselineLines": 65,
+        "currentLines": 67,
+        "deleted": 5,
+        "file": "clients/client-auto-scaling/src/waiters/waitForGroupNotExists.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 2,
+        "baselineLines": 785,
+        "currentLines": 786,
+        "deleted": 1,
+        "file": "clients/client-b2bi/src/B2bi.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 11,
+        "baselineLines": 62,
+        "currentLines": 67,
+        "deleted": 6,
+        "file": "clients/client-b2bi/src/waiters/waitForTransformerJobSucceeded.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 8,
+        "baselineLines": 2748,
+        "currentLines": 2750,
+        "deleted": 6,
+        "file": "clients/client-bedrock-agentcore-control/src/BedrockAgentCoreControl.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 11,
+        "baselineLines": 70,
+        "currentLines": 75,
+        "deleted": 6,
+        "file": "clients/client-bedrock-agentcore-control/src/waiters/waitForMemoryCreated.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 11,
+        "baselineLines": 78,
+        "currentLines": 83,
+        "deleted": 6,
+        "file": "clients/client-bedrock-agentcore-control/src/waiters/waitForPolicyActive.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 13,
+        "baselineLines": 65,
+        "currentLines": 71,
+        "deleted": 7,
+        "file": "clients/client-bedrock-agentcore-control/src/waiters/waitForPolicyDeleted.ts",
+        "netGrowth": 6
+      },
+      {
+        "added": 11,
+        "baselineLines": 78,
+        "currentLines": 83,
+        "deleted": 6,
+        "file": "clients/client-bedrock-agentcore-control/src/waiters/waitForPolicyEngineActive.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 13,
+        "baselineLines": 65,
+        "currentLines": 71,
+        "deleted": 7,
+        "file": "clients/client-bedrock-agentcore-control/src/waiters/waitForPolicyEngineDeleted.ts",
+        "netGrowth": 6
+      },
+      {
+        "added": 7,
+        "baselineLines": 81,
+        "currentLines": 83,
+        "deleted": 5,
+        "file": "clients/client-bedrock-agentcore-control/src/waiters/waitForPolicyGenerationCompleted.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 2,
+        "baselineLines": 251,
+        "currentLines": 252,
+        "deleted": 1,
+        "file": "clients/client-cloudcontrol/src/CloudControl.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 7,
+        "baselineLines": 73,
+        "currentLines": 75,
+        "deleted": 5,
+        "file": "clients/client-cloudcontrol/src/waiters/waitForResourceRequestSuccess.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 11,
+        "baselineLines": 2564,
+        "currentLines": 2565,
+        "deleted": 10,
+        "file": "clients/client-cloudformation/src/CloudFormation.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 12,
+        "baselineLines": 65,
+        "currentLines": 70,
+        "deleted": 7,
+        "file": "clients/client-cloudformation/src/waiters/waitForChangeSetCreateComplete.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 12,
+        "baselineLines": 263,
+        "currentLines": 268,
+        "deleted": 7,
+        "file": "clients/client-cloudformation/src/waiters/waitForStackCreateComplete.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 12,
+        "baselineLines": 163,
+        "currentLines": 168,
+        "deleted": 7,
+        "file": "clients/client-cloudformation/src/waiters/waitForStackDeleteComplete.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 12,
+        "baselineLines": 50,
+        "currentLines": 55,
+        "deleted": 7,
+        "file": "clients/client-cloudformation/src/waiters/waitForStackExists.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 12,
+        "baselineLines": 135,
+        "currentLines": 140,
+        "deleted": 7,
+        "file": "clients/client-cloudformation/src/waiters/waitForStackImportComplete.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 8,
+        "baselineLines": 68,
+        "currentLines": 70,
+        "deleted": 6,
+        "file": "clients/client-cloudformation/src/waiters/waitForStackRefactorCreateComplete.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 8,
+        "baselineLines": 76,
+        "currentLines": 78,
+        "deleted": 6,
+        "file": "clients/client-cloudformation/src/waiters/waitForStackRefactorExecuteComplete.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 12,
+        "baselineLines": 107,
+        "currentLines": 112,
+        "deleted": 7,
+        "file": "clients/client-cloudformation/src/waiters/waitForStackRollbackComplete.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 12,
+        "baselineLines": 107,
+        "currentLines": 112,
+        "deleted": 7,
+        "file": "clients/client-cloudformation/src/waiters/waitForStackUpdateComplete.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 7,
+        "baselineLines": 65,
+        "currentLines": 67,
+        "deleted": 5,
+        "file": "clients/client-cloudformation/src/waiters/waitForTypeRegistrationComplete.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 5,
+        "baselineLines": 4173,
+        "currentLines": 4174,
+        "deleted": 4,
+        "file": "clients/client-cloudfront/src/CloudFront.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 11,
+        "baselineLines": 54,
+        "currentLines": 59,
+        "deleted": 6,
+        "file": "clients/client-cloudfront/src/waiters/waitForDistributionDeployed.ts",
+        "netGrowth": 5
+      }
+    ],
+    "totalAdded": 3905,
+    "totalDeleted": 2471
+  },
+  "changedFilesCount": 880,
+  "changedFilesSample": [
+    "clients/client-accessanalyzer/package.json",
+    "clients/client-account/package.json",
+    "clients/client-acm-pca/package.json",
+    "clients/client-acm-pca/src/ACMPCA.ts",
+    "clients/client-acm-pca/src/waiters/waitForAuditReportCreated.ts",
+    "clients/client-acm-pca/src/waiters/waitForCertificateAuthorityCSRCreated.ts",
+    "clients/client-acm-pca/src/waiters/waitForCertificateIssued.ts",
+    "clients/client-acm/package.json",
+    "clients/client-acm/src/ACM.ts",
+    "clients/client-acm/src/waiters/waitForCertificateValidated.ts",
+    "clients/client-aiops/package.json",
+    "clients/client-amp/package.json",
+    "clients/client-amp/src/Amp.ts",
+    "clients/client-amp/src/waiters/waitForAnomalyDetectorActive.ts",
+    "clients/client-amp/src/waiters/waitForAnomalyDetectorDeleted.ts",
+    "clients/client-amp/src/waiters/waitForScraperActive.ts",
+    "clients/client-amp/src/waiters/waitForScraperDeleted.ts",
+    "clients/client-amp/src/waiters/waitForWorkspaceActive.ts",
+    "clients/client-amp/src/waiters/waitForWorkspaceDeleted.ts",
+    "clients/client-amplify/package.json",
+    "clients/client-amplifybackend/package.json",
+    "clients/client-amplifyuibuilder/package.json",
+    "clients/client-api-gateway/package.json",
+    "clients/client-apigatewaymanagementapi/package.json",
+    "clients/client-apigatewayv2/package.json",
+    "clients/client-app-mesh/package.json",
+    "clients/client-appconfig/package.json",
+    "clients/client-appconfig/src/AppConfig.ts",
+    "clients/client-appconfig/src/waiters/waitForDeploymentComplete.ts",
+    "clients/client-appconfig/src/waiters/waitForEnvironmentReadyForDeployment.ts"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "packages-internal/xml-builder/src/xml-parser.ts:1",
+        "packages-internal/xml-builder/src/xml-parser.ts:6"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 4,
+          "files": [
+            "clients/client-amp/src/waiters/waitForScraperActive.ts",
+            "clients/client-amp/src/waiters/waitForScraperDeleted.ts"
+          ],
+          "sample": "DescribeScraperCommand | } from \"../commands/DescribeScraperCommand\" | import type { AmpServiceException } from \"../models/AmpServiceException\""
+        },
+        {
+          "count": 2,
+          "files": [
+            "clients/client-amp/src/waiters/waitForScraperActive.ts",
+            "clients/client-amp/src/waiters/waitForScraperDeleted.ts"
+          ],
+          "sample": "type DescribeScraperCommandInput | type DescribeScraperCommandOutput | DescribeScraperCommand"
+        },
+        {
+          "count": 4,
+          "files": [
+            "clients/client-amp/src/waiters/waitForWorkspaceActive.ts",
+            "clients/client-amp/src/waiters/waitForWorkspaceDeleted.ts"
+          ],
+          "sample": "DescribeWorkspaceCommand | } from \"../commands/DescribeWorkspaceCommand\" | import type { AmpServiceException } from \"../models/AmpServiceException\""
+        },
+        {
+          "count": 4,
+          "files": [
+            "clients/client-amp/src/waiters/waitForWorkspaceActive.ts",
+            "clients/client-amp/src/waiters/waitForWorkspaceDeleted.ts"
+          ],
+          "sample": "import { | type DescribeWorkspaceCommandInput | type DescribeWorkspaceCommandOutput"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file clients/client-appconfig/src/AppConfig.ts grew by 1 lines",
+        "large source file clients/client-appstream/src/AppStream.ts grew by 1 lines",
+        "large source file clients/client-auto-scaling/src/AutoScaling.ts grew by 1 lines",
+        "large source file clients/client-bedrock-agentcore-control/src/BedrockAgentCoreControl.ts grew by 2 lines",
+        "large source file clients/client-cloudformation/src/CloudFormation.ts grew by 1 lines",
+        "large source file clients/client-cloudfront/src/CloudFront.ts grew by 1 lines",
+        "large source file clients/client-cloudwatch/src/CloudWatch.ts grew by 1 lines",
+        "large source file clients/client-codedeploy/src/CodeDeploy.ts grew by 1 lines",
+        "large source file clients/client-database-migration-service/src/DatabaseMigrationService.ts grew by 2 lines",
+        "large source file clients/client-deadline/src/Deadline.ts grew by 2 lines"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 2 changed location(s)",
+    "duplicate added code blocks detected: 299"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_aws-sdk-js_pr7965",
+  "reuseFindings": [],
+  "sourceFilesCount": 420,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file clients/client-appconfig/src/AppConfig.ts grew by 1 lines",
+    "large source file clients/client-appstream/src/AppStream.ts grew by 1 lines",
+    "large source file clients/client-auto-scaling/src/AutoScaling.ts grew by 1 lines",
+    "large source file clients/client-bedrock-agentcore-control/src/BedrockAgentCoreControl.ts grew by 2 lines",
+    "large source file clients/client-cloudformation/src/CloudFormation.ts grew by 1 lines",
+    "large source file clients/client-cloudfront/src/CloudFront.ts grew by 1 lines",
+    "large source file clients/client-cloudwatch/src/CloudWatch.ts grew by 1 lines",
+    "large source file clients/client-codedeploy/src/CodeDeploy.ts grew by 1 lines",
+    "large source file clients/client-database-migration-service/src/DatabaseMigrationService.ts grew by 2 lines",
+    "large source file clients/client-deadline/src/Deadline.ts grew by 2 lines",
+    "large source file clients/client-directory-service/src/DirectoryService.ts grew by 1 lines",
+    "large source file clients/client-docdb/src/DocDB.ts grew by 2 lines",
+    "large source file clients/client-dynamodb/src/DynamoDB.ts grew by 2 lines",
+    "large source file clients/client-ec2/src/EC2.ts grew by 1 lines",
+    "large source file clients/client-ecr/src/ECR.ts grew by 1 lines",
+    "large source file clients/client-ecs/src/ECS.ts grew by 1 lines",
+    "large source file clients/client-eks/src/EKS.ts grew by 2 lines",
+    "large source file clients/client-elastic-beanstalk/src/ElasticBeanstalk.ts grew by 1 lines",
+    "large source file clients/client-elastic-load-balancing-v2/src/ElasticLoadBalancingV2.ts grew by 2 lines",
+    "large source file clients/client-elasticache/src/ElastiCache.ts grew by 2 lines",
+    "large source file clients/client-emr/src/EMR.ts grew by 1 lines",
+    "large source file clients/client-iam/src/IAM.ts grew by 1 lines",
+    "large source file clients/client-iotsitewise/src/IoTSiteWise.ts grew by 2 lines",
+    "large source file clients/client-lambda/src/Lambda.ts grew by 1 lines",
+    "large source file clients/client-lex-models-v2/src/LexModelsV2.ts grew by 1 lines",
+    "large source file clients/client-location/src/Location.ts grew by 1 lines",
+    "large source file clients/client-macie2/src/Macie2.ts grew by 1 lines",
+    "large source file clients/client-mediaconnect/src/MediaConnect.ts grew by 2 lines",
+    "large source file clients/client-medialive/src/MediaLive.ts grew by 1 lines",
+    "large source file clients/client-neptune/src/Neptune.ts grew by 2 lines",
+    "large source file clients/client-omics/src/Omics.ts grew by 2 lines",
+    "large source file clients/client-proton/src/Proton.ts grew by 2 lines",
+    "large source file clients/client-rds/src/RDS.ts grew by 7 lines",
+    "large source file clients/client-redshift/src/Redshift.ts grew by 2 lines",
+    "large source file clients/client-rekognition/src/Rekognition.ts grew by 1 lines",
+    "large source file clients/client-route-53/src/Route53.ts grew by 1 lines",
+    "large source file clients/client-s3/src/S3.ts grew by 2 lines",
+    "large source file clients/client-sagemaker/src/SageMaker.ts grew by 1 lines",
+    "large source file clients/client-ses/src/SES.ts grew by 1 lines",
+    "large source file clients/client-ssm/src/SSM.ts grew by 1 lines",
+    "large source file clients/client-transcribe/src/Transcribe.ts grew by 1 lines",
+    "large source file clients/client-transfer/src/Transfer.ts grew by 1 lines"
+  ]
+}

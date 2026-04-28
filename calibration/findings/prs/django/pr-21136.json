@@ -1,0 +1,326 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 61,
+        "baselineLines": 145,
+        "currentLines": 177,
+        "deleted": 29,
+        "file": "django/contrib/admin/static/admin/js/SelectBox.js",
+        "netGrowth": 32
+      },
+      {
+        "added": 380,
+        "baselineLines": 316,
+        "currentLines": 523,
+        "deleted": 173,
+        "file": "django/contrib/admin/static/admin/js/SelectFilter2.js",
+        "netGrowth": 207
+      },
+      {
+        "added": 116,
+        "baselineLines": 204,
+        "currentLines": 246,
+        "deleted": 74,
+        "file": "django/contrib/admin/static/admin/js/actions.js",
+        "netGrowth": 42
+      },
+      {
+        "added": 287,
+        "baselineLines": 418,
+        "currentLines": 547,
+        "deleted": 158,
+        "file": "django/contrib/admin/static/admin/js/admin/DateTimeShortcuts.js",
+        "netGrowth": 129
+      },
+      {
+        "added": 142,
+        "baselineLines": 266,
+        "currentLines": 332,
+        "deleted": 76,
+        "file": "django/contrib/admin/static/admin/js/admin/RelatedObjectLookups.js",
+        "netGrowth": 66
+      },
+      {
+        "added": 10,
+        "baselineLines": 33,
+        "currentLines": 33,
+        "deleted": 10,
+        "file": "django/contrib/admin/static/admin/js/autocomplete.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 142,
+        "baselineLines": 239,
+        "currentLines": 288,
+        "deleted": 93,
+        "file": "django/contrib/admin/static/admin/js/calendar.js",
+        "netGrowth": 49
+      },
+      {
+        "added": 7,
+        "baselineLines": 29,
+        "currentLines": 29,
+        "deleted": 7,
+        "file": "django/contrib/admin/static/admin/js/cancel.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 10,
+        "baselineLines": 16,
+        "currentLines": 21,
+        "deleted": 5,
+        "file": "django/contrib/admin/static/admin/js/change_form.js",
+        "netGrowth": 5
+      },
+      {
+        "added": 59,
+        "baselineLines": 184,
+        "currentLines": 194,
+        "deleted": 49,
+        "file": "django/contrib/admin/static/admin/js/core.js",
+        "netGrowth": 10
+      },
+      {
+        "added": 17,
+        "baselineLines": 30,
+        "currentLines": 39,
+        "deleted": 8,
+        "file": "django/contrib/admin/static/admin/js/filters.js",
+        "netGrowth": 9
+      },
+      {
+        "added": 188,
+        "baselineLines": 359,
+        "currentLines": 451,
+        "deleted": 96,
+        "file": "django/contrib/admin/static/admin/js/inlines.js",
+        "netGrowth": 92
+      },
+      {
+        "added": 2,
+        "baselineLines": 8,
+        "currentLines": 8,
+        "deleted": 2,
+        "file": "django/contrib/admin/static/admin/js/jquery.init.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 42,
+        "baselineLines": 79,
+        "currentLines": 89,
+        "deleted": 32,
+        "file": "django/contrib/admin/static/admin/js/nav_sidebar.js",
+        "netGrowth": 10
+      },
+      {
+        "added": 25,
+        "baselineLines": 15,
+        "currentLines": 28,
+        "deleted": 12,
+        "file": "django/contrib/admin/static/admin/js/popup_response.js",
+        "netGrowth": 13
+      },
+      {
+        "added": 13,
+        "baselineLines": 43,
+        "currentLines": 45,
+        "deleted": 11,
+        "file": "django/contrib/admin/static/admin/js/prepopulate.js",
+        "netGrowth": 2
+      },
+      {
+        "added": 19,
+        "baselineLines": 15,
+        "currentLines": 24,
+        "deleted": 10,
+        "file": "django/contrib/admin/static/admin/js/prepopulate_init.js",
+        "netGrowth": 9
+      },
+      {
+        "added": 8,
+        "baselineLines": 51,
+        "currentLines": 55,
+        "deleted": 4,
+        "file": "django/contrib/admin/static/admin/js/theme.js",
+        "netGrowth": 4
+      },
+      {
+        "added": 448,
+        "baselineLines": 169,
+        "currentLines": 532,
+        "deleted": 85,
+        "file": "django/contrib/admin/static/admin/js/urlify.js",
+        "netGrowth": 363
+      },
+      {
+        "added": 106,
+        "baselineLines": 283,
+        "currentLines": 333,
+        "deleted": 56,
+        "file": "django/contrib/gis/static/gis/js/OLMapWidget.js",
+        "netGrowth": 50
+      },
+      {
+        "added": 32,
+        "baselineLines": 577,
+        "currentLines": 596,
+        "deleted": 13,
+        "file": "django/core/serializers/xml_serializer.py",
+        "netGrowth": 19
+      }
+    ],
+    "totalAdded": 2114,
+    "totalDeleted": 1003
+  },
+  "changedFilesCount": 40,
+  "changedFilesSample": [
+    ".pre-commit-config.yaml",
+    "biome.json",
+    "django/contrib/admin/static/admin/js/SelectBox.js",
+    "django/contrib/admin/static/admin/js/SelectFilter2.js",
+    "django/contrib/admin/static/admin/js/actions.js",
+    "django/contrib/admin/static/admin/js/admin/DateTimeShortcuts.js",
+    "django/contrib/admin/static/admin/js/admin/RelatedObjectLookups.js",
+    "django/contrib/admin/static/admin/js/autocomplete.js",
+    "django/contrib/admin/static/admin/js/calendar.js",
+    "django/contrib/admin/static/admin/js/cancel.js",
+    "django/contrib/admin/static/admin/js/change_form.js",
+    "django/contrib/admin/static/admin/js/core.js",
+    "django/contrib/admin/static/admin/js/filters.js",
+    "django/contrib/admin/static/admin/js/inlines.js",
+    "django/contrib/admin/static/admin/js/jquery.init.js",
+    "django/contrib/admin/static/admin/js/nav_sidebar.js",
+    "django/contrib/admin/static/admin/js/popup_response.js",
+    "django/contrib/admin/static/admin/js/prepopulate.js",
+    "django/contrib/admin/static/admin/js/prepopulate_init.js",
+    "django/contrib/admin/static/admin/js/theme.js",
+    "django/contrib/admin/static/admin/js/urlify.js",
+    "django/contrib/gis/static/gis/js/OLMapWidget.js",
+    "django/core/serializers/xml_serializer.py",
+    "docs/internals/contributing/writing-code/javascript.txt",
+    "docs/spelling_wordlist",
+    "eslint-recommended.js",
+    "eslint.config.mjs",
+    "globals.js",
+    "js_tests/admin/DateTimeShortcuts.test.js",
+    "js_tests/admin/RelatedObjectLookups.test.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 2,
+          "files": [
+            "django/contrib/admin/static/admin/js/actions.js",
+            "django/contrib/admin/static/admin/js/cancel.js"
+          ],
+          "sample": "if (document.readyState !== \"loading\") { | document.addEventListener(\"DOMContentLoaded\", fn) | ready(function () {"
+        },
+        {
+          "count": 2,
+          "files": [
+            "django/contrib/admin/static/admin/js/actions.js"
+          ],
+          "sample": ".forEach(function (el) { | el.addEventListener(\"click\", function (event) { | event.preventDefault()"
+        },
+        {
+          "count": 2,
+          "files": [
+            "django/contrib/admin/static/admin/js/actions.js"
+          ],
+          "sample": "document | .querySelector(options.actionContainer) | .classList.remove(options.selectedClass)"
+        },
+        {
+          "count": 2,
+          "files": [
+            "django/contrib/admin/static/admin/js/admin/DateTimeShortcuts.js"
+          ],
+          "sample": ") | cancel_link.addEventListener(\"click\", function (e) { | document.addEventListener(\"keyup\", function (event) {"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": false,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "duplicate added code blocks detected: 10",
+    "source file django/contrib/admin/static/admin/js/urlify.js grew by 363 lines without same-directory shrink"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": false
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_django_pr21136",
+  "reuseFindings": [],
+  "sourceFilesCount": 24,
+  "version": "3.0.0",
+  "warnings": []
+}

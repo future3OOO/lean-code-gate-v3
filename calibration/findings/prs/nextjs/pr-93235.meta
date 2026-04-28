@@ -1,0 +1,9 @@
+repo: nextjs
+github: vercel/next.js
+pr_number: 93235
+title: [ci] Automatically start React sync when new `react@experimental` is available
+base_sha: 16e5f9e685188751f1f4fb085f6e9e729f409950
+merge_sha: 5c165904c1b507d7a054526078c655cd3733fc04
+exit_code: 0
+duration_seconds: 1
+cleanliness: clean

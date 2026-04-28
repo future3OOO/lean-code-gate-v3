@@ -1,0 +1,9 @@
+repo: nextjs
+github: vercel/next.js
+pr_number: 93236
+title: [ci] Create test summary comment if job immediately passes
+base_sha: 854fdb034e2e85c630c79669901755a3d66f7935
+merge_sha: 5ccc1cc26f1fec88be1458a22ad35ea015bd724c
+exit_code: 0
+duration_seconds: 1
+cleanliness: clean

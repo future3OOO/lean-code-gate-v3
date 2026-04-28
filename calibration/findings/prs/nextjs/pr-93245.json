@@ -1,0 +1,171 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 6,
+        "baselineLines": 232,
+        "currentLines": 236,
+        "deleted": 2,
+        "file": "scripts/check-backport-canary-release.js",
+        "netGrowth": 4
+      },
+      {
+        "added": 15,
+        "baselineLines": 130,
+        "currentLines": 132,
+        "deleted": 13,
+        "file": "scripts/create-release-branch.js",
+        "netGrowth": 2
+      },
+      {
+        "added": 6,
+        "baselineLines": 219,
+        "currentLines": 223,
+        "deleted": 2,
+        "file": "scripts/publish-release.js",
+        "netGrowth": 4
+      },
+      {
+        "added": 74,
+        "baselineLines": null,
+        "currentLines": 74,
+        "deleted": 0,
+        "file": "scripts/release-github-auth.js",
+        "netGrowth": 74
+      },
+      {
+        "added": 29,
+        "baselineLines": 93,
+        "currentLines": 96,
+        "deleted": 26,
+        "file": "scripts/start-release.js",
+        "netGrowth": 3
+      }
+    ],
+    "totalAdded": 130,
+    "totalDeleted": 43
+  },
+  "changedFilesCount": 9,
+  "changedFilesSample": [
+    ".github/workflows/build_and_deploy.yml",
+    ".github/workflows/create_release_branch.yml",
+    ".github/workflows/sync_backport_canary_release.yml",
+    ".github/workflows/trigger_release.yml",
+    "scripts/check-backport-canary-release.js",
+    "scripts/create-release-branch.js",
+    "scripts/publish-release.js",
+    "scripts/release-github-auth.js",
+    "scripts/start-release.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 2,
+          "files": [
+            "scripts/check-backport-canary-release.js",
+            "scripts/publish-release.js"
+          ],
+          "sample": "getGitHubToken | getGitHubTokenMissingMessage | } = require('./release-github-auth')"
+        },
+        {
+          "count": 6,
+          "files": [
+            "scripts/create-release-branch.js",
+            "scripts/start-release.js"
+          ],
+          "sample": "await configureGitHubAuth(githubToken) | await verifyGitHubApiAccess( | githubToken"
+        },
+        {
+          "count": 6,
+          "files": [
+            "scripts/create-release-branch.js",
+            "scripts/start-release.js"
+          ],
+          "sample": "getGitHubTokenMissingMessage | verifyGitHubApiAccess | } = require('./release-github-auth')"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "duplicate added code blocks detected: 3"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_nextjs_pr93245",
+  "reuseFindings": [],
+  "sourceFilesCount": 5,
+  "version": "3.0.0",
+  "warnings": []
+}

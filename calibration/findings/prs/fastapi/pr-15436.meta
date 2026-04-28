@@ -1,0 +1,9 @@
+repo: fastapi
+github: fastapi/fastapi
+pr_number: 15436
+title: ⬆ Bump CodSpeedHQ/action from 4.12.1 to 4.14.0
+base_sha: b44585589a04a095abf4bf0f1b4526b35ddaeca8
+merge_sha: 4bad6d2597f8df0251aa39cf388e3567bfd6290e
+exit_code: 0
+duration_seconds: 1
+cleanliness: clean

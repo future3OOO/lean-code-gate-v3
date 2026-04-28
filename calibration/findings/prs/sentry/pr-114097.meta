@@ -1,0 +1,9 @@
+repo: sentry
+github: getsentry/sentry
+pr_number: 114097
+title: ref(autofix): Pass optional args to startStep as object
+base_sha: 59e88bd181c5f8fa53489800feba75eed6b00ae6
+merge_sha: 60ef618cca7cb73906bccf141f2a6da77daf404b
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

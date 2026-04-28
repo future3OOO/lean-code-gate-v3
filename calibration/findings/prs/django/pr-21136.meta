@@ -1,0 +1,9 @@
+repo: django
+github: django/django
+pr_number: 21136
+title: Fixed #35007 -- Replaced ESLint with Biome for JavaScript linting and formatting.
+base_sha: 8ddc5b444c175c696c8197dc8f24273252b0de77
+merge_sha: fc0a0ebd4fe573299a5f978e77fa3bca8424f661
+exit_code: 2
+duration_seconds: 1
+cleanliness: clean

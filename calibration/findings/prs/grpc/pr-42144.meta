@@ -1,0 +1,9 @@
+repo: grpc
+github: grpc/grpc
+pr_number: 42144
+title: [export] [Flake] Fix a flake in `alts_concurrent_connectivity_test`.
+base_sha: 1715c91b0eea6686ebef8bd2fe2ef58564ba8a93
+merge_sha: 9a53d4fea23336fe42cbe956c0321406dc34faba
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

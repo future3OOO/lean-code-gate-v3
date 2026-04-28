@@ -1,0 +1,9 @@
+repo: aws-sdk-js
+github: aws/aws-sdk-js-v3
+pr_number: 7958
+title: chore(codegen): sync for http2 session closure, retry longpoll backoff, and fast-xml-parser version bump
+base_sha: 110b1c01dedb62bc56449598eeaac1d838e4995f
+merge_sha: 107aefc4d41379a56836ade376f27eef23db8d43
+exit_code: 2
+duration_seconds: 0
+cleanliness: clean

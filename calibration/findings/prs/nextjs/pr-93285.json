@@ -1,0 +1,189 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 349,
+        "baselineLines": null,
+        "currentLines": 349,
+        "deleted": 0,
+        "file": "scripts/release-github-api.js",
+        "netGrowth": 349
+      },
+      {
+        "added": 31,
+        "baselineLines": 96,
+        "currentLines": 113,
+        "deleted": 14,
+        "file": "scripts/start-release.js",
+        "netGrowth": 17
+      },
+      {
+        "added": 64,
+        "baselineLines": null,
+        "currentLines": 64,
+        "deleted": 0,
+        "file": "turbopack/crates/turbopack-trace-server/src/lazy_sorted_vec.rs",
+        "netGrowth": 64
+      },
+      {
+        "added": 1,
+        "baselineLines": 413,
+        "currentLines": 414,
+        "deleted": 0,
+        "file": "turbopack/crates/turbopack-trace-server/src/lib.rs",
+        "netGrowth": 1
+      },
+      {
+        "added": 1,
+        "baselineLines": 48,
+        "currentLines": 49,
+        "deleted": 0,
+        "file": "turbopack/crates/turbopack-trace-server/src/main.rs",
+        "netGrowth": 1
+      },
+      {
+        "added": 57,
+        "baselineLines": 561,
+        "currentLines": 605,
+        "deleted": 13,
+        "file": "turbopack/crates/turbopack-trace-server/src/reader/turbopack.rs",
+        "netGrowth": 44
+      },
+      {
+        "added": 58,
+        "baselineLines": 182,
+        "currentLines": 235,
+        "deleted": 5,
+        "file": "turbopack/crates/turbopack-trace-server/src/span.rs",
+        "netGrowth": 53
+      },
+      {
+        "added": 65,
+        "baselineLines": 605,
+        "currentLines": 613,
+        "deleted": 57,
+        "file": "turbopack/crates/turbopack-trace-server/src/span_ref.rs",
+        "netGrowth": 8
+      },
+      {
+        "added": 26,
+        "baselineLines": 459,
+        "currentLines": 458,
+        "deleted": 27,
+        "file": "turbopack/crates/turbopack-trace-server/src/store.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 1300,
+        "currentLines": 1298,
+        "deleted": 3,
+        "file": "turbopack/crates/turbopack-trace-server/src/viewer.rs",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 653,
+    "totalDeleted": 119
+  },
+  "changedFilesCount": 10,
+  "changedFilesSample": [
+    "scripts/release-github-api.js",
+    "scripts/start-release.js",
+    "turbopack/crates/turbopack-trace-server/src/lazy_sorted_vec.rs",
+    "turbopack/crates/turbopack-trace-server/src/lib.rs",
+    "turbopack/crates/turbopack-trace-server/src/main.rs",
+    "turbopack/crates/turbopack-trace-server/src/reader/turbopack.rs",
+    "turbopack/crates/turbopack-trace-server/src/span.rs",
+    "turbopack/crates/turbopack-trace-server/src/span_ref.rs",
+    "turbopack/crates/turbopack-trace-server/src/store.rs",
+    "turbopack/crates/turbopack-trace-server/src/viewer.rs"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "changed source diff is additive: added=653 deleted=119"
+      ]
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_nextjs_pr93285",
+  "reuseFindings": [],
+  "sourceFilesCount": 10,
+  "version": "3.0.0",
+  "warnings": [
+    "changed source diff is additive: added=653 deleted=119"
+  ]
+}

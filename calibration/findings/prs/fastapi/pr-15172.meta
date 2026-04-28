@@ -1,0 +1,9 @@
+repo: fastapi
+github: fastapi/fastapi
+pr_number: 15172
+title: 🌐 Update translations for tr (update-outdated)
+base_sha: a28b785ed79461e184595684d20188d85f401c99
+merge_sha: d90c38572b9f701118bba2b0b2f6e660cce53a36
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

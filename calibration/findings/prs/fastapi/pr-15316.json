@@ -1,0 +1,117 @@
+{
+  "bloat": {
+    "files": [],
+    "totalAdded": 0,
+    "totalDeleted": 0
+  },
+  "changedFilesCount": 23,
+  "changedFilesSample": [
+    ".github/dependabot.yml",
+    ".github/workflows/add-to-project.yml",
+    ".github/workflows/build-docs.yml",
+    ".github/workflows/contributors.yml",
+    ".github/workflows/deploy-docs.yml",
+    ".github/workflows/detect-conflicts.yml",
+    ".github/workflows/issue-manager.yml",
+    ".github/workflows/label-approved.yml",
+    ".github/workflows/labeler.yml",
+    ".github/workflows/latest-changes.yml",
+    ".github/workflows/notify-translations.yml",
+    ".github/workflows/people.yml",
+    ".github/workflows/pre-commit.yml",
+    ".github/workflows/publish.yml",
+    ".github/workflows/smokeshow.yml",
+    ".github/workflows/sponsors.yml",
+    ".github/workflows/test-redistribute.yml",
+    ".github/workflows/test.yml",
+    ".github/workflows/topic-repos.yml",
+    ".github/workflows/translate.yml",
+    ".pre-commit-config.yaml",
+    "pyproject.toml",
+    "uv.lock"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_fastapi_pr15316",
+  "reuseFindings": [],
+  "sourceFilesCount": 0,
+  "version": "3.0.0",
+  "warnings": []
+}

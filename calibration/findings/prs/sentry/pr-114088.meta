@@ -1,0 +1,9 @@
+repo: sentry
+github: getsentry/sentry
+pr_number: 114088
+title: feat(cmdk): Add assigned-to-me alias to issue filter actions
+base_sha: 262f2a8cac7855202e2b53056202fed35e27cdb9
+merge_sha: 59e88bd181c5f8fa53489800feba75eed6b00ae6
+exit_code: 2
+duration_seconds: 2
+cleanliness: clean

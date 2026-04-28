@@ -1,0 +1,9 @@
+repo: nextjs
+github: vercel/next.js
+pr_number: 93285
+title: [ci]: trigger signed release commit via API
+base_sha: e69de2ffaf31743f6c015a1c645e913c8e59a436
+merge_sha: 012fd7df4ba12f0699754125dc0226b6c99937a2
+exit_code: 0
+duration_seconds: 8
+cleanliness: clean

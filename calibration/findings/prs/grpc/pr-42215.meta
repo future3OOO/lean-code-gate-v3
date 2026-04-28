@@ -1,0 +1,9 @@
+repo: grpc
+github: grpc/grpc
+pr_number: 42215
+title: [export] Allow a little more tolerance for RPC distribution error to reduce test flakiness.
+base_sha: def12c0ebd716ef48326beebfe5d334023395829
+merge_sha: a66f83d1258c86ddbf271b0f3806d68ad042322a
+exit_code: 0
+duration_seconds: 1
+cleanliness: clean

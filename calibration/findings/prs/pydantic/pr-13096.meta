@@ -1,0 +1,9 @@
+repo: pydantic
+github: pydantic/pydantic
+pr_number: 13096
+title: Handle `AttributeError` subclasses with `from_attributes`
+base_sha: a6bf50b721c2dd1ed609c8bb402076e8ec0c43f3
+merge_sha: 5bc4d9cccc3d9a703a06319dd1a3452c6bd4a41d
+exit_code: 2
+duration_seconds: 0
+cleanliness: clean

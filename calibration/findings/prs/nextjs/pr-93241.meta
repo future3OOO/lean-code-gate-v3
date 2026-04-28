@@ -1,0 +1,9 @@
+repo: nextjs
+github: vercel/next.js
+pr_number: 93241
+title: [ci] Handle namespaced packages in preview builds
+base_sha: 854fdb034e2e85c630c79669901755a3d66f7935
+merge_sha: 8a390fbf7692337335b574577efa5df9082c2d31
+exit_code: 0
+duration_seconds: 1
+cleanliness: clean

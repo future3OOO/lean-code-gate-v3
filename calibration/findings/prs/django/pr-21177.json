@@ -1,0 +1,123 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 19,
+        "baselineLines": 393,
+        "currentLines": 412,
+        "deleted": 0,
+        "file": "django/contrib/auth/__init__.py",
+        "netGrowth": 19
+      },
+      {
+        "added": 17,
+        "baselineLines": 345,
+        "currentLines": 347,
+        "deleted": 15,
+        "file": "django/contrib/auth/backends.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 2,
+        "baselineLines": 66,
+        "currentLines": 58,
+        "deleted": 10,
+        "file": "django/contrib/auth/handlers/modwsgi.py",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 38,
+    "totalDeleted": 25
+  },
+  "changedFilesCount": 4,
+  "changedFilesSample": [
+    "django/contrib/auth/__init__.py",
+    "django/contrib/auth/backends.py",
+    "django/contrib/auth/handlers/modwsgi.py",
+    "tests/queries/tests.py"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_django_pr21177",
+  "reuseFindings": [],
+  "sourceFilesCount": 3,
+  "version": "3.0.0",
+  "warnings": []
+}

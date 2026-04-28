@@ -1,0 +1,9 @@
+repo: django
+github: django/django
+pr_number: 21177
+title: Moved QuerySet.extra() assertions to a separate test.
+base_sha: 017d7f6f12e597e6179de7ffdf330a52c2b22053
+merge_sha: a49be25e6128a3272960ed4f6f6506d147596395
+exit_code: 0
+duration_seconds: 1
+cleanliness: clean

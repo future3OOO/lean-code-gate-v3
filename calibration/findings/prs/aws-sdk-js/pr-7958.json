@@ -1,0 +1,256 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 24,
+        "baselineLines": null,
+        "currentLines": 24,
+        "deleted": 0,
+        "file": "private/aws-echo-service/src/endpoint/bdd.ts",
+        "netGrowth": 24
+      },
+      {
+        "added": 3,
+        "baselineLines": 26,
+        "currentLines": 26,
+        "deleted": 3,
+        "file": "private/aws-echo-service/src/endpoint/endpointResolver.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 63,
+        "baselineLines": null,
+        "currentLines": 63,
+        "deleted": 0,
+        "file": "private/aws-restjson-server/src/endpoint/bdd.ts",
+        "netGrowth": 63
+      },
+      {
+        "added": 3,
+        "baselineLines": 26,
+        "currentLines": 26,
+        "deleted": 3,
+        "file": "private/aws-restjson-server/src/endpoint/endpointResolver.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 63,
+        "baselineLines": null,
+        "currentLines": 63,
+        "deleted": 0,
+        "file": "private/aws-restjson-validation-server/src/endpoint/bdd.ts",
+        "netGrowth": 63
+      },
+      {
+        "added": 3,
+        "baselineLines": 26,
+        "currentLines": 26,
+        "deleted": 3,
+        "file": "private/aws-restjson-validation-server/src/endpoint/endpointResolver.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 24,
+        "baselineLines": null,
+        "currentLines": 24,
+        "deleted": 0,
+        "file": "private/weather-legacy-auth/src/endpoint/bdd.ts",
+        "netGrowth": 24
+      },
+      {
+        "added": 3,
+        "baselineLines": 26,
+        "currentLines": 26,
+        "deleted": 3,
+        "file": "private/weather-legacy-auth/src/endpoint/endpointResolver.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 24,
+        "baselineLines": null,
+        "currentLines": 24,
+        "deleted": 0,
+        "file": "private/weather/src/endpoint/bdd.ts",
+        "netGrowth": 24
+      },
+      {
+        "added": 3,
+        "baselineLines": 26,
+        "currentLines": 26,
+        "deleted": 3,
+        "file": "private/weather/src/endpoint/endpointResolver.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 11,
+        "currentLines": 11,
+        "deleted": 2,
+        "file": "scripts/generate-clients/config.js",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 215,
+    "totalDeleted": 17
+  },
+  "changedFilesCount": 494,
+  "changedFilesSample": [
+    "clients/client-accessanalyzer/package.json",
+    "clients/client-account/package.json",
+    "clients/client-acm-pca/package.json",
+    "clients/client-acm/package.json",
+    "clients/client-aiops/package.json",
+    "clients/client-amp/package.json",
+    "clients/client-amplify/package.json",
+    "clients/client-amplifybackend/package.json",
+    "clients/client-amplifyuibuilder/package.json",
+    "clients/client-api-gateway/package.json",
+    "clients/client-apigatewaymanagementapi/package.json",
+    "clients/client-apigatewayv2/package.json",
+    "clients/client-app-mesh/package.json",
+    "clients/client-appconfig/package.json",
+    "clients/client-appconfigdata/package.json",
+    "clients/client-appfabric/package.json",
+    "clients/client-appflow/package.json",
+    "clients/client-appintegrations/package.json",
+    "clients/client-application-auto-scaling/package.json",
+    "clients/client-application-discovery-service/package.json",
+    "clients/client-application-insights/package.json",
+    "clients/client-application-signals/package.json",
+    "clients/client-applicationcostprofiler/package.json",
+    "clients/client-apprunner/package.json",
+    "clients/client-appstream/package.json",
+    "clients/client-appsync/package.json",
+    "clients/client-arc-region-switch/package.json",
+    "clients/client-arc-zonal-shift/package.json",
+    "clients/client-artifact/package.json",
+    "clients/client-athena/package.json"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 10,
+          "files": [
+            "private/aws-echo-service/src/endpoint/bdd.ts",
+            "private/aws-restjson-server/src/endpoint/bdd.ts",
+            "private/aws-restjson-validation-server/src/endpoint/bdd.ts",
+            "private/weather-legacy-auth/src/endpoint/bdd.ts",
+            "private/weather/src/endpoint/bdd.ts"
+          ],
+          "sample": "]) | export const bdd = BinaryDecisionDiagram.from( | nodes, root, _data.conditions, _data.results"
+        },
+        {
+          "count": 9,
+          "files": [
+            "private/aws-echo-service/src/endpoint/bdd.ts",
+            "private/weather-legacy-auth/src/endpoint/bdd.ts",
+            "private/weather/src/endpoint/bdd.ts"
+          ],
+          "sample": "[-1,\"(default endpointRuleSet) endpoint is not set - you must configure an endpoint.\"] | ] | const root = 2"
+        },
+        {
+          "count": 3,
+          "files": [
+            "private/aws-echo-service/src/endpoint/bdd.ts",
+            "private/weather-legacy-auth/src/endpoint/bdd.ts",
+            "private/weather/src/endpoint/bdd.ts"
+          ],
+          "sample": "import { BinaryDecisionDiagram } from \"@smithy/util-endpoints\" | const a={\"ref\":\"endpoint\"} | const _data={"
+        },
+        {
+          "count": 5,
+          "files": [
+            "private/aws-echo-service/src/endpoint/endpointResolver.ts",
+            "private/aws-restjson-server/src/endpoint/endpointResolver.ts",
+            "private/aws-restjson-validation-server/src/endpoint/endpointResolver.ts",
+            "private/weather-legacy-auth/src/endpoint/endpointResolver.ts",
+            "private/weather/src/endpoint/endpointResolver.ts"
+          ],
+          "sample": "import { type EndpointParams, decideEndpoint, EndpointCache } from \"@smithy/util-endpoints\" | import { bdd } from \"./bdd\" | decideEndpoint(bdd, {"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "duplicate added code blocks detected: 7"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_aws-sdk-js_pr7958",
+  "reuseFindings": [],
+  "sourceFilesCount": 16,
+  "version": "3.0.0",
+  "warnings": []
+}

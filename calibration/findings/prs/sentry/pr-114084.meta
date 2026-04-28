@@ -1,0 +1,9 @@
+repo: sentry
+github: getsentry/sentry
+pr_number: 114084
+title: feat(cmdk): Add Switch Organization action to command palette
+base_sha: 81087bd2e810b293ac1f579f05f976fffd74e63e
+merge_sha: 262f2a8cac7855202e2b53056202fed35e27cdb9
+exit_code: 2
+duration_seconds: 0
+cleanliness: clean

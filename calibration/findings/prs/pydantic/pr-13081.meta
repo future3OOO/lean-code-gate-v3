@@ -1,0 +1,9 @@
+repo: pydantic
+github: pydantic/pydantic
+pr_number: 13081
+title: Make validation `Extra` immutable, like with serialization
+base_sha: 07724d08a90d01cdd6b38235eabd158cb63491bb
+merge_sha: 156dc0fa59edd90df311a84f13b6ce0911da6f2a
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

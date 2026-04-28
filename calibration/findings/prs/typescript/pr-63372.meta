@@ -1,0 +1,9 @@
+repo: typescript
+github: microsoft/TypeScript
+pr_number: 63372
+title: 🤖 Pick PR #63368 (Harden ATA package name filtering) into release-6.0
+base_sha: 0725fb4664a1d5ec94040b6d94db77dc1cc354e4
+merge_sha: ad1c695fada682764bb510dd680e8f175ae54094
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

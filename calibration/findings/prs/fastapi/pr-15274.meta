@@ -1,0 +1,9 @@
+repo: fastapi
+github: fastapi/fastapi
+pr_number: 15274
+title: 👥 Update FastAPI GitHub topic repositories
+base_sha: 681146d90b5534d6139668ac240c7bff63e4a7bc
+merge_sha: 9274097c302071f8506808c0c2faf1e4393fbb5c
+exit_code: 0
+duration_seconds: 1
+cleanliness: clean

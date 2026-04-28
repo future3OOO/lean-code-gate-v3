@@ -1,0 +1,9 @@
+repo: django
+github: django/django
+pr_number: 21152
+title: Fixed #37057 -- Adjusted UniqueConstraint handling of UNKNOWN condition.
+base_sha: e1bdebc84ee7cacd40b820e862fd504054619403
+merge_sha: 61a62be313e395ce1265132bfc99f51476fb3c95
+exit_code: 2
+duration_seconds: 1
+cleanliness: clean

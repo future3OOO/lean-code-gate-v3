@@ -1,0 +1,9 @@
+repo: typescript
+github: microsoft/TypeScript
+pr_number: 63366
+title: Require AI disclosure in PR descriptions
+base_sha: 38c3279e29e45c274c408d909394b7bf45c24fdc
+merge_sha: 5f435057a5154e95c74fbb94d241da6d4c207be3
+exit_code: 0
+duration_seconds: 1
+cleanliness: clean

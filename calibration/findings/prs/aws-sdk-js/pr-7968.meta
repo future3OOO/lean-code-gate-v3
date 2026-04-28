@@ -1,0 +1,9 @@
+repo: aws-sdk-js
+github: aws/aws-sdk-js-v3
+pr_number: 7968
+title: fix(xml-builder): inline nodable/entities for dist format compatibility
+base_sha: 3fbf6c563843fd198085b3db2198af02ac09fede
+merge_sha: 02b6be6bec6d47d3dcecbdcad6e4319107ae2172
+exit_code: 2
+duration_seconds: 1
+cleanliness: clean

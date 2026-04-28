@@ -1,0 +1,150 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 8,
+        "baselineLines": 865,
+        "currentLines": 862,
+        "deleted": 11,
+        "file": "static/app/components/events/autofix/useExplorerAutofix.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 128,
+        "currentLines": 128,
+        "deleted": 1,
+        "file": "static/app/components/events/autofix/v3/codeChangesCard.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 426,
+        "currentLines": 426,
+        "deleted": 5,
+        "file": "static/app/components/events/autofix/v3/nextStep.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 98,
+        "currentLines": 98,
+        "deleted": 1,
+        "file": "static/app/components/events/autofix/v3/solutionCard.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 189,
+        "currentLines": 189,
+        "deleted": 2,
+        "file": "static/app/views/issueDetails/actions/seerCommandPaletteActions.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 216,
+        "currentLines": 216,
+        "deleted": 1,
+        "file": "static/app/views/issueDetails/streamline/instrumentationFixSection.tsx",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 18,
+    "totalDeleted": 21
+  },
+  "changedFilesCount": 7,
+  "changedFilesSample": [
+    "static/app/components/events/autofix/useExplorerAutofix.tsx",
+    "static/app/components/events/autofix/v3/codeChangesCard.tsx",
+    "static/app/components/events/autofix/v3/nextStep.spec.tsx",
+    "static/app/components/events/autofix/v3/nextStep.tsx",
+    "static/app/components/events/autofix/v3/solutionCard.tsx",
+    "static/app/views/issueDetails/actions/seerCommandPaletteActions.tsx",
+    "static/app/views/issueDetails/streamline/instrumentationFixSection.tsx"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_sentry_pr114097",
+  "reuseFindings": [],
+  "sourceFilesCount": 6,
+  "version": "3.0.0",
+  "warnings": []
+}

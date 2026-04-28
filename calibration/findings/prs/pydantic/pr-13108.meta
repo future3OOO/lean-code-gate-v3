@@ -1,0 +1,9 @@
+repo: pydantic
+github: pydantic/pydantic
+pr_number: 13108
+title: Fix Clippy 0.1.95 warnings
+base_sha: 749aa690f24b4867e4b21793bab68f37f0d28a25
+merge_sha: 07724d08a90d01cdd6b38235eabd158cb63491bb
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

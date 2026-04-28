@@ -1,0 +1,128 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 3,
+        "baselineLines": 38,
+        "currentLines": 39,
+        "deleted": 2,
+        "file": "static/app/views/seerExplorer/hooks/useExplorerSessions.tsx",
+        "netGrowth": 1
+      },
+      {
+        "added": 5,
+        "baselineLines": 70,
+        "currentLines": 73,
+        "deleted": 2,
+        "file": "static/app/views/seerExplorer/hooks/useSeerExplorerPolling.tsx",
+        "netGrowth": 3
+      },
+      {
+        "added": 10,
+        "baselineLines": 1063,
+        "currentLines": 1068,
+        "deleted": 5,
+        "file": "static/app/views/seerExplorer/utils.tsx",
+        "netGrowth": 5
+      }
+    ],
+    "totalAdded": 18,
+    "totalDeleted": 9
+  },
+  "changedFilesCount": 9,
+  "changedFilesSample": [
+    "pyproject.toml",
+    "static/app/views/seerExplorer/components/drawer/explorerDrawerContent.spec.tsx",
+    "static/app/views/seerExplorer/components/drawer/useSeerExplorerDrawer.spec.tsx",
+    "static/app/views/seerExplorer/components/panel/explorerFAB.spec.tsx",
+    "static/app/views/seerExplorer/hooks/useExplorerSessions.tsx",
+    "static/app/views/seerExplorer/hooks/useSeerExplorer.spec.tsx",
+    "static/app/views/seerExplorer/hooks/useSeerExplorerPolling.tsx",
+    "static/app/views/seerExplorer/utils.tsx",
+    "uv.lock"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_sentry_pr114099",
+  "reuseFindings": [],
+  "sourceFilesCount": 3,
+  "version": "3.0.0",
+  "warnings": []
+}

@@ -1,0 +1,9 @@
+repo: django
+github: django/django
+pr_number: 21150
+title: Refs #12090 -- Documented parameters for contrib.admin.decorators.action().
+base_sha: 183e6505b64c140ad2ad64626c52bba88fc13edd
+merge_sha: d24160ab4855f6971aa1f437720adca6330048a2
+exit_code: 0
+duration_seconds: 1
+cleanliness: clean

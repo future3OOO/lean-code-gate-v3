@@ -1,0 +1,9 @@
+repo: fastapi
+github: fastapi/fastapi
+pr_number: 15165
+title: 🌐 Update translations for fr (update-outdated)
+base_sha: c4571779697453e589cfa4b4199a302dbbb85517
+merge_sha: fdf31c110be56daf016834f284d36cecd1303351
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

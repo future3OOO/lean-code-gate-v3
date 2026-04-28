@@ -1,0 +1,9 @@
+repo: fastapi
+github: fastapi/fastapi
+pr_number: 15439
+title: ⬆ Bump pydantic from 2.12.5 to 2.13.2
+base_sha: b44585589a04a095abf4bf0f1b4526b35ddaeca8
+merge_sha: edc4c8ba33f1851d0ac589f34e8d7dcdc5b9b856
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

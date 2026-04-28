@@ -1,0 +1,124 @@
+{
+  "bloat": {
+    "files": [],
+    "totalAdded": 0,
+    "totalDeleted": 0
+  },
+  "changedFilesCount": 98,
+  "changedFilesSample": [
+    "docs/tr/docs/_llm-test.md",
+    "docs/tr/docs/advanced/additional-responses.md",
+    "docs/tr/docs/advanced/additional-status-codes.md",
+    "docs/tr/docs/advanced/advanced-dependencies.md",
+    "docs/tr/docs/advanced/async-tests.md",
+    "docs/tr/docs/advanced/behind-a-proxy.md",
+    "docs/tr/docs/advanced/custom-response.md",
+    "docs/tr/docs/advanced/dataclasses.md",
+    "docs/tr/docs/advanced/events.md",
+    "docs/tr/docs/advanced/generate-clients.md",
+    "docs/tr/docs/advanced/index.md",
+    "docs/tr/docs/advanced/middleware.md",
+    "docs/tr/docs/advanced/openapi-callbacks.md",
+    "docs/tr/docs/advanced/openapi-webhooks.md",
+    "docs/tr/docs/advanced/path-operation-advanced-configuration.md",
+    "docs/tr/docs/advanced/response-change-status-code.md",
+    "docs/tr/docs/advanced/response-cookies.md",
+    "docs/tr/docs/advanced/response-directly.md",
+    "docs/tr/docs/advanced/response-headers.md",
+    "docs/tr/docs/advanced/security/http-basic-auth.md",
+    "docs/tr/docs/advanced/security/index.md",
+    "docs/tr/docs/advanced/security/oauth2-scopes.md",
+    "docs/tr/docs/advanced/settings.md",
+    "docs/tr/docs/advanced/sub-applications.md",
+    "docs/tr/docs/advanced/templates.md",
+    "docs/tr/docs/advanced/testing-websockets.md",
+    "docs/tr/docs/advanced/using-request-directly.md",
+    "docs/tr/docs/advanced/websockets.md",
+    "docs/tr/docs/advanced/wsgi.md",
+    "docs/tr/docs/alternatives.md"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_fastapi_pr15172",
+  "reuseFindings": [],
+  "sourceFilesCount": 0,
+  "version": "3.0.0",
+  "warnings": []
+}

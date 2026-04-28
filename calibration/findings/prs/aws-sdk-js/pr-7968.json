@@ -1,0 +1,127 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 465,
+        "baselineLines": null,
+        "currentLines": 465,
+        "deleted": 0,
+        "file": "packages-internal/xml-builder/src/xml-external/nodable_entities.ts",
+        "netGrowth": 465
+      },
+      {
+        "added": 1,
+        "baselineLines": 74,
+        "currentLines": 70,
+        "deleted": 5,
+        "file": "packages-internal/xml-builder/src/xml-parser.ts",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 466,
+    "totalDeleted": 5
+  },
+  "changedFilesCount": 3,
+  "changedFilesSample": [
+    "packages-internal/xml-builder/src/xml-external/nodable_entities.spec.ts",
+    "packages-internal/xml-builder/src/xml-external/nodable_entities.ts",
+    "packages-internal/xml-builder/src/xml-parser.ts"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "packages-internal/xml-builder/src/xml-external/nodable_entities.ts:277"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 2,
+          "files": [
+            "packages-internal/xml-builder/src/xml-external/nodable_entities.ts"
+          ],
+          "sample": "this._inputMap = Object.create(null) | this._totalExpansions = 0 | this._expandedLength = 0"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 1 changed location(s)",
+    "duplicate added code blocks detected: 1"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_aws-sdk-js_pr7968",
+  "reuseFindings": [],
+  "sourceFilesCount": 2,
+  "version": "3.0.0",
+  "warnings": []
+}

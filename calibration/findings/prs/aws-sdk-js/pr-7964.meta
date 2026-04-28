@@ -1,0 +1,9 @@
+repo: aws-sdk-js
+github: aws/aws-sdk-js-v3
+pr_number: 7964
+title: fix(xml-builder): use xml 1.1 parsing behavior for entities
+base_sha: 7babd8b09f04ece820e08fdc2d4601b9698133f2
+merge_sha: 7a30bce017601c93aea1b6aed38c0c9882e05834
+exit_code: 2
+duration_seconds: 0
+cleanliness: clean

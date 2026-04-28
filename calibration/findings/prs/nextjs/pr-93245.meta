@@ -1,0 +1,9 @@
+repo: nextjs
+github: vercel/next.js
+pr_number: 93245
+title: [ci]: app-based release workflow
+base_sha: a6782fa6203183cc25a616b89c03f12141e8678d
+merge_sha: e69de2ffaf31743f6c015a1c645e913c8e59a436
+exit_code: 2
+duration_seconds: 1
+cleanliness: clean

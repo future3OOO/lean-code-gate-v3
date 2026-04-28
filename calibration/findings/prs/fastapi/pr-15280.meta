@@ -1,0 +1,9 @@
+repo: fastapi
+github: fastapi/fastapi
+pr_number: 15280
+title: ✨ Add support for `@app.vibe()`
+base_sha: 6ee87478d821171139264cd9cd17cbd2232934ce
+merge_sha: 70580da818722cce68b7a88928d67bd0f64f42c5
+exit_code: 2
+duration_seconds: 0
+cleanliness: clean

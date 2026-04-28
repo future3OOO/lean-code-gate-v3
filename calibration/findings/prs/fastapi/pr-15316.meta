@@ -1,0 +1,9 @@
+repo: fastapi
+github: fastapi/fastapi
+pr_number: 15316
+title: 🔒️ Add zizmor and fix audit findings
+base_sha: 708606c982cf35718cb2214c0bb9261cf548f042
+merge_sha: 3f4169be1afaca39b0227e4947cf4e2596aa4e31
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

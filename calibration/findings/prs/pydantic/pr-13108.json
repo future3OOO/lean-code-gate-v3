@@ -1,0 +1,140 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 3,
+        "baselineLines": 381,
+        "currentLines": 381,
+        "deleted": 3,
+        "file": "pydantic-core/src/input/input_abstract.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 1003,
+        "currentLines": 1003,
+        "deleted": 2,
+        "file": "pydantic-core/src/input/input_python.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 340,
+        "currentLines": 340,
+        "deleted": 2,
+        "file": "pydantic-core/src/input/input_string.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 737,
+        "currentLines": 738,
+        "deleted": 0,
+        "file": "pydantic-core/src/input/return_enums.rs",
+        "netGrowth": 1
+      },
+      {
+        "added": 1,
+        "baselineLines": 893,
+        "currentLines": 876,
+        "deleted": 18,
+        "file": "pydantic-core/src/validators/mod.rs",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 9,
+    "totalDeleted": 25
+  },
+  "changedFilesCount": 5,
+  "changedFilesSample": [
+    "pydantic-core/src/input/input_abstract.rs",
+    "pydantic-core/src/input/input_python.rs",
+    "pydantic-core/src/input/input_string.rs",
+    "pydantic-core/src/input/return_enums.rs",
+    "pydantic-core/src/validators/mod.rs"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_pydantic_pr13108",
+  "reuseFindings": [],
+  "sourceFilesCount": 5,
+  "version": "3.0.0",
+  "warnings": []
+}

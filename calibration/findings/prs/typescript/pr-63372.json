@@ -1,0 +1,120 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 6,
+        "baselineLines": 415,
+        "currentLines": 416,
+        "deleted": 5,
+        "file": "src/jsTyping/jsTyping.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 12,
+        "baselineLines": 2741,
+        "currentLines": 2742,
+        "deleted": 11,
+        "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+        "netGrowth": 1
+      }
+    ],
+    "totalAdded": 18,
+    "totalDeleted": 16
+  },
+  "changedFilesCount": 5,
+  "changedFilesSample": [
+    "src/jsTyping/jsTyping.ts",
+    "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+    "tests/baselines/reference/tsserver/typingsInstaller/malformed-packagejson.js",
+    "tests/baselines/reference/tsserver/typingsInstaller/should-handle-node-core-modules.js",
+    "tests/baselines/reference/tsserver/typingsInstaller/should-not-initialize-invaalid-package-names.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file src/testRunner/unittests/tsserver/typingsInstaller.ts grew by 1 lines"
+      ]
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_typescript_pr63372",
+  "reuseFindings": [],
+  "sourceFilesCount": 2,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file src/testRunner/unittests/tsserver/typingsInstaller.ts grew by 1 lines"
+  ]
+}

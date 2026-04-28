@@ -1,0 +1,163 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 2,
+        "baselineLines": 53,
+        "currentLines": 55,
+        "deleted": 0,
+        "file": "static/app/components/commandPalette/types.tsx",
+        "netGrowth": 2
+      },
+      {
+        "added": 59,
+        "baselineLines": 162,
+        "currentLines": 194,
+        "deleted": 27,
+        "file": "static/app/components/commandPalette/ui/cmdk.tsx",
+        "netGrowth": 32
+      },
+      {
+        "added": 11,
+        "baselineLines": 767,
+        "currentLines": 772,
+        "deleted": 6,
+        "file": "static/app/components/commandPalette/ui/commandPaletteGlobalActions.tsx",
+        "netGrowth": 5
+      },
+      {
+        "added": 2,
+        "baselineLines": 237,
+        "currentLines": 239,
+        "deleted": 0,
+        "file": "static/app/views/explore/spans/content.tsx",
+        "netGrowth": 2
+      },
+      {
+        "added": 173,
+        "baselineLines": null,
+        "currentLines": 173,
+        "deleted": 0,
+        "file": "static/app/views/explore/spans/spansCommandPaletteActions.tsx",
+        "netGrowth": 173
+      },
+      {
+        "added": 1,
+        "baselineLines": 258,
+        "currentLines": 259,
+        "deleted": 0,
+        "file": "static/app/views/issueDetails/streamline/header/assigneeSelector.tsx",
+        "netGrowth": 1
+      },
+      {
+        "added": 27,
+        "baselineLines": 369,
+        "currentLines": 393,
+        "deleted": 3,
+        "file": "static/app/views/issueList/issueListCommandPaletteActions.tsx",
+        "netGrowth": 24
+      }
+    ],
+    "totalAdded": 275,
+    "totalDeleted": 36
+  },
+  "changedFilesCount": 7,
+  "changedFilesSample": [
+    "static/app/components/commandPalette/types.tsx",
+    "static/app/components/commandPalette/ui/cmdk.tsx",
+    "static/app/components/commandPalette/ui/commandPaletteGlobalActions.tsx",
+    "static/app/views/explore/spans/content.tsx",
+    "static/app/views/explore/spans/spansCommandPaletteActions.tsx",
+    "static/app/views/issueDetails/streamline/header/assigneeSelector.tsx",
+    "static/app/views/issueList/issueListCommandPaletteActions.tsx"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "static/app/views/explore/spans/spansCommandPaletteActions.tsx:115",
+        "static/app/views/explore/spans/spansCommandPaletteActions.tsx:74"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 2 changed location(s)"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": false,
+  "repo": "/home/prop_/projects/lean code/calibration/repos/_wt_sentry_pr114088",
+  "reuseFindings": [],
+  "sourceFilesCount": 7,
+  "version": "3.0.0",
+  "warnings": []
+}

@@ -1,0 +1,9 @@
+repo: aws-sdk-js
+github: aws/aws-sdk-js-v3
+pr_number: 7957
+title: chore(xml-builder): up fast-xml-parser to 5.7.1
+base_sha: d8fbfbc133a0d7e3bce3075b39b151c25ef82734
+merge_sha: 110b1c01dedb62bc56449598eeaac1d838e4995f
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

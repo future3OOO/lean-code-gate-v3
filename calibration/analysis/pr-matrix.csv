@@ -1,0 +1,43 @@
+repo,pr,changed,src,errors,warnings,reuse_errors,title
+aws-sdk-js,7957,12,1,0,0,0,chore(xml-builder): up fast-xml-parser to 5.7.1
+aws-sdk-js,7958,494,16,1,0,0,"chore(codegen): sync for http2 session closure, retry longpoll backoff, and fast"
+aws-sdk-js,7964,7,1,1,0,0,fix(xml-builder): use xml 1.1 parsing behavior for entities
+aws-sdk-js,7965,880,420,2,42,0,chore(codegen): sync for typed waiter-result values
+aws-sdk-js,7968,3,2,2,0,0,fix(xml-builder): inline nodable/entities for dist format compatibility
+django,21136,40,24,2,0,0,Fixed #35007 -- Replaced ESLint with Biome for JavaScript linting and formatting
+django,21150,2,0,0,0,0,Refs #12090 -- Documented parameters for contrib.admin.decorators.action().
+django,21152,38,12,1,4,0,Fixed #37057 -- Adjusted UniqueConstraint handling of UNKNOWN condition.
+django,21177,4,3,0,0,0,Moved QuerySet.extra() assertions to a separate test.
+django,21178,4,2,0,0,0,Refs #35514 -- Added warn_about_external_use() deprecation utility.
+fastapi,15165,98,0,0,0,0,🌐 Update translations for fr (update-outdated)
+fastapi,15172,98,0,0,0,0,🌐 Update translations for tr (update-outdated)
+fastapi,15274,1,0,0,0,0,👥 Update FastAPI GitHub topic repositories
+fastapi,15280,5,2,2,1,0,✨ Add support for `@app.vibe()`
+fastapi,15316,23,0,0,0,0,🔒️ Add zizmor and fix audit findings
+fastapi,15436,3,0,0,0,0,⬆ Bump CodSpeedHQ/action from 4.12.1 to 4.14.0
+fastapi,15439,1,0,0,0,0,⬆ Bump pydantic from 2.12.5 to 2.13.2
+grpc,42124,1,1,0,0,0,[export] [Fixit2026] Ensuring timely update of test infra
+grpc,42144,2,0,0,0,0,[export] [Flake] Fix a flake in `alts_concurrent_connectivity_test`.
+grpc,42159,1,0,0,0,0,[export]
+grpc,42215,1,0,0,0,0,[export] Allow a little more tolerance for RPC distribution error to reduce test
+grpc,42221,5,0,0,0,0,[export] Increase grpc_bazel_rbe_tsan/asan/ubsan/msan/opt/dbg PR config timeouts
+nextjs,93235,1,0,0,0,0,[ci] Automatically start React sync when new `react@experimental` is available
+nextjs,93236,2,2,0,0,0,[ci] Create test summary comment if job immediately passes
+nextjs,93241,1,1,0,0,0,[ci] Handle namespaced packages in preview builds
+nextjs,93245,9,5,1,0,0,[ci]: app-based release workflow
+nextjs,93285,10,10,0,1,0,[ci]: trigger signed release commit via API
+pydantic,13081,10,10,0,0,0,"Make validation `Extra` immutable, like with serialization"
+pydantic,13084,3,1,0,0,0,Fix `ValidationInfo.field_name` missing with `model_validate_json()`
+pydantic,13096,2,1,1,0,0,Handle `AttributeError` subclasses with `from_attributes`
+pydantic,13098,3,1,0,0,0,Set version post v2.13 release
+pydantic,13108,5,5,0,0,0,Fix Clippy 0.1.95 warnings
+sentry,114077,1,1,0,0,0,ref(cmdk) padding tlc
+sentry,114084,1,1,1,0,0,feat(cmdk): Add Switch Organization action to command palette
+sentry,114088,7,7,1,0,0,feat(cmdk): Add assigned-to-me alias to issue filter actions
+sentry,114097,7,6,0,0,0,ref(autofix): Pass optional args to startStep as object
+sentry,114099,9,3,0,0,0,ref(seer): Update isSeerExplorerEnabled to use gen-ai-features flag
+typescript,63366,1,0,0,0,0,Require AI disclosure in PR descriptions
+typescript,63368,5,2,0,1,0,Harden ATA package name filtering
+typescript,63372,5,2,0,1,0,🤖 Pick PR #63368 (Harden ATA package name filtering) into release-6.0
+typescript,63401,3,2,0,0,0,Also check package name validity in InstallPackageRequest
+typescript,63407,3,2,0,0,0,🤖 Pick PR #63401 (Also check package name validity in...) into release-6.0

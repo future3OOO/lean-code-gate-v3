@@ -1,0 +1,9 @@
+repo: sentry
+github: getsentry/sentry
+pr_number: 114099
+title: ref(seer): Update isSeerExplorerEnabled to use gen-ai-features flag
+base_sha: 60ef618cca7cb73906bccf141f2a6da77daf404b
+merge_sha: a3d21a4bc845786b54787713656484628b5f639d
+exit_code: 0
+duration_seconds: 1
+cleanliness: clean

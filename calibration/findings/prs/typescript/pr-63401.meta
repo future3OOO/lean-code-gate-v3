@@ -1,0 +1,9 @@
+repo: typescript
+github: microsoft/TypeScript
+pr_number: 63401
+title: Also check package name validity in InstallPackageRequest
+base_sha: c7a0ae102dfb030c534a7bc31fbbd61a707dc9cf
+merge_sha: f1a9288c23c04e785bbfb092077a7b70747c5b76
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

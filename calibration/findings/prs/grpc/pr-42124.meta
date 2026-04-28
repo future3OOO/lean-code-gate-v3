@@ -1,0 +1,9 @@
+repo: grpc
+github: grpc/grpc
+pr_number: 42124
+title: [export] [Fixit2026] Ensuring timely update of test infra
+base_sha: 3f425ab85ec2e707fa61102e10ff026a8ce4d65d
+merge_sha: c342030eea21318b6d921e250994c64bc878fc15
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean

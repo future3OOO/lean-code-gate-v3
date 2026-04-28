@@ -1,0 +1,9 @@
+repo: typescript
+github: microsoft/TypeScript
+pr_number: 63368
+title: Harden ATA package name filtering
+base_sha: 5f435057a5154e95c74fbb94d241da6d4c207be3
+merge_sha: c7a0ae102dfb030c534a7bc31fbbd61a707dc9cf
+exit_code: 0
+duration_seconds: 0
+cleanliness: clean
