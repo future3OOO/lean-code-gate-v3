@@ -172,6 +172,74 @@ The headline-PR metric (avg gate-err per PR, avg bot per PR) hides the size effe
 
 A previous version of this section asserted that "at >500 lines, neither the gate nor reviewers are doing their job adequately, the slop sits unreviewed" and argued for lowering `default_max_added_lines`. The user correctly pointed out that the supporting evidence I cited (the Greptile cap message) was about file count, not line count, and was incorrectly mapped onto the line-bucket discussion. That assertion is rolled back. The data only directly supports the file-count cap on bots; the line-count narrative was extrapolation, not measurement.
 
+## Major data-contamination finding (A6 — added after user feedback)
+
+The user pointed out that significant portions of the PR dataset are not actually code. I audited and confirmed:
+
+| Repo | PRs in dataset | with code | non-code | % non-code |
+|---|---|---|---|---|
+| aws-sdk-js | 20 | 17 | 3 | 15% |
+| django | 11 | 6 | 5 | 45% |
+| fastapi | 17 | **0** | 17 | **100%** |
+| grpc | 3 | **0** | 3 | **100%** |
+| nextjs | 20 | 11 | 9 | 45% |
+| pydantic | 15 | 9 | 6 | 40% |
+| sentry | 20 | 19 | 1 | 5% |
+| typescript | 8 | 6 | 2 | 25% |
+| **total** | **114** | **68** | **46** | **40.4%** |
+
+"Non-code" = the gate's own `gate_source_files` count is 0. These PRs are dependabot dependency bumps, translation updates (fastapi `🌐 Update translations for fr`), CI workflow yaml tweaks, README updates, git-blame-ignore lists, lockfile updates. They have no production source code in them, so per-PR / per-LOC metrics computed across the full set are **diluted by content the gate cannot meaningfully analyze.**
+
+**fastapi (17/17) and grpc (3/3) are entirely non-code in this dataset.** Every "fastapi" or "grpc" data point in PR-level analyses is contributing zero source-code signal.
+
+### Re-computed metrics on code-only subset (n=68)
+
+**PR-level error rate**:
+- Full (n=114): **22.8%** of PRs errored.
+- Code-only (n=68): **38.2%** of PRs errored.
+
+**Per-LOC error rate** (gate errors / 100 added lines):
+
+| Bucket | n (full) | err/100L (full) | n (code-only) | err/100L (code-only) |
+|---|---|---|---|---|
+| 0–50 | 70 | 0.77 | 32 | **1.14** (+47%) |
+| 50–200 | 25 | 0.49 | 17 | **0.75** (+52%) |
+| 200–500 | 8 | 0.07 | 8 | 0.07 |
+| 500–1500 | 3 | 0.22 | 3 | 0.22 |
+| 1500+ | 7 | 0.02 | 7 | 0.02 |
+
+The non-code PRs were diluting small-bucket rates by ~50%. Once filtered, **gate fires more frequently on real code** than the prior numbers suggested. The big-bucket numbers are unchanged (no non-code PRs in those buckets to begin with).
+
+**Per-repo FP rate**:
+- aws-sdk-js: 55.0% → **64.7%**
+- django: 18.2% → **33.3%**
+- nextjs: 20.0% → **36.4%**
+- pydantic: 26.7% → **44.4%**
+- sentry: 25.0% → **26.3%**
+- typescript: 0% → 0%
+- fastapi: 0/17 → **no code data**
+- grpc: 0/3 → **no code data**
+
+### What this changes about the calibration's claims
+
+**Holds up:**
+- The clean A/B 52.5% error reduction. Verified by inspection: 0/40 v3.0.0 errors and 0/19 calibrated errors in the clean A/B mention non-source paths. The gate's internal `is_production_source_path` filter correctly routed the 50-commit-window analysis through source-only.
+- A1 TP/FP audit on 18 sampled findings — the findings sampled were against real source code (django reuse, aws-sdk-js bloat, etc.).
+- Self-benchmark on PRs #1–11 — used distinct issue counts on each PR; the *issue count* is not affected by data file presence (bots still flag issues in source files when there are any).
+
+**Diluted / understated:**
+- "26.2% PR-level FP rate before, 19.0% after" in PR-B / PR-C — true denominator should be code-only. Real numbers are higher (38.2% before any calibration on the matched A2-v2 PRs).
+- A2-v2 per-LOC rates at small sizes (0–50 and 50–200 buckets) were ~50% understated.
+
+**Misleadingly thin:**
+- fastapi and grpc contributed zero code-PR data points. Conclusions involving them in PR-level analyses (e.g., "fastapi 1→1 error" in clean A/B) are based on the *50-commit window*, not on PRs.
+
+### Action items
+
+1. **A6 (now):** the recompute above is integrated; the PR-level numbers in PR-B / PR-C are explicitly flagged as diluted.
+2. **A8:** update PR-fetch tooling (`list_merged_prs.sh` and `pr_size_v2.py`) to filter at fetch time — require ≥3 production source files and ≥50 added source lines per PR. Avoids polluting future data.
+3. **A7:** expand to a broader code-heavy repo set (Redis/Postgres/Cargo/Pandas/scikit-learn/Spark/Vue/Jest/Zed) where PRs are more reliably code-dominant. Repeat clean A/B and A2-v2 there. The current 8 repos skew toward Python web frameworks; cross-language coverage is thin.
+
 ### Caveats
 
 - n=3 at 500–1500 and n=7 at 1500+ is small. The "gate inverts at large size" finding is directionally robust but the magnitude could shift with more data. A scaled-up version of A2-v2 (300+ PRs) would tighten the bucket means.
