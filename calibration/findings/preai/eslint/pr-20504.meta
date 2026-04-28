@@ -1,0 +1,9 @@
+repo: eslint
+github: eslint/eslint
+pr_number: 20504
+title: fix: restore TypeScript 4.0 compatibility in types
+base_sha: af498c63b9ca065223a425a85afabdcc8451e69b
+merge_sha: 791bf8d7e76ce7ab8c88cb8982658823da4eff27
+merged_at: 2026-02-16T21:29:12Z
+exit_code: 2
+duration_seconds: 0

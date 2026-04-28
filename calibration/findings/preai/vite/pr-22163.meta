@@ -1,0 +1,9 @@
+repo: vite
+github: vitejs/vite
+pr_number: 22163
+title: fix: apply server.fs check to env transport (#22159)
+base_sha: 6e37ac2d3df77054fe393a9bf0bf63e1e0ff8e7e
+merge_sha: fe28e47e9463e4c9619f94bfa06d2f8f1411b44b
+merged_at: 2026-04-06T11:31:22Z
+exit_code: 0
+duration_seconds: 1

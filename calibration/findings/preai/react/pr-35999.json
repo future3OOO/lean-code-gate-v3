@@ -1,0 +1,109 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 67,
+        "baselineLines": 5569,
+        "currentLines": 5614,
+        "deleted": 22,
+        "file": "packages/react-reconciler/src/ReactFiberWorkLoop.js",
+        "netGrowth": 45
+      }
+    ],
+    "totalAdded": 67,
+    "totalDeleted": 22
+  },
+  "changedFilesCount": 2,
+  "changedFilesSample": [
+    "packages/react-dom/src/__tests__/ReactUpdates-test.js",
+    "packages/react-reconciler/src/ReactFiberWorkLoop.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file packages/react-reconciler/src/ReactFiberWorkLoop.js grew by 45 lines"
+      ]
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "react/_wt_pr35999",
+  "reuseFindings": [],
+  "sourceFilesCount": 1,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file packages/react-reconciler/src/ReactFiberWorkLoop.js grew by 45 lines"
+  ]
+}

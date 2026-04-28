@@ -1,0 +1,9 @@
+repo: vite
+github: vitejs/vite
+pr_number: 22160
+title: fix: check `server.fs` after stripping query as well
+base_sha: f02d9fde0b195afe3ea2944414186962fbbe41e0
+merge_sha: a9a3df299378d9cbc5f069e3536a369f8188c8ff
+merged_at: 2026-04-06T10:39:25Z
+exit_code: 0
+duration_seconds: 0

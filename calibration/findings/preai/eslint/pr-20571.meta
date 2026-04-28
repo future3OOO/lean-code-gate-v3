@@ -1,0 +1,9 @@
+repo: eslint
+github: eslint/eslint
+pr_number: 20571
+title: feat: Add `meta.languages` support to rules
+base_sha: 14207dee3939dc87cfa8b2fcfc271fff2cfd6471
+merge_sha: 586ec2f43092779acc957866db4abe999112d1e1
+merged_at: 2026-03-26T17:00:19Z
+exit_code: 0
+duration_seconds: 1

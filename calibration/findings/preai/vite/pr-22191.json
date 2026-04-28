@@ -1,0 +1,188 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 1,
+        "baselineLines": 13,
+        "currentLines": 13,
+        "deleted": 1,
+        "file": "playground/optimize-deps/dep-alias-using-absolute-path/index.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 1,
+        "currentLines": 1,
+        "deleted": 1,
+        "file": "playground/optimize-deps/dep-linked/index.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 22,
+        "baselineLines": null,
+        "currentLines": 22,
+        "deleted": 0,
+        "file": "playground/optimize-deps/dep-lodash-clonedeep/index.js",
+        "netGrowth": 22
+      },
+      {
+        "added": 6,
+        "baselineLines": null,
+        "currentLines": 6,
+        "deleted": 0,
+        "file": "playground/optimize-deps/dep-lodash-es/camelCase.js",
+        "netGrowth": 6
+      },
+      {
+        "added": 1,
+        "baselineLines": null,
+        "currentLines": 1,
+        "deleted": 0,
+        "file": "playground/optimize-deps/dep-lodash-es/index.js",
+        "netGrowth": 1
+      },
+      {
+        "added": 22,
+        "baselineLines": null,
+        "currentLines": 22,
+        "deleted": 0,
+        "file": "playground/optimize-deps/dep-lodash/cloneDeep.js",
+        "netGrowth": 22
+      },
+      {
+        "added": 37,
+        "baselineLines": null,
+        "currentLines": 37,
+        "deleted": 0,
+        "file": "playground/optimize-deps/dep-lodash/index.js",
+        "netGrowth": 37
+      }
+    ],
+    "totalAdded": 90,
+    "totalDeleted": 2
+  },
+  "changedFilesCount": 16,
+  "changedFilesSample": [
+    "playground/optimize-deps/__tests__/optimize-deps.spec.ts",
+    "playground/optimize-deps/dep-alias-using-absolute-path/index.js",
+    "playground/optimize-deps/dep-alias-using-absolute-path/package.json",
+    "playground/optimize-deps/dep-linked/index.js",
+    "playground/optimize-deps/dep-linked/package.json",
+    "playground/optimize-deps/dep-lodash-clonedeep/index.js",
+    "playground/optimize-deps/dep-lodash-clonedeep/package.json",
+    "playground/optimize-deps/dep-lodash-es/camelCase.js",
+    "playground/optimize-deps/dep-lodash-es/index.js",
+    "playground/optimize-deps/dep-lodash-es/package.json",
+    "playground/optimize-deps/dep-lodash/cloneDeep.js",
+    "playground/optimize-deps/dep-lodash/index.js",
+    "playground/optimize-deps/dep-lodash/package.json",
+    "playground/optimize-deps/index.html",
+    "playground/optimize-deps/package.json",
+    "pnpm-lock.yaml"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 9,
+          "files": [
+            "playground/optimize-deps/dep-lodash-clonedeep/index.js",
+            "playground/optimize-deps/dep-lodash/cloneDeep.js",
+            "playground/optimize-deps/dep-lodash/index.js"
+          ],
+          "sample": "const cloned = {} | for (const key in value) { | if (Object.hasOwn(value, key)) {"
+        },
+        {
+          "count": 3,
+          "files": [
+            "playground/optimize-deps/dep-lodash-clonedeep/index.js",
+            "playground/optimize-deps/dep-lodash/cloneDeep.js",
+            "playground/optimize-deps/dep-lodash/index.js"
+          ],
+          "sample": "if (value == null || typeof value !== 'object') { | return value | if (Array.isArray(value)) {"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "duplicate added code blocks detected: 2"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "vite/_wt_pr22191",
+  "reuseFindings": [],
+  "sourceFilesCount": 7,
+  "version": "3.0.0",
+  "warnings": []
+}

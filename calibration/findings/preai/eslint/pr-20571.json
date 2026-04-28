@@ -1,0 +1,165 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 1,
+        "baselineLines": 63,
+        "currentLines": 64,
+        "deleted": 0,
+        "file": "docs/_examples/custom-rule-tutorial-code/enforce-foo-bar.js",
+        "netGrowth": 1
+      },
+      {
+        "added": 129,
+        "baselineLines": 674,
+        "currentLines": 803,
+        "deleted": 0,
+        "file": "lib/config/config.js",
+        "netGrowth": 129
+      },
+      {
+        "added": 16,
+        "baselineLines": 1614,
+        "currentLines": 1630,
+        "deleted": 0,
+        "file": "lib/linter/linter.js",
+        "netGrowth": 16
+      },
+      {
+        "added": 18,
+        "baselineLines": null,
+        "currentLines": 18,
+        "deleted": 0,
+        "file": "messages/rule-unsupported-language.js",
+        "netGrowth": 18
+      }
+    ],
+    "totalAdded": 164,
+    "totalDeleted": 0
+  },
+  "changedFilesCount": 9,
+  "changedFilesSample": [
+    "docs/_examples/custom-rule-tutorial-code/enforce-foo-bar.js",
+    "docs/src/extend/custom-rule-tutorial.md",
+    "docs/src/extend/custom-rules.md",
+    "lib/config/config.js",
+    "lib/linter/linter.js",
+    "messages/rule-unsupported-language.js",
+    "tests/lib/config/config.js",
+    "tests/lib/linter/linter.js",
+    "tests/messages/messages.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": [
+        {
+          "existingFile": "lib/shared/naming.js",
+          "existingLine": 16,
+          "existingSymbol": "normalizePackageName",
+          "newFile": "lib/config/config.js",
+          "newLine": 236,
+          "newSymbol": "normalizeLanguageName",
+          "reason": "matching behavior tokens: name, normalize",
+          "score": 57,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file lib/linter/linter.js grew by 16 lines"
+      ]
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "eslint/_wt_pr20571",
+  "reuseFindings": [
+    {
+      "existingFile": "lib/shared/naming.js",
+      "existingLine": 16,
+      "existingSymbol": "normalizePackageName",
+      "newFile": "lib/config/config.js",
+      "newLine": 236,
+      "newSymbol": "normalizeLanguageName",
+      "reason": "matching behavior tokens: name, normalize",
+      "score": 57,
+      "severity": "warning"
+    }
+  ],
+  "sourceFilesCount": 4,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file lib/linter/linter.js grew by 16 lines",
+    "possible reusable existing path for lib/config/config.js:236 -> lib/shared/naming.js:16 normalizePackageName (matching behavior tokens: name, normalize)"
+  ]
+}

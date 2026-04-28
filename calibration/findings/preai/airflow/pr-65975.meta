@@ -1,0 +1,9 @@
+repo: airflow
+github: apache/airflow
+pr_number: 65975
+title: Fix registry incremental extract dropping modules from catalog
+base_sha: e3089bf977c1a936c1a54600dcecf1c7ea21d771
+merge_sha: 83b4c09df32498d84f346de6ab372a98ea15012a
+merged_at: 2026-04-27T21:23:27Z
+exit_code: 0
+duration_seconds: 0

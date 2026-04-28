@@ -1,0 +1,9 @@
+repo: react
+github: facebook/react
+pr_number: 36094
+title: [DevTools] feat: display subtree for Activity and dim in hidden mode
+base_sha: 8b2e903a7447d370eb77bb117bc4c0ae240ce831
+merge_sha: ed69815cebae33b0326cc69faa90f813bb924f3b
+merged_at: 2026-03-23T14:29:39Z
+exit_code: 0
+duration_seconds: 2

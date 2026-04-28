@@ -1,0 +1,9 @@
+repo: eslint
+github: eslint/eslint
+pr_number: 20773
+title: feat: add suggestions for no-unused-private-class-members
+base_sha: 97c8c330beae9557ad24e19f94eebc8d08d1a722
+merge_sha: 379571a975f2b24d88037b9de2e72ec61d004130
+merged_at: 2026-04-27T21:33:03Z
+exit_code: 0
+duration_seconds: 1

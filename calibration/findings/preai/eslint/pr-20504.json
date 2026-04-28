@@ -1,0 +1,108 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 464,
+        "baselineLines": 1473,
+        "currentLines": 1915,
+        "deleted": 22,
+        "file": "lib/types/index.d.ts",
+        "netGrowth": 442
+      }
+    ],
+    "totalAdded": 464,
+    "totalDeleted": 22
+  },
+  "changedFilesCount": 3,
+  "changedFilesSample": [
+    ".github/workflows/ci.yml",
+    "lib/types/index.d.ts",
+    "tests/lib/types/tsconfig.ts40.json"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": false,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "source file lib/types/index.d.ts grew by 442 lines without same-directory shrink"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": false
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "eslint/_wt_pr20504",
+  "reuseFindings": [],
+  "sourceFilesCount": 1,
+  "version": "3.0.0",
+  "warnings": []
+}

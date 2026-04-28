@@ -1,0 +1,9 @@
+repo: airflow
+github: apache/airflow
+pr_number: 65984
+title: Filter unreleased phantom versions from registry build
+base_sha: 0440172082e16fb3588667e2dc0fd50860b290d6
+merge_sha: 38d8d419ea67dccaa78a33010afe846aa21a1985
+merged_at: 2026-04-28T01:06:48Z
+exit_code: 0
+duration_seconds: 0

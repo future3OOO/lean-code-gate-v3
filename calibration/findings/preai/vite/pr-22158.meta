@@ -1,0 +1,9 @@
+repo: vite
+github: vitejs/vite
+pr_number: 22158
+title: fix: disallow referencing files outside the package from sourcemap
+base_sha: fd6ab02e1f051945383828cfc3936690d93550f5
+merge_sha: f05f50173461789e0f1323fe06b51f18ca41c132
+merged_at: 2026-04-06T09:36:34Z
+exit_code: 2
+duration_seconds: 0

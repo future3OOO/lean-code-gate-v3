@@ -1,0 +1,9 @@
+repo: eslint
+github: eslint/eslint
+pr_number: 20565
+title: feat: Implement api support for bulk-suppressions
+base_sha: 2b8824e6be4223980e929a20025602df20d05ea2
+merge_sha: 0916995b51528872b15ba4fedb24172cf25fcb3f
+merged_at: 2026-03-16T20:05:43Z
+exit_code: 0
+duration_seconds: 0

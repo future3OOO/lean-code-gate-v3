@@ -1,0 +1,494 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 305,
+        "baselineLines": 1299,
+        "currentLines": 1599,
+        "deleted": 5,
+        "file": "airflow-core/src/airflow/api_fastapi/common/parameters.py",
+        "netGrowth": 300
+      },
+      {
+        "added": 11,
+        "baselineLines": 709,
+        "currentLines": 717,
+        "deleted": 3,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/public/assets.py",
+        "netGrowth": 8
+      },
+      {
+        "added": 3,
+        "baselineLines": 269,
+        "currentLines": 271,
+        "deleted": 1,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/public/connections.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 22,
+        "baselineLines": 747,
+        "currentLines": 769,
+        "deleted": 0,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/public/dag_run.py",
+        "netGrowth": 22
+      },
+      {
+        "added": 3,
+        "baselineLines": 72,
+        "currentLines": 74,
+        "deleted": 1,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/public/dag_tags.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 13,
+        "baselineLines": 460,
+        "currentLines": 470,
+        "deleted": 3,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/public/dags.py",
+        "netGrowth": 10
+      },
+      {
+        "added": 29,
+        "baselineLines": 171,
+        "currentLines": 199,
+        "deleted": 1,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/public/event_logs.py",
+        "netGrowth": 28
+      },
+      {
+        "added": 6,
+        "baselineLines": 344,
+        "currentLines": 350,
+        "deleted": 0,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/public/hitl.py",
+        "netGrowth": 6
+      },
+      {
+        "added": 3,
+        "baselineLines": 255,
+        "currentLines": 257,
+        "deleted": 1,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/public/import_error.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 3,
+        "baselineLines": 183,
+        "currentLines": 185,
+        "deleted": 1,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/public/pools.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 30,
+        "baselineLines": 1097,
+        "currentLines": 1127,
+        "deleted": 0,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/public/task_instances.py",
+        "netGrowth": 30
+      },
+      {
+        "added": 3,
+        "baselineLines": 193,
+        "currentLines": 195,
+        "deleted": 1,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/public/variables.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 12,
+        "baselineLines": 403,
+        "currentLines": 415,
+        "deleted": 0,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/public/xcom.py",
+        "netGrowth": 12
+      },
+      {
+        "added": 6,
+        "baselineLines": 301,
+        "currentLines": 307,
+        "deleted": 0,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/ui/dags.py",
+        "netGrowth": 6
+      },
+      {
+        "added": 5,
+        "baselineLines": 474,
+        "currentLines": 477,
+        "deleted": 2,
+        "file": "airflow-core/src/airflow/api_fastapi/core_api/routes/ui/grid.py",
+        "netGrowth": 3
+      },
+      {
+        "added": 75,
+        "baselineLines": 971,
+        "currentLines": 1010,
+        "deleted": 36,
+        "file": "airflow-core/src/airflow/ui/openapi-gen/queries/common.ts",
+        "netGrowth": 39
+      },
+      {
+        "added": 196,
+        "baselineLines": 1775,
+        "currentLines": 1935,
+        "deleted": 36,
+        "file": "airflow-core/src/airflow/ui/openapi-gen/queries/ensureQueryData.ts",
+        "netGrowth": 160
+      },
+      {
+        "added": 196,
+        "baselineLines": 1775,
+        "currentLines": 1935,
+        "deleted": 36,
+        "file": "airflow-core/src/airflow/ui/openapi-gen/queries/prefetch.ts",
+        "netGrowth": 160
+      },
+      {
+        "added": 205,
+        "baselineLines": 2613,
+        "currentLines": 2778,
+        "deleted": 40,
+        "file": "airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts",
+        "netGrowth": 165
+      },
+      {
+        "added": 196,
+        "baselineLines": 1775,
+        "currentLines": 1935,
+        "deleted": 36,
+        "file": "airflow-core/src/airflow/ui/openapi-gen/queries/suspense.ts",
+        "netGrowth": 160
+      },
+      {
+        "added": 175,
+        "baselineLines": 4326,
+        "currentLines": 4490,
+        "deleted": 11,
+        "file": "airflow-core/src/airflow/ui/openapi-gen/requests/services.gen.ts",
+        "netGrowth": 164
+      },
+      {
+        "added": 244,
+        "baselineLines": 7101,
+        "currentLines": 7345,
+        "deleted": 0,
+        "file": "airflow-core/src/airflow/ui/openapi-gen/requests/types.gen.ts",
+        "netGrowth": 244
+      },
+      {
+        "added": 2,
+        "baselineLines": 94,
+        "currentLines": 94,
+        "deleted": 2,
+        "file": "airflow-core/src/airflow/ui/src/components/SearchDags/SearchDags.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 123,
+        "currentLines": 123,
+        "deleted": 1,
+        "file": "airflow-core/src/airflow/ui/src/hooks/useRequiredActionTabs.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 186,
+        "currentLines": 186,
+        "deleted": 1,
+        "file": "airflow-core/src/airflow/ui/src/pages/AssetsList/AssetsList.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 233,
+        "currentLines": 233,
+        "deleted": 1,
+        "file": "airflow-core/src/airflow/ui/src/pages/Connections/Connections.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 4,
+        "baselineLines": 292,
+        "currentLines": 292,
+        "deleted": 4,
+        "file": "airflow-core/src/airflow/ui/src/pages/DagRuns.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 243,
+        "currentLines": 243,
+        "deleted": 5,
+        "file": "airflow-core/src/airflow/ui/src/pages/Events/Events.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 262,
+        "currentLines": 262,
+        "deleted": 2,
+        "file": "airflow-core/src/airflow/ui/src/pages/HITLTaskInstances/HITLTaskInstances.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 140,
+        "currentLines": 140,
+        "deleted": 1,
+        "file": "airflow-core/src/airflow/ui/src/pages/Pools/Pools.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 122,
+        "currentLines": 122,
+        "deleted": 1,
+        "file": "airflow-core/src/airflow/ui/src/pages/TaskInstance/AssetEvents.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 6,
+        "baselineLines": 322,
+        "currentLines": 322,
+        "deleted": 6,
+        "file": "airflow-core/src/airflow/ui/src/pages/TaskInstances/TaskInstances.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 247,
+        "currentLines": 247,
+        "deleted": 1,
+        "file": "airflow-core/src/airflow/ui/src/pages/Variables/Variables.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 4,
+        "baselineLines": 242,
+        "currentLines": 242,
+        "deleted": 4,
+        "file": "airflow-core/src/airflow/ui/src/pages/XCom/XCom.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 63,
+        "currentLines": 66,
+        "deleted": 2,
+        "file": "airflow-core/src/airflow/ui/src/queries/useDagTagsInfinite.ts",
+        "netGrowth": 3
+      },
+      {
+        "added": 2,
+        "baselineLines": 94,
+        "currentLines": 94,
+        "deleted": 2,
+        "file": "airflow-core/src/airflow/ui/src/queries/useDags.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 99,
+        "currentLines": 99,
+        "deleted": 1,
+        "file": "airflow-core/src/airflow/ui/src/queries/useUpdateHITLDetail.ts",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 1778,
+    "totalDeleted": 248
+  },
+  "changedFilesCount": 52,
+  "changedFilesSample": [
+    "airflow-core/newsfragments/64963.significant.rst",
+    "airflow-core/src/airflow/api_fastapi/common/parameters.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/openapi/_private_ui.yaml",
+    "airflow-core/src/airflow/api_fastapi/core_api/openapi/v2-rest-api-generated.yaml",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/public/assets.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/public/connections.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/public/dag_run.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/public/dag_tags.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/public/dags.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/public/event_logs.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/public/hitl.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/public/import_error.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/public/pools.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/public/task_instances.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/public/variables.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/public/xcom.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/ui/dags.py",
+    "airflow-core/src/airflow/api_fastapi/core_api/routes/ui/grid.py",
+    "airflow-core/src/airflow/ui/openapi-gen/queries/common.ts",
+    "airflow-core/src/airflow/ui/openapi-gen/queries/ensureQueryData.ts",
+    "airflow-core/src/airflow/ui/openapi-gen/queries/prefetch.ts",
+    "airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts",
+    "airflow-core/src/airflow/ui/openapi-gen/queries/suspense.ts",
+    "airflow-core/src/airflow/ui/openapi-gen/requests/services.gen.ts",
+    "airflow-core/src/airflow/ui/openapi-gen/requests/types.gen.ts",
+    "airflow-core/src/airflow/ui/src/components/SearchDags/SearchDags.tsx",
+    "airflow-core/src/airflow/ui/src/hooks/useRequiredActionTabs.ts",
+    "airflow-core/src/airflow/ui/src/pages/AssetsList/AssetsList.tsx",
+    "airflow-core/src/airflow/ui/src/pages/Connections/Connections.tsx",
+    "airflow-core/src/airflow/ui/src/pages/DagRuns.tsx"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "airflow-core/src/airflow/api_fastapi/common/parameters.py:306",
+        "airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts:2349"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 15,
+          "files": [
+            "airflow-core/src/airflow/ui/openapi-gen/queries/common.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/ensureQueryData.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/prefetch.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/suspense.ts"
+          ],
+          "sample": "dagDisplayNamePrefixPattern?: string | runIdPrefixPattern?: string | taskIdPrefixPattern?: string"
+        },
+        {
+          "count": 10,
+          "files": [
+            "airflow-core/src/airflow/ui/openapi-gen/queries/common.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/ensureQueryData.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/prefetch.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/suspense.ts"
+          ],
+          "sample": "dagIdPrefixPattern?: string | eventPrefixPattern?: string | ownerPrefixPattern?: string"
+        },
+        {
+          "count": 15,
+          "files": [
+            "airflow-core/src/airflow/ui/openapi-gen/queries/common.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/ensureQueryData.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/prefetch.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/suspense.ts"
+          ],
+          "sample": "dagIdPrefixPattern?: string | operatorNamePrefixPattern?: string | poolNamePrefixPattern?: string"
+        },
+        {
+          "count": 10,
+          "files": [
+            "airflow-core/src/airflow/ui/openapi-gen/queries/common.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/ensureQueryData.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/prefetch.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts",
+            "airflow-core/src/airflow/ui/openapi-gen/queries/suspense.ts"
+          ],
+          "sample": "dagIdPrefixPattern?: string | partitionKeyPrefixPattern?: string | runIdPrefixPattern?: string"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": false,
+      "warnings": [
+        "large source file airflow-core/src/airflow/ui/openapi-gen/queries/ensureQueryData.ts grew by 160 lines",
+        "large source file airflow-core/src/airflow/ui/openapi-gen/queries/prefetch.ts grew by 160 lines",
+        "large source file airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts grew by 165 lines",
+        "large source file airflow-core/src/airflow/ui/openapi-gen/queries/suspense.ts grew by 160 lines",
+        "large source file airflow-core/src/airflow/ui/openapi-gen/requests/services.gen.ts grew by 164 lines",
+        "large source file airflow-core/src/airflow/ui/openapi-gen/requests/types.gen.ts grew by 244 lines"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 2 changed location(s)",
+    "duplicate added code blocks detected: 5",
+    "source file airflow-core/src/airflow/api_fastapi/common/parameters.py grew by 300 lines without same-directory shrink",
+    "large source file airflow-core/src/airflow/ui/openapi-gen/queries/ensureQueryData.ts grew by 160 lines without same-directory shrink",
+    "large source file airflow-core/src/airflow/ui/openapi-gen/queries/prefetch.ts grew by 160 lines without same-directory shrink",
+    "large source file airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts grew by 165 lines without same-directory shrink",
+    "large source file airflow-core/src/airflow/ui/openapi-gen/queries/suspense.ts grew by 160 lines without same-directory shrink",
+    "large source file airflow-core/src/airflow/ui/openapi-gen/requests/services.gen.ts grew by 164 lines without same-directory shrink",
+    "large source file airflow-core/src/airflow/ui/openapi-gen/requests/types.gen.ts grew by 244 lines without same-directory shrink",
+    "changed source diff is heavily additive: added=1778 deleted=248"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": false
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "airflow/_wt_pr65964",
+  "reuseFindings": [],
+  "sourceFilesCount": 37,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file airflow-core/src/airflow/ui/openapi-gen/queries/ensureQueryData.ts grew by 160 lines",
+    "large source file airflow-core/src/airflow/ui/openapi-gen/queries/prefetch.ts grew by 160 lines",
+    "large source file airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts grew by 165 lines",
+    "large source file airflow-core/src/airflow/ui/openapi-gen/queries/suspense.ts grew by 160 lines",
+    "large source file airflow-core/src/airflow/ui/openapi-gen/requests/services.gen.ts grew by 164 lines",
+    "large source file airflow-core/src/airflow/ui/openapi-gen/requests/types.gen.ts grew by 244 lines"
+  ]
+}

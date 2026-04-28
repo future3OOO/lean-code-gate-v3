@@ -1,0 +1,9 @@
+repo: jquery
+github: jquery/jquery
+pr_number: 5429
+title: Core: Fix the exports setup to make bundlers work with ESM & CommonJS
+base_sha: fedffe7448b9e2328b43641158335be18eff5f69
+merge_sha: 60f11b58bfeece6b6d0189d7d19b61a4e1e61139
+merged_at: 2024-03-11T23:39:34Z
+exit_code: 0
+duration_seconds: 0

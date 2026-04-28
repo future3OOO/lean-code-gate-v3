@@ -1,0 +1,9 @@
+repo: vite
+github: vitejs/vite
+pr_number: 22278
+title: refactor: enable some typecheck rules
+base_sha: 3770a53064e8da27d4cb8d595a2b038413e6abdb
+merge_sha: 943751801f70057ae94f9092e349c8f3fd9ccdf2
+merged_at: 2026-04-22T01:40:00Z
+exit_code: 2
+duration_seconds: 1

@@ -1,0 +1,9 @@
+repo: react
+github: facebook/react
+pr_number: 36309
+title: Add react-flight-server-fb package for Meta's internal bundler
+base_sha: 561ed529b3a6a16e5b2b76fa5ee86c09f959686c
+merge_sha: ad5dfc82b7107728da1430dd142f75b97b684dac
+merged_at: 2026-04-27T16:48:37Z
+exit_code: 2
+duration_seconds: 13

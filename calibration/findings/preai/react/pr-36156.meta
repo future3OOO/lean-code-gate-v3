@@ -1,0 +1,9 @@
+repo: react
+github: facebook/react
+pr_number: 36156
+title: [Flight] Transport `AggregateErrors.errors`
+base_sha: 9627b5a1caa64c1488643bffdf04495106fa3247
+merge_sha: 74568e8627aa43469b74f2972f427a209639d0b6
+merged_at: 2026-03-29T01:18:21Z
+exit_code: 2
+duration_seconds: 1

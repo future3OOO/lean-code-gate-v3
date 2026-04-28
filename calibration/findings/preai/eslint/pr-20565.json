@@ -1,0 +1,159 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 2,
+        "baselineLines": 521,
+        "currentLines": 522,
+        "deleted": 1,
+        "file": "lib/cli.js",
+        "netGrowth": 1
+      },
+      {
+        "added": 12,
+        "baselineLines": 1462,
+        "currentLines": 1437,
+        "deleted": 37,
+        "file": "lib/eslint/eslint-helpers.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 44,
+        "baselineLines": 1337,
+        "currentLines": 1377,
+        "deleted": 4,
+        "file": "lib/eslint/eslint.js",
+        "netGrowth": 40
+      },
+      {
+        "added": 3,
+        "baselineLines": 302,
+        "currentLines": 304,
+        "deleted": 1,
+        "file": "lib/services/suppressions-service.js",
+        "netGrowth": 2
+      },
+      {
+        "added": 46,
+        "baselineLines": null,
+        "currentLines": 46,
+        "deleted": 0,
+        "file": "lib/shared/message-counts.js",
+        "netGrowth": 46
+      },
+      {
+        "added": 6,
+        "baselineLines": 1526,
+        "currentLines": 1532,
+        "deleted": 0,
+        "file": "lib/types/index.d.ts",
+        "netGrowth": 6
+      }
+    ],
+    "totalAdded": 113,
+    "totalDeleted": 43
+  },
+  "changedFilesCount": 12,
+  "changedFilesSample": [
+    "docs/src/integrate/nodejs-api.md",
+    "docs/src/use/suppressions.md",
+    "lib/cli.js",
+    "lib/eslint/eslint-helpers.js",
+    "lib/eslint/eslint.js",
+    "lib/services/suppressions-service.js",
+    "lib/shared/message-counts.js",
+    "lib/types/index.d.ts",
+    "tests/fixtures/suppressions/eslint-suppressions.json",
+    "tests/fixtures/suppressions/partial-suppressions.json",
+    "tests/lib/eslint/eslint.js",
+    "tests/lib/types/types.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file lib/types/index.d.ts grew by 6 lines"
+      ]
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "eslint/_wt_pr20565",
+  "reuseFindings": [],
+  "sourceFilesCount": 6,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file lib/types/index.d.ts grew by 6 lines"
+  ]
+}

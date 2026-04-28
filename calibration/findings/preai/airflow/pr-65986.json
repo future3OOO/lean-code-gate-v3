@@ -1,0 +1,142 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 32,
+        "baselineLines": 4804,
+        "currentLines": 4835,
+        "deleted": 1,
+        "file": "dev/breeze/src/airflow_breeze/commands/release_management_commands.py",
+        "netGrowth": 31
+      },
+      {
+        "added": 73,
+        "baselineLines": 439,
+        "currentLines": 512,
+        "deleted": 0,
+        "file": "dev/breeze/src/airflow_breeze/utils/provider_dependencies.py",
+        "netGrowth": 73
+      }
+    ],
+    "totalAdded": 105,
+    "totalDeleted": 1
+  },
+  "changedFilesCount": 2,
+  "changedFilesSample": [
+    "dev/breeze/src/airflow_breeze/commands/release_management_commands.py",
+    "dev/breeze/src/airflow_breeze/utils/provider_dependencies.py"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": [
+        {
+          "existingFile": "dev/validate_version_added_fields_in_config.py",
+          "existingLine": 48,
+          "existingSymbol": "fetch_pypi_versions",
+          "newFile": "dev/breeze/src/airflow_breeze/utils/provider_dependencies.py",
+          "newLine": 93,
+          "newSymbol": "_fetch_pypi_released_versions",
+          "reason": "matching behavior tokens: fetch, pypi, versions",
+          "score": 57,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file dev/breeze/src/airflow_breeze/commands/release_management_commands.py grew by 31 lines"
+      ]
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "airflow/_wt_pr65986",
+  "reuseFindings": [
+    {
+      "existingFile": "dev/validate_version_added_fields_in_config.py",
+      "existingLine": 48,
+      "existingSymbol": "fetch_pypi_versions",
+      "newFile": "dev/breeze/src/airflow_breeze/utils/provider_dependencies.py",
+      "newLine": 93,
+      "newSymbol": "_fetch_pypi_released_versions",
+      "reason": "matching behavior tokens: fetch, pypi, versions",
+      "score": 57,
+      "severity": "warning"
+    }
+  ],
+  "sourceFilesCount": 2,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file dev/breeze/src/airflow_breeze/commands/release_management_commands.py grew by 31 lines",
+    "possible reusable existing path for dev/breeze/src/airflow_breeze/utils/provider_dependencies.py:93 -> dev/validate_version_added_fields_in_config.py:48 fetch_pypi_versions (matching behavior tokens: fetch, pypi, versions)"
+  ]
+}

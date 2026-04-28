@@ -1,0 +1,9 @@
+repo: eslint
+github: eslint/eslint
+pr_number: 20536
+title: chore: update dependency eslint-plugin-jsdoc to ^62.7.0
+base_sha: 0bd54976080936ce080ee2552d504180105593b4
+merge_sha: 6aa1afe6694f3fd7f82116109a5ef2ad18ece074
+merged_at: 2026-02-21T17:14:23Z
+exit_code: 2
+duration_seconds: 1

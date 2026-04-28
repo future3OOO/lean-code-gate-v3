@@ -1,0 +1,9 @@
+repo: cargo
+github: rust-lang/cargo
+pr_number: 16912
+title: Convert GitHub fast path to use http_async
+base_sha: 72d80ecb5f78a5f8a5f88daa81fe2979d0a4d010
+merge_sha: 6307456e9a6795bbe167ab5f501df05962432a31
+merged_at: 2026-04-20T21:40:12Z
+exit_code: 0
+duration_seconds: 0

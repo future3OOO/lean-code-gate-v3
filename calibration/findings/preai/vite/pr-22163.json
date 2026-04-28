@@ -1,0 +1,170 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 1,
+        "baselineLines": 2172,
+        "currentLines": 2173,
+        "deleted": 0,
+        "file": "packages/vite/src/node/config.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 17,
+        "baselineLines": 379,
+        "currentLines": 393,
+        "deleted": 3,
+        "file": "packages/vite/src/node/server/environment.ts",
+        "netGrowth": 14
+      },
+      {
+        "added": 6,
+        "baselineLines": 1198,
+        "currentLines": 1204,
+        "deleted": 0,
+        "file": "packages/vite/src/node/server/hmr.ts",
+        "netGrowth": 6
+      },
+      {
+        "added": 35,
+        "baselineLines": 383,
+        "currentLines": 412,
+        "deleted": 6,
+        "file": "packages/vite/src/node/server/middlewares/transform.ts",
+        "netGrowth": 29
+      },
+      {
+        "added": 12,
+        "baselineLines": 536,
+        "currentLines": 543,
+        "deleted": 5,
+        "file": "packages/vite/src/node/server/transformRequest.ts",
+        "netGrowth": 7
+      },
+      {
+        "added": 2,
+        "baselineLines": 138,
+        "currentLines": 138,
+        "deleted": 2,
+        "file": "packages/vite/src/node/ssr/runtime/serverModuleRunner.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 106,
+        "currentLines": 106,
+        "deleted": 1,
+        "file": "packages/vite/src/node/ssr/ssrModuleLoader.ts",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 74,
+    "totalDeleted": 17
+  },
+  "changedFilesCount": 15,
+  "changedFilesSample": [
+    "docs/guide/api-environment-runtimes.md",
+    "packages/vite/src/node/config.ts",
+    "packages/vite/src/node/server/environment.ts",
+    "packages/vite/src/node/server/hmr.ts",
+    "packages/vite/src/node/server/middlewares/transform.ts",
+    "packages/vite/src/node/server/transformRequest.ts",
+    "packages/vite/src/node/ssr/__tests__/fixtures/basic/file.js",
+    "packages/vite/src/node/ssr/__tests__/ssrLoadModule.spec.ts",
+    "packages/vite/src/node/ssr/runtime/__tests__/fixture-outside.js",
+    "packages/vite/src/node/ssr/runtime/__tests__/server-runtime.spec.ts",
+    "packages/vite/src/node/ssr/runtime/__tests__/server-worker-runner.invoke.spec.ts",
+    "packages/vite/src/node/ssr/runtime/__tests__/server-worker-runner.spec.ts",
+    "packages/vite/src/node/ssr/runtime/serverModuleRunner.ts",
+    "packages/vite/src/node/ssr/ssrModuleLoader.ts",
+    "playground/fs-serve/__tests__/commonTests.ts"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file packages/vite/src/node/config.ts grew by 1 lines"
+      ]
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "vite/_wt_pr22163",
+  "reuseFindings": [],
+  "sourceFilesCount": 7,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file packages/vite/src/node/config.ts grew by 1 lines"
+  ]
+}

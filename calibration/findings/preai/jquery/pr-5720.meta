@@ -1,0 +1,9 @@
+repo: jquery
+github: jquery/jquery
+pr_number: 5720
+title: Build: Verify release using dist repo tarball
+base_sha: 1fe3476907b5a978b70633ccdccd458964768f5e
+merge_sha: e3e52487c7beb18ab86c7d81d67705be5cf7f307
+merged_at: 2025-11-15T15:38:12Z
+exit_code: 0
+duration_seconds: 0

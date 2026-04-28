@@ -1,0 +1,9 @@
+repo: vite
+github: vitejs/vite
+pr_number: 22191
+title: test: replace lodash dependencies with local test packages
+base_sha: dfc8aa5057dd8ec2b1223980d1e2eeb946ac3384
+merge_sha: 456096953f2b38b0f6916476ea37a4c9b513df13
+merged_at: 2026-04-13T04:12:01Z
+exit_code: 2
+duration_seconds: 0

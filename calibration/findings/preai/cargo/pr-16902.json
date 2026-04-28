@@ -1,0 +1,253 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 8,
+        "baselineLines": 85,
+        "currentLines": 81,
+        "deleted": 12,
+        "file": "crates/cargo-util/src/du.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 440,
+        "currentLines": 425,
+        "deleted": 17,
+        "file": "src/bin/cargo/main.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 273,
+        "baselineLines": 1208,
+        "currentLines": 814,
+        "deleted": 667,
+        "file": "src/cargo/core/package.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 283,
+        "currentLines": 283,
+        "deleted": 2,
+        "file": "src/cargo/sources/directory.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 506,
+        "currentLines": 507,
+        "deleted": 2,
+        "file": "src/cargo/sources/git/source.rs",
+        "netGrowth": 1
+      },
+      {
+        "added": 10,
+        "baselineLines": 133,
+        "currentLines": 138,
+        "deleted": 5,
+        "file": "src/cargo/sources/overlay.rs",
+        "netGrowth": 5
+      },
+      {
+        "added": 4,
+        "baselineLines": 1223,
+        "currentLines": 1223,
+        "deleted": 4,
+        "file": "src/cargo/sources/path.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 8,
+        "baselineLines": 640,
+        "currentLines": 645,
+        "deleted": 3,
+        "file": "src/cargo/sources/registry/http_remote.rs",
+        "netGrowth": 5
+      },
+      {
+        "added": 7,
+        "baselineLines": 207,
+        "currentLines": 212,
+        "deleted": 2,
+        "file": "src/cargo/sources/registry/local.rs",
+        "netGrowth": 5
+      },
+      {
+        "added": 17,
+        "baselineLines": 1114,
+        "currentLines": 1119,
+        "deleted": 12,
+        "file": "src/cargo/sources/registry/mod.rs",
+        "netGrowth": 5
+      },
+      {
+        "added": 8,
+        "baselineLines": 461,
+        "currentLines": 466,
+        "deleted": 3,
+        "file": "src/cargo/sources/registry/remote.rs",
+        "netGrowth": 5
+      },
+      {
+        "added": 4,
+        "baselineLines": 170,
+        "currentLines": 170,
+        "deleted": 4,
+        "file": "src/cargo/sources/replaced.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 6,
+        "baselineLines": 299,
+        "currentLines": 299,
+        "deleted": 6,
+        "file": "src/cargo/sources/source.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 17,
+        "baselineLines": 185,
+        "currentLines": 200,
+        "deleted": 2,
+        "file": "src/cargo/util/local_poll_adapter.rs",
+        "netGrowth": 15
+      },
+      {
+        "added": 2,
+        "baselineLines": 532,
+        "currentLines": 532,
+        "deleted": 2,
+        "file": "src/cargo/util/network/http_async.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 0,
+        "baselineLines": 83,
+        "currentLines": 82,
+        "deleted": 1,
+        "file": "src/cargo/util/network/mod.rs",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 371,
+    "totalDeleted": 744
+  },
+  "changedFilesCount": 38,
+  "changedFilesSample": [
+    "Cargo.lock",
+    "Cargo.toml",
+    "clippy.toml",
+    "crates/cargo-util/Cargo.toml",
+    "crates/cargo-util/src/du.rs",
+    "src/bin/cargo/main.rs",
+    "src/cargo/core/package.rs",
+    "src/cargo/sources/directory.rs",
+    "src/cargo/sources/git/source.rs",
+    "src/cargo/sources/overlay.rs",
+    "src/cargo/sources/path.rs",
+    "src/cargo/sources/registry/http_remote.rs",
+    "src/cargo/sources/registry/local.rs",
+    "src/cargo/sources/registry/mod.rs",
+    "src/cargo/sources/registry/remote.rs",
+    "src/cargo/sources/replaced.rs",
+    "src/cargo/sources/source.rs",
+    "src/cargo/util/local_poll_adapter.rs",
+    "src/cargo/util/network/http_async.rs",
+    "src/cargo/util/network/mod.rs",
+    "src/cargo/util/network/sleep.rs",
+    "src/doc/src/reference/unstable.md",
+    "tests/testsuite/alt_registry.rs",
+    "tests/testsuite/cargo_tree/deps.rs",
+    "tests/testsuite/cargo_tree/dupe/stderr.term.svg",
+    "tests/testsuite/cargo_tree/edge_kind/stderr.term.svg",
+    "tests/testsuite/cfg.rs",
+    "tests/testsuite/doc.rs",
+    "tests/testsuite/features.rs",
+    "tests/testsuite/features_namespaced.rs"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "cargo/_wt_pr16902",
+  "reuseFindings": [],
+  "sourceFilesCount": 17,
+  "version": "3.0.0",
+  "warnings": []
+}

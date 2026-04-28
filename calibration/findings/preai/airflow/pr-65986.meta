@@ -1,0 +1,9 @@
+repo: airflow
+github: apache/airflow
+pr_number: 65986
+title: breeze: prune unreleased versions from provider.yaml during metadata generation
+base_sha: 635896843794b83c4dffef2bccbb3bf45d0c2a25
+merge_sha: b28a45e7b5eb33126f112dfc58d3721881364427
+merged_at: 2026-04-28T08:15:58Z
+exit_code: 0
+duration_seconds: 1

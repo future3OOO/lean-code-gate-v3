@@ -1,0 +1,433 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 1,
+        "baselineLines": 660,
+        "currentLines": 661,
+        "deleted": 0,
+        "file": ".eslintrc.js",
+        "netGrowth": 1
+      },
+      {
+        "added": 19,
+        "baselineLines": null,
+        "currentLines": 19,
+        "deleted": 0,
+        "file": "packages/react-client/src/forks/ReactFlightClientConfig.dom-browser-fb.js",
+        "netGrowth": 19
+      },
+      {
+        "added": 19,
+        "baselineLines": null,
+        "currentLines": 19,
+        "deleted": 0,
+        "file": "packages/react-client/src/forks/ReactFlightClientConfig.dom-node-fb.js",
+        "netGrowth": 19
+      },
+      {
+        "added": 10,
+        "baselineLines": null,
+        "currentLines": 10,
+        "deleted": 0,
+        "file": "packages/react-flight-server-fb/client.browser.js",
+        "netGrowth": 10
+      },
+      {
+        "added": 131,
+        "baselineLines": null,
+        "currentLines": 131,
+        "deleted": 0,
+        "file": "packages/react-flight-server-fb/src/ReactFlightFBReferences.js",
+        "netGrowth": 131
+      },
+      {
+        "added": 240,
+        "baselineLines": null,
+        "currentLines": 240,
+        "deleted": 0,
+        "file": "packages/react-flight-server-fb/src/ReactServerStreamConfigFB.js",
+        "netGrowth": 240
+      },
+      {
+        "added": 239,
+        "baselineLines": null,
+        "currentLines": 239,
+        "deleted": 0,
+        "file": "packages/react-flight-server-fb/src/client/ReactFlightClientConfigBundlerFB.js",
+        "netGrowth": 239
+      },
+      {
+        "added": 34,
+        "baselineLines": null,
+        "currentLines": 34,
+        "deleted": 0,
+        "file": "packages/react-flight-server-fb/src/client/ReactFlightClientConfigDOMFB.js",
+        "netGrowth": 34
+      },
+      {
+        "added": 18,
+        "baselineLines": null,
+        "currentLines": 18,
+        "deleted": 0,
+        "file": "packages/react-flight-server-fb/src/client/ReactFlightClientConfigTargetFBBrowser.js",
+        "netGrowth": 18
+      },
+      {
+        "added": 295,
+        "baselineLines": null,
+        "currentLines": 295,
+        "deleted": 0,
+        "file": "packages/react-flight-server-fb/src/client/ReactFlightDOMClientBrowser.js",
+        "netGrowth": 295
+      },
+      {
+        "added": 379,
+        "baselineLines": null,
+        "currentLines": 379,
+        "deleted": 0,
+        "file": "packages/react-flight-server-fb/src/server/ReactFlightDOMServerNode.js",
+        "netGrowth": 379
+      },
+      {
+        "added": 48,
+        "baselineLines": null,
+        "currentLines": 48,
+        "deleted": 0,
+        "file": "packages/react-flight-server-fb/src/server/ReactFlightServerConfigDOMFB.js",
+        "netGrowth": 48
+      },
+      {
+        "added": 61,
+        "baselineLines": null,
+        "currentLines": 61,
+        "deleted": 0,
+        "file": "packages/react-flight-server-fb/src/server/ReactFlightServerConfigFBBundler.js",
+        "netGrowth": 61
+      },
+      {
+        "added": 18,
+        "baselineLines": null,
+        "currentLines": 18,
+        "deleted": 0,
+        "file": "packages/react-flight-server-fb/src/server/react-flight-dom-server.node.js",
+        "netGrowth": 18
+      },
+      {
+        "added": 26,
+        "baselineLines": null,
+        "currentLines": 26,
+        "deleted": 0,
+        "file": "packages/react-server/src/forks/ReactFlightServerConfig.dom-browser-fb.js",
+        "netGrowth": 26
+      },
+      {
+        "added": 26,
+        "baselineLines": null,
+        "currentLines": 26,
+        "deleted": 0,
+        "file": "packages/react-server/src/forks/ReactFlightServerConfig.dom-node-fb.js",
+        "netGrowth": 26
+      },
+      {
+        "added": 10,
+        "baselineLines": null,
+        "currentLines": 10,
+        "deleted": 0,
+        "file": "packages/react-server/src/forks/ReactServerStreamConfig.dom-browser-fb.js",
+        "netGrowth": 10
+      },
+      {
+        "added": 10,
+        "baselineLines": null,
+        "currentLines": 10,
+        "deleted": 0,
+        "file": "packages/react-server/src/forks/ReactServerStreamConfig.dom-node-fb.js",
+        "netGrowth": 10
+      },
+      {
+        "added": 23,
+        "baselineLines": 1362,
+        "currentLines": 1385,
+        "deleted": 0,
+        "file": "scripts/rollup/bundles.js",
+        "netGrowth": 23
+      },
+      {
+        "added": 64,
+        "baselineLines": 689,
+        "currentLines": 753,
+        "deleted": 0,
+        "file": "scripts/shared/inlinedHostConfigs.js",
+        "netGrowth": 64
+      }
+    ],
+    "totalAdded": 1671,
+    "totalDeleted": 0
+  },
+  "changedFilesCount": 24,
+  "changedFilesSample": [
+    ".eslintrc.js",
+    ".github/workflows/runtime_build_and_test.yml",
+    ".github/workflows/shared_lint.yml",
+    "packages/react-client/src/forks/ReactFlightClientConfig.dom-browser-fb.js",
+    "packages/react-client/src/forks/ReactFlightClientConfig.dom-node-fb.js",
+    "packages/react-flight-server-fb/README.md",
+    "packages/react-flight-server-fb/client.browser.js",
+    "packages/react-flight-server-fb/package.json",
+    "packages/react-flight-server-fb/src/ReactFlightFBReferences.js",
+    "packages/react-flight-server-fb/src/ReactServerStreamConfigFB.js",
+    "packages/react-flight-server-fb/src/client/ReactFlightClientConfigBundlerFB.js",
+    "packages/react-flight-server-fb/src/client/ReactFlightClientConfigDOMFB.js",
+    "packages/react-flight-server-fb/src/client/ReactFlightClientConfigTargetFBBrowser.js",
+    "packages/react-flight-server-fb/src/client/ReactFlightDOMClientBrowser.js",
+    "packages/react-flight-server-fb/src/server/ReactFlightDOMServerNode.js",
+    "packages/react-flight-server-fb/src/server/ReactFlightServerConfigDOMFB.js",
+    "packages/react-flight-server-fb/src/server/ReactFlightServerConfigFBBundler.js",
+    "packages/react-flight-server-fb/src/server/react-flight-dom-server.node.js",
+    "packages/react-server/src/forks/ReactFlightServerConfig.dom-browser-fb.js",
+    "packages/react-server/src/forks/ReactFlightServerConfig.dom-node-fb.js",
+    "packages/react-server/src/forks/ReactServerStreamConfig.dom-browser-fb.js",
+    "packages/react-server/src/forks/ReactServerStreamConfig.dom-node-fb.js",
+    "scripts/rollup/bundles.js",
+    "scripts/shared/inlinedHostConfigs.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "packages/react-flight-server-fb/src/ReactFlightFBReferences.js:110",
+        "packages/react-flight-server-fb/src/ReactFlightFBReferences.js:19",
+        "packages/react-flight-server-fb/src/ReactFlightFBReferences.js:38",
+        "packages/react-flight-server-fb/src/ReactFlightFBReferences.js:53",
+        "packages/react-flight-server-fb/src/ReactFlightFBReferences.js:70",
+        "packages/react-flight-server-fb/src/ReactServerStreamConfigFB.js:113",
+        "packages/react-flight-server-fb/src/ReactServerStreamConfigFB.js:123",
+        "packages/react-flight-server-fb/src/ReactServerStreamConfigFB.js:126",
+        "packages/react-flight-server-fb/src/ReactServerStreamConfigFB.js:128",
+        "packages/react-flight-server-fb/src/ReactServerStreamConfigFB.js:133"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": false,
+      "sample": [
+        {
+          "existingFile": "packages/react-server-dom-esm/src/client/ReactFlightDOMClientBrowser.js",
+          "existingLine": 198,
+          "existingSymbol": "handleDone",
+          "newFile": "packages/react-flight-server-fb/src/client/ReactFlightDOMClientBrowser.js",
+          "newLine": 197,
+          "newSymbol": "handleDone",
+          "reason": "same symbol name",
+          "score": 100,
+          "severity": "error"
+        },
+        {
+          "existingFile": "packages/react-server-dom-esm/src/client/ReactFlightDOMClientBrowser.js",
+          "existingLine": 198,
+          "existingSymbol": "handleDone",
+          "newFile": "packages/react-flight-server-fb/src/client/ReactFlightDOMClientBrowser.js",
+          "newLine": 233,
+          "newSymbol": "handleDone",
+          "reason": "same symbol name",
+          "score": 100,
+          "severity": "error"
+        },
+        {
+          "existingFile": "packages/react-devtools-extensions/src/contentScripts/backendManager.js",
+          "existingLine": 120,
+          "existingSymbol": "listener",
+          "newFile": "packages/react-flight-server-fb/src/client/ReactFlightDOMClientBrowser.js",
+          "newLine": 281,
+          "newSymbol": "listener",
+          "reason": "same symbol name",
+          "score": 100,
+          "severity": "error"
+        }
+      ],
+      "warnings": [
+        {
+          "existingFile": "packages/react-dom-bindings/src/server/ReactDOMLegacyServerStreamConfig.js",
+          "existingLine": 35,
+          "existingSymbol": "writeChunk",
+          "newFile": "packages/react-flight-server-fb/src/ReactServerStreamConfigFB.js",
+          "newLine": 57,
+          "newSymbol": "writeStringChunk",
+          "reason": "matching behavior tokens: chunk, write",
+          "score": 57,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "packages/react-dom-bindings/src/server/ReactDOMLegacyServerStreamConfig.js",
+          "existingLine": 35,
+          "existingSymbol": "writeChunk",
+          "newFile": "packages/react-flight-server-fb/src/ReactServerStreamConfigFB.js",
+          "newLine": 102,
+          "newSymbol": "writeViewChunk",
+          "reason": "matching behavior tokens: chunk, write",
+          "score": 57,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "packages/react-dom-bindings/src/server/ReactFizzConfigDOM.js",
+          "existingLine": 816,
+          "existingSymbol": "createFormatContext",
+          "newFile": "packages/react-flight-server-fb/src/server/ReactFlightServerConfigDOMFB.js",
+          "newLine": 38,
+          "newSymbol": "createRootFormatContext",
+          "reason": "matching behavior tokens: context, create, format",
+          "score": 57,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": false,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 55 changed location(s)",
+    "new code appears to reimplement existing helpers or loops: 3",
+    "changed source diff is heavily additive: added=1671 deleted=0"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": false
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "react/_wt_pr36309",
+  "reuseFindings": [
+    {
+      "existingFile": "packages/react-server-dom-esm/src/client/ReactFlightDOMClientBrowser.js",
+      "existingLine": 198,
+      "existingSymbol": "handleDone",
+      "newFile": "packages/react-flight-server-fb/src/client/ReactFlightDOMClientBrowser.js",
+      "newLine": 197,
+      "newSymbol": "handleDone",
+      "reason": "same symbol name",
+      "score": 100,
+      "severity": "error"
+    },
+    {
+      "existingFile": "packages/react-server-dom-esm/src/client/ReactFlightDOMClientBrowser.js",
+      "existingLine": 198,
+      "existingSymbol": "handleDone",
+      "newFile": "packages/react-flight-server-fb/src/client/ReactFlightDOMClientBrowser.js",
+      "newLine": 233,
+      "newSymbol": "handleDone",
+      "reason": "same symbol name",
+      "score": 100,
+      "severity": "error"
+    },
+    {
+      "existingFile": "packages/react-devtools-extensions/src/contentScripts/backendManager.js",
+      "existingLine": 120,
+      "existingSymbol": "listener",
+      "newFile": "packages/react-flight-server-fb/src/client/ReactFlightDOMClientBrowser.js",
+      "newLine": 281,
+      "newSymbol": "listener",
+      "reason": "same symbol name",
+      "score": 100,
+      "severity": "error"
+    },
+    {
+      "existingFile": "packages/react-dom-bindings/src/server/ReactDOMLegacyServerStreamConfig.js",
+      "existingLine": 35,
+      "existingSymbol": "writeChunk",
+      "newFile": "packages/react-flight-server-fb/src/ReactServerStreamConfigFB.js",
+      "newLine": 57,
+      "newSymbol": "writeStringChunk",
+      "reason": "matching behavior tokens: chunk, write",
+      "score": 57,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "packages/react-dom-bindings/src/server/ReactDOMLegacyServerStreamConfig.js",
+      "existingLine": 35,
+      "existingSymbol": "writeChunk",
+      "newFile": "packages/react-flight-server-fb/src/ReactServerStreamConfigFB.js",
+      "newLine": 102,
+      "newSymbol": "writeViewChunk",
+      "reason": "matching behavior tokens: chunk, write",
+      "score": 57,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "packages/react-dom-bindings/src/server/ReactFizzConfigDOM.js",
+      "existingLine": 816,
+      "existingSymbol": "createFormatContext",
+      "newFile": "packages/react-flight-server-fb/src/server/ReactFlightServerConfigDOMFB.js",
+      "newLine": 38,
+      "newSymbol": "createRootFormatContext",
+      "reason": "matching behavior tokens: context, create, format",
+      "score": 57,
+      "severity": "warning"
+    }
+  ],
+  "sourceFilesCount": 20,
+  "version": "3.0.0",
+  "warnings": [
+    "possible reusable existing path for packages/react-flight-server-fb/src/ReactServerStreamConfigFB.js:57 -> packages/react-dom-bindings/src/server/ReactDOMLegacyServerStreamConfig.js:35 writeChunk (matching behavior tokens: chunk, write)",
+    "possible reusable existing path for packages/react-flight-server-fb/src/ReactServerStreamConfigFB.js:102 -> packages/react-dom-bindings/src/server/ReactDOMLegacyServerStreamConfig.js:35 writeChunk (matching behavior tokens: chunk, write)",
+    "possible reusable existing path for packages/react-flight-server-fb/src/server/ReactFlightServerConfigDOMFB.js:38 -> packages/react-dom-bindings/src/server/ReactFizzConfigDOM.js:816 createFormatContext (matching behavior tokens: context, create, format)"
+  ]
+}

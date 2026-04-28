@@ -1,0 +1,266 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 15,
+        "baselineLines": 401,
+        "currentLines": 402,
+        "deleted": 14,
+        "file": "eslint.config.js",
+        "netGrowth": 1
+      },
+      {
+        "added": 5,
+        "baselineLines": 407,
+        "currentLines": 410,
+        "deleted": 2,
+        "file": "packages/vite/rolldown.config.ts",
+        "netGrowth": 3
+      },
+      {
+        "added": 1,
+        "baselineLines": 203,
+        "currentLines": 204,
+        "deleted": 0,
+        "file": "packages/vite/rollupLicensePlugin.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 1,
+        "baselineLines": 665,
+        "currentLines": 665,
+        "deleted": 1,
+        "file": "packages/vite/src/client/client.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 158,
+        "currentLines": 158,
+        "deleted": 1,
+        "file": "packages/vite/src/module-runner/evaluatedModules.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 424,
+        "currentLines": 424,
+        "deleted": 2,
+        "file": "packages/vite/src/module-runner/sourcemap/interceptor.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 7,
+        "baselineLines": 71,
+        "currentLines": 66,
+        "deleted": 12,
+        "file": "packages/vite/src/module-runner/utils.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 480,
+        "currentLines": 480,
+        "deleted": 1,
+        "file": "packages/vite/src/node/cli.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 115,
+        "currentLines": 115,
+        "deleted": 1,
+        "file": "packages/vite/src/node/env.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 4,
+        "baselineLines": 618,
+        "currentLines": 618,
+        "deleted": 4,
+        "file": "packages/vite/src/node/plugins/asset.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 3558,
+        "currentLines": 3558,
+        "deleted": 1,
+        "file": "packages/vite/src/node/plugins/css.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 10,
+        "baselineLines": 1605,
+        "currentLines": 1606,
+        "deleted": 9,
+        "file": "packages/vite/src/node/plugins/html.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 577,
+        "currentLines": 577,
+        "deleted": 2,
+        "file": "packages/vite/src/node/plugins/importAnalysisBuild.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 1160,
+        "currentLines": 1160,
+        "deleted": 1,
+        "file": "packages/vite/src/node/server/hmr.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 1382,
+        "currentLines": 1382,
+        "deleted": 1,
+        "file": "packages/vite/src/node/server/index.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 361,
+        "currentLines": 361,
+        "deleted": 1,
+        "file": "packages/vite/src/node/server/middlewares/static.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 1326,
+        "currentLines": 1326,
+        "deleted": 1,
+        "file": "packages/vite/src/node/server/pluginContainer.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 1835,
+        "currentLines": 1835,
+        "deleted": 1,
+        "file": "packages/vite/src/node/utils.ts",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 56,
+    "totalDeleted": 55
+  },
+  "changedFilesCount": 19,
+  "changedFilesSample": [
+    "docs/.vitepress/theme/landing/Community.vue",
+    "eslint.config.js",
+    "packages/vite/rolldown.config.ts",
+    "packages/vite/rollupLicensePlugin.ts",
+    "packages/vite/src/client/client.ts",
+    "packages/vite/src/module-runner/evaluatedModules.ts",
+    "packages/vite/src/module-runner/sourcemap/interceptor.ts",
+    "packages/vite/src/module-runner/utils.ts",
+    "packages/vite/src/node/cli.ts",
+    "packages/vite/src/node/env.ts",
+    "packages/vite/src/node/plugins/asset.ts",
+    "packages/vite/src/node/plugins/css.ts",
+    "packages/vite/src/node/plugins/html.ts",
+    "packages/vite/src/node/plugins/importAnalysisBuild.ts",
+    "packages/vite/src/node/server/hmr.ts",
+    "packages/vite/src/node/server/index.ts",
+    "packages/vite/src/node/server/middlewares/static.ts",
+    "packages/vite/src/node/server/pluginContainer.ts",
+    "packages/vite/src/node/utils.ts"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "packages/vite/src/module-runner/evaluatedModules.ts:17"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file packages/vite/src/node/plugins/html.ts grew by 1 lines"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 1 changed location(s)"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": false,
+  "repo": "vite/_wt_pr22278",
+  "reuseFindings": [],
+  "sourceFilesCount": 18,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file packages/vite/src/node/plugins/html.ts grew by 1 lines"
+  ]
+}

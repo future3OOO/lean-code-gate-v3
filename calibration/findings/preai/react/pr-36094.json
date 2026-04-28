@@ -1,0 +1,166 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 91,
+        "baselineLines": 8073,
+        "currentLines": 8153,
+        "deleted": 11,
+        "file": "packages/react-devtools-shared/src/backend/fiber/renderer.js",
+        "netGrowth": 80
+      },
+      {
+        "added": 50,
+        "baselineLines": 2453,
+        "currentLines": 2501,
+        "deleted": 2,
+        "file": "packages/react-devtools-shared/src/devtools/store.js",
+        "netGrowth": 48
+      },
+      {
+        "added": 7,
+        "baselineLines": 278,
+        "currentLines": 284,
+        "deleted": 1,
+        "file": "packages/react-devtools-shared/src/devtools/utils.js",
+        "netGrowth": 6
+      },
+      {
+        "added": 20,
+        "baselineLines": 296,
+        "currentLines": 316,
+        "deleted": 0,
+        "file": "packages/react-devtools-shared/src/devtools/views/Components/Element.js",
+        "netGrowth": 20
+      },
+      {
+        "added": 8,
+        "baselineLines": 357,
+        "currentLines": 365,
+        "deleted": 0,
+        "file": "packages/react-devtools-shared/src/frontend/types.js",
+        "netGrowth": 8
+      },
+      {
+        "added": 39,
+        "baselineLines": null,
+        "currentLines": 39,
+        "deleted": 0,
+        "file": "packages/react-devtools-shell/src/app/ActivityTree/index.js",
+        "netGrowth": 39
+      },
+      {
+        "added": 2,
+        "baselineLines": 132,
+        "currentLines": 134,
+        "deleted": 0,
+        "file": "packages/react-devtools-shell/src/app/index.js",
+        "netGrowth": 2
+      }
+    ],
+    "totalAdded": 217,
+    "totalDeleted": 14
+  },
+  "changedFilesCount": 9,
+  "changedFilesSample": [
+    "packages/react-devtools-shared/src/__tests__/store-test.js",
+    "packages/react-devtools-shared/src/__tests__/storeComponentFilters-test.js",
+    "packages/react-devtools-shared/src/backend/fiber/renderer.js",
+    "packages/react-devtools-shared/src/devtools/store.js",
+    "packages/react-devtools-shared/src/devtools/utils.js",
+    "packages/react-devtools-shared/src/devtools/views/Components/Element.js",
+    "packages/react-devtools-shared/src/frontend/types.js",
+    "packages/react-devtools-shell/src/app/ActivityTree/index.js",
+    "packages/react-devtools-shell/src/app/index.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file packages/react-devtools-shared/src/backend/fiber/renderer.js grew by 80 lines",
+        "large source file packages/react-devtools-shared/src/devtools/store.js grew by 48 lines"
+      ]
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "react/_wt_pr36094",
+  "reuseFindings": [],
+  "sourceFilesCount": 7,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file packages/react-devtools-shared/src/backend/fiber/renderer.js grew by 80 lines",
+    "large source file packages/react-devtools-shared/src/devtools/store.js grew by 48 lines"
+  ]
+}

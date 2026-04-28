@@ -1,0 +1,137 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 11,
+        "baselineLines": 371,
+        "currentLines": 380,
+        "deleted": 2,
+        "file": "packages/vite/src/node/server/middlewares/transform.ts",
+        "netGrowth": 9
+      },
+      {
+        "added": 144,
+        "baselineLines": null,
+        "currentLines": 144,
+        "deleted": 0,
+        "file": "playground/fs-serve/root/matrixTestResultPlugin.ts",
+        "netGrowth": 144
+      },
+      {
+        "added": 2,
+        "baselineLines": 39,
+        "currentLines": 40,
+        "deleted": 1,
+        "file": "playground/fs-serve/root/vite.config-base.js",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 35,
+        "currentLines": 36,
+        "deleted": 1,
+        "file": "playground/fs-serve/root/vite.config.js",
+        "netGrowth": 1
+      }
+    ],
+    "totalAdded": 159,
+    "totalDeleted": 4
+  },
+  "changedFilesCount": 10,
+  "changedFilesSample": [
+    "packages/vite/src/node/server/middlewares/transform.ts",
+    "playground/fs-serve/__tests__/commonTests.ts",
+    "playground/fs-serve/__tests__/deny/fs-serve-deny.spec.ts",
+    "playground/fs-serve/__tests__/fs-serve.spec.ts",
+    "playground/fs-serve/package.json",
+    "playground/fs-serve/root/matrixTestResultPlugin.ts",
+    "playground/fs-serve/root/src/index.html",
+    "playground/fs-serve/root/vite.config-base.js",
+    "playground/fs-serve/root/vite.config.js",
+    "pnpm-lock.yaml"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "vite/_wt_pr22160",
+  "reuseFindings": [],
+  "sourceFilesCount": 4,
+  "version": "3.0.0",
+  "warnings": []
+}

@@ -1,0 +1,9 @@
+repo: react
+github: facebook/react
+pr_number: 36253
+title: [react-native-renderer] EventTarget-based event dispatching
+base_sha: 705268dcd16779b1f51f234cebaa588d761202ce
+merge_sha: 568244232e29a0d4524544344aa280917580e8f7
+merged_at: 2026-04-14T11:43:41Z
+exit_code: 2
+duration_seconds: 6

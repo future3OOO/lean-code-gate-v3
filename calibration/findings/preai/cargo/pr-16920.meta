@@ -1,0 +1,9 @@
+repo: cargo
+github: rust-lang/cargo
+pr_number: 16920
+title: refactor(compile): Log all ignored unused externs
+base_sha: 06ac0e7c05770a8c7bbf67bdd12fa1a1eefdc8ae
+merge_sha: dede9f5f6b9f4a53f23f0297c4e35308f5012d37
+merged_at: 2026-04-21T22:02:33Z
+exit_code: 0
+duration_seconds: 1

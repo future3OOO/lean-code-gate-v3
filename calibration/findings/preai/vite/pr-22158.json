@@ -1,0 +1,189 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 5,
+        "baselineLines": 140,
+        "currentLines": 144,
+        "deleted": 1,
+        "file": "packages/vite/src/node/plugins/forwardConsole.ts",
+        "netGrowth": 4
+      },
+      {
+        "added": 71,
+        "baselineLines": 180,
+        "currentLines": 243,
+        "deleted": 8,
+        "file": "packages/vite/src/node/server/sourcemap.ts",
+        "netGrowth": 63
+      },
+      {
+        "added": 1,
+        "baselineLines": 560,
+        "currentLines": 560,
+        "deleted": 1,
+        "file": "packages/vite/src/node/server/transformRequest.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": null,
+        "currentLines": 2,
+        "deleted": 0,
+        "file": "playground/js-sourcemap/dep-malicious-sourcemap/index.js",
+        "netGrowth": 2
+      },
+      {
+        "added": 3,
+        "baselineLines": null,
+        "currentLines": 3,
+        "deleted": 0,
+        "file": "playground/js-sourcemap/dep-optimized-malicious/index.js",
+        "netGrowth": 3
+      },
+      {
+        "added": 2,
+        "baselineLines": null,
+        "currentLines": 2,
+        "deleted": 0,
+        "file": "playground/js-sourcemap/malicious-import.js",
+        "netGrowth": 2
+      },
+      {
+        "added": 2,
+        "baselineLines": null,
+        "currentLines": 2,
+        "deleted": 0,
+        "file": "playground/js-sourcemap/optimized-malicious-import.js",
+        "netGrowth": 2
+      },
+      {
+        "added": 3,
+        "baselineLines": 54,
+        "currentLines": 57,
+        "deleted": 0,
+        "file": "playground/js-sourcemap/vite.config.js",
+        "netGrowth": 3
+      },
+      {
+        "added": 26,
+        "baselineLines": 428,
+        "currentLines": 451,
+        "deleted": 3,
+        "file": "playground/test-utils.ts",
+        "netGrowth": 23
+      }
+    ],
+    "totalAdded": 115,
+    "totalDeleted": 13
+  },
+  "changedFilesCount": 16,
+  "changedFilesSample": [
+    "packages/vite/src/node/plugins/forwardConsole.ts",
+    "packages/vite/src/node/server/__tests__/sourcemap.spec.ts",
+    "packages/vite/src/node/server/sourcemap.ts",
+    "packages/vite/src/node/server/transformRequest.ts",
+    "playground/js-sourcemap/__tests__/js-sourcemap.spec.ts",
+    "playground/js-sourcemap/dep-malicious-sourcemap/index.js",
+    "playground/js-sourcemap/dep-malicious-sourcemap/package.json",
+    "playground/js-sourcemap/dep-optimized-malicious/index.js",
+    "playground/js-sourcemap/dep-optimized-malicious/package.json",
+    "playground/js-sourcemap/index.html",
+    "playground/js-sourcemap/malicious-import.js",
+    "playground/js-sourcemap/optimized-malicious-import.js",
+    "playground/js-sourcemap/package.json",
+    "playground/js-sourcemap/vite.config.js",
+    "playground/test-utils.ts",
+    "pnpm-lock.yaml"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "playground/test-utils.ts:376",
+        "playground/test-utils.ts:380",
+        "playground/test-utils.ts:384"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 3 changed location(s)"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": false,
+  "repo": "vite/_wt_pr22158",
+  "reuseFindings": [],
+  "sourceFilesCount": 9,
+  "version": "3.0.0",
+  "warnings": []
+}

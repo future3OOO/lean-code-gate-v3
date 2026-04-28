@@ -1,0 +1,9 @@
+repo: cargo
+github: rust-lang/cargo
+pr_number: 16902
+title: refactor(network): convert .crate downloads to use http_async
+base_sha: 3bf1388b8823ec4eab622340036593381d8871aa
+merge_sha: 72d80ecb5f78a5f8a5f88daa81fe2979d0a4d010
+merged_at: 2026-04-20T16:07:43Z
+exit_code: 0
+duration_seconds: 1

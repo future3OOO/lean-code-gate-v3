@@ -1,0 +1,9 @@
+repo: cargo
+github: rust-lang/cargo
+pr_number: 16903
+title: Add global HTTP timeout tracking to http_async
+base_sha: da06c615cfa5f28d7e1babd144cc2678121e883e
+merge_sha: 3bf1388b8823ec4eab622340036593381d8871aa
+merged_at: 2026-04-18T00:01:26Z
+exit_code: 0
+duration_seconds: 2

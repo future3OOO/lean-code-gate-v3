@@ -1,0 +1,126 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 17,
+        "baselineLines": 456,
+        "currentLines": 471,
+        "deleted": 2,
+        "file": "dev/breeze/src/airflow_breeze/commands/registry_commands.py",
+        "netGrowth": 15
+      },
+      {
+        "added": 1,
+        "baselineLines": 58,
+        "currentLines": 59,
+        "deleted": 0,
+        "file": "dev/breeze/src/airflow_breeze/commands/registry_commands_config.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 106,
+        "baselineLines": 653,
+        "currentLines": 756,
+        "deleted": 3,
+        "file": "dev/registry/extract_metadata.py",
+        "netGrowth": 103
+      }
+    ],
+    "totalAdded": 124,
+    "totalDeleted": 5
+  },
+  "changedFilesCount": 7,
+  "changedFilesSample": [
+    ".github/workflows/registry-build.yml",
+    "dev/breeze/doc/images/output_registry_extract-data.svg",
+    "dev/breeze/doc/images/output_registry_extract-data.txt",
+    "dev/breeze/src/airflow_breeze/commands/registry_commands.py",
+    "dev/breeze/src/airflow_breeze/commands/registry_commands_config.py",
+    "dev/registry/extract_metadata.py",
+    "dev/registry/tests/test_extract_metadata.py"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "airflow/_wt_pr65984",
+  "reuseFindings": [],
+  "sourceFilesCount": 3,
+  "version": "3.0.0",
+  "warnings": []
+}

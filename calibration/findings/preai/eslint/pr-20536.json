@@ -1,0 +1,306 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 9,
+        "baselineLines": 137,
+        "currentLines": 144,
+        "deleted": 2,
+        "file": "lib/rules/block-scoped-var.js",
+        "netGrowth": 7
+      },
+      {
+        "added": 11,
+        "baselineLines": 194,
+        "currentLines": 204,
+        "deleted": 1,
+        "file": "lib/rules/func-names.js",
+        "netGrowth": 10
+      },
+      {
+        "added": 9,
+        "baselineLines": 221,
+        "currentLines": 227,
+        "deleted": 3,
+        "file": "lib/rules/no-console.js",
+        "netGrowth": 6
+      },
+      {
+        "added": 7,
+        "baselineLines": 92,
+        "currentLines": 98,
+        "deleted": 1,
+        "file": "lib/rules/no-dupe-args.js",
+        "netGrowth": 6
+      },
+      {
+        "added": 8,
+        "baselineLines": 450,
+        "currentLines": 456,
+        "deleted": 2,
+        "file": "lib/rules/no-else-return.js",
+        "netGrowth": 6
+      },
+      {
+        "added": 8,
+        "baselineLines": 295,
+        "currentLines": 301,
+        "deleted": 2,
+        "file": "lib/rules/no-eval.js",
+        "netGrowth": 6
+      },
+      {
+        "added": 8,
+        "baselineLines": 267,
+        "currentLines": 273,
+        "deleted": 2,
+        "file": "lib/rules/no-loop-func.js",
+        "netGrowth": 6
+      },
+      {
+        "added": 7,
+        "baselineLines": 689,
+        "currentLines": 695,
+        "deleted": 1,
+        "file": "lib/rules/no-shadow.js",
+        "netGrowth": 6
+      },
+      {
+        "added": 7,
+        "baselineLines": 85,
+        "currentLines": 91,
+        "deleted": 1,
+        "file": "lib/rules/no-undefined.js",
+        "netGrowth": 6
+      },
+      {
+        "added": 15,
+        "baselineLines": 360,
+        "currentLines": 367,
+        "deleted": 8,
+        "file": "lib/rules/no-unmodified-loop-condition.js",
+        "netGrowth": 7
+      },
+      {
+        "added": 10,
+        "baselineLines": 1739,
+        "currentLines": 1746,
+        "deleted": 3,
+        "file": "lib/rules/no-unused-vars.js",
+        "netGrowth": 7
+      },
+      {
+        "added": 11,
+        "baselineLines": 446,
+        "currentLines": 453,
+        "deleted": 4,
+        "file": "lib/rules/no-use-before-define.js",
+        "netGrowth": 7
+      },
+      {
+        "added": 15,
+        "baselineLines": 367,
+        "currentLines": 375,
+        "deleted": 7,
+        "file": "lib/rules/no-var.js",
+        "netGrowth": 8
+      },
+      {
+        "added": 10,
+        "baselineLines": 437,
+        "currentLines": 444,
+        "deleted": 3,
+        "file": "lib/rules/prefer-arrow-callback.js",
+        "netGrowth": 7
+      },
+      {
+        "added": 13,
+        "baselineLines": 546,
+        "currentLines": 554,
+        "deleted": 5,
+        "file": "lib/rules/prefer-const.js",
+        "netGrowth": 8
+      },
+      {
+        "added": 12,
+        "baselineLines": 117,
+        "currentLines": 125,
+        "deleted": 4,
+        "file": "lib/rules/prefer-rest-params.js",
+        "netGrowth": 8
+      },
+      {
+        "added": 7,
+        "baselineLines": 193,
+        "currentLines": 199,
+        "deleted": 1,
+        "file": "lib/rules/radix.js",
+        "netGrowth": 6
+      },
+      {
+        "added": 10,
+        "baselineLines": 2841,
+        "currentLines": 2848,
+        "deleted": 3,
+        "file": "lib/rules/utils/ast-utils.js",
+        "netGrowth": 7
+      },
+      {
+        "added": 1,
+        "baselineLines": 109,
+        "currentLines": 109,
+        "deleted": 1,
+        "file": "lib/shared/naming.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 318,
+        "currentLines": 323,
+        "deleted": 0,
+        "file": "packages/eslint-config-eslint/base.js",
+        "netGrowth": 5
+      },
+      {
+        "added": 3,
+        "baselineLines": 323,
+        "currentLines": 324,
+        "deleted": 2,
+        "file": "tools/config-rule.js",
+        "netGrowth": 1
+      }
+    ],
+    "totalAdded": 186,
+    "totalDeleted": 56
+  },
+  "changedFilesCount": 25,
+  "changedFilesSample": [
+    "docs/src/rules/vars-on-top.md",
+    "docs/src/use/migrate-to-10.0.0.md",
+    "lib/rules/block-scoped-var.js",
+    "lib/rules/func-names.js",
+    "lib/rules/no-console.js",
+    "lib/rules/no-dupe-args.js",
+    "lib/rules/no-else-return.js",
+    "lib/rules/no-eval.js",
+    "lib/rules/no-loop-func.js",
+    "lib/rules/no-shadow.js",
+    "lib/rules/no-undefined.js",
+    "lib/rules/no-unmodified-loop-condition.js",
+    "lib/rules/no-unused-vars.js",
+    "lib/rules/no-use-before-define.js",
+    "lib/rules/no-var.js",
+    "lib/rules/prefer-arrow-callback.js",
+    "lib/rules/prefer-const.js",
+    "lib/rules/prefer-rest-params.js",
+    "lib/rules/radix.js",
+    "lib/rules/utils/ast-utils.js",
+    "lib/shared/naming.js",
+    "package.json",
+    "packages/eslint-config-eslint/base.js",
+    "packages/eslint-config-eslint/package.json",
+    "tools/config-rule.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 3,
+          "files": [
+            "lib/rules/no-var.js",
+            "lib/rules/prefer-const.js",
+            "lib/rules/prefer-rest-params.js"
+          ],
+          "sample": "/** @typedef {import(\"eslint-scope\").Scope} Scope */ | /** @typedef {import(\"eslint-scope\").Variable} Variable */ | /** @typedef {import(\"eslint-scope\").Reference} Reference */"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file lib/rules/no-unused-vars.js grew by 7 lines",
+        "large source file lib/rules/utils/ast-utils.js grew by 7 lines"
+      ]
+    }
+  ],
+  "errors": [
+    "duplicate added code blocks detected: 1"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "eslint/_wt_pr20536",
+  "reuseFindings": [],
+  "sourceFilesCount": 21,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file lib/rules/no-unused-vars.js grew by 7 lines",
+    "large source file lib/rules/utils/ast-utils.js grew by 7 lines"
+  ]
+}

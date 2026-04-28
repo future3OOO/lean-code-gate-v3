@@ -1,0 +1,9 @@
+repo: airflow
+github: apache/airflow
+pr_number: 65964
+title: [v3-2-test] Update search parameters to better leverage DB indexes
+base_sha: caf94947b382e5f20f0fece18b3a85294c028dd9
+merge_sha: 065e04c19a3ca0cd52ae69497301bb1ec1c007af
+merged_at: 2026-04-28T07:58:32Z
+exit_code: 2
+duration_seconds: 5

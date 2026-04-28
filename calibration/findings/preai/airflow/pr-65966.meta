@@ -1,0 +1,9 @@
+repo: airflow
+github: apache/airflow
+pr_number: 65966
+title: [v3-2-test] UI: Serve grid TI summaries from shared cached DagBag (#65775)
+base_sha: caf94947b382e5f20f0fece18b3a85294c028dd9
+merge_sha: 7249b6cc5b81224441acb458e0b07313b0975ed4
+merged_at: 2026-04-28T07:58:46Z
+exit_code: 2
+duration_seconds: 5

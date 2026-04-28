@@ -1,0 +1,149 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 3,
+        "baselineLines": 4,
+        "currentLines": 5,
+        "deleted": 2,
+        "file": "dist-module/jquery.node-module-wrapper.js",
+        "netGrowth": 1
+      },
+      {
+        "added": 3,
+        "baselineLines": 4,
+        "currentLines": 5,
+        "deleted": 2,
+        "file": "dist-module/jquery.node-module-wrapper.slim.js",
+        "netGrowth": 1
+      },
+      {
+        "added": 24,
+        "baselineLines": 340,
+        "currentLines": 359,
+        "deleted": 5,
+        "file": "eslint.config.js",
+        "netGrowth": 19
+      }
+    ],
+    "totalAdded": 30,
+    "totalDeleted": 9
+  },
+  "changedFilesCount": 35,
+  "changedFilesSample": [
+    ".gitignore",
+    "build/fixtures/README.md",
+    "build/release/dist.js",
+    "build/tasks/node_smoke_tests.js",
+    "dist-module/jquery.node-module-wrapper.js",
+    "dist-module/jquery.node-module-wrapper.slim.js",
+    "dist/jquery.bundler-require-wrapper.js",
+    "dist/jquery.bundler-require-wrapper.slim.js",
+    "eslint.config.js",
+    "package-lock.json",
+    "package.json",
+    "test/bundler_smoke_tests/lib/run-rollup.js",
+    "test/bundler_smoke_tests/lib/run-webpack.js",
+    "test/bundler_smoke_tests/lib/utils.js",
+    "test/bundler_smoke_tests/rollup-commonjs.config.js",
+    "test/bundler_smoke_tests/rollup-pure-esm.config.js",
+    "test/bundler_smoke_tests/run-jsdom-tests.js",
+    "test/bundler_smoke_tests/src-esm-commonjs/jquery-require.cjs",
+    "test/bundler_smoke_tests/src-esm-commonjs/main.js",
+    "test/bundler_smoke_tests/src-pure-esm/main.js",
+    "test/bundler_smoke_tests/test.html",
+    "test/bundler_smoke_tests/webpack.config.cjs",
+    "test/node_smoke_tests/commonjs/factory/document_missing.cjs",
+    "test/node_smoke_tests/commonjs/lib/ensure_global_not_created.cjs",
+    "test/node_smoke_tests/commonjs/lib/ensure_iterability_es6.cjs",
+    "test/node_smoke_tests/commonjs/lib/ensure_jquery.cjs",
+    "test/node_smoke_tests/dual/factory/import-and-require-factory.js",
+    "test/node_smoke_tests/dual/lib/jquery-require-factory.cjs",
+    "test/node_smoke_tests/dual/lib/jquery-require.cjs",
+    "test/node_smoke_tests/dual/regular/import-and-require.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "jquery/_wt_pr5429",
+  "reuseFindings": [],
+  "sourceFilesCount": 3,
+  "version": "3.0.0",
+  "warnings": []
+}

@@ -1,0 +1,225 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 1,
+        "baselineLines": 659,
+        "currentLines": 660,
+        "deleted": 0,
+        "file": ".eslintrc.js",
+        "netGrowth": 1
+      },
+      {
+        "added": 69,
+        "baselineLines": null,
+        "currentLines": 69,
+        "deleted": 0,
+        "file": "packages/react-native-renderer/src/LegacySyntheticEvent.js",
+        "netGrowth": 69
+      },
+      {
+        "added": 65,
+        "baselineLines": 139,
+        "currentLines": 191,
+        "deleted": 13,
+        "file": "packages/react-native-renderer/src/ReactFabricEventEmitter.js",
+        "netGrowth": 52
+      },
+      {
+        "added": 4,
+        "baselineLines": 241,
+        "currentLines": 243,
+        "deleted": 2,
+        "file": "packages/react-native-renderer/src/ReactNativeEventEmitter.js",
+        "netGrowth": 2
+      },
+      {
+        "added": 24,
+        "baselineLines": null,
+        "currentLines": 24,
+        "deleted": 0,
+        "file": "packages/react-native-renderer/src/ReactNativeEventTypeMapping.js",
+        "netGrowth": 24
+      },
+      {
+        "added": 23,
+        "baselineLines": null,
+        "currentLines": 23,
+        "deleted": 0,
+        "file": "packages/react-native-renderer/src/ReactNativeFeatureFlags.js",
+        "netGrowth": 23
+      },
+      {
+        "added": 572,
+        "baselineLines": null,
+        "currentLines": 572,
+        "deleted": 0,
+        "file": "packages/react-native-renderer/src/ReactNativeResponder.js",
+        "netGrowth": 572
+      },
+      {
+        "added": 3,
+        "baselineLines": 36,
+        "currentLines": 38,
+        "deleted": 1,
+        "file": "packages/react-native-renderer/src/legacy-events/PluginModuleType.js",
+        "netGrowth": 2
+      },
+      {
+        "added": 1,
+        "baselineLines": 287,
+        "currentLines": 287,
+        "deleted": 1,
+        "file": "packages/react-reconciler/src/ReactFiberConcurrentUpdates.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 9,
+        "baselineLines": 5621,
+        "currentLines": 5626,
+        "deleted": 4,
+        "file": "packages/react-reconciler/src/ReactFiberWorkLoop.js",
+        "netGrowth": 5
+      },
+      {
+        "added": 13,
+        "baselineLines": 314,
+        "currentLines": 327,
+        "deleted": 0,
+        "file": "scripts/flow/react-native-host-hooks.js",
+        "netGrowth": 13
+      },
+      {
+        "added": 1,
+        "baselineLines": 97,
+        "currentLines": 98,
+        "deleted": 0,
+        "file": "scripts/rollup/validate/eslintrc.rn.js",
+        "netGrowth": 1
+      }
+    ],
+    "totalAdded": 785,
+    "totalDeleted": 21
+  },
+  "changedFilesCount": 13,
+  "changedFilesSample": [
+    ".eslintrc.js",
+    "packages/react-dom/src/__tests__/ReactUpdates-test.js",
+    "packages/react-native-renderer/src/LegacySyntheticEvent.js",
+    "packages/react-native-renderer/src/ReactFabricEventEmitter.js",
+    "packages/react-native-renderer/src/ReactNativeEventEmitter.js",
+    "packages/react-native-renderer/src/ReactNativeEventTypeMapping.js",
+    "packages/react-native-renderer/src/ReactNativeFeatureFlags.js",
+    "packages/react-native-renderer/src/ReactNativeResponder.js",
+    "packages/react-native-renderer/src/legacy-events/PluginModuleType.js",
+    "packages/react-reconciler/src/ReactFiberConcurrentUpdates.js",
+    "packages/react-reconciler/src/ReactFiberWorkLoop.js",
+    "scripts/flow/react-native-host-hooks.js",
+    "scripts/rollup/validate/eslintrc.rn.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "packages/react-native-renderer/src/ReactFabricEventEmitter.js:105",
+        "packages/react-native-renderer/src/ReactFabricEventEmitter.js:62",
+        "packages/react-native-renderer/src/ReactNativeEventEmitter.js:134",
+        "packages/react-native-renderer/src/ReactNativeResponder.js:202",
+        "packages/react-native-renderer/src/ReactNativeResponder.js:208",
+        "packages/react-native-renderer/src/ReactNativeResponder.js:218",
+        "packages/react-native-renderer/src/ReactNativeResponder.js:219",
+        "packages/react-native-renderer/src/ReactNativeResponder.js:433",
+        "packages/react-native-renderer/src/ReactNativeResponder.js:480",
+        "scripts/flow/react-native-host-hooks.js:239"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "new source file packages/react-native-renderer/src/ReactNativeResponder.js has 572 lines (>500)",
+        "large source file packages/react-reconciler/src/ReactFiberWorkLoop.js grew by 5 lines",
+        "changed source diff is additive: added=785 deleted=21"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 10 changed location(s)"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": false,
+  "repo": "react/_wt_pr36253",
+  "reuseFindings": [],
+  "sourceFilesCount": 12,
+  "version": "3.0.0",
+  "warnings": [
+    "new source file packages/react-native-renderer/src/ReactNativeResponder.js has 572 lines (>500)",
+    "large source file packages/react-reconciler/src/ReactFiberWorkLoop.js grew by 5 lines",
+    "changed source diff is additive: added=785 deleted=21"
+  ]
+}

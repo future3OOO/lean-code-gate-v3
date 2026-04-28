@@ -1,0 +1,182 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 1,
+        "baselineLines": 658,
+        "currentLines": 659,
+        "deleted": 0,
+        "file": ".eslintrc.js",
+        "netGrowth": 1
+      },
+      {
+        "added": 0,
+        "baselineLines": 379,
+        "currentLines": 378,
+        "deleted": 1,
+        "file": "packages/internal-test-utils/ReactInternalTestUtils.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 0,
+        "baselineLines": 297,
+        "currentLines": 296,
+        "deleted": 1,
+        "file": "packages/internal-test-utils/internalAct.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 31,
+        "baselineLines": 5383,
+        "currentLines": 5406,
+        "deleted": 8,
+        "file": "packages/react-client/src/ReactFlightClient.js",
+        "netGrowth": 23
+      },
+      {
+        "added": 31,
+        "baselineLines": 6413,
+        "currentLines": 6444,
+        "deleted": 0,
+        "file": "packages/react-server/src/ReactFlightServer.js",
+        "netGrowth": 31
+      },
+      {
+        "added": 0,
+        "baselineLines": 366,
+        "currentLines": 365,
+        "deleted": 1,
+        "file": "packages/react/src/ReactAct.js",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 439,
+        "currentLines": 440,
+        "deleted": 0,
+        "file": "packages/shared/ReactTypes.js",
+        "netGrowth": 1
+      }
+    ],
+    "totalAdded": 64,
+    "totalDeleted": 11
+  },
+  "changedFilesCount": 10,
+  "changedFilesSample": [
+    ".eslintrc.js",
+    "packages/internal-test-utils/ReactInternalTestUtils.js",
+    "packages/internal-test-utils/internalAct.js",
+    "packages/react-client/src/ReactFlightClient.js",
+    "packages/react-client/src/__tests__/ReactFlight-test.js",
+    "packages/react-dom/src/__tests__/ReactDOMSelect-test.js",
+    "packages/react-reconciler/src/__tests__/ReactFlushSync-test.js",
+    "packages/react-server/src/ReactFlightServer.js",
+    "packages/react/src/ReactAct.js",
+    "packages/shared/ReactTypes.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "packages/react-server/src/ReactFlightServer.js:4176",
+        "packages/react-server/src/ReactFlightServer.js:4227",
+        "packages/react-server/src/ReactFlightServer.js:4284"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 6,
+          "files": [
+            "packages/react-server/src/ReactFlightServer.js"
+          ],
+          "sample": "if ( | typeof AggregateError !== 'undefined' && | error instanceof AggregateError"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file packages/react-client/src/ReactFlightClient.js grew by 23 lines",
+        "large source file packages/react-server/src/ReactFlightServer.js grew by 31 lines"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 3 changed location(s)",
+    "duplicate added code blocks detected: 1"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "react/_wt_pr36156",
+  "reuseFindings": [],
+  "sourceFilesCount": 7,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file packages/react-client/src/ReactFlightClient.js grew by 23 lines",
+    "large source file packages/react-server/src/ReactFlightServer.js grew by 31 lines"
+  ]
+}

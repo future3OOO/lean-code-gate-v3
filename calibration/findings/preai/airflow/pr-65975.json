@@ -1,0 +1,135 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 31,
+        "baselineLines": 438,
+        "currentLines": 456,
+        "deleted": 13,
+        "file": "dev/breeze/src/airflow_breeze/commands/registry_commands.py",
+        "netGrowth": 18
+      },
+      {
+        "added": 56,
+        "baselineLines": 968,
+        "currentLines": 994,
+        "deleted": 30,
+        "file": "dev/registry/extract_parameters.py",
+        "netGrowth": 26
+      },
+      {
+        "added": 17,
+        "baselineLines": 103,
+        "currentLines": 114,
+        "deleted": 6,
+        "file": "dev/registry/merge_registry_data.py",
+        "netGrowth": 11
+      },
+      {
+        "added": 17,
+        "baselineLines": 515,
+        "currentLines": 532,
+        "deleted": 0,
+        "file": "task-sdk/src/airflow/sdk/definitions/asset/__init__.py",
+        "netGrowth": 17
+      }
+    ],
+    "totalAdded": 121,
+    "totalDeleted": 49
+  },
+  "changedFilesCount": 8,
+  "changedFilesSample": [
+    "dev/breeze/src/airflow_breeze/commands/registry_commands.py",
+    "dev/breeze/tests/test_registry_backfill.py",
+    "dev/registry/extract_parameters.py",
+    "dev/registry/merge_registry_data.py",
+    "dev/registry/tests/test_extract_parameters.py",
+    "dev/registry/tests/test_merge_registry_data.py",
+    "task-sdk/src/airflow/sdk/definitions/asset/__init__.py",
+    "task-sdk/tests/task_sdk/definitions/test_asset.py"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": true,
+  "repo": "airflow/_wt_pr65975",
+  "reuseFindings": [],
+  "sourceFilesCount": 4,
+  "version": "3.0.0",
+  "warnings": []
+}

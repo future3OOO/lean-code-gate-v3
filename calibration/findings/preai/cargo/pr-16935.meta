@@ -1,0 +1,9 @@
+repo: cargo
+github: rust-lang/cargo
+pr_number: 16935
+title: fix(compile): Ignore unused deps if also transitive 
+base_sha: c5efee4513daa27b0852fe2430472a38a83adb7e
+merge_sha: 32aa9b5fb068c9924d0ec6f5e829922ba90a0624
+merged_at: 2026-04-23T18:30:22Z
+exit_code: 0
+duration_seconds: 0

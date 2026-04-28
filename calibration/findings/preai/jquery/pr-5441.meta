@@ -1,0 +1,9 @@
+repo: jquery
+github: jquery/jquery
+pr_number: 5441
+title: Some build refactors/improvements
+base_sha: 2d8208e007a4a6b42015d98db1625b29cd100e27
+merge_sha: d926cca9c6406544dbe776d84331903c1a390493
+merged_at: 2024-03-11T17:36:09Z
+exit_code: 0
+duration_seconds: 0

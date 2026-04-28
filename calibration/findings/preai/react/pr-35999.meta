@@ -1,0 +1,9 @@
+repo: react
+github: facebook/react
+pr_number: 35999
+title: [enableInfiniteRenderLoopDetection] Warn about potential infinite loop, instead of interrupting
+base_sha: 3f0b9e61c467cd6e09cac6fb69f6e8f68cd3c5d7
+merge_sha: b4546cd0d4db2b913d8e7503bee86e1844073b2e
+merged_at: 2026-03-18T14:11:30Z
+exit_code: 0
+duration_seconds: 0
