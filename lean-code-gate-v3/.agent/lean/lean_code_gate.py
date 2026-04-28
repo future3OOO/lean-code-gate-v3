@@ -46,7 +46,8 @@ DEFAULT_POLICY: dict[str, object] = {
     "block_hidden_bash_writes": True,
     "run_quality_gate_on_stop": True,
     "fail_on_quality_warnings": False,
-    "max_design_markers": 2,
+    "max_design_markers": 4,
+    "max_design_marker_density_per_100_lines": 3.0,
     "allowed_broad_globs": ["src/**", "lib/**", "app/**", "tests/**", "test/**"],
     "bloat_new_file_warn_lines": 500,
     "bloat_new_file_error_lines": 800,
@@ -1724,9 +1725,14 @@ def check_change(change_facts: dict[str, object], current_contract: dict[str, ob
     configs = [path for path in paths if path_type(path) == "config"]
     if configs and active_policy["block_config_changes_without_flag"] and not current_contract.get("allow_config_changes"):
         errors.append("Undeclared config change: " + ", ".join(configs))
-    hits = design_hits(str(change_facts.get("text") or ""))
+    text = str(change_facts.get("text") or "")
+    hits = design_hits(text)
     if len(hits) >= int(active_policy["max_design_markers"]) and not current_contract.get("allow_abstractions"):
-        errors.append("Possible abstraction bloat: " + ", ".join(sorted(set(hits))) + ". Prefer direct code or redeclare with --allow-abstractions --reason.")
+        line_count = len(text.splitlines())
+        density_threshold = float(active_policy.get("max_design_marker_density_per_100_lines") or 0.0)
+        density = (len(hits) / line_count * 100) if line_count else 0.0
+        if line_count < 100 or density_threshold <= 0 or density >= density_threshold:
+            errors.append("Possible abstraction bloat: " + ", ".join(sorted(set(hits))) + ". Prefer direct code or redeclare with --allow-abstractions --reason.")
     quality_hits = proposed_quality_hits(str(change_facts.get("text") or ""), paths)
     if quality_hits:
         errors.append("Proposed change contains quality escapes: " + ", ".join(quality_hits[:6]))

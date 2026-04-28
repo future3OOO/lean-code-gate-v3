@@ -469,6 +469,52 @@ def test_large_existing_file_big_growth_fails() -> None:
         assert data["hardRules"]["codeVolume"]["passed"] is False
 
 
+_HIGH_DENSITY_TEXT = (
+    "from typing import Protocol, TypeVar, Generic\n"
+    "from abc import ABC\n"
+    "T = TypeVar('T')\n"
+    "class BaseWidget: pass\n"
+    "class WidgetFactory(Generic[T]):\n"
+    "    plugin = True\n"
+    "    pass\n"
+)
+
+
+def test_pretool_blocks_high_density_abstraction_in_small_file() -> None:
+    with repo_fixture() as repo:
+        declare_valid(repo)
+        result = run_gate(repo, "pretool", payload={
+            "tool_name": "Edit", "tool_input": {"file_path": "src/app.py", "new_string": _HIGH_DENSITY_TEXT}
+        })
+        assert result.returncode == 0, result.stderr
+        assert "Possible abstraction bloat" in result.stdout
+
+
+def test_pretool_allows_low_density_abstraction_in_large_file() -> None:
+    with repo_fixture() as repo:
+        declare_valid(repo)
+        # ~200-line file with the same 4 distinct design markers ->
+        # density = 4/200 * 100 = 2.0/100, below the 3.0 default threshold.
+        body = "\n".join(f"value_{i} = {i}" for i in range(192))
+        result = run_gate(repo, "pretool", payload={
+            "tool_name": "Edit", "tool_input": {"file_path": "src/app.py", "new_string": _HIGH_DENSITY_TEXT + body + "\n"}
+        })
+        assert "Possible abstraction bloat" not in result.stdout, result.stdout
+
+
+def test_pretool_blocks_at_density_threshold_in_large_file() -> None:
+    with repo_fixture() as repo:
+        declare_valid(repo)
+        # ~100-line file with 4 distinct design markers -> density = 4.0/100,
+        # at-or-above the 3.0 threshold. This exercises the density-firing
+        # branch the prior test (low-density) cannot reach.
+        body = "\n".join(f"value_{i} = {i}" for i in range(92))
+        result = run_gate(repo, "pretool", payload={
+            "tool_name": "Edit", "tool_input": {"file_path": "src/app.py", "new_string": _HIGH_DENSITY_TEXT + body + "\n"}
+        })
+        assert "Possible abstraction bloat" in result.stdout, result.stdout
+
+
 def test_framework_override_names_suppress_reuse_error() -> None:
     with repo_fixture() as repo:
         (repo / "src" / "ser1.py").write_text(
@@ -570,6 +616,9 @@ TESTS = [
     test_reuse_detector_ignores_same_name_across_languages,
     test_large_existing_file_small_growth_warns_but_does_not_fail_by_default,
     test_large_existing_file_big_growth_fails,
+    test_pretool_blocks_high_density_abstraction_in_small_file,
+    test_pretool_allows_low_density_abstraction_in_large_file,
+    test_pretool_blocks_at_density_threshold_in_large_file,
     test_framework_override_names_suppress_reuse_error,
     test_private_public_sibling_pair_suppresses_reuse_error,
     test_excluded_path_globs_skip_generated_sdk_files,
