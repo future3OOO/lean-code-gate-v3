@@ -53,19 +53,24 @@ SEARCH_Q="repo:$GH+is:pr+is:merged+-author:app/dependabot+-author:app/pre-commit
   gh api "search/issues?q=$SEARCH_Q&sort=created&order=desc&per_page=100&page=2" 2>/dev/null
 } | python3 -c "
 import json, sys
-# Two GitHub-search responses concatenated. Split on the JSON boundary
-# and merge their items[] arrays.
+# Two GitHub-search responses concatenated; use raw_decode to walk the
+# stream and extract every top-level JSON object regardless of whitespace
+# between them.
 raw = sys.stdin.read()
-chunks = raw.split('}\n{', 1)
+decoder = json.JSONDecoder()
 items = []
-for chunk in chunks:
-    if not chunk.strip(): continue
-    if not chunk.startswith('{'): chunk = '{' + chunk
-    if not chunk.endswith('}'): chunk = chunk + '}'
+pos = 0
+while pos < len(raw):
+    while pos < len(raw) and raw[pos] in ' \t\n\r':
+        pos += 1
+    if pos >= len(raw): break
     try:
-        items.extend(json.loads(chunk).get('items', []))
+        obj, end = decoder.raw_decode(raw, pos)
     except json.JSONDecodeError:
-        continue
+        break
+    if isinstance(obj, dict):
+        items.extend(obj.get('items', []))
+    pos = end
 print(json.dumps({'items': items}))
 " \
   | python3 -c "
