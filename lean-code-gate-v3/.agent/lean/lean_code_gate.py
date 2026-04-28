@@ -1530,8 +1530,14 @@ def best_existing_match(new_item: SymbolDef, existing: list[SymbolDef], added_by
 
 
 def symbol_is_called_nearby(symbol: str, lines: list[tuple[int, str]], new_line: int) -> bool:
+    # Excludes new_line itself: the new symbol's own def line ("def foo(...)")
+    # matches `\bfoo\s*\(` even though it's a definition not a call. Without
+    # this exclusion, exact-name reuse across files (existing foo at one path,
+    # new foo at another) is silently invisible to the reuse detector because
+    # best_existing_match treats the new def line as proof the existing symbol
+    # is already in use here.
     pattern = re.compile(rf"\b{re.escape(symbol)}\s*\(")
-    return any(max(0, new_line - 8) <= line_no <= new_line + 20 and pattern.search(text) for line_no, text in lines)
+    return any(line_no != new_line and max(0, new_line - 8) <= line_no <= new_line + 20 and pattern.search(text) for line_no, text in lines)
 
 
 def warning_is_actionable(new_item: SymbolDef, existing_item: SymbolDef) -> bool:

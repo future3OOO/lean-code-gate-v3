@@ -403,6 +403,37 @@ def test_reimplemented_dedupe_loop_fails_as_high_confidence_reuse() -> None:
         assert any(item["existingSymbol"] == "dedupe_items" for item in data["reuseFindings"])
 
 
+def test_exact_name_reimplementation_across_files_fires() -> None:
+    # Regression: symbol_is_called_nearby's `\b{name}\s*\(` pattern matched
+    # the new symbol's own def line ("def parse_html_payload(...)" matches
+    # `\bparse_html_payload\s*\(`). This made best_existing_match treat the
+    # new def line as proof the existing symbol was already called nearby,
+    # silently skipping the candidate. Net effect: exact-name reuse across
+    # files was invisible to the detector. Fix excludes the new-symbol's own
+    # def line from the call-detection window.
+    with repo_fixture() as repo:
+        (repo / "src" / "parser.py").write_text(
+            "def parse_html_payload(blob):\n    return blob.decode('utf-8').strip()\n",
+            encoding="utf-8",
+        )
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed parser")
+        (repo / "src" / "parsers").mkdir(exist_ok=True)
+        (repo / "src" / "parsers" / "extra.py").write_text(
+            "def parse_html_payload(blob):\n"
+            "    text = blob.decode('utf-8')\n"
+            "    return text.strip()\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        assert code == 2, data
+        assert data["reuseFindings"], data
+        assert any(
+            f["newSymbol"] == "parse_html_payload" and f["existingSymbol"] == "parse_html_payload"
+            for f in data["reuseFindings"]
+        ), data["reuseFindings"]
+
+
 def test_reuse_detector_suppresses_generic_same_name_false_positive() -> None:
     with repo_fixture() as repo:
         (repo / "src" / "task_a.py").write_text("def run() -> str:\n    return 'a'\n", encoding="utf-8")
@@ -701,6 +732,7 @@ TESTS = [
     test_quality_check_detects_production_type_escape_but_allows_test_any,
     test_quality_check_detects_reimplemented_existing_helper_name,
     test_reimplemented_dedupe_loop_fails_as_high_confidence_reuse,
+    test_exact_name_reimplementation_across_files_fires,
     test_reuse_detector_suppresses_generic_same_name_false_positive,
     test_reuse_detector_suppresses_same_tokens_different_domain,
     test_reuse_detector_ignores_deleted_then_recreated_helper,
