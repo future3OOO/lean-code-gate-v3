@@ -1,0 +1,156 @@
+[
+  {
+    "pr": 1,
+    "title": "calibration: scaffolding + governing plan (PR-0)",
+    "additions": 152,
+    "deletions": 0,
+    "changed_files": 7,
+    "commit_count": 1,
+    "bot_comment_count_total": 2,
+    "distinct_issues": 2,
+    "per_bot": {
+      "devin-ai-integration[bot]": 1,
+      "greptile-apps[bot]": 1
+    }
+  },
+  {
+    "pr": 2,
+    "title": "calibration: analysis docs + measurement findings (PR-1)",
+    "additions": 5396,
+    "deletions": 0,
+    "changed_files": 39,
+    "commit_count": 1,
+    "bot_comment_count_total": 4,
+    "distinct_issues": 4,
+    "per_bot": {
+      "greptile-apps[bot]": 3,
+      "devin-ai-integration[bot]": 1
+    }
+  },
+  {
+    "pr": 3,
+    "title": "calibration: proposed policy + merged-PR baseline (PR-2)",
+    "additions": 6862,
+    "deletions": 0,
+    "changed_files": 134,
+    "commit_count": 2,
+    "bot_comment_count_total": 25,
+    "distinct_issues": 23,
+    "per_bot": {
+      "devin-ai-integration[bot]": 6,
+      "coderabbitai[bot]": 16,
+      "greptile-apps[bot]": 3
+    }
+  },
+  {
+    "pr": 4,
+    "title": "calibration: proposed tests pinning observed behavior (PR-3)",
+    "additions": 230,
+    "deletions": 0,
+    "changed_files": 1,
+    "commit_count": 3,
+    "bot_comment_count_total": 10,
+    "distinct_issues": 8,
+    "per_bot": {
+      "greptile-apps[bot]": 2,
+      "devin-ai-integration[bot]": 4,
+      "coderabbitai[bot]": 4
+    }
+  },
+  {
+    "pr": 5,
+    "title": "calibration: final report (PR-4)",
+    "additions": 179,
+    "deletions": 0,
+    "changed_files": 1,
+    "commit_count": 2,
+    "bot_comment_count_total": 6,
+    "distinct_issues": 6,
+    "per_bot": {
+      "greptile-apps[bot]": 2,
+      "coderabbitai[bot]": 4
+    }
+  },
+  {
+    "pr": 6,
+    "title": "calibration: cleanup-commit reference analysis (PR-A)",
+    "additions": 542,
+    "deletions": 0,
+    "changed_files": 3,
+    "commit_count": 2,
+    "bot_comment_count_total": 5,
+    "distinct_issues": 4,
+    "per_bot": {
+      "devin-ai-integration[bot]": 3,
+      "greptile-apps[bot]": 2
+    }
+  },
+  {
+    "pr": 7,
+    "title": "gate: add excluded_path_globs policy field (PR-5, R-1)",
+    "additions": 114,
+    "deletions": 2,
+    "changed_files": 4,
+    "commit_count": 2,
+    "bot_comment_count_total": 4,
+    "distinct_issues": 4,
+    "per_bot": {
+      "greptile-apps[bot]": 2,
+      "devin-ai-integration[bot]": 1,
+      "coderabbitai[bot]": 1
+    }
+  },
+  {
+    "pr": 8,
+    "title": "gate: framework_override_names + private/public sibling suppression (PR-6, R-2+R",
+    "additions": 82,
+    "deletions": 3,
+    "changed_files": 3,
+    "commit_count": 1,
+    "bot_comment_count_total": 2,
+    "distinct_issues": 2,
+    "per_bot": {
+      "greptile-apps[bot]": 2
+    }
+  },
+  {
+    "pr": 9,
+    "title": "gate: abstraction-marker density + raise raw threshold (PR-7, R-6)",
+    "additions": 61,
+    "deletions": 4,
+    "changed_files": 4,
+    "commit_count": 1,
+    "bot_comment_count_total": 7,
+    "distinct_issues": 6,
+    "per_bot": {
+      "devin-ai-integration[bot]": 4,
+      "greptile-apps[bot]": 3
+    }
+  },
+  {
+    "pr": 10,
+    "title": "gate: bloat threshold + min duplicate count + Go/Rust factory regex (PR-8)",
+    "additions": 57,
+    "deletions": 6,
+    "changed_files": 3,
+    "commit_count": 1,
+    "bot_comment_count_total": 1,
+    "distinct_issues": 1,
+    "per_bot": {
+      "devin-ai-integration[bot]": 1
+    }
+  },
+  {
+    "pr": 11,
+    "title": "calibration: measured impact (autoresearch loop, PR-B)",
+    "additions": 7537,
+    "deletions": 18,
+    "changed_files": 61,
+    "commit_count": 1,
+    "bot_comment_count_total": 1,
+    "distinct_issues": 1,
+    "per_bot": {
+      "greptile-apps[bot]": 1
+    }
+  }
+]

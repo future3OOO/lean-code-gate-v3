@@ -1,0 +1,644 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 57,
+        "baselineLines": null,
+        "currentLines": 57,
+        "deleted": 0,
+        "file": "scripts/dev-ui-server.ts",
+        "netGrowth": 57
+      },
+      {
+        "added": 4,
+        "baselineLines": 68,
+        "currentLines": 67,
+        "deleted": 5,
+        "file": "src/sentry/api/endpoints/release_thresholds/release_threshold_index.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 39,
+        "baselineLines": 288,
+        "currentLines": 325,
+        "deleted": 2,
+        "file": "src/sentry/api/invite_helper.py",
+        "netGrowth": 37
+      },
+      {
+        "added": 14,
+        "baselineLines": 148,
+        "currentLines": 161,
+        "deleted": 1,
+        "file": "src/sentry/api/serializers/models/exploresavedquery.py",
+        "netGrowth": 13
+      },
+      {
+        "added": 2,
+        "baselineLines": 1281,
+        "currentLines": 1281,
+        "deleted": 2,
+        "file": "src/sentry/apidocs/parameters.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 1220,
+        "currentLines": 1219,
+        "deleted": 4,
+        "file": "src/sentry/auth/access.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 17,
+        "baselineLines": 302,
+        "currentLines": 318,
+        "deleted": 1,
+        "file": "src/sentry/explore/endpoints/serializers.py",
+        "netGrowth": 16
+      },
+      {
+        "added": 3,
+        "baselineLines": 378,
+        "currentLines": 381,
+        "deleted": 0,
+        "file": "src/sentry/incidents/grouptype.py",
+        "netGrowth": 3
+      },
+      {
+        "added": 3,
+        "baselineLines": 338,
+        "currentLines": 341,
+        "deleted": 0,
+        "file": "src/sentry/integrations/bitbucket/integration.py",
+        "netGrowth": 3
+      },
+      {
+        "added": 27,
+        "baselineLines": 718,
+        "currentLines": 723,
+        "deleted": 22,
+        "file": "src/sentry/integrations/gitlab/integration.py",
+        "netGrowth": 5
+      },
+      {
+        "added": 64,
+        "baselineLines": 280,
+        "currentLines": 344,
+        "deleted": 0,
+        "file": "src/sentry/integrations/services/repository/impl.py",
+        "netGrowth": 64
+      },
+      {
+        "added": 17,
+        "baselineLines": 131,
+        "currentLines": 148,
+        "deleted": 0,
+        "file": "src/sentry/integrations/services/repository/service.py",
+        "netGrowth": 17
+      },
+      {
+        "added": 32,
+        "baselineLines": 56,
+        "currentLines": 88,
+        "deleted": 0,
+        "file": "src/sentry/integrations/slack/views/link_identity.py",
+        "netGrowth": 32
+      },
+      {
+        "added": 43,
+        "baselineLines": 461,
+        "currentLines": 499,
+        "deleted": 5,
+        "file": "src/sentry/integrations/source_code_management/sync_repos.py",
+        "netGrowth": 38
+      },
+      {
+        "added": 1,
+        "baselineLines": 206,
+        "currentLines": 204,
+        "deleted": 3,
+        "file": "src/sentry/issues/endpoints/project_event_details.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 22,
+        "baselineLines": 257,
+        "currentLines": 279,
+        "deleted": 0,
+        "file": "src/sentry/middleware/integrations/tasks.py",
+        "netGrowth": 22
+      },
+      {
+        "added": 3,
+        "baselineLines": 126,
+        "currentLines": 128,
+        "deleted": 1,
+        "file": "src/sentry/models/savedsearch.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 12,
+        "baselineLines": 65,
+        "currentLines": 76,
+        "deleted": 1,
+        "file": "src/sentry/notifications/notification_action/action_handler_registry/base.py",
+        "netGrowth": 11
+      },
+      {
+        "added": 1,
+        "baselineLines": 628,
+        "currentLines": 629,
+        "deleted": 0,
+        "file": "src/sentry/notifications/notification_action/types.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 14,
+        "baselineLines": 139,
+        "currentLines": 145,
+        "deleted": 8,
+        "file": "src/sentry/notifications/utils/tasks.py",
+        "netGrowth": 6
+      },
+      {
+        "added": 0,
+        "baselineLines": 4167,
+        "currentLines": 4159,
+        "deleted": 8,
+        "file": "src/sentry/options/defaults.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 670,
+        "currentLines": 651,
+        "deleted": 24,
+        "file": "src/sentry/seer/autofix/autofix_agent.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 577,
+        "currentLines": 573,
+        "deleted": 6,
+        "file": "src/sentry/seer/autofix/on_completion_hook.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 12,
+        "baselineLines": 1248,
+        "currentLines": 1260,
+        "deleted": 0,
+        "file": "src/sentry/seer/autofix/utils.py",
+        "netGrowth": 12
+      },
+      {
+        "added": 5,
+        "baselineLines": 177,
+        "currentLines": 137,
+        "deleted": 45,
+        "file": "src/sentry/seer/code_review/contributor_seats.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 125,
+        "currentLines": 93,
+        "deleted": 37,
+        "file": "src/sentry/seer/endpoints/organization_seer_onboarding_check.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 6,
+        "baselineLines": 29,
+        "currentLines": 34,
+        "deleted": 1,
+        "file": "src/sentry/seer/endpoints/project_seer_night_shift.py",
+        "netGrowth": 5
+      },
+      {
+        "added": 3,
+        "baselineLines": 976,
+        "currentLines": 968,
+        "deleted": 11,
+        "file": "src/sentry/seer/endpoints/seer_rpc.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 68,
+        "baselineLines": 235,
+        "currentLines": 303,
+        "deleted": 0,
+        "file": "src/sentry/seer/entrypoints/cache.py",
+        "netGrowth": 68
+      },
+      {
+        "added": 2,
+        "baselineLines": 72,
+        "currentLines": 74,
+        "deleted": 0,
+        "file": "src/sentry/seer/entrypoints/metrics.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 17,
+        "baselineLines": 570,
+        "currentLines": 587,
+        "deleted": 0,
+        "file": "src/sentry/seer/entrypoints/slack/entrypoint.py",
+        "netGrowth": 17
+      },
+      {
+        "added": 7,
+        "baselineLines": 459,
+        "currentLines": 434,
+        "deleted": 32,
+        "file": "src/sentry/seer/explorer/client_utils.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 4,
+        "baselineLines": 505,
+        "currentLines": 507,
+        "deleted": 2,
+        "file": "src/sentry/seer/explorer/utils.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 2,
+        "baselineLines": 1109,
+        "currentLines": 1110,
+        "deleted": 1,
+        "file": "src/sentry/sentry_apps/tasks/sentry_apps.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 21,
+        "baselineLines": 326,
+        "currentLines": 308,
+        "deleted": 39,
+        "file": "src/sentry/tasks/seer/autofix.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 14,
+        "baselineLines": 263,
+        "currentLines": 275,
+        "deleted": 2,
+        "file": "src/sentry/tasks/seer/night_shift/agentic_triage.py",
+        "netGrowth": 12
+      },
+      {
+        "added": 1,
+        "baselineLines": 431,
+        "currentLines": 432,
+        "deleted": 0,
+        "file": "src/sentry/tasks/seer/night_shift/cron.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 189,
+        "baselineLines": null,
+        "currentLines": 189,
+        "deleted": 0,
+        "file": "src/sentry/tasks/seer/night_shift/issue_formatter.py",
+        "netGrowth": 189
+      },
+      {
+        "added": 82,
+        "baselineLines": 144,
+        "currentLines": 223,
+        "deleted": 3,
+        "file": "src/sentry/tasks/seer/night_shift/triage_tools.py",
+        "netGrowth": 79
+      },
+      {
+        "added": 3,
+        "baselineLines": 336,
+        "currentLines": 327,
+        "deleted": 12,
+        "file": "src/sentry/users/api/endpoints/user_authenticator_enroll.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 38,
+        "currentLines": 38,
+        "deleted": 1,
+        "file": "src/sentry/workflow_engine/endpoints/serializers/action_serializer.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 9,
+        "baselineLines": 412,
+        "currentLines": 421,
+        "deleted": 0,
+        "file": "src/sentry/workflow_engine/types.py",
+        "netGrowth": 9
+      },
+      {
+        "added": 8,
+        "baselineLines": 487,
+        "currentLines": 481,
+        "deleted": 14,
+        "file": "static/app/actionCreators/modal.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 13,
+        "baselineLines": 35,
+        "currentLines": 47,
+        "deleted": 1,
+        "file": "static/app/components/commandPalette/__stories__/components.tsx",
+        "netGrowth": 12
+      },
+      {
+        "added": 3,
+        "baselineLines": 53,
+        "currentLines": 55,
+        "deleted": 1,
+        "file": "static/app/components/commandPalette/types.tsx",
+        "netGrowth": 2
+      },
+      {
+        "added": 59,
+        "baselineLines": 162,
+        "currentLines": 194,
+        "deleted": 27,
+        "file": "static/app/components/commandPalette/ui/cmdk.tsx",
+        "netGrowth": 32
+      },
+      {
+        "added": 116,
+        "baselineLines": 992,
+        "currentLines": 1089,
+        "deleted": 19,
+        "file": "static/app/components/commandPalette/ui/commandPalette.tsx",
+        "netGrowth": 97
+      },
+      {
+        "added": 93,
+        "baselineLines": 699,
+        "currentLines": 772,
+        "deleted": 20,
+        "file": "static/app/components/commandPalette/ui/commandPaletteGlobalActions.tsx",
+        "netGrowth": 73
+      },
+      {
+        "added": 1,
+        "baselineLines": 210,
+        "currentLines": 210,
+        "deleted": 1,
+        "file": "static/app/components/commandPalette/ui/commandPaletteStateContext.tsx",
+        "netGrowth": 0
+      },
+      {
+        "added": 14,
+        "baselineLines": 23,
+        "currentLines": 35,
+        "deleted": 2,
+        "file": "static/app/components/core/backdrop/backdrop.tsx",
+        "netGrowth": 12
+      }
+    ],
+    "totalAdded": 4137,
+    "totalDeleted": 1837
+  },
+  "changedFilesCount": 269,
+  "changedFilesSample": [
+    "package.json",
+    "pnpm-lock.yaml",
+    "pyproject.toml",
+    "scripts/dev-ui-server.ts",
+    "src/sentry/api/endpoints/release_thresholds/release_threshold_index.py",
+    "src/sentry/api/invite_helper.py",
+    "src/sentry/api/serializers/models/exploresavedquery.py",
+    "src/sentry/apidocs/parameters.py",
+    "src/sentry/auth/access.py",
+    "src/sentry/explore/endpoints/serializers.py",
+    "src/sentry/incidents/grouptype.py",
+    "src/sentry/integrations/bitbucket/integration.py",
+    "src/sentry/integrations/gitlab/integration.py",
+    "src/sentry/integrations/services/repository/impl.py",
+    "src/sentry/integrations/services/repository/service.py",
+    "src/sentry/integrations/slack/views/link_identity.py",
+    "src/sentry/integrations/source_code_management/sync_repos.py",
+    "src/sentry/issues/endpoints/project_event_details.py",
+    "src/sentry/middleware/integrations/tasks.py",
+    "src/sentry/models/savedsearch.py",
+    "src/sentry/notifications/notification_action/action_handler_registry/base.py",
+    "src/sentry/notifications/notification_action/types.py",
+    "src/sentry/notifications/utils/tasks.py",
+    "src/sentry/options/defaults.py",
+    "src/sentry/seer/autofix/autofix_agent.py",
+    "src/sentry/seer/autofix/on_completion_hook.py",
+    "src/sentry/seer/autofix/utils.py",
+    "src/sentry/seer/code_review/contributor_seats.py",
+    "src/sentry/seer/endpoints/organization_seer_onboarding_check.py",
+    "src/sentry/seer/endpoints/project_seer_night_shift.py"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "src/sentry/notifications/utils/tasks.py:27",
+        "src/sentry/tasks/seer/night_shift/issue_formatter.py:160",
+        "src/sentry/tasks/seer/night_shift/issue_formatter.py:170",
+        "src/sentry/tasks/seer/night_shift/triage_tools.py:137",
+        "static/app/components/commandPalette/ui/commandPaletteGlobalActions.tsx:436",
+        "static/app/utils/theme/theme.tsx:228",
+        "static/app/views/explore/spans/spansCommandPaletteActions.tsx:115",
+        "static/app/views/explore/spans/spansCommandPaletteActions.tsx:74",
+        "static/app/views/insights/pages/agents/utils/aiMessageNormalizer.ts:131",
+        "static/app/views/insights/pages/agents/utils/aiMessageNormalizer.ts:156"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 2,
+          "files": [
+            "src/sentry/integrations/slack/views/link_identity.py",
+            "src/sentry/middleware/integrations/tasks.py"
+          ],
+          "sample": "from sentry.seer.entrypoints.cache import SeerOperatorPendingMentionCache | from sentry.seer.entrypoints.slack.entrypoint import SlackPendingMentionPayload | from sentry.seer.entry"
+        },
+        {
+          "count": 8,
+          "files": [
+            "src/sentry/seer/entrypoints/cache.py"
+          ],
+          "sample": "\"integration_id\": integration_id | \"user_ext_id\": user_ext_id | \"cache_key\": cache_key"
+        },
+        {
+          "count": 4,
+          "files": [
+            "src/sentry/seer/entrypoints/cache.py"
+          ],
+          "sample": ").capture() as lifecycle: | cache_key = cls._get_cache_key( | entrypoint_key=entrypoint_key"
+        },
+        {
+          "count": 2,
+          "files": [
+            "static/app/components/commandPalette/ui/commandPalette.tsx"
+          ],
+          "sample": "animate(docEl, {scale: 1}, {type: 'spring', stiffness: 350, damping: 15}) | ) | }, [getDocEl])"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": false,
+      "sample": [
+        {
+          "existingFile": "src/sentry/sentry_apps/token_exchange/grant_exchanger.py",
+          "existingLine": 89,
+          "existingSymbol": "_validate",
+          "newFile": "src/sentry/explore/endpoints/serializers.py",
+          "newLine": 164,
+          "newSymbol": "validate",
+          "reason": "same name tokens",
+          "score": 100,
+          "severity": "error"
+        },
+        {
+          "existingFile": "src/sentry/integrations/models/doc_integration_avatar.py",
+          "existingLine": 32,
+          "existingSymbol": "get_cache_key",
+          "newFile": "src/sentry/seer/entrypoints/cache.py",
+          "newLine": 248,
+          "newSymbol": "_get_cache_key",
+          "reason": "same name tokens",
+          "score": 100,
+          "severity": "error"
+        },
+        {
+          "existingFile": "src/sentry/db/models/utils.py",
+          "existingLine": 133,
+          "existingSymbol": "__set__",
+          "newFile": "src/sentry/seer/entrypoints/cache.py",
+          "newLine": 252,
+          "newSymbol": "set",
+          "reason": "same name tokens",
+          "score": 100,
+          "severity": "error"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file src/sentry/seer/autofix/utils.py grew by 12 lines",
+        "large source file static/app/views/alerts/rules/metric/ruleForm.tsx grew by 4 lines"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 31 changed location(s)",
+    "duplicate added code blocks detected: 15",
+    "new code appears to reimplement existing helpers or loops: 3"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "sentry/_50commit_window",
+  "reuseFindings": [
+    {
+      "existingFile": "src/sentry/sentry_apps/token_exchange/grant_exchanger.py",
+      "existingLine": 89,
+      "existingSymbol": "_validate",
+      "newFile": "src/sentry/explore/endpoints/serializers.py",
+      "newLine": 164,
+      "newSymbol": "validate",
+      "reason": "same name tokens",
+      "score": 100,
+      "severity": "error"
+    },
+    {
+      "existingFile": "src/sentry/integrations/models/doc_integration_avatar.py",
+      "existingLine": 32,
+      "existingSymbol": "get_cache_key",
+      "newFile": "src/sentry/seer/entrypoints/cache.py",
+      "newLine": 248,
+      "newSymbol": "_get_cache_key",
+      "reason": "same name tokens",
+      "score": 100,
+      "severity": "error"
+    },
+    {
+      "existingFile": "src/sentry/db/models/utils.py",
+      "existingLine": 133,
+      "existingSymbol": "__set__",
+      "newFile": "src/sentry/seer/entrypoints/cache.py",
+      "newLine": 252,
+      "newSymbol": "set",
+      "reason": "same name tokens",
+      "score": 100,
+      "severity": "error"
+    }
+  ],
+  "sourceFilesCount": 184,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file src/sentry/seer/autofix/utils.py grew by 12 lines",
+    "large source file static/app/views/alerts/rules/metric/ruleForm.tsx grew by 4 lines"
+  ]
+}

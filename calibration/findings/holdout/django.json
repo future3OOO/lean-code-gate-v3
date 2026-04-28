@@ -1,0 +1,563 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 30,
+        "baselineLines": 257,
+        "currentLines": 278,
+        "deleted": 9,
+        "file": "django/conf/__init__.py",
+        "netGrowth": 21
+      },
+      {
+        "added": 3,
+        "baselineLines": 680,
+        "currentLines": 683,
+        "deleted": 0,
+        "file": "django/conf/global_settings.py",
+        "netGrowth": 3
+      },
+      {
+        "added": 1,
+        "baselineLines": 95,
+        "currentLines": 96,
+        "deleted": 0,
+        "file": "django/contrib/admin/actions.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 20,
+        "baselineLines": 1384,
+        "currentLines": 1404,
+        "deleted": 0,
+        "file": "django/contrib/admin/checks.py",
+        "netGrowth": 20
+      },
+      {
+        "added": 50,
+        "baselineLines": 2607,
+        "currentLines": 2632,
+        "deleted": 25,
+        "file": "django/contrib/admin/options.py",
+        "netGrowth": 25
+      },
+      {
+        "added": 68,
+        "baselineLines": 12,
+        "currentLines": 79,
+        "deleted": 1,
+        "file": "django/contrib/admin/templatetags/admin_filters.py",
+        "netGrowth": 67
+      },
+      {
+        "added": 2,
+        "baselineLines": 627,
+        "currentLines": 628,
+        "deleted": 1,
+        "file": "django/contrib/admin/utils.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 3,
+        "baselineLines": 631,
+        "currentLines": 633,
+        "deleted": 1,
+        "file": "django/contrib/admin/widgets.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 33,
+        "baselineLines": 383,
+        "currentLines": 412,
+        "deleted": 4,
+        "file": "django/contrib/auth/__init__.py",
+        "netGrowth": 29
+      },
+      {
+        "added": 20,
+        "baselineLines": 342,
+        "currentLines": 347,
+        "deleted": 15,
+        "file": "django/contrib/auth/backends.py",
+        "netGrowth": 5
+      },
+      {
+        "added": 2,
+        "baselineLines": 66,
+        "currentLines": 58,
+        "deleted": 10,
+        "file": "django/contrib/auth/handlers/modwsgi.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 634,
+        "currentLines": 639,
+        "deleted": 0,
+        "file": "django/contrib/auth/models.py",
+        "netGrowth": 5
+      },
+      {
+        "added": 15,
+        "baselineLines": 143,
+        "currentLines": 158,
+        "deleted": 0,
+        "file": "django/contrib/contenttypes/admin.py",
+        "netGrowth": 15
+      },
+      {
+        "added": 106,
+        "baselineLines": 283,
+        "currentLines": 333,
+        "deleted": 56,
+        "file": "django/contrib/gis/static/gis/js/OLMapWidget.js",
+        "netGrowth": 50
+      },
+      {
+        "added": 35,
+        "baselineLines": 82,
+        "currentLines": 107,
+        "deleted": 10,
+        "file": "django/contrib/postgres/aggregates/general.py",
+        "netGrowth": 25
+      },
+      {
+        "added": 24,
+        "baselineLines": 14,
+        "currentLines": 30,
+        "deleted": 8,
+        "file": "django/contrib/sites/checks.py",
+        "netGrowth": 16
+      },
+      {
+        "added": 2,
+        "baselineLines": 164,
+        "currentLines": 161,
+        "deleted": 5,
+        "file": "django/core/files/base.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 152,
+        "currentLines": 155,
+        "deleted": 0,
+        "file": "django/core/files/uploadedfile.py",
+        "netGrowth": 3
+      },
+      {
+        "added": 3,
+        "baselineLines": 364,
+        "currentLines": 367,
+        "deleted": 0,
+        "file": "django/core/handlers/asgi.py",
+        "netGrowth": 3
+      },
+      {
+        "added": 16,
+        "baselineLines": 88,
+        "currentLines": 81,
+        "deleted": 23,
+        "file": "django/core/serializers/pyyaml.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 55,
+        "baselineLines": 560,
+        "currentLines": 596,
+        "deleted": 19,
+        "file": "django/core/serializers/xml_serializer.py",
+        "netGrowth": 36
+      },
+      {
+        "added": 15,
+        "baselineLines": 466,
+        "currentLines": 481,
+        "deleted": 0,
+        "file": "django/db/backends/base/features.py",
+        "netGrowth": 15
+      },
+      {
+        "added": 1,
+        "baselineLines": 243,
+        "currentLines": 244,
+        "deleted": 0,
+        "file": "django/db/backends/mysql/features.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 5,
+        "baselineLines": 242,
+        "currentLines": 247,
+        "deleted": 0,
+        "file": "django/db/backends/oracle/features.py",
+        "netGrowth": 5
+      },
+      {
+        "added": 28,
+        "baselineLines": 537,
+        "currentLines": 565,
+        "deleted": 0,
+        "file": "django/db/backends/sqlite3/_functions.py",
+        "netGrowth": 28
+      },
+      {
+        "added": 51,
+        "baselineLines": 417,
+        "currentLines": 468,
+        "deleted": 0,
+        "file": "django/db/models/aggregates.py",
+        "netGrowth": 51
+      },
+      {
+        "added": 7,
+        "baselineLines": 680,
+        "currentLines": 686,
+        "deleted": 1,
+        "file": "django/db/models/constraints.py",
+        "netGrowth": 6
+      },
+      {
+        "added": 4,
+        "baselineLines": 2232,
+        "currentLines": 2235,
+        "deleted": 1,
+        "file": "django/db/models/expressions.py",
+        "netGrowth": 3
+      },
+      {
+        "added": 12,
+        "baselineLines": 2963,
+        "currentLines": 2972,
+        "deleted": 3,
+        "file": "django/db/models/fields/__init__.py",
+        "netGrowth": 9
+      },
+      {
+        "added": 3,
+        "baselineLines": 538,
+        "currentLines": 541,
+        "deleted": 0,
+        "file": "django/db/models/fields/files.py",
+        "netGrowth": 3
+      },
+      {
+        "added": 18,
+        "baselineLines": 2163,
+        "currentLines": 2159,
+        "deleted": 22,
+        "file": "django/db/models/fields/related.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 4,
+        "baselineLines": 405,
+        "currentLines": 407,
+        "deleted": 2,
+        "file": "django/db/models/fields/reverse_related.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 4,
+        "baselineLines": 3024,
+        "currentLines": 3024,
+        "deleted": 4,
+        "file": "django/db/models/query.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 554,
+        "currentLines": 552,
+        "deleted": 7,
+        "file": "django/db/models/query_utils.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 21,
+        "baselineLines": 2881,
+        "currentLines": 2892,
+        "deleted": 10,
+        "file": "django/db/models/sql/query.py",
+        "netGrowth": 11
+      },
+      {
+        "added": 12,
+        "baselineLines": 69,
+        "currentLines": 81,
+        "deleted": 0,
+        "file": "django/db/models/utils.py",
+        "netGrowth": 12
+      },
+      {
+        "added": 2,
+        "baselineLines": 1396,
+        "currentLines": 1397,
+        "deleted": 1,
+        "file": "django/forms/fields.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 7,
+        "baselineLines": 1716,
+        "currentLines": 1719,
+        "deleted": 4,
+        "file": "django/forms/models.py",
+        "netGrowth": 3
+      },
+      {
+        "added": 9,
+        "baselineLines": 754,
+        "currentLines": 757,
+        "deleted": 6,
+        "file": "django/http/multipartparser.py",
+        "netGrowth": 3
+      },
+      {
+        "added": 27,
+        "baselineLines": 859,
+        "currentLines": 874,
+        "deleted": 12,
+        "file": "django/http/request.py",
+        "netGrowth": 15
+      },
+      {
+        "added": 13,
+        "baselineLines": 248,
+        "currentLines": 255,
+        "deleted": 6,
+        "file": "django/tasks/base.py",
+        "netGrowth": 7
+      },
+      {
+        "added": 26,
+        "baselineLines": 996,
+        "currentLines": 997,
+        "deleted": 25,
+        "file": "django/template/defaultfilters.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 79,
+        "baselineLines": 331,
+        "currentLines": 410,
+        "deleted": 0,
+        "file": "django/utils/deprecation.py",
+        "netGrowth": 79
+      },
+      {
+        "added": 9,
+        "baselineLines": 397,
+        "currentLines": 405,
+        "deleted": 1,
+        "file": "django/utils/http.py",
+        "netGrowth": 8
+      },
+      {
+        "added": 0,
+        "baselineLines": 125,
+        "currentLines": 123,
+        "deleted": 2,
+        "file": "django/utils/version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 0,
+        "baselineLines": null,
+        "currentLines": 0,
+        "deleted": 0,
+        "file": "scripts/pr_quality/__init__.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 556,
+        "baselineLines": null,
+        "currentLines": 556,
+        "deleted": 0,
+        "file": "scripts/pr_quality/check_pr.py",
+        "netGrowth": 556
+      },
+      {
+        "added": 159,
+        "baselineLines": null,
+        "currentLines": 159,
+        "deleted": 0,
+        "file": "scripts/pr_quality/errors.py",
+        "netGrowth": 159
+      },
+      {
+        "added": 6,
+        "baselineLines": 95,
+        "currentLines": 95,
+        "deleted": 6,
+        "file": "scripts/verify_release.sh",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 1579,
+    "totalDeleted": 300
+  },
+  "changedFilesCount": 210,
+  "changedFilesSample": [
+    ".editorconfig",
+    ".git-blame-ignore-revs",
+    ".github/workflows/check_pr_quality.yml",
+    ".github/workflows/labels.yml",
+    ".github/workflows/linters.yml",
+    ".github/workflows/tests.yml",
+    ".pre-commit-config.yaml",
+    "AUTHORS",
+    "biome.json",
+    "django/conf/__init__.py",
+    "django/conf/global_settings.py",
+    "django/contrib/admin/actions.py",
+    "django/contrib/admin/checks.py",
+    "django/contrib/admin/options.py",
+    "django/contrib/admin/static/admin/css/autocomplete.css",
+    "django/contrib/admin/static/admin/css/base.css",
+    "django/contrib/admin/static/admin/css/changelists.css",
+    "django/contrib/admin/static/admin/css/dark_mode.css",
+    "django/contrib/admin/static/admin/css/dashboard.css",
+    "django/contrib/admin/static/admin/css/forms.css",
+    "django/contrib/admin/static/admin/css/login.css",
+    "django/contrib/admin/static/admin/css/nav_sidebar.css",
+    "django/contrib/admin/static/admin/css/responsive.css",
+    "django/contrib/admin/static/admin/css/responsive_rtl.css",
+    "django/contrib/admin/static/admin/css/rtl.css",
+    "django/contrib/admin/static/admin/css/unusable_password_field.css",
+    "django/contrib/admin/static/admin/css/widgets.css",
+    "django/contrib/admin/static/admin/js/SelectBox.js",
+    "django/contrib/admin/static/admin/js/SelectFilter2.js",
+    "django/contrib/admin/static/admin/js/actions.js"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": false,
+      "sample": [
+        "docs/howto/upgrade-version.txt",
+        "docs/ref/forms/widgets.txt"
+      ]
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": false,
+      "sample": [
+        {
+          "existingFile": "django/core/mail/message.py",
+          "existingLine": 315,
+          "existingSymbol": "message",
+          "newFile": "scripts/pr_quality/errors.py",
+          "newLine": 12,
+          "newSymbol": "Message",
+          "reason": "same name tokens",
+          "score": 90,
+          "severity": "error"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file django/contrib/admin/options.py grew by 25 lines",
+        "large source file django/db/models/expressions.py grew by 3 lines",
+        "large source file django/db/models/fields/__init__.py grew by 9 lines",
+        "large source file django/db/models/sql/query.py grew by 11 lines",
+        "large source file django/forms/models.py grew by 3 lines",
+        "new source file scripts/pr_quality/check_pr.py has 556 lines (>500)",
+        "changed source diff is additive: added=1579 deleted=300"
+      ]
+    }
+  ],
+  "errors": [
+    "merge conflict markers found in 2 file(s)",
+    "new code appears to reimplement existing helpers or loops: 1"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": false
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": true
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "django/_50commit_window",
+  "reuseFindings": [
+    {
+      "existingFile": "django/core/mail/message.py",
+      "existingLine": 315,
+      "existingSymbol": "message",
+      "newFile": "scripts/pr_quality/errors.py",
+      "newLine": 12,
+      "newSymbol": "Message",
+      "reason": "same name tokens",
+      "score": 90,
+      "severity": "error"
+    }
+  ],
+  "sourceFilesCount": 52,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file django/contrib/admin/options.py grew by 25 lines",
+    "large source file django/db/models/expressions.py grew by 3 lines",
+    "large source file django/db/models/fields/__init__.py grew by 9 lines",
+    "large source file django/db/models/sql/query.py grew by 11 lines",
+    "large source file django/forms/models.py grew by 3 lines",
+    "new source file scripts/pr_quality/check_pr.py has 556 lines (>500)",
+    "changed source diff is additive: added=1579 deleted=300"
+  ]
+}

@@ -1,0 +1,696 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 3,
+        "baselineLines": 235,
+        "currentLines": 236,
+        "deleted": 2,
+        "file": "packages/adapter-better-sqlite3/src/conversion.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 3,
+        "baselineLines": 396,
+        "currentLines": 396,
+        "deleted": 3,
+        "file": "packages/adapter-d1/src/d1-http.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 227,
+        "currentLines": 227,
+        "deleted": 3,
+        "file": "packages/adapter-d1/src/d1-worker.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 69,
+        "baselineLines": 279,
+        "currentLines": 319,
+        "deleted": 29,
+        "file": "packages/adapter-mariadb/src/mariadb.ts",
+        "netGrowth": 40
+      },
+      {
+        "added": 4,
+        "baselineLines": 237,
+        "currentLines": 239,
+        "deleted": 2,
+        "file": "packages/adapter-pg/src/errors.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 23,
+        "baselineLines": 327,
+        "currentLines": 337,
+        "deleted": 13,
+        "file": "packages/adapter-pg/src/pg.ts",
+        "netGrowth": 10
+      },
+      {
+        "added": 24,
+        "baselineLines": 162,
+        "currentLines": 182,
+        "deleted": 4,
+        "file": "packages/cli/helpers/build.ts",
+        "netGrowth": 20
+      },
+      {
+        "added": 2,
+        "baselineLines": 187,
+        "currentLines": 189,
+        "deleted": 0,
+        "file": "packages/cli/src/CLI.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 3,
+        "baselineLines": 367,
+        "currentLines": 368,
+        "deleted": 2,
+        "file": "packages/cli/src/Generate.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 6,
+        "baselineLines": 770,
+        "currentLines": 774,
+        "deleted": 2,
+        "file": "packages/cli/src/Init.ts",
+        "netGrowth": 4
+      },
+      {
+        "added": 323,
+        "baselineLines": 545,
+        "currentLines": 699,
+        "deleted": 169,
+        "file": "packages/cli/src/Studio.ts",
+        "netGrowth": 154
+      },
+      {
+        "added": 7,
+        "baselineLines": 252,
+        "currentLines": 259,
+        "deleted": 0,
+        "file": "packages/cli/src/bin.ts",
+        "netGrowth": 7
+      },
+      {
+        "added": 650,
+        "baselineLines": null,
+        "currentLines": 650,
+        "deleted": 0,
+        "file": "packages/cli/src/bootstrap/Bootstrap.ts",
+        "netGrowth": 650
+      },
+      {
+        "added": 99,
+        "baselineLines": null,
+        "currentLines": 99,
+        "deleted": 0,
+        "file": "packages/cli/src/bootstrap/completion-output.ts",
+        "netGrowth": 99
+      },
+      {
+        "added": 110,
+        "baselineLines": null,
+        "currentLines": 110,
+        "deleted": 0,
+        "file": "packages/cli/src/bootstrap/project-state.ts",
+        "netGrowth": 110
+      },
+      {
+        "added": 102,
+        "baselineLines": null,
+        "currentLines": 102,
+        "deleted": 0,
+        "file": "packages/cli/src/bootstrap/telemetry.ts",
+        "netGrowth": 102
+      },
+      {
+        "added": 212,
+        "baselineLines": null,
+        "currentLines": 212,
+        "deleted": 0,
+        "file": "packages/cli/src/bootstrap/template-scaffold.ts",
+        "netGrowth": 212
+      },
+      {
+        "added": 63,
+        "baselineLines": null,
+        "currentLines": 63,
+        "deleted": 0,
+        "file": "packages/cli/src/postgres/PostgresCommand.ts",
+        "netGrowth": 63
+      },
+      {
+        "added": 286,
+        "baselineLines": null,
+        "currentLines": 286,
+        "deleted": 0,
+        "file": "packages/cli/src/postgres/link/Link.ts",
+        "netGrowth": 286
+      },
+      {
+        "added": 32,
+        "baselineLines": null,
+        "currentLines": 32,
+        "deleted": 0,
+        "file": "packages/cli/src/postgres/link/completion-output.ts",
+        "netGrowth": 32
+      },
+      {
+        "added": 131,
+        "baselineLines": null,
+        "currentLines": 131,
+        "deleted": 0,
+        "file": "packages/cli/src/postgres/link/local-setup.ts",
+        "netGrowth": 131
+      },
+      {
+        "added": 97,
+        "baselineLines": null,
+        "currentLines": 97,
+        "deleted": 0,
+        "file": "packages/cli/src/postgres/link/management-api.ts",
+        "netGrowth": 97
+      },
+      {
+        "added": 56,
+        "baselineLines": null,
+        "currentLines": 56,
+        "deleted": 0,
+        "file": "packages/cli/src/studio-entry.ts",
+        "netGrowth": 56
+      },
+      {
+        "added": 14,
+        "baselineLines": null,
+        "currentLines": 14,
+        "deleted": 0,
+        "file": "packages/cli/src/studio-frontend-shared.ts",
+        "netGrowth": 14
+      },
+      {
+        "added": 165,
+        "baselineLines": null,
+        "currentLines": 165,
+        "deleted": 0,
+        "file": "packages/cli/src/studio-server.ts",
+        "netGrowth": 165
+      },
+      {
+        "added": 3,
+        "baselineLines": 216,
+        "currentLines": 218,
+        "deleted": 1,
+        "file": "packages/cli/src/utils/checkpoint.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 13,
+        "baselineLines": 41,
+        "currentLines": 52,
+        "deleted": 2,
+        "file": "packages/cli/src/utils/nps/capture.ts",
+        "netGrowth": 11
+      },
+      {
+        "added": 2,
+        "baselineLines": 214,
+        "currentLines": 214,
+        "deleted": 2,
+        "file": "packages/cli/src/utils/nps/survey.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 7,
+        "currentLines": 8,
+        "deleted": 0,
+        "file": "packages/cli/vitest.config.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 39,
+        "currentLines": 39,
+        "deleted": 2,
+        "file": "packages/client-common/src/QueryCompiler.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 20,
+        "currentLines": 21,
+        "deleted": 0,
+        "file": "packages/client-engine-runtime/src/index.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 4,
+        "baselineLines": 113,
+        "currentLines": 116,
+        "deleted": 1,
+        "file": "packages/client-engine-runtime/src/interpreter/generators.ts",
+        "netGrowth": 3
+      },
+      {
+        "added": 14,
+        "baselineLines": 368,
+        "currentLines": 378,
+        "deleted": 4,
+        "file": "packages/client-engine-runtime/src/interpreter/render-query.ts",
+        "netGrowth": 10
+      },
+      {
+        "added": 96,
+        "baselineLines": null,
+        "currentLines": 96,
+        "deleted": 0,
+        "file": "packages/client-engine-runtime/src/parameterization/classify.ts",
+        "netGrowth": 96
+      },
+      {
+        "added": 97,
+        "baselineLines": null,
+        "currentLines": 97,
+        "deleted": 0,
+        "file": "packages/client-engine-runtime/src/parameterization/parameterize-tests/test-fixtures.ts",
+        "netGrowth": 97
+      },
+      {
+        "added": 590,
+        "baselineLines": null,
+        "currentLines": 590,
+        "deleted": 0,
+        "file": "packages/client-engine-runtime/src/parameterization/parameterize.ts",
+        "netGrowth": 590
+      },
+      {
+        "added": 81,
+        "baselineLines": 202,
+        "currentLines": 270,
+        "deleted": 13,
+        "file": "packages/client-engine-runtime/src/user-facing-error.ts",
+        "netGrowth": 68
+      },
+      {
+        "added": 7,
+        "baselineLines": 681,
+        "currentLines": 683,
+        "deleted": 5,
+        "file": "packages/client-generator-js/src/TSClient/PrismaClient.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 2,
+        "baselineLines": 119,
+        "currentLines": 119,
+        "deleted": 2,
+        "file": "packages/client-generator-js/src/generator.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 15,
+        "currentLines": 1,
+        "deleted": 15,
+        "file": "packages/client-generator-js/src/getDMMF.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 0,
+        "baselineLines": 5,
+        "currentLines": 4,
+        "deleted": 1,
+        "file": "packages/client-generator-js/src/index.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 40,
+        "currentLines": 41,
+        "deleted": 2,
+        "file": "packages/client-generator-js/src/utils/types/dmmfToTypes.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 1,
+        "baselineLines": 982,
+        "currentLines": 982,
+        "deleted": 1,
+        "file": "packages/client-generator-ts/src/TSClient/Model.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 7,
+        "baselineLines": 336,
+        "currentLines": 338,
+        "deleted": 5,
+        "file": "packages/client-generator-ts/src/TSClient/PrismaClient.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 17,
+        "baselineLines": 291,
+        "currentLines": 308,
+        "deleted": 0,
+        "file": "packages/client-generator-ts/src/TSClient/file-generators/PrismaNamespaceFile.ts",
+        "netGrowth": 17
+      },
+      {
+        "added": 1,
+        "baselineLines": 15,
+        "currentLines": 1,
+        "deleted": 15,
+        "file": "packages/client-generator-ts/src/getDMMF.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 0,
+        "baselineLines": 4,
+        "currentLines": 3,
+        "deleted": 1,
+        "file": "packages/client-generator-ts/src/index.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 23,
+        "baselineLines": 102,
+        "currentLines": 125,
+        "deleted": 0,
+        "file": "packages/client-runtime-utils/src/nullTypes.ts",
+        "netGrowth": 23
+      },
+      {
+        "added": 3,
+        "baselineLines": 29,
+        "currentLines": 30,
+        "deleted": 2,
+        "file": "packages/client/src/generation/generator.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 367,
+        "currentLines": 369,
+        "deleted": 0,
+        "file": "packages/client/src/runtime/RequestHandler.ts",
+        "netGrowth": 2
+      }
+    ],
+    "totalAdded": 3937,
+    "totalDeleted": 475
+  },
+  "changedFilesCount": 178,
+  "changedFilesSample": [
+    ".gitleaksignore",
+    "AGENTS.md",
+    "docker/mongodb_replica/Dockerfile",
+    "package.json",
+    "packages/adapter-better-sqlite3/src/conversion.ts",
+    "packages/adapter-d1/src/d1-http.ts",
+    "packages/adapter-d1/src/d1-worker.ts",
+    "packages/adapter-mariadb/src/credentials.test.ts",
+    "packages/adapter-mariadb/src/mariadb.test.ts",
+    "packages/adapter-mariadb/src/mariadb.ts",
+    "packages/adapter-pg/package.json",
+    "packages/adapter-pg/src/__tests__/errors.test.ts",
+    "packages/adapter-pg/src/__tests__/pg.test.ts",
+    "packages/adapter-pg/src/errors.ts",
+    "packages/adapter-pg/src/pg.ts",
+    "packages/cli/helpers/build.ts",
+    "packages/cli/package.json",
+    "packages/cli/src/CLI.ts",
+    "packages/cli/src/Generate.ts",
+    "packages/cli/src/Init.ts",
+    "packages/cli/src/Studio.ts",
+    "packages/cli/src/__tests__/Init.vitest.ts",
+    "packages/cli/src/__tests__/Studio.vitest.ts",
+    "packages/cli/src/__tests__/__snapshots__/Init.vitest.ts.snap",
+    "packages/cli/src/__tests__/studio-server.vitest.ts",
+    "packages/cli/src/bin.ts",
+    "packages/cli/src/bootstrap/Bootstrap.ts",
+    "packages/cli/src/bootstrap/__tests__/Bootstrap.vitest.ts",
+    "packages/cli/src/bootstrap/__tests__/project-state.vitest.ts",
+    "packages/cli/src/bootstrap/__tests__/template-scaffold.vitest.ts"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "packages/cli/src/Init.ts:116",
+        "packages/cli/src/bootstrap/project-state.ts:75",
+        "packages/cli/src/bootstrap/project-state.ts:84",
+        "packages/cli/src/bootstrap/project-state.ts:99",
+        "packages/cli/src/bootstrap/template-scaffold.ts:169",
+        "packages/client/tests/functional/issues/29160-mysql-precision-loss/tests.ts:2",
+        "packages/client/tests/functional/issues/29309-datetime-cursor/tests.ts:2",
+        "packages/client/tests/functional/issues/29331-query-plan-cache-bloat/tests.ts:4",
+        "packages/client/tests/functional/issues/unmapped-driver-error-user-facing/test.ts:2",
+        "packages/client/tests/functional/json-null-types/tests.ts:78"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 3,
+          "files": [
+            "packages/cli/src/bootstrap/Bootstrap.ts",
+            "packages/cli/src/bootstrap/telemetry.ts"
+          ],
+          "sample": "distinctId: string | databaseId: string | undefined | linkResult: LinkResult | null"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": false,
+      "sample": [
+        {
+          "existingFile": "packages/get-platform/src/link.ts",
+          "existingLine": 4,
+          "existingSymbol": "link",
+          "newFile": "packages/cli/src/postgres/link/Link.ts",
+          "newLine": 130,
+          "newSymbol": "Link",
+          "reason": "same name tokens",
+          "score": 95,
+          "severity": "error"
+        }
+      ],
+      "warnings": [
+        {
+          "existingFile": "packages/cli/src/DebugInfo.ts",
+          "existingLine": 65,
+          "existingSymbol": "formatEnvValue",
+          "newFile": "packages/cli/src/postgres/link/local-setup.ts",
+          "newLine": 106,
+          "newSymbol": "formatEnvSummary",
+          "reason": "matching behavior tokens: env, format",
+          "score": 62,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "packages/internals/src/cli/getGeneratorSuccessMessage.ts",
+          "existingLine": 31,
+          "existingSymbol": "formatOutput",
+          "newFile": "packages/cli/src/bootstrap/completion-output.ts",
+          "newLine": 40,
+          "newSymbol": "formatBootstrapOutput",
+          "reason": "matching behavior tokens: format, output",
+          "score": 57,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "packages/client-generator-js/src/resolvePrismaClient.ts",
+          "existingLine": 14,
+          "existingSymbol": "resolvePrismaClient",
+          "newFile": "packages/cli/src/postgres/link/Link.ts",
+          "newLine": 46,
+          "newSymbol": "resolveApiClient",
+          "reason": "matching behavior tokens: client, resolve",
+          "score": 57,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "packages/internals/src/cli/getGeneratorSuccessMessage.ts",
+          "existingLine": 31,
+          "existingSymbol": "formatOutput",
+          "newFile": "packages/cli/src/postgres/link/completion-output.ts",
+          "newLine": 7,
+          "newSymbol": "formatCompletionOutput",
+          "reason": "matching behavior tokens: format, output",
+          "score": 57,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "packages/query-plan-executor/src/logic/adapter.ts",
+          "existingLine": 81,
+          "existingSymbol": "sanitizeError",
+          "newFile": "packages/cli/src/postgres/link/management-api.ts",
+          "newLine": 19,
+          "newSymbol": "sanitizeErrorMessage",
+          "reason": "matching behavior tokens: error, sanitize",
+          "score": 57,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": false,
+      "warnings": [
+        "new source file packages/cli/src/bootstrap/Bootstrap.ts has 650 lines (>500)",
+        "new source file packages/client-engine-runtime/src/parameterization/parameterize.ts has 590 lines (>500)"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 13 changed location(s)",
+    "duplicate added code blocks detected: 1",
+    "new code appears to reimplement existing helpers or loops: 1",
+    "changed source diff is heavily additive: added=3937 deleted=475"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": false
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "prisma/_50commit_window",
+  "reuseFindings": [
+    {
+      "existingFile": "packages/get-platform/src/link.ts",
+      "existingLine": 4,
+      "existingSymbol": "link",
+      "newFile": "packages/cli/src/postgres/link/Link.ts",
+      "newLine": 130,
+      "newSymbol": "Link",
+      "reason": "same name tokens",
+      "score": 95,
+      "severity": "error"
+    },
+    {
+      "existingFile": "packages/cli/src/DebugInfo.ts",
+      "existingLine": 65,
+      "existingSymbol": "formatEnvValue",
+      "newFile": "packages/cli/src/postgres/link/local-setup.ts",
+      "newLine": 106,
+      "newSymbol": "formatEnvSummary",
+      "reason": "matching behavior tokens: env, format",
+      "score": 62,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "packages/internals/src/cli/getGeneratorSuccessMessage.ts",
+      "existingLine": 31,
+      "existingSymbol": "formatOutput",
+      "newFile": "packages/cli/src/bootstrap/completion-output.ts",
+      "newLine": 40,
+      "newSymbol": "formatBootstrapOutput",
+      "reason": "matching behavior tokens: format, output",
+      "score": 57,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "packages/client-generator-js/src/resolvePrismaClient.ts",
+      "existingLine": 14,
+      "existingSymbol": "resolvePrismaClient",
+      "newFile": "packages/cli/src/postgres/link/Link.ts",
+      "newLine": 46,
+      "newSymbol": "resolveApiClient",
+      "reason": "matching behavior tokens: client, resolve",
+      "score": 57,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "packages/internals/src/cli/getGeneratorSuccessMessage.ts",
+      "existingLine": 31,
+      "existingSymbol": "formatOutput",
+      "newFile": "packages/cli/src/postgres/link/completion-output.ts",
+      "newLine": 7,
+      "newSymbol": "formatCompletionOutput",
+      "reason": "matching behavior tokens: format, output",
+      "score": 57,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "packages/query-plan-executor/src/logic/adapter.ts",
+      "existingLine": 81,
+      "existingSymbol": "sanitizeError",
+      "newFile": "packages/cli/src/postgres/link/management-api.ts",
+      "newLine": 19,
+      "newSymbol": "sanitizeErrorMessage",
+      "reason": "matching behavior tokens: error, sanitize",
+      "score": 57,
+      "severity": "warning"
+    }
+  ],
+  "sourceFilesCount": 92,
+  "version": "3.0.0",
+  "warnings": [
+    "new source file packages/cli/src/bootstrap/Bootstrap.ts has 650 lines (>500)",
+    "new source file packages/client-engine-runtime/src/parameterization/parameterize.ts has 590 lines (>500)",
+    "possible reusable existing path for packages/cli/src/postgres/link/local-setup.ts:106 -> packages/cli/src/DebugInfo.ts:65 formatEnvValue (matching behavior tokens: env, format)",
+    "possible reusable existing path for packages/cli/src/bootstrap/completion-output.ts:40 -> packages/internals/src/cli/getGeneratorSuccessMessage.ts:31 formatOutput (matching behavior tokens: format, output)",
+    "possible reusable existing path for packages/cli/src/postgres/link/Link.ts:46 -> packages/client-generator-js/src/resolvePrismaClient.ts:14 resolvePrismaClient (matching behavior tokens: client, resolve)",
+    "possible reusable existing path for packages/cli/src/postgres/link/completion-output.ts:7 -> packages/internals/src/cli/getGeneratorSuccessMessage.ts:31 formatOutput (matching behavior tokens: format, output)",
+    "possible reusable existing path for packages/cli/src/postgres/link/management-api.ts:19 -> packages/query-plan-executor/src/logic/adapter.ts:81 sanitizeError (matching behavior tokens: error, sanitize)"
+  ]
+}

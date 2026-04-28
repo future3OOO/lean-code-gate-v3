@@ -20,7 +20,14 @@ WT_RE = re.compile(r"_wt_(?P<key>[\w-]+)_pr(?P<pr>\d+)(?:_\d+)?$")
 
 
 def sanitize_one(path: Path) -> bool:
-    data = json.loads(path.read_text(encoding="utf-8"))
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        # File is not JSON (e.g. captured a Python traceback when the gate
+        # crashed). Skip — nothing to sanitize.
+        return False
+    if not isinstance(data, dict):
+        return False
     repo = data.get("repo")
     if not isinstance(repo, str) or not repo.startswith("/"):
         return False

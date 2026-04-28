@@ -1,0 +1,637 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 134,
+        "baselineLines": null,
+        "currentLines": 134,
+        "deleted": 0,
+        "file": ".github/actions/pr-auto-label/src/index.ts",
+        "netGrowth": 134
+      },
+      {
+        "added": 2,
+        "baselineLines": 69,
+        "currentLines": 69,
+        "deleted": 2,
+        "file": ".github/actions/sccache/start.sh",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 2199,
+        "currentLines": 2197,
+        "deleted": 7,
+        "file": "crates/next-api/src/app.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 1789,
+        "currentLines": 1789,
+        "deleted": 3,
+        "file": "crates/next-api/src/pages.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 21,
+        "baselineLines": 2621,
+        "currentLines": 2624,
+        "deleted": 18,
+        "file": "crates/next-api/src/project.rs",
+        "netGrowth": 3
+      },
+      {
+        "added": 1,
+        "baselineLines": 335,
+        "currentLines": 335,
+        "deleted": 1,
+        "file": "crates/next-build-test/src/lib.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 125,
+        "currentLines": 119,
+        "deleted": 7,
+        "file": "crates/next-core/src/next_client/transforms.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 8,
+        "baselineLines": 812,
+        "currentLines": 815,
+        "deleted": 5,
+        "file": "crates/next-core/src/next_font/google/mod.rs",
+        "netGrowth": 3
+      },
+      {
+        "added": 3,
+        "baselineLines": 263,
+        "currentLines": 257,
+        "deleted": 9,
+        "file": "crates/next-core/src/next_server/transforms.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 15,
+        "baselineLines": 55,
+        "currentLines": 59,
+        "deleted": 11,
+        "file": "crates/next-core/src/next_shared/transforms/next_debug_instant_stack.rs",
+        "netGrowth": 4
+      },
+      {
+        "added": 2,
+        "baselineLines": 112,
+        "currentLines": 113,
+        "deleted": 1,
+        "file": "crates/next-core/src/next_shared/transforms/next_strip_page_exports.rs",
+        "netGrowth": 1
+      },
+      {
+        "added": 3,
+        "baselineLines": 491,
+        "currentLines": 491,
+        "deleted": 3,
+        "file": "crates/next-custom-transforms/src/chain_transforms.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 38,
+        "baselineLines": 168,
+        "currentLines": 183,
+        "deleted": 23,
+        "file": "crates/next-custom-transforms/src/transforms/debug_instant_stack.rs",
+        "netGrowth": 15
+      },
+      {
+        "added": 351,
+        "baselineLines": 422,
+        "currentLines": 693,
+        "deleted": 80,
+        "file": "crates/next-error-code-swc-plugin/src/lib.rs",
+        "netGrowth": 271
+      },
+      {
+        "added": 7,
+        "baselineLines": 91,
+        "currentLines": 93,
+        "deleted": 5,
+        "file": "crates/next-napi-bindings/build.rs",
+        "netGrowth": 2
+      },
+      {
+        "added": 1,
+        "baselineLines": 138,
+        "currentLines": 138,
+        "deleted": 1,
+        "file": "crates/next-napi-bindings/src/next_api/analyze.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 302,
+        "currentLines": 302,
+        "deleted": 2,
+        "file": "crates/next-napi-bindings/src/next_api/endpoint.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 34,
+        "baselineLines": 2581,
+        "currentLines": 2604,
+        "deleted": 11,
+        "file": "crates/next-napi-bindings/src/next_api/project.rs",
+        "netGrowth": 23
+      },
+      {
+        "added": 24,
+        "baselineLines": 542,
+        "currentLines": 562,
+        "deleted": 4,
+        "file": "packages/next/src/cli/next-dev.ts",
+        "netGrowth": 20
+      },
+      {
+        "added": 1,
+        "baselineLines": 186,
+        "currentLines": 187,
+        "deleted": 0,
+        "file": "packages/next/src/client/components/offline.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 3,
+        "baselineLines": 672,
+        "currentLines": 673,
+        "deleted": 2,
+        "file": "packages/next/src/client/components/router-reducer/fetch-server-response.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 1,
+        "baselineLines": 557,
+        "currentLines": 558,
+        "deleted": 0,
+        "file": "packages/next/src/client/components/router-reducer/reducers/server-action-reducer.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 30,
+        "baselineLines": 90,
+        "currentLines": 109,
+        "deleted": 11,
+        "file": "packages/next/src/client/components/router-reducer/set-cache-busting-search-param.ts",
+        "netGrowth": 19
+      },
+      {
+        "added": 1,
+        "baselineLines": 3111,
+        "currentLines": 3112,
+        "deleted": 0,
+        "file": "packages/next/src/client/components/segment-cache/cache.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 26,
+        "baselineLines": null,
+        "currentLines": 26,
+        "deleted": 0,
+        "file": "packages/next/src/client/components/segment-cache/fetch.ts",
+        "netGrowth": 26
+      },
+      {
+        "added": 112,
+        "baselineLines": 199,
+        "currentLines": 295,
+        "deleted": 16,
+        "file": "packages/next/src/client/components/segment-cache/navigation-testing-lock.ts",
+        "netGrowth": 96
+      },
+      {
+        "added": 8,
+        "baselineLines": 995,
+        "currentLines": 1003,
+        "deleted": 0,
+        "file": "packages/next/src/client/index.tsx",
+        "netGrowth": 8
+      },
+      {
+        "added": 2,
+        "baselineLines": 1093,
+        "currentLines": 1095,
+        "deleted": 0,
+        "file": "packages/next/src/export/index.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 5,
+        "baselineLines": 172,
+        "currentLines": 176,
+        "deleted": 1,
+        "file": "packages/next/src/export/routes/app-route.ts",
+        "netGrowth": 4
+      },
+      {
+        "added": 1,
+        "baselineLines": 652,
+        "currentLines": 653,
+        "deleted": 0,
+        "file": "packages/next/src/export/worker.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 46,
+        "baselineLines": null,
+        "currentLines": 46,
+        "deleted": 0,
+        "file": "packages/next/src/lib/helpers/git.ts",
+        "netGrowth": 46
+      },
+      {
+        "added": 9,
+        "baselineLines": 1480,
+        "currentLines": 1477,
+        "deleted": 12,
+        "file": "packages/next/src/server/app-render/action-handler.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 8740,
+        "currentLines": 8742,
+        "deleted": 0,
+        "file": "packages/next/src/server/app-render/app-render.tsx",
+        "netGrowth": 2
+      },
+      {
+        "added": 2,
+        "baselineLines": 233,
+        "currentLines": 235,
+        "deleted": 0,
+        "file": "packages/next/src/server/app-render/types.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 2,
+        "baselineLines": 130,
+        "currentLines": 132,
+        "deleted": 0,
+        "file": "packages/next/src/server/app-render/work-async-storage.external.ts",
+        "netGrowth": 2
+      },
+      {
+        "added": 4,
+        "baselineLines": 180,
+        "currentLines": 183,
+        "deleted": 1,
+        "file": "packages/next/src/server/async-storage/work-store.ts",
+        "netGrowth": 3
+      },
+      {
+        "added": 22,
+        "baselineLines": 3051,
+        "currentLines": 3070,
+        "deleted": 3,
+        "file": "packages/next/src/server/base-server.ts",
+        "netGrowth": 19
+      },
+      {
+        "added": 1,
+        "baselineLines": 807,
+        "currentLines": 808,
+        "deleted": 0,
+        "file": "packages/next/src/server/config-schema.ts",
+        "netGrowth": 1
+      },
+      {
+        "added": 64,
+        "baselineLines": 2162,
+        "currentLines": 2173,
+        "deleted": 53,
+        "file": "packages/next/src/server/config-shared.ts",
+        "netGrowth": 11
+      },
+      {
+        "added": 8,
+        "baselineLines": 2321,
+        "currentLines": 2329,
+        "deleted": 0,
+        "file": "packages/next/src/server/config.ts",
+        "netGrowth": 8
+      },
+      {
+        "added": 3,
+        "baselineLines": 1047,
+        "currentLines": 1050,
+        "deleted": 0,
+        "file": "packages/next/src/server/dev/next-dev-server.ts",
+        "netGrowth": 3
+      },
+      {
+        "added": 9,
+        "baselineLines": 70,
+        "currentLines": 79,
+        "deleted": 0,
+        "file": "packages/next/src/server/dev/node-stack-frames.ts",
+        "netGrowth": 9
+      },
+      {
+        "added": 6,
+        "baselineLines": 171,
+        "currentLines": 177,
+        "deleted": 0,
+        "file": "packages/next/src/server/dev/static-paths-worker.ts",
+        "netGrowth": 6
+      },
+      {
+        "added": 3,
+        "baselineLines": 1323,
+        "currentLines": 1322,
+        "deleted": 4,
+        "file": "packages/next/src/server/image-optimizer.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 13,
+        "baselineLines": 53,
+        "currentLines": 66,
+        "deleted": 0,
+        "file": "packages/next/src/server/lib/patch-set-header.ts",
+        "netGrowth": 13
+      },
+      {
+        "added": 2,
+        "baselineLines": 1641,
+        "currentLines": 1643,
+        "deleted": 0,
+        "file": "packages/next/src/server/render.tsx",
+        "netGrowth": 2
+      },
+      {
+        "added": 5,
+        "baselineLines": 1159,
+        "currentLines": 1164,
+        "deleted": 0,
+        "file": "packages/next/src/server/route-modules/route-module.ts",
+        "netGrowth": 5
+      },
+      {
+        "added": 7,
+        "baselineLines": 1307,
+        "currentLines": 1306,
+        "deleted": 8,
+        "file": "packages/next/src/server/stream-utils/node-web-streams-helper.ts",
+        "netGrowth": 0
+      },
+      {
+        "added": 69,
+        "baselineLines": 2835,
+        "currentLines": 2861,
+        "deleted": 43,
+        "file": "packages/next/src/server/use-cache/use-cache-wrapper.ts",
+        "netGrowth": 26
+      },
+      {
+        "added": 10,
+        "baselineLines": 512,
+        "currentLines": 522,
+        "deleted": 0,
+        "file": "packages/next/src/server/web/adapter.ts",
+        "netGrowth": 10
+      }
+    ],
+    "totalAdded": 4542,
+    "totalDeleted": 1717
+  },
+  "changedFilesCount": 309,
+  "changedFilesSample": [
+    ".github/actions/pr-auto-label/README.md",
+    ".github/actions/pr-auto-label/action.yml",
+    ".github/actions/pr-auto-label/dist/index.js",
+    ".github/actions/pr-auto-label/dist/licenses.txt",
+    ".github/actions/pr-auto-label/package.json",
+    ".github/actions/pr-auto-label/src/config.json",
+    ".github/actions/pr-auto-label/src/index.ts",
+    ".github/actions/pr-auto-label/tsconfig.json",
+    ".github/actions/sccache/action.yml",
+    ".github/actions/sccache/start.sh",
+    ".github/pnpm-lock.yaml",
+    ".github/pull_request_template.md",
+    ".github/workflows/build_and_deploy.yml",
+    ".github/workflows/build_and_test.yml",
+    ".github/workflows/build_reusable.yml",
+    ".github/workflows/create_release_branch.yml",
+    ".github/workflows/integration_tests_reusable.yml",
+    ".github/workflows/pr_ci_comment.yml",
+    ".github/workflows/pull_request_auto_label.yml",
+    ".github/workflows/pull_request_stats.yml",
+    ".github/workflows/setup-nextjs-build.yml",
+    ".github/workflows/sync_backport_canary_release.yml",
+    ".github/workflows/test-turbopack-rust-bench-test.yml",
+    ".github/workflows/test_e2e_deploy_release.yml",
+    ".github/workflows/test_e2e_project_reset_cron.yml",
+    ".github/workflows/trigger_release.yml",
+    ".github/workflows/turbopack-benchmark.yml",
+    ".github/workflows/update_react_poller.yml",
+    ".github/workflows/upload_preview_tarballs.yml",
+    "Cargo.lock"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        ".github/actions/pr-auto-label/dist/index.js:1",
+        ".github/actions/pr-auto-label/dist/index.js:2",
+        ".github/actions/pr-auto-label/dist/index.js:3",
+        "packages/next/src/server/dev/node-stack-frames.ts:47",
+        "scripts/pr-ci-comment.mjs:17",
+        "turbopack/crates/turbo-tasks-backend/src/backend/cell_data.rs:90",
+        "turbopack/crates/turbopack-ecmascript/src/analyzer/imports.rs:1233",
+        "turbopack/crates/turbopack-ecmascript/src/analyzer/imports.rs:1234",
+        "turbopack/crates/turbopack-ecmascript/src/analyzer/imports.rs:296",
+        "turbopack/crates/turbopack-ecmascript/src/references/mod.rs:3275"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 3,
+          "files": [
+            "crates/next-core/src/next_font/google/mod.rs",
+            "turbopack/crates/turbopack-node/src/transforms/postcss.rs",
+            "turbopack/crates/turbopack-node/src/transforms/webpack.rs"
+          ],
+          "sample": "let module_graph = ModuleGraph::from_graphs( | vec![SingleModuleGraph::new_with_entries( | entries.graph_entries().to_resolved().await?"
+        },
+        {
+          "count": 3,
+          "files": [
+            "crates/next-error-code-swc-plugin/src/lib.rs"
+          ],
+          "sample": "Object.defineProperty(this, \"__NEXT_ERROR_CODE\", { | value: \"E7\" | enumerable: false"
+        },
+        {
+          "count": 3,
+          "files": [
+            "turbopack/crates/turbopack-ecmascript/src/references/mod.rs"
+          ],
+          "sample": "&& let Some(req) = pat.as_constant_string() | && let Some(a) = inner_assets.get(req) | Some(*a)"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": [
+        {
+          "existingFile": "packages/next/src/server/image-optimizer.ts",
+          "existingLine": 974,
+          "existingSymbol": "fetchInternalImage",
+          "newFile": "packages/next/src/client/components/segment-cache/fetch.ts",
+          "newLine": 13,
+          "newSymbol": "fetchInternal",
+          "reason": "matching behavior tokens: fetch, internal",
+          "score": 62,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "scripts/get-changed-tests.mjs",
+          "existingLine": 18,
+          "existingSymbol": "normalizePath",
+          "newFile": "scripts/pr-ci-comment.mjs",
+          "newLine": 731,
+          "newSymbol": "normalizeTestPath",
+          "reason": "matching behavior tokens: normalize, path",
+          "score": 62,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": false,
+      "warnings": [
+        "large source file crates/next-api/src/project.rs grew by 3 lines",
+        "large source file crates/next-napi-bindings/src/next_api/project.rs grew by 23 lines",
+        "large source file packages/next/src/client/components/segment-cache/cache.ts grew by 1 lines",
+        "large source file packages/next/src/server/app-render/app-render.tsx grew by 2 lines",
+        "large source file packages/next/src/server/base-server.ts grew by 19 lines",
+        "large source file packages/next/src/server/config-shared.ts grew by 11 lines",
+        "large source file packages/next/src/server/config.ts grew by 8 lines",
+        "large source file packages/next/src/server/render.tsx grew by 2 lines",
+        "large source file packages/next/src/server/use-cache/use-cache-wrapper.ts grew by 26 lines",
+        "new source file scripts/pr-ci-comment.mjs has 864 lines (>500)"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 10 changed location(s)",
+    "duplicate added code blocks detected: 3",
+    "source file crates/next-error-code-swc-plugin/src/lib.rs grew by 271 lines without same-directory shrink",
+    "new source file scripts/pr-ci-comment.mjs has 864 lines (>800)"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": false
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "nextjs/_50commit_window",
+  "reuseFindings": [
+    {
+      "existingFile": "packages/next/src/server/image-optimizer.ts",
+      "existingLine": 974,
+      "existingSymbol": "fetchInternalImage",
+      "newFile": "packages/next/src/client/components/segment-cache/fetch.ts",
+      "newLine": 13,
+      "newSymbol": "fetchInternal",
+      "reason": "matching behavior tokens: fetch, internal",
+      "score": 62,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "scripts/get-changed-tests.mjs",
+      "existingLine": 18,
+      "existingSymbol": "normalizePath",
+      "newFile": "scripts/pr-ci-comment.mjs",
+      "newLine": 731,
+      "newSymbol": "normalizeTestPath",
+      "reason": "matching behavior tokens: normalize, path",
+      "score": 62,
+      "severity": "warning"
+    }
+  ],
+  "sourceFilesCount": 169,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file crates/next-api/src/project.rs grew by 3 lines",
+    "large source file crates/next-napi-bindings/src/next_api/project.rs grew by 23 lines",
+    "large source file packages/next/src/client/components/segment-cache/cache.ts grew by 1 lines",
+    "large source file packages/next/src/server/app-render/app-render.tsx grew by 2 lines",
+    "large source file packages/next/src/server/base-server.ts grew by 19 lines",
+    "large source file packages/next/src/server/config-shared.ts grew by 11 lines",
+    "large source file packages/next/src/server/config.ts grew by 8 lines",
+    "large source file packages/next/src/server/render.tsx grew by 2 lines",
+    "large source file packages/next/src/server/use-cache/use-cache-wrapper.ts grew by 26 lines",
+    "new source file scripts/pr-ci-comment.mjs has 864 lines (>500)",
+    "large source file turbopack/crates/turbo-tasks-macros/src/derive/task_storage_macro.rs grew by 34 lines",
+    "large source file turbopack/crates/turbopack-ecmascript/src/lib.rs grew by 77 lines",
+    "possible reusable existing path for packages/next/src/client/components/segment-cache/fetch.ts:13 -> packages/next/src/server/image-optimizer.ts:974 fetchInternalImage (matching behavior tokens: fetch, internal)",
+    "possible reusable existing path for scripts/pr-ci-comment.mjs:731 -> scripts/get-changed-tests.mjs:18 normalizePath (matching behavior tokens: normalize, path)"
+  ]
+}

@@ -1,0 +1,548 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 20,
+        "baselineLines": 48,
+        "currentLines": 66,
+        "deleted": 2,
+        "file": ".github/scripts/test_release_options.py",
+        "netGrowth": 18
+      },
+      {
+        "added": 71,
+        "baselineLines": 1157,
+        "currentLines": 1220,
+        "deleted": 8,
+        "file": "libs/core/langchain_core/callbacks/base.py",
+        "netGrowth": 63
+      },
+      {
+        "added": 41,
+        "baselineLines": 2751,
+        "currentLines": 2792,
+        "deleted": 0,
+        "file": "libs/core/langchain_core/callbacks/manager.py",
+        "netGrowth": 41
+      },
+      {
+        "added": 6,
+        "baselineLines": 948,
+        "currentLines": 954,
+        "deleted": 0,
+        "file": "libs/core/langchain_core/indexing/api.py",
+        "netGrowth": 6
+      },
+      {
+        "added": 722,
+        "baselineLines": null,
+        "currentLines": 722,
+        "deleted": 0,
+        "file": "libs/core/langchain_core/language_models/_compat_bridge.py",
+        "netGrowth": 722
+      },
+      {
+        "added": 1317,
+        "baselineLines": null,
+        "currentLines": 1317,
+        "deleted": 0,
+        "file": "libs/core/langchain_core/language_models/chat_model_stream.py",
+        "netGrowth": 1317
+      },
+      {
+        "added": 636,
+        "baselineLines": 1883,
+        "currentLines": 2503,
+        "deleted": 16,
+        "file": "libs/core/langchain_core/language_models/chat_models.py",
+        "netGrowth": 620
+      },
+      {
+        "added": 81,
+        "baselineLines": 6261,
+        "currentLines": 6342,
+        "deleted": 0,
+        "file": "libs/core/langchain_core/runnables/base.py",
+        "netGrowth": 81
+      },
+      {
+        "added": 8,
+        "baselineLines": 1586,
+        "currentLines": 1593,
+        "deleted": 1,
+        "file": "libs/core/langchain_core/tools/base.py",
+        "netGrowth": 7
+      },
+      {
+        "added": 19,
+        "baselineLines": 33,
+        "currentLines": 52,
+        "deleted": 0,
+        "file": "libs/core/langchain_core/tracers/_streaming.py",
+        "netGrowth": 19
+      },
+      {
+        "added": 36,
+        "baselineLines": 456,
+        "currentLines": 490,
+        "deleted": 2,
+        "file": "libs/core/langchain_core/tracers/langchain.py",
+        "netGrowth": 34
+      },
+      {
+        "added": 1,
+        "baselineLines": 3,
+        "currentLines": 3,
+        "deleted": 1,
+        "file": "libs/core/langchain_core/version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 12,
+        "baselineLines": 1876,
+        "currentLines": 1874,
+        "deleted": 14,
+        "file": "libs/langchain_v1/langchain/agents/factory.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 267,
+        "currentLines": 267,
+        "deleted": 1,
+        "file": "libs/langchain_v1/langchain/agents/middleware/model_call_limit.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 138,
+        "currentLines": 138,
+        "deleted": 1,
+        "file": "libs/langchain_v1/langchain/agents/middleware/model_fallback.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 345,
+        "currentLines": 345,
+        "deleted": 1,
+        "file": "libs/langchain_v1/langchain/agents/middleware/todo.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 46,
+        "baselineLines": 59,
+        "currentLines": 101,
+        "deleted": 4,
+        "file": "libs/partners/deepseek/langchain_deepseek/data/_profiles.py",
+        "netGrowth": 42
+      },
+      {
+        "added": 231,
+        "baselineLines": 1084,
+        "currentLines": 1276,
+        "deleted": 39,
+        "file": "libs/partners/fireworks/langchain_fireworks/chat_models.py",
+        "netGrowth": 192
+      },
+      {
+        "added": 20,
+        "baselineLines": 359,
+        "currentLines": 379,
+        "deleted": 0,
+        "file": "libs/partners/fireworks/langchain_fireworks/data/_profiles.py",
+        "netGrowth": 20
+      },
+      {
+        "added": 20,
+        "baselineLines": 460,
+        "currentLines": 480,
+        "deleted": 0,
+        "file": "libs/partners/huggingface/langchain_huggingface/data/_profiles.py",
+        "netGrowth": 20
+      },
+      {
+        "added": 2,
+        "baselineLines": 16,
+        "currentLines": 18,
+        "deleted": 0,
+        "file": "libs/partners/openai/langchain_openai/__init__.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 568,
+        "baselineLines": 142,
+        "currentLines": 685,
+        "deleted": 25,
+        "file": "libs/partners/openai/langchain_openai/chat_models/_client_utils.py",
+        "netGrowth": 543
+      },
+      {
+        "added": 4,
+        "baselineLines": 1165,
+        "currentLines": 1169,
+        "deleted": 0,
+        "file": "libs/partners/openai/langchain_openai/chat_models/azure.py",
+        "netGrowth": 4
+      },
+      {
+        "added": 217,
+        "baselineLines": 4853,
+        "currentLines": 5041,
+        "deleted": 29,
+        "file": "libs/partners/openai/langchain_openai/chat_models/base.py",
+        "netGrowth": 188
+      },
+      {
+        "added": 26,
+        "baselineLines": 1334,
+        "currentLines": 1335,
+        "deleted": 25,
+        "file": "libs/partners/openai/langchain_openai/data/_profiles.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 169,
+        "baselineLines": 3571,
+        "currentLines": 3740,
+        "deleted": 0,
+        "file": "libs/partners/openrouter/langchain_openrouter/data/_profiles.py",
+        "netGrowth": 169
+      },
+      {
+        "added": 68,
+        "baselineLines": 3465,
+        "currentLines": 3533,
+        "deleted": 0,
+        "file": "libs/standard-tests/langchain_tests/integration_tests/chat_models.py",
+        "netGrowth": 68
+      },
+      {
+        "added": 202,
+        "baselineLines": null,
+        "currentLines": 202,
+        "deleted": 0,
+        "file": "libs/standard-tests/langchain_tests/utils/stream_lifecycle.py",
+        "netGrowth": 202
+      },
+      {
+        "added": 0,
+        "baselineLines": 803,
+        "currentLines": 797,
+        "deleted": 6,
+        "file": "libs/text-splitters/langchain_text_splitters/character.py",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 4546,
+    "totalDeleted": 175
+  },
+  "changedFilesCount": 119,
+  "changedFilesSample": [
+    ".github/PULL_REQUEST_TEMPLATE.md",
+    ".github/scripts/test_release_options.py",
+    ".github/workflows/_release.yml",
+    ".github/workflows/close_unchecked_issues.yml",
+    ".github/workflows/integration_tests.yml",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "libs/core/langchain_core/callbacks/base.py",
+    "libs/core/langchain_core/callbacks/manager.py",
+    "libs/core/langchain_core/indexing/api.py",
+    "libs/core/langchain_core/language_models/_compat_bridge.py",
+    "libs/core/langchain_core/language_models/chat_model_stream.py",
+    "libs/core/langchain_core/language_models/chat_models.py",
+    "libs/core/langchain_core/runnables/base.py",
+    "libs/core/langchain_core/tools/base.py",
+    "libs/core/langchain_core/tracers/_streaming.py",
+    "libs/core/langchain_core/tracers/langchain.py",
+    "libs/core/langchain_core/version.py",
+    "libs/core/pyproject.toml",
+    "libs/core/tests/unit_tests/indexing/test_indexing.py",
+    "libs/core/tests/unit_tests/language_models/chat_models/test_base.py",
+    "libs/core/tests/unit_tests/language_models/test_chat_model_stream.py",
+    "libs/core/tests/unit_tests/language_models/test_chat_model_streamer.py",
+    "libs/core/tests/unit_tests/language_models/test_compat_bridge.py",
+    "libs/core/tests/unit_tests/language_models/test_stream_v2.py",
+    "libs/core/tests/unit_tests/language_models/test_v1_parity.py",
+    "libs/core/tests/unit_tests/test_tools.py",
+    "libs/core/tests/unit_tests/tracers/test_langchain.py",
+    "libs/core/uv.lock",
+    "libs/langchain/pyproject.toml"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "libs/core/langchain_core/callbacks/base.py:135",
+        "libs/core/langchain_core/callbacks/base.py:700",
+        "libs/core/langchain_core/callbacks/manager.py:751",
+        "libs/core/langchain_core/callbacks/manager.py:873",
+        "libs/core/langchain_core/language_models/_compat_bridge.py:101",
+        "libs/core/langchain_core/language_models/_compat_bridge.py:335",
+        "libs/core/langchain_core/language_models/_compat_bridge.py:344",
+        "libs/core/langchain_core/language_models/_compat_bridge.py:352",
+        "libs/core/langchain_core/language_models/_compat_bridge.py:410",
+        "libs/core/langchain_core/language_models/_compat_bridge.py:515"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 3,
+          "files": [
+            "libs/core/langchain_core/language_models/_compat_bridge.py"
+          ],
+          "sample": "if _should_emit_delta(block): | yield ContentBlockDeltaData( | event=\"content-block-delta\""
+        },
+        {
+          "count": 3,
+          "files": [
+            "libs/core/langchain_core/language_models/chat_model_stream.py"
+          ],
+          "sample": "namespace: list[str] | None = None | node: str | None = None | message_id: str | None = None"
+        },
+        {
+          "count": 3,
+          "files": [
+            "libs/core/langchain_core/language_models/chat_models.py",
+            "libs/core/langchain_core/runnables/base.py",
+            "libs/standard-tests/langchain_tests/integration_tests/chat_models.py"
+          ],
+          "sample": "from langchain_core.language_models.chat_model_stream import ( | AsyncChatModelStream | ChatModelStream"
+        },
+        {
+          "count": 4,
+          "files": [
+            "libs/partners/deepseek/langchain_deepseek/data/_profiles.py",
+            "libs/partners/openrouter/langchain_openrouter/data/_profiles.py"
+          ],
+          "sample": "\"release_date\": \"2026-04-24\" | \"last_updated\": \"2026-04-24\" | \"open_weights\": True"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": false,
+      "sample": [
+        {
+          "existingFile": "libs/core/langchain_core/runnables/graph.py",
+          "existingLine": 93,
+          "existingSymbol": "Node",
+          "newFile": "libs/core/langchain_core/language_models/chat_model_stream.py",
+          "newLine": 489,
+          "newSymbol": "node",
+          "reason": "same name tokens",
+          "score": 100,
+          "severity": "error"
+        }
+      ],
+      "warnings": [
+        {
+          "existingFile": "libs/core/langchain_core/_api/deprecation.py",
+          "existingLine": 30,
+          "existingSymbol": "_build_deprecation_message",
+          "newFile": "libs/core/langchain_core/language_models/_compat_bridge.py",
+          "newLine": 444,
+          "newSymbol": "_build_message_start",
+          "reason": "matching behavior tokens: build, message",
+          "score": 62,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "libs/core/langchain_core/_api/deprecation.py",
+          "existingLine": 30,
+          "existingSymbol": "_build_deprecation_message",
+          "newFile": "libs/core/langchain_core/language_models/_compat_bridge.py",
+          "newLine": 458,
+          "newSymbol": "_build_message_finish",
+          "reason": "matching behavior tokens: build, message",
+          "score": 62,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "libs/partners/openai/langchain_openai/chat_models/_client_utils.py",
+          "existingLine": 49,
+          "existingSymbol": "_build_sync_httpx_client",
+          "newFile": "libs/partners/openai/langchain_openai/chat_models/_client_utils.py",
+          "newLine": 430,
+          "newSymbol": "_build_proxied_sync_httpx_client",
+          "reason": "matching behavior tokens: build, client, httpx, sync",
+          "score": 62,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "libs/partners/openai/langchain_openai/chat_models/_client_utils.py",
+          "existingLine": 60,
+          "existingSymbol": "_build_async_httpx_client",
+          "newFile": "libs/partners/openai/langchain_openai/chat_models/_client_utils.py",
+          "newLine": 460,
+          "newSymbol": "_build_proxied_async_httpx_client",
+          "reason": "matching behavior tokens: async, build, client, httpx",
+          "score": 62,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": false,
+      "warnings": [
+        "large source file libs/core/langchain_core/callbacks/manager.py grew by 41 lines",
+        "new source file libs/core/langchain_core/language_models/_compat_bridge.py has 722 lines (>500)",
+        "new source file libs/core/langchain_core/language_models/chat_model_stream.py has 1317 lines (>500)",
+        "large source file libs/core/langchain_core/language_models/chat_models.py grew by 620 lines",
+        "large source file libs/core/langchain_core/runnables/base.py grew by 81 lines",
+        "large source file libs/core/langchain_core/tools/base.py grew by 7 lines",
+        "large source file libs/partners/openai/langchain_openai/chat_models/base.py grew by 188 lines",
+        "large source file libs/partners/openrouter/langchain_openrouter/data/_profiles.py grew by 169 lines",
+        "large source file libs/standard-tests/langchain_tests/integration_tests/chat_models.py grew by 68 lines"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 103 changed location(s)",
+    "duplicate added code blocks detected: 5",
+    "new code appears to reimplement existing helpers or loops: 1",
+    "new source file libs/core/langchain_core/language_models/chat_model_stream.py has 1317 lines (>800)",
+    "source file libs/core/langchain_core/language_models/chat_models.py grew by 620 lines without same-directory shrink",
+    "large source file libs/core/langchain_core/runnables/base.py grew by 81 lines without same-directory shrink",
+    "source file libs/partners/openai/langchain_openai/chat_models/_client_utils.py grew by 543 lines without same-directory shrink",
+    "large source file libs/partners/openai/langchain_openai/chat_models/base.py grew by 188 lines without same-directory shrink",
+    "large source file libs/partners/openrouter/langchain_openrouter/data/_profiles.py grew by 169 lines without same-directory shrink",
+    "changed source diff is heavily additive: added=4546 deleted=175"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": false
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "langchain/_50commit_window",
+  "reuseFindings": [
+    {
+      "existingFile": "libs/core/langchain_core/runnables/graph.py",
+      "existingLine": 93,
+      "existingSymbol": "Node",
+      "newFile": "libs/core/langchain_core/language_models/chat_model_stream.py",
+      "newLine": 489,
+      "newSymbol": "node",
+      "reason": "same name tokens",
+      "score": 100,
+      "severity": "error"
+    },
+    {
+      "existingFile": "libs/core/langchain_core/_api/deprecation.py",
+      "existingLine": 30,
+      "existingSymbol": "_build_deprecation_message",
+      "newFile": "libs/core/langchain_core/language_models/_compat_bridge.py",
+      "newLine": 444,
+      "newSymbol": "_build_message_start",
+      "reason": "matching behavior tokens: build, message",
+      "score": 62,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "libs/core/langchain_core/_api/deprecation.py",
+      "existingLine": 30,
+      "existingSymbol": "_build_deprecation_message",
+      "newFile": "libs/core/langchain_core/language_models/_compat_bridge.py",
+      "newLine": 458,
+      "newSymbol": "_build_message_finish",
+      "reason": "matching behavior tokens: build, message",
+      "score": 62,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "libs/partners/openai/langchain_openai/chat_models/_client_utils.py",
+      "existingLine": 49,
+      "existingSymbol": "_build_sync_httpx_client",
+      "newFile": "libs/partners/openai/langchain_openai/chat_models/_client_utils.py",
+      "newLine": 430,
+      "newSymbol": "_build_proxied_sync_httpx_client",
+      "reason": "matching behavior tokens: build, client, httpx, sync",
+      "score": 62,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "libs/partners/openai/langchain_openai/chat_models/_client_utils.py",
+      "existingLine": 60,
+      "existingSymbol": "_build_async_httpx_client",
+      "newFile": "libs/partners/openai/langchain_openai/chat_models/_client_utils.py",
+      "newLine": 460,
+      "newSymbol": "_build_proxied_async_httpx_client",
+      "reason": "matching behavior tokens: async, build, client, httpx",
+      "score": 62,
+      "severity": "warning"
+    }
+  ],
+  "sourceFilesCount": 29,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file libs/core/langchain_core/callbacks/manager.py grew by 41 lines",
+    "new source file libs/core/langchain_core/language_models/_compat_bridge.py has 722 lines (>500)",
+    "new source file libs/core/langchain_core/language_models/chat_model_stream.py has 1317 lines (>500)",
+    "large source file libs/core/langchain_core/language_models/chat_models.py grew by 620 lines",
+    "large source file libs/core/langchain_core/runnables/base.py grew by 81 lines",
+    "large source file libs/core/langchain_core/tools/base.py grew by 7 lines",
+    "large source file libs/partners/openai/langchain_openai/chat_models/base.py grew by 188 lines",
+    "large source file libs/partners/openrouter/langchain_openrouter/data/_profiles.py grew by 169 lines",
+    "large source file libs/standard-tests/langchain_tests/integration_tests/chat_models.py grew by 68 lines",
+    "possible reusable existing path for libs/core/langchain_core/language_models/_compat_bridge.py:444 -> libs/core/langchain_core/_api/deprecation.py:30 _build_deprecation_message (matching behavior tokens: build, message)",
+    "possible reusable existing path for libs/core/langchain_core/language_models/_compat_bridge.py:458 -> libs/core/langchain_core/_api/deprecation.py:30 _build_deprecation_message (matching behavior tokens: build, message)",
+    "possible reusable existing path for libs/partners/openai/langchain_openai/chat_models/_client_utils.py:430 -> libs/partners/openai/langchain_openai/chat_models/_client_utils.py:49 _build_sync_httpx_client (matching behavior tokens: build, client, httpx, sync)",
+    "possible reusable existing path for libs/partners/openai/langchain_openai/chat_models/_client_utils.py:460 -> libs/partners/openai/langchain_openai/chat_models/_client_utils.py:60 _build_async_httpx_client (matching behavior tokens: async, build, client, httpx)"
+  ]
+}

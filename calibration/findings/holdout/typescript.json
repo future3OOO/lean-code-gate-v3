@@ -1,0 +1,35 @@
+Traceback (most recent call last):
+  File "/home/prop_/projects/lean code/lean-code-gate-v3/.agent/lean/lean_code_gate.py", line 2065, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/prop_/projects/lean code/lean-code-gate-v3/.agent/lean/lean_code_gate.py", line 2048, in main
+    return check_command(args)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/prop_/projects/lean code/lean-code-gate-v3/.agent/lean/lean_code_gate.py", line 1976, in check_command
+    result = run_quality_gate(root, args.base_ref or None, args.fail_on_warnings)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/prop_/projects/lean code/lean-code-gate-v3/.agent/lean/lean_code_gate.py", line 1526, in run_quality_gate
+    ctx = collect_scope(repo, base_ref)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/prop_/projects/lean code/lean-code-gate-v3/.agent/lean/lean_code_gate.py", line 865, in collect_scope
+    raw_diffs.append(git_text(repo, args))
+                     ^^^^^^^^^^^^^^^^^^^^
+  File "/home/prop_/projects/lean code/lean-code-gate-v3/.agent/lean/lean_code_gate.py", line 675, in git_text
+    result = run_git(repo, args)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/prop_/projects/lean code/lean-code-gate-v3/.agent/lean/lean_code_gate.py", line 671, in run_git
+    return run_process(["git", "-c", "gc.auto=0", "-c", "maintenance.auto=false", *args], repo, timeout=15)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/prop_/projects/lean code/lean-code-gate-v3/.agent/lean/lean_code_gate.py", line 477, in run_process
+    stdout, stderr = process.communicate(timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 2153, in _communicate
+    stdout = self._translate_newlines(stdout,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1086, in _translate_newlines
+    data = data.decode(encoding, errors)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x92 in position 88959088: invalid start byte

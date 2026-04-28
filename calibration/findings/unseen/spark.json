@@ -1,0 +1,409 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 2,
+        "baselineLines": 382,
+        "currentLines": 382,
+        "deleted": 2,
+        "file": "dev/generate_srs_registry.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 9,
+        "baselineLines": 767,
+        "currentLines": 774,
+        "deleted": 2,
+        "file": "dev/merge_spark_pr.py",
+        "netGrowth": 7
+      },
+      {
+        "added": 95,
+        "baselineLines": 241,
+        "currentLines": 335,
+        "deleted": 1,
+        "file": "docs/_plugins/build_api_docs.rb",
+        "netGrowth": 94
+      },
+      {
+        "added": 138,
+        "baselineLines": 1362,
+        "currentLines": 1470,
+        "deleted": 30,
+        "file": "python/benchmarks/bench_eval_type.py",
+        "netGrowth": 108
+      },
+      {
+        "added": 4,
+        "baselineLines": 14414,
+        "currentLines": 14414,
+        "deleted": 4,
+        "file": "python/pyspark/pandas/frame.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 2688,
+        "currentLines": 2688,
+        "deleted": 1,
+        "file": "python/pyspark/pandas/indexes/base.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 895,
+        "currentLines": 895,
+        "deleted": 2,
+        "file": "python/pyspark/pandas/indexes/datetimes.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 1292,
+        "currentLines": 1292,
+        "deleted": 1,
+        "file": "python/pyspark/pandas/indexes/multi.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 2137,
+        "currentLines": 2137,
+        "deleted": 5,
+        "file": "python/pyspark/sql/classic/dataframe.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 0,
+        "baselineLines": 150,
+        "currentLines": 149,
+        "deleted": 1,
+        "file": "python/pyspark/sql/classic/window.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 2528,
+        "currentLines": 2528,
+        "deleted": 5,
+        "file": "python/pyspark/sql/connect/dataframe.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 0,
+        "baselineLines": 186,
+        "currentLines": 185,
+        "deleted": 1,
+        "file": "python/pyspark/sql/connect/window.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 7147,
+        "currentLines": 7147,
+        "deleted": 1,
+        "file": "python/pyspark/sql/dataframe.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 425,
+        "currentLines": 425,
+        "deleted": 1,
+        "file": "python/pyspark/sql/window.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 279,
+        "currentLines": 275,
+        "deleted": 6,
+        "file": "python/pyspark/testing/mlutils.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 72,
+        "baselineLines": 1193,
+        "currentLines": 1250,
+        "deleted": 15,
+        "file": "python/pyspark/testing/utils.py",
+        "netGrowth": 57
+      },
+      {
+        "added": 1,
+        "baselineLines": 3626,
+        "currentLines": 3626,
+        "deleted": 1,
+        "file": "python/pyspark/worker.py",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 339,
+    "totalDeleted": 79
+  },
+  "changedFilesCount": 420,
+  "changedFilesSample": [
+    ".github/workflows/build_and_test.yml",
+    ".github/workflows/build_infra_images_cache.yml",
+    "common/utils/src/main/resources/error/error-conditions.json",
+    "common/utils/src/main/scala/org/apache/spark/util/SparkTestUtils.scala",
+    "connector/avro/src/test/scala/org/apache/spark/sql/avro/AvroFunctionsSuite.scala",
+    "connector/avro/src/test/scala/org/apache/spark/sql/avro/AvroLogicalTypeInitSuite.scala",
+    "connector/avro/src/test/scala/org/apache/spark/sql/avro/AvroLogicalTypeSuite.scala",
+    "connector/avro/src/test/scala/org/apache/spark/sql/avro/AvroRowReaderSuite.scala",
+    "connector/avro/src/test/scala/org/apache/spark/sql/avro/AvroSuite.scala",
+    "connector/avro/src/test/scala/org/apache/spark/sql/avro/DeprecatedAvroFunctionsSuite.scala",
+    "connector/docker-integration-tests/src/test/scala/org/apache/spark/sql/jdbc/DockerJDBCIntegrationSuite.scala",
+    "connector/kafka-0-10-sql/src/test/scala/org/apache/spark/sql/kafka010/KafkaOffsetReaderSuite.scala",
+    "connector/kafka-0-10-sql/src/test/scala/org/apache/spark/sql/kafka010/KafkaRelationSuite.scala",
+    "connector/kafka-0-10-sql/src/test/scala/org/apache/spark/sql/kafka010/KafkaSinkSuite.scala",
+    "connector/protobuf/src/test/scala/org/apache/spark/sql/protobuf/ProtobufExtensionsSuite.scala",
+    "connector/protobuf/src/test/scala/org/apache/spark/sql/protobuf/ProtobufFunctionsSuite.scala",
+    "core/src/main/scala/org/apache/spark/scheduler/SupportsDelegationToken.scala",
+    "core/src/main/scala/org/apache/spark/scheduler/cluster/CoarseGrainedSchedulerBackend.scala",
+    "core/src/main/scala/org/apache/spark/scheduler/local/LocalSchedulerBackend.scala",
+    "dev/deps/spark-deps-hadoop-3-hive-2.3",
+    "dev/generate_srs_registry.py",
+    "dev/infra/Dockerfile",
+    "dev/merge_spark_pr.py",
+    "dev/spark-test-image/pypy-310/Dockerfile",
+    "docs/Gemfile.lock",
+    "docs/_plugins/build_api_docs.rb",
+    "docs/security.md",
+    "pom.xml",
+    "python/benchmarks/bench_eval_type.py",
+    "python/pyspark/errors/error-conditions.json"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "python/pyspark/sql/classic/dataframe.py:107",
+        "python/pyspark/sql/classic/dataframe.py:108",
+        "python/pyspark/sql/connect/dataframe.py:115",
+        "python/pyspark/sql/connect/dataframe.py:116"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": [
+        {
+          "existingFile": "python/benchmarks/bench_eval_type.py",
+          "existingLine": 463,
+          "existingSymbol": "_CogroupedMapArrowBenchMixin",
+          "newFile": "python/benchmarks/bench_eval_type.py",
+          "newLine": 566,
+          "newSymbol": "_CogroupedMapPandasBenchMixin",
+          "reason": "matching behavior tokens: bench, cogrouped, map, mixin",
+          "score": 62,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "python/benchmarks/bench_eval_type.py",
+          "existingLine": 466,
+          "existingSymbol": "_cogrouped_map_arrow_identity",
+          "newFile": "python/benchmarks/bench_eval_type.py",
+          "newLine": 569,
+          "newSymbol": "_cogrouped_map_pandas_identity",
+          "reason": "matching behavior tokens: cogrouped, identity, map",
+          "score": 62,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "python/benchmarks/bench_eval_type.py",
+          "existingLine": 470,
+          "existingSymbol": "_cogrouped_map_arrow_concat",
+          "newFile": "python/benchmarks/bench_eval_type.py",
+          "newLine": 573,
+          "newSymbol": "_cogrouped_map_pandas_concat",
+          "reason": "matching behavior tokens: cogrouped, concat, map",
+          "score": 62,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "python/benchmarks/bench_eval_type.py",
+          "existingLine": 476,
+          "existingSymbol": "_cogrouped_map_arrow_left_semi",
+          "newFile": "python/benchmarks/bench_eval_type.py",
+          "newLine": 579,
+          "newSymbol": "_cogrouped_map_pandas_left_semi",
+          "reason": "matching behavior tokens: cogrouped, left, map, semi",
+          "score": 62,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "python/benchmarks/bench_eval_type.py",
+          "existingLine": 538,
+          "existingSymbol": "CogroupedMapArrowUDFTimeBench",
+          "newFile": "python/benchmarks/bench_eval_type.py",
+          "newLine": 650,
+          "newSymbol": "CogroupedMapPandasUDFTimeBench",
+          "reason": "matching behavior tokens: bench, cogrouped, map, udftime",
+          "score": 62,
+          "severity": "warning"
+        },
+        {
+          "existingFile": "python/benchmarks/bench_eval_type.py",
+          "existingLine": 542,
+          "existingSymbol": "CogroupedMapArrowUDFPeakmemBench",
+          "newFile": "python/benchmarks/bench_eval_type.py",
+          "newLine": 654,
+          "newSymbol": "CogroupedMapPandasUDFPeakmemBench",
+          "reason": "matching behavior tokens: bench, cogrouped, map, udfpeakmem",
+          "score": 62,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 4 changed location(s)"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": false,
+  "repo": "spark/_50commit_window",
+  "reuseFindings": [
+    {
+      "existingFile": "python/benchmarks/bench_eval_type.py",
+      "existingLine": 463,
+      "existingSymbol": "_CogroupedMapArrowBenchMixin",
+      "newFile": "python/benchmarks/bench_eval_type.py",
+      "newLine": 566,
+      "newSymbol": "_CogroupedMapPandasBenchMixin",
+      "reason": "matching behavior tokens: bench, cogrouped, map, mixin",
+      "score": 62,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "python/benchmarks/bench_eval_type.py",
+      "existingLine": 466,
+      "existingSymbol": "_cogrouped_map_arrow_identity",
+      "newFile": "python/benchmarks/bench_eval_type.py",
+      "newLine": 569,
+      "newSymbol": "_cogrouped_map_pandas_identity",
+      "reason": "matching behavior tokens: cogrouped, identity, map",
+      "score": 62,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "python/benchmarks/bench_eval_type.py",
+      "existingLine": 470,
+      "existingSymbol": "_cogrouped_map_arrow_concat",
+      "newFile": "python/benchmarks/bench_eval_type.py",
+      "newLine": 573,
+      "newSymbol": "_cogrouped_map_pandas_concat",
+      "reason": "matching behavior tokens: cogrouped, concat, map",
+      "score": 62,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "python/benchmarks/bench_eval_type.py",
+      "existingLine": 476,
+      "existingSymbol": "_cogrouped_map_arrow_left_semi",
+      "newFile": "python/benchmarks/bench_eval_type.py",
+      "newLine": 579,
+      "newSymbol": "_cogrouped_map_pandas_left_semi",
+      "reason": "matching behavior tokens: cogrouped, left, map, semi",
+      "score": 62,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "python/benchmarks/bench_eval_type.py",
+      "existingLine": 538,
+      "existingSymbol": "CogroupedMapArrowUDFTimeBench",
+      "newFile": "python/benchmarks/bench_eval_type.py",
+      "newLine": 650,
+      "newSymbol": "CogroupedMapPandasUDFTimeBench",
+      "reason": "matching behavior tokens: bench, cogrouped, map, udftime",
+      "score": 62,
+      "severity": "warning"
+    },
+    {
+      "existingFile": "python/benchmarks/bench_eval_type.py",
+      "existingLine": 542,
+      "existingSymbol": "CogroupedMapArrowUDFPeakmemBench",
+      "newFile": "python/benchmarks/bench_eval_type.py",
+      "newLine": 654,
+      "newSymbol": "CogroupedMapPandasUDFPeakmemBench",
+      "reason": "matching behavior tokens: bench, cogrouped, map, udfpeakmem",
+      "score": 62,
+      "severity": "warning"
+    }
+  ],
+  "sourceFilesCount": 17,
+  "version": "3.0.0",
+  "warnings": [
+    "possible reusable existing path for python/benchmarks/bench_eval_type.py:566 -> python/benchmarks/bench_eval_type.py:463 _CogroupedMapArrowBenchMixin (matching behavior tokens: bench, cogrouped, map, mixin)",
+    "possible reusable existing path for python/benchmarks/bench_eval_type.py:569 -> python/benchmarks/bench_eval_type.py:466 _cogrouped_map_arrow_identity (matching behavior tokens: cogrouped, identity, map)",
+    "possible reusable existing path for python/benchmarks/bench_eval_type.py:573 -> python/benchmarks/bench_eval_type.py:470 _cogrouped_map_arrow_concat (matching behavior tokens: cogrouped, concat, map)",
+    "possible reusable existing path for python/benchmarks/bench_eval_type.py:579 -> python/benchmarks/bench_eval_type.py:476 _cogrouped_map_arrow_left_semi (matching behavior tokens: cogrouped, left, map, semi)",
+    "possible reusable existing path for python/benchmarks/bench_eval_type.py:650 -> python/benchmarks/bench_eval_type.py:538 CogroupedMapArrowUDFTimeBench (matching behavior tokens: bench, cogrouped, map, udftime)",
+    "possible reusable existing path for python/benchmarks/bench_eval_type.py:654 -> python/benchmarks/bench_eval_type.py:542 CogroupedMapArrowUDFPeakmemBench (matching behavior tokens: bench, cogrouped, map, udfpeakmem)"
+  ]
+}

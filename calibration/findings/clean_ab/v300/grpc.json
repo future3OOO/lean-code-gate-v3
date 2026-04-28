@@ -1,0 +1,487 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 10,
+        "baselineLines": 73,
+        "currentLines": 81,
+        "deleted": 2,
+        "file": "bazel/update_mirror.sh",
+        "netGrowth": 8
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "py_xds_protos/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 45,
+        "baselineLines": 72,
+        "currentLines": 115,
+        "deleted": 2,
+        "file": "src/python/grpcio/_spawn_patch.py",
+        "netGrowth": 43
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "src/python/grpcio/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "src/python/grpcio_admin/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "src/python/grpcio_channelz/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "src/python/grpcio_csds/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "src/python/grpcio_csm_observability/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "src/python/grpcio_health_checking/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "src/python/grpcio_observability/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "src/python/grpcio_reflection/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "src/python/grpcio_status/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 84,
+        "currentLines": 84,
+        "deleted": 1,
+        "file": "src/python/grpcio_status/setup.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "src/python/grpcio_testing/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "src/python/grpcio_tests/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 14,
+        "baselineLines": 1667,
+        "currentLines": 1681,
+        "deleted": 0,
+        "file": "tools/buildgen/extract_metadata_from_bazel_xml.py",
+        "netGrowth": 14
+      },
+      {
+        "added": 2,
+        "baselineLines": 37,
+        "currentLines": 37,
+        "deleted": 2,
+        "file": "tools/distrib/docgen/_generate_python_doc.sh",
+        "netGrowth": 0
+      },
+      {
+        "added": 45,
+        "baselineLines": 72,
+        "currentLines": 115,
+        "deleted": 2,
+        "file": "tools/distrib/python/grpcio_tools/_spawn_patch.py",
+        "netGrowth": 43
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "tools/distrib/python/grpcio_tools/grpc_tools/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 20,
+        "currentLines": 20,
+        "deleted": 3,
+        "file": "tools/distrib/python/grpcio_tools/python_version.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 88,
+        "baselineLines": 297,
+        "currentLines": 346,
+        "deleted": 39,
+        "file": "tools/dockerfile/push_testing_images.sh",
+        "netGrowth": 49
+      },
+      {
+        "added": 25,
+        "baselineLines": 41,
+        "currentLines": 54,
+        "deleted": 12,
+        "file": "tools/internal_ci/helper_scripts/choco_install_with_retry.sh",
+        "netGrowth": 13
+      },
+      {
+        "added": 1,
+        "baselineLines": 28,
+        "currentLines": 29,
+        "deleted": 0,
+        "file": "tools/internal_ci/linux/arm64/grpc_bazel.sh",
+        "netGrowth": 1
+      },
+      {
+        "added": 2,
+        "baselineLines": 37,
+        "currentLines": 37,
+        "deleted": 2,
+        "file": "tools/internal_ci/linux/aws/grpc_run_basictests_python_aarch64.sh",
+        "netGrowth": 0
+      },
+      {
+        "added": 0,
+        "baselineLines": 60,
+        "currentLines": 59,
+        "deleted": 1,
+        "file": "tools/internal_ci/macos/grpc_distribtests_python.sh",
+        "netGrowth": 0
+      },
+      {
+        "added": 7,
+        "baselineLines": 151,
+        "currentLines": 157,
+        "deleted": 1,
+        "file": "tools/internal_ci/macos/grpc_objc_bazel_test.sh",
+        "netGrowth": 6
+      },
+      {
+        "added": 7,
+        "baselineLines": 98,
+        "currentLines": 104,
+        "deleted": 1,
+        "file": "tools/internal_ci/macos/grpc_python_bazel_test.sh",
+        "netGrowth": 6
+      },
+      {
+        "added": 7,
+        "baselineLines": 80,
+        "currentLines": 86,
+        "deleted": 1,
+        "file": "tools/internal_ci/macos/grpc_run_bazel_c_cpp_tests.sh",
+        "netGrowth": 6
+      },
+      {
+        "added": 7,
+        "baselineLines": 58,
+        "currentLines": 64,
+        "deleted": 1,
+        "file": "tools/internal_ci/macos/grpc_run_bazel_cpp_ios_tests.sh",
+        "netGrowth": 6
+      },
+      {
+        "added": 20,
+        "baselineLines": 516,
+        "currentLines": 516,
+        "deleted": 20,
+        "file": "tools/run_tests/artifacts/artifact_targets.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 34,
+        "currentLines": 39,
+        "deleted": 0,
+        "file": "tools/run_tests/artifacts/build_artifact_protoc.sh",
+        "netGrowth": 5
+      },
+      {
+        "added": 5,
+        "baselineLines": 330,
+        "currentLines": 335,
+        "deleted": 0,
+        "file": "tools/run_tests/artifacts/build_artifact_python.sh",
+        "netGrowth": 5
+      },
+      {
+        "added": 1,
+        "baselineLines": 593,
+        "currentLines": 593,
+        "deleted": 1,
+        "file": "tools/run_tests/artifacts/distribtest_targets.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 7,
+        "baselineLines": 298,
+        "currentLines": 305,
+        "deleted": 0,
+        "file": "tools/run_tests/python_utils/bazel_report_helper.py",
+        "netGrowth": 7
+      },
+      {
+        "added": 4,
+        "baselineLines": 340,
+        "currentLines": 343,
+        "deleted": 1,
+        "file": "tools/run_tests/python_utils/upload_rbe_results.py",
+        "netGrowth": 3
+      },
+      {
+        "added": 9,
+        "baselineLines": 191,
+        "currentLines": 200,
+        "deleted": 0,
+        "file": "tools/run_tests/python_utils/upload_test_results.py",
+        "netGrowth": 9
+      },
+      {
+        "added": 70,
+        "baselineLines": null,
+        "currentLines": 70,
+        "deleted": 0,
+        "file": "tools/run_tests/python_utils/utils_common.py",
+        "netGrowth": 70
+      },
+      {
+        "added": 5,
+        "baselineLines": 1994,
+        "currentLines": 1983,
+        "deleted": 16,
+        "file": "tools/run_tests/run_tests.py",
+        "netGrowth": 0
+      }
+    ],
+    "totalAdded": 429,
+    "totalDeleted": 147
+  },
+  "changedFilesCount": 222,
+  "changedFilesSample": [
+    ".bazelignore",
+    "CMakeLists.txt",
+    "MODULE.bazel",
+    "WORKSPACE",
+    "bazel/grpc_build_system.bzl",
+    "bazel/update_mirror.sh",
+    "build_autogenerated.yaml",
+    "build_handwritten.yaml",
+    "cmake/download_archive.cmake",
+    "py_xds_protos/python_version.py",
+    "requirements.bazel.lock",
+    "requirements.bazel.txt",
+    "src/core/call/metadata_batch.h",
+    "src/core/lib/event_engine/cf_engine/cfsocket_listener.cc",
+    "src/core/lib/experiments/experiments.cc",
+    "src/core/lib/experiments/experiments.yaml",
+    "src/core/lib/surface/call_utils.h",
+    "src/core/lib/surface/completion_queue.cc",
+    "src/core/util/sorted_pack.h",
+    "src/cpp/server/load_reporter/get_cpu_stats_windows.cc",
+    "src/python/grpcio/_spawn_patch.py",
+    "src/python/grpcio/python_version.py",
+    "src/python/grpcio_admin/python_version.py",
+    "src/python/grpcio_channelz/python_version.py",
+    "src/python/grpcio_csds/python_version.py",
+    "src/python/grpcio_csm_observability/python_version.py",
+    "src/python/grpcio_health_checking/python_version.py",
+    "src/python/grpcio_observability/python_version.py",
+    "src/python/grpcio_reflection/python_version.py",
+    "src/python/grpcio_status/python_version.py"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "tools/bazelify_tests/test/build_artifact_python_linux_x64_cp310.sh:19",
+        "tools/internal_ci/linux/arm64/grpc_bazel.sh:27",
+        "tools/run_tests/artifacts/build_artifact_protoc.sh:33",
+        "tools/run_tests/artifacts/build_artifact_python.sh:334",
+        "tools/run_tests/python_utils/utils_common.py:49"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 14,
+          "files": [
+            "py_xds_protos/python_version.py",
+            "src/python/grpcio/python_version.py",
+            "src/python/grpcio_admin/python_version.py",
+            "src/python/grpcio_channelz/python_version.py",
+            "src/python/grpcio_csds/python_version.py",
+            "src/python/grpcio_csm_observability/python_version.py",
+            "src/python/grpcio_health_checking/python_version.py",
+            "src/python/grpcio_observability/python_version.py",
+            "src/python/grpcio_reflection/python_version.py",
+            "src/python/grpcio_status/python_version.py",
+            "src/python/grpcio_testing/python_version.py",
+            "src/python/grpcio_tests/python_version.py",
+            "tools/distrib/python/grpcio_tools/grpc_tools/python_version.py",
+            "tools/distrib/python/grpcio_tools/python_version.py"
+          ],
+          "sample": "SUPPORTED_PYTHON_VERSIONS = [\"3.10\",\"3.11\",\"3.12\",\"3.13\",\"3.14\"] | MIN_PYTHON_VERSION = \"3.10\" | MAX_PYTHON_VERSION = \"3.14\""
+        },
+        {
+          "count": 6,
+          "files": [
+            "src/python/grpcio/_spawn_patch.py",
+            "tools/distrib/python/grpcio_tools/_spawn_patch.py"
+          ],
+          "sample": "] | has_ccache = shutil.which(\"ccache\") is not None | use_ccache = enable_ccache and has_ccache and command[0].endswith(\"cl.exe\")"
+        },
+        {
+          "count": 4,
+          "files": [
+            "src/python/grpcio/_spawn_patch.py",
+            "tools/distrib/python/grpcio_tools/_spawn_patch.py"
+          ],
+          "sample": "_classic_spawn(self, [\"ccache\"] + command, **kwargs) | else: | _classic_spawn(self, command, **kwargs)"
+        },
+        {
+          "count": 8,
+          "files": [
+            "src/python/grpcio/_spawn_patch.py",
+            "tools/distrib/python/grpcio_tools/_spawn_patch.py"
+          ],
+          "sample": "elif arg == \"/Zc:preprocessor\": | new_command.extend([\"--ccache-skip\", \"/Zc:preprocessor\"]) | else:"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file tools/buildgen/extract_metadata_from_bazel_xml.py grew by 14 lines"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 5 changed location(s)",
+    "duplicate added code blocks detected: 10"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "grpc/_50commit_window",
+  "reuseFindings": [],
+  "sourceFilesCount": 38,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file tools/buildgen/extract_metadata_from_bazel_xml.py grew by 14 lines"
+  ]
+}

@@ -1,0 +1,617 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 42,
+        "baselineLines": 202,
+        "currentLines": 234,
+        "deleted": 10,
+        "file": ".github/workflows/scripts/report-backend-test-failures.js",
+        "netGrowth": 32
+      },
+      {
+        "added": 57,
+        "baselineLines": null,
+        "currentLines": 57,
+        "deleted": 0,
+        "file": "scripts/dev-ui-server.ts",
+        "netGrowth": 57
+      },
+      {
+        "added": 2,
+        "baselineLines": 766,
+        "currentLines": 768,
+        "deleted": 0,
+        "file": "src/sentry/api/base.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 4,
+        "baselineLines": 68,
+        "currentLines": 67,
+        "deleted": 5,
+        "file": "src/sentry/api/endpoints/release_thresholds/release_threshold_index.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 39,
+        "baselineLines": 288,
+        "currentLines": 325,
+        "deleted": 2,
+        "file": "src/sentry/api/invite_helper.py",
+        "netGrowth": 37
+      },
+      {
+        "added": 14,
+        "baselineLines": 148,
+        "currentLines": 161,
+        "deleted": 1,
+        "file": "src/sentry/api/serializers/models/exploresavedquery.py",
+        "netGrowth": 13
+      },
+      {
+        "added": 2,
+        "baselineLines": 973,
+        "currentLines": 973,
+        "deleted": 2,
+        "file": "src/sentry/api/serializers/models/organization.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 1281,
+        "currentLines": 1281,
+        "deleted": 2,
+        "file": "src/sentry/apidocs/parameters.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 1220,
+        "currentLines": 1219,
+        "deleted": 4,
+        "file": "src/sentry/auth/access.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 3335,
+        "currentLines": 3340,
+        "deleted": 0,
+        "file": "src/sentry/conf/server.py",
+        "netGrowth": 5
+      },
+      {
+        "added": 1,
+        "baselineLines": 1074,
+        "currentLines": 1074,
+        "deleted": 1,
+        "file": "src/sentry/constants.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 1594,
+        "currentLines": 1594,
+        "deleted": 2,
+        "file": "src/sentry/core/endpoints/organization_details.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 27,
+        "baselineLines": 218,
+        "currentLines": 243,
+        "deleted": 2,
+        "file": "src/sentry/dashboards/models/generate_dashboard_artifact.py",
+        "netGrowth": 25
+      },
+      {
+        "added": 0,
+        "baselineLines": null,
+        "currentLines": 0,
+        "deleted": 0,
+        "file": "src/sentry/dynamic_sampling/per_org/__init__.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 0,
+        "baselineLines": null,
+        "currentLines": 0,
+        "deleted": 0,
+        "file": "src/sentry/dynamic_sampling/per_org/tasks/__init__.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 28,
+        "baselineLines": null,
+        "currentLines": 28,
+        "deleted": 0,
+        "file": "src/sentry/dynamic_sampling/per_org/tasks/gate.py",
+        "netGrowth": 28
+      },
+      {
+        "added": 31,
+        "baselineLines": null,
+        "currentLines": 31,
+        "deleted": 0,
+        "file": "src/sentry/dynamic_sampling/per_org/tasks/scheduler.py",
+        "netGrowth": 31
+      },
+      {
+        "added": 79,
+        "baselineLines": null,
+        "currentLines": 79,
+        "deleted": 0,
+        "file": "src/sentry/dynamic_sampling/per_org/tasks/telemetry.py",
+        "netGrowth": 79
+      },
+      {
+        "added": 17,
+        "baselineLines": 302,
+        "currentLines": 318,
+        "deleted": 1,
+        "file": "src/sentry/explore/endpoints/serializers.py",
+        "netGrowth": 16
+      },
+      {
+        "added": 2,
+        "baselineLines": 597,
+        "currentLines": 597,
+        "deleted": 2,
+        "file": "src/sentry/features/temporary.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 109,
+        "currentLines": 109,
+        "deleted": 1,
+        "file": "src/sentry/hybridcloud/rpc/resolvers.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 3,
+        "baselineLines": 378,
+        "currentLines": 381,
+        "deleted": 0,
+        "file": "src/sentry/incidents/grouptype.py",
+        "netGrowth": 3
+      },
+      {
+        "added": 4,
+        "baselineLines": 59,
+        "currentLines": 34,
+        "deleted": 29,
+        "file": "src/sentry/integrations/bitbucket/installed.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 4,
+        "baselineLines": 337,
+        "currentLines": 341,
+        "deleted": 0,
+        "file": "src/sentry/integrations/bitbucket/integration.py",
+        "netGrowth": 4
+      },
+      {
+        "added": 1,
+        "baselineLines": 463,
+        "currentLines": 464,
+        "deleted": 0,
+        "file": "src/sentry/integrations/bitbucket_server/integration.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 1,
+        "baselineLines": 299,
+        "currentLines": 300,
+        "deleted": 0,
+        "file": "src/sentry/integrations/example/integration.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 38,
+        "baselineLines": 1103,
+        "currentLines": 1131,
+        "deleted": 10,
+        "file": "src/sentry/integrations/github/client.py",
+        "netGrowth": 28
+      },
+      {
+        "added": 35,
+        "baselineLines": 1252,
+        "currentLines": 1269,
+        "deleted": 18,
+        "file": "src/sentry/integrations/github/integration.py",
+        "netGrowth": 17
+      },
+      {
+        "added": 7,
+        "baselineLines": 28,
+        "currentLines": 34,
+        "deleted": 1,
+        "file": "src/sentry/integrations/github_enterprise/client.py",
+        "netGrowth": 6
+      },
+      {
+        "added": 31,
+        "baselineLines": 788,
+        "currentLines": 811,
+        "deleted": 8,
+        "file": "src/sentry/integrations/github_enterprise/integration.py",
+        "netGrowth": 23
+      },
+      {
+        "added": 8,
+        "baselineLines": 379,
+        "currentLines": 385,
+        "deleted": 2,
+        "file": "src/sentry/integrations/github_enterprise/webhook.py",
+        "netGrowth": 6
+      },
+      {
+        "added": 28,
+        "baselineLines": 717,
+        "currentLines": 723,
+        "deleted": 22,
+        "file": "src/sentry/integrations/gitlab/integration.py",
+        "netGrowth": 6
+      },
+      {
+        "added": 38,
+        "baselineLines": 80,
+        "currentLines": 109,
+        "deleted": 9,
+        "file": "src/sentry/integrations/jira/webhooks/installed.py",
+        "netGrowth": 29
+      },
+      {
+        "added": 18,
+        "baselineLines": 679,
+        "currentLines": 694,
+        "deleted": 3,
+        "file": "src/sentry/integrations/perforce/integration.py",
+        "netGrowth": 15
+      },
+      {
+        "added": 64,
+        "baselineLines": 280,
+        "currentLines": 344,
+        "deleted": 0,
+        "file": "src/sentry/integrations/services/repository/impl.py",
+        "netGrowth": 64
+      },
+      {
+        "added": 17,
+        "baselineLines": 131,
+        "currentLines": 148,
+        "deleted": 0,
+        "file": "src/sentry/integrations/services/repository/service.py",
+        "netGrowth": 17
+      },
+      {
+        "added": 40,
+        "baselineLines": 367,
+        "currentLines": 388,
+        "deleted": 19,
+        "file": "src/sentry/integrations/slack/unfurl/dashboards.py",
+        "netGrowth": 21
+      },
+      {
+        "added": 32,
+        "baselineLines": 56,
+        "currentLines": 88,
+        "deleted": 0,
+        "file": "src/sentry/integrations/slack/views/link_identity.py",
+        "netGrowth": 32
+      },
+      {
+        "added": 6,
+        "baselineLines": 357,
+        "currentLines": 363,
+        "deleted": 0,
+        "file": "src/sentry/integrations/source_code_management/repository.py",
+        "netGrowth": 6
+      },
+      {
+        "added": 73,
+        "baselineLines": 434,
+        "currentLines": 499,
+        "deleted": 8,
+        "file": "src/sentry/integrations/source_code_management/sync_repos.py",
+        "netGrowth": 65
+      },
+      {
+        "added": 9,
+        "baselineLines": 219,
+        "currentLines": 154,
+        "deleted": 74,
+        "file": "src/sentry/integrations/utils/atlassian_connect.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 843,
+        "currentLines": 844,
+        "deleted": 0,
+        "file": "src/sentry/integrations/vsts/integration.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 1,
+        "baselineLines": 206,
+        "currentLines": 204,
+        "deleted": 3,
+        "file": "src/sentry/issues/endpoints/project_event_details.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 22,
+        "baselineLines": 257,
+        "currentLines": 279,
+        "deleted": 0,
+        "file": "src/sentry/middleware/integrations/tasks.py",
+        "netGrowth": 22
+      },
+      {
+        "added": 7,
+        "baselineLines": 114,
+        "currentLines": 120,
+        "deleted": 1,
+        "file": "src/sentry/models/organizationmapping.py",
+        "netGrowth": 6
+      },
+      {
+        "added": 3,
+        "baselineLines": 126,
+        "currentLines": 128,
+        "deleted": 1,
+        "file": "src/sentry/models/savedsearch.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 12,
+        "baselineLines": 65,
+        "currentLines": 76,
+        "deleted": 1,
+        "file": "src/sentry/notifications/notification_action/action_handler_registry/base.py",
+        "netGrowth": 11
+      },
+      {
+        "added": 1,
+        "baselineLines": 628,
+        "currentLines": 629,
+        "deleted": 0,
+        "file": "src/sentry/notifications/notification_action/types.py",
+        "netGrowth": 1
+      },
+      {
+        "added": 14,
+        "baselineLines": 139,
+        "currentLines": 145,
+        "deleted": 8,
+        "file": "src/sentry/notifications/utils/tasks.py",
+        "netGrowth": 6
+      },
+      {
+        "added": 30,
+        "baselineLines": 4137,
+        "currentLines": 4159,
+        "deleted": 8,
+        "file": "src/sentry/options/defaults.py",
+        "netGrowth": 22
+      }
+    ],
+    "totalAdded": 7109,
+    "totalDeleted": 3481
+  },
+  "changedFilesCount": 426,
+  "changedFilesSample": [
+    ".agents/skills/django-models/SKILL.md",
+    ".agents/skills/generate-migration/SKILL.md",
+    ".github/workflows/scripts/report-backend-test-failures.js",
+    ".github/workflows/scripts/report-backend-test-failures.test.js",
+    "package.json",
+    "pnpm-lock.yaml",
+    "pyproject.toml",
+    "scripts/dev-ui-server.ts",
+    "src/sentry/api/base.py",
+    "src/sentry/api/endpoints/release_thresholds/release_threshold_index.py",
+    "src/sentry/api/invite_helper.py",
+    "src/sentry/api/serializers/models/exploresavedquery.py",
+    "src/sentry/api/serializers/models/organization.py",
+    "src/sentry/apidocs/parameters.py",
+    "src/sentry/auth/access.py",
+    "src/sentry/conf/server.py",
+    "src/sentry/constants.py",
+    "src/sentry/core/endpoints/organization_details.py",
+    "src/sentry/dashboards/models/generate_dashboard_artifact.py",
+    "src/sentry/dynamic_sampling/per_org/__init__.py",
+    "src/sentry/dynamic_sampling/per_org/tasks/__init__.py",
+    "src/sentry/dynamic_sampling/per_org/tasks/gate.py",
+    "src/sentry/dynamic_sampling/per_org/tasks/scheduler.py",
+    "src/sentry/dynamic_sampling/per_org/tasks/telemetry.py",
+    "src/sentry/explore/endpoints/serializers.py",
+    "src/sentry/features/temporary.py",
+    "src/sentry/hybridcloud/rpc/resolvers.py",
+    "src/sentry/incidents/grouptype.py",
+    "src/sentry/integrations/bitbucket/installed.py",
+    "src/sentry/integrations/bitbucket/integration.py"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "src/sentry/dynamic_sampling/per_org/tasks/telemetry.py:79",
+        "src/sentry/notifications/utils/tasks.py:27",
+        "src/sentry/tasks/seer/night_shift/issue_formatter.py:160",
+        "src/sentry/tasks/seer/night_shift/issue_formatter.py:170",
+        "src/sentry/tasks/seer/night_shift/triage_tools.py:137",
+        "static/app/components/commandPalette/ui/commandPaletteGlobalActions.tsx:436",
+        "static/app/components/events/autofix/v3/autofixEvidence.tsx:284",
+        "static/app/components/events/autofix/v3/autofixEvidence.tsx:300",
+        "static/app/utils/profiling/hooks/useProfileEventsStats.tsx:44",
+        "static/app/utils/theme/theme.tsx:228"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 15,
+          "files": [
+            "static/app/components/events/autofix/v3/codeChangesCard.tsx",
+            "static/app/components/events/autofix/v3/codingAgentsCard.tsx",
+            "static/app/components/events/autofix/v3/pullRequestsCard.tsx",
+            "static/app/components/events/autofix/v3/rootCauseCard.tsx",
+            "static/app/components/events/autofix/v3/solutionCard.tsx"
+          ],
+          "sample": "? () => copy(markdown, {successMessage: t('Copied to clipboard.')}) | : undefined | >"
+        },
+        {
+          "count": 10,
+          "files": [
+            "static/app/components/events/autofix/v3/codeChangesCard.tsx",
+            "static/app/components/events/autofix/v3/codingAgentsCard.tsx",
+            "static/app/components/events/autofix/v3/pullRequestsCard.tsx",
+            "static/app/components/events/autofix/v3/rootCauseCard.tsx",
+            "static/app/components/events/autofix/v3/solutionCard.tsx"
+          ],
+          "sample": "autofix: ReturnType<typeof useExplorerAutofix> | section: AutofixSection | const artifact = useMemo(() => {"
+        },
+        {
+          "count": 10,
+          "files": [
+            "static/app/components/events/autofix/v3/codeChangesCard.tsx",
+            "static/app/components/events/autofix/v3/codingAgentsCard.tsx",
+            "static/app/components/events/autofix/v3/pullRequestsCard.tsx",
+            "static/app/components/events/autofix/v3/rootCauseCard.tsx",
+            "static/app/components/events/autofix/v3/solutionCard.tsx"
+          ],
+          "sample": "const markdown = useMemo( | () => (artifact ? artifactToMarkdown(artifact) : null) | [artifact]"
+        },
+        {
+          "count": 10,
+          "files": [
+            "static/app/components/events/autofix/v3/codeChangesCard.tsx",
+            "static/app/components/events/autofix/v3/codingAgentsCard.tsx",
+            "static/app/components/events/autofix/v3/pullRequestsCard.tsx",
+            "static/app/components/events/autofix/v3/rootCauseCard.tsx",
+            "static/app/components/events/autofix/v3/solutionCard.tsx"
+          ],
+          "sample": "type AutofixSection | type useExplorerAutofix | } from 'sentry/components/events/autofix/useExplorerAutofix'"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": [
+        {
+          "existingFile": "src/sentry/seer/explorer/index_data.py",
+          "existingLine": 226,
+          "existingSymbol": "_fetch_and_process_profile",
+          "newFile": "src/sentry/integrations/github/integration.py",
+          "newLine": 309,
+          "newSymbol": "_fetch_and_process",
+          "reason": "matching behavior tokens: and, fetch, process",
+          "score": 62,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": [
+        "large source file src/sentry/conf/server.py grew by 5 lines",
+        "large source file src/sentry/options/defaults.py grew by 22 lines",
+        "large source file static/app/views/alerts/rules/metric/ruleForm.tsx grew by 4 lines"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 36 changed location(s)",
+    "duplicate added code blocks detected: 19"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "sentry/_50commit_window",
+  "reuseFindings": [
+    {
+      "existingFile": "src/sentry/seer/explorer/index_data.py",
+      "existingLine": 226,
+      "existingSymbol": "_fetch_and_process_profile",
+      "newFile": "src/sentry/integrations/github/integration.py",
+      "newLine": 309,
+      "newSymbol": "_fetch_and_process",
+      "reason": "matching behavior tokens: and, fetch, process",
+      "score": 62,
+      "severity": "warning"
+    }
+  ],
+  "sourceFilesCount": 300,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file src/sentry/conf/server.py grew by 5 lines",
+    "large source file src/sentry/options/defaults.py grew by 22 lines",
+    "large source file static/app/views/alerts/rules/metric/ruleForm.tsx grew by 4 lines",
+    "possible reusable existing path for src/sentry/integrations/github/integration.py:309 -> src/sentry/seer/explorer/index_data.py:226 _fetch_and_process_profile (matching behavior tokens: and, fetch, process)"
+  ]
+}

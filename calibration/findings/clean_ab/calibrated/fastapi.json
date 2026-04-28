@@ -1,0 +1,172 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 1,
+        "baselineLines": 25,
+        "currentLines": 25,
+        "deleted": 1,
+        "file": "fastapi/__init__.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 1,
+        "baselineLines": 40,
+        "currentLines": 40,
+        "deleted": 1,
+        "file": "fastapi/_compat/__init__.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 15,
+        "baselineLines": 480,
+        "currentLines": 493,
+        "deleted": 2,
+        "file": "fastapi/_compat/v2.py",
+        "netGrowth": 13
+      },
+      {
+        "added": 2,
+        "baselineLines": 1057,
+        "currentLines": 1057,
+        "deleted": 2,
+        "file": "fastapi/dependencies/utils.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 19,
+        "baselineLines": 347,
+        "currentLines": 364,
+        "deleted": 2,
+        "file": "fastapi/encoders.py",
+        "netGrowth": 17
+      },
+      {
+        "added": 63,
+        "baselineLines": 454,
+        "currentLines": 484,
+        "deleted": 33,
+        "file": "scripts/translate.py",
+        "netGrowth": 30
+      }
+    ],
+    "totalAdded": 101,
+    "totalDeleted": 41
+  },
+  "changedFilesCount": 23,
+  "changedFilesSample": [
+    ".github/workflows/build-docs.yml",
+    ".github/workflows/contributors.yml",
+    ".github/workflows/deploy-docs.yml",
+    ".github/workflows/label-approved.yml",
+    ".github/workflows/notify-translations.yml",
+    ".github/workflows/people.yml",
+    ".github/workflows/pre-commit.yml",
+    ".github/workflows/publish.yml",
+    ".github/workflows/smokeshow.yml",
+    ".github/workflows/sponsors.yml",
+    ".github/workflows/test.yml",
+    ".github/workflows/topic-repos.yml",
+    ".github/workflows/translate.yml",
+    "docs/en/docs/release-notes.md",
+    "fastapi/__init__.py",
+    "fastapi/_compat/__init__.py",
+    "fastapi/_compat/v2.py",
+    "fastapi/dependencies/utils.py",
+    "fastapi/encoders.py",
+    "scripts/general-llm-prompt.md",
+    "scripts/translate.py",
+    "tests/test_jsonable_encoder.py",
+    "uv.lock"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "fastapi/_compat/v2.py:44",
+        "fastapi/encoders.py:39",
+        "fastapi/encoders.py:48"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 3 changed location(s)"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": true
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": true
+    }
+  },
+  "ok": false,
+  "repo": "fastapi/_50commit_window",
+  "reuseFindings": [],
+  "sourceFilesCount": 6,
+  "version": "3.0.0",
+  "warnings": []
+}

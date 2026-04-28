@@ -1,0 +1,584 @@
+{
+  "bloat": {
+    "files": [
+      {
+        "added": 8,
+        "baselineLines": 778,
+        "currentLines": 777,
+        "deleted": 9,
+        "file": ".github/actions/people/people.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 152,
+        "baselineLines": 4433,
+        "currentLines": 4467,
+        "deleted": 118,
+        "file": "pydantic-core/python/pydantic_core/core_schema.py",
+        "netGrowth": 34
+      },
+      {
+        "added": 2,
+        "baselineLines": 850,
+        "currentLines": 852,
+        "deleted": 0,
+        "file": "pydantic-core/src/errors/types.rs",
+        "netGrowth": 2
+      },
+      {
+        "added": 1,
+        "baselineLines": 657,
+        "currentLines": 658,
+        "deleted": 0,
+        "file": "pydantic-core/src/errors/validation_exception.rs",
+        "netGrowth": 1
+      },
+      {
+        "added": 3,
+        "baselineLines": 381,
+        "currentLines": 381,
+        "deleted": 3,
+        "file": "pydantic-core/src/input/input_abstract.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 1003,
+        "currentLines": 1003,
+        "deleted": 2,
+        "file": "pydantic-core/src/input/input_python.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 6,
+        "baselineLines": 337,
+        "currentLines": 340,
+        "deleted": 3,
+        "file": "pydantic-core/src/input/input_string.rs",
+        "netGrowth": 3
+      },
+      {
+        "added": 1,
+        "baselineLines": 737,
+        "currentLines": 738,
+        "deleted": 0,
+        "file": "pydantic-core/src/input/return_enums.rs",
+        "netGrowth": 1
+      },
+      {
+        "added": 20,
+        "baselineLines": 456,
+        "currentLines": 473,
+        "deleted": 3,
+        "file": "pydantic-core/src/lookup_key.rs",
+        "netGrowth": 17
+      },
+      {
+        "added": 6852,
+        "baselineLines": 2,
+        "currentLines": 6853,
+        "deleted": 1,
+        "file": "pydantic-core/src/self_schema.py",
+        "netGrowth": 6851
+      },
+      {
+        "added": 3,
+        "baselineLines": 118,
+        "currentLines": 119,
+        "deleted": 2,
+        "file": "pydantic-core/src/serializers/computed_fields.rs",
+        "netGrowth": 1
+      },
+      {
+        "added": 7,
+        "baselineLines": 581,
+        "currentLines": 588,
+        "deleted": 0,
+        "file": "pydantic-core/src/serializers/extra.rs",
+        "netGrowth": 7
+      },
+      {
+        "added": 6,
+        "baselineLines": 398,
+        "currentLines": 398,
+        "deleted": 6,
+        "file": "pydantic-core/src/serializers/filter.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 20,
+        "baselineLines": 673,
+        "currentLines": 684,
+        "deleted": 9,
+        "file": "pydantic-core/src/serializers/infer.rs",
+        "netGrowth": 11
+      },
+      {
+        "added": 15,
+        "baselineLines": 302,
+        "currentLines": 313,
+        "deleted": 4,
+        "file": "pydantic-core/src/serializers/mod.rs",
+        "netGrowth": 11
+      },
+      {
+        "added": 94,
+        "baselineLines": null,
+        "currentLines": 94,
+        "deleted": 0,
+        "file": "pydantic-core/src/serializers/polymorphism_trampoline.rs",
+        "netGrowth": 94
+      },
+      {
+        "added": 17,
+        "baselineLines": 66,
+        "currentLines": 78,
+        "deleted": 5,
+        "file": "pydantic-core/src/serializers/prebuilt.rs",
+        "netGrowth": 12
+      },
+      {
+        "added": 42,
+        "baselineLines": 792,
+        "currentLines": 831,
+        "deleted": 3,
+        "file": "pydantic-core/src/serializers/shared.rs",
+        "netGrowth": 39
+      },
+      {
+        "added": 4,
+        "baselineLines": 664,
+        "currentLines": 668,
+        "deleted": 0,
+        "file": "pydantic-core/src/serializers/type_serializers/function.rs",
+        "netGrowth": 4
+      },
+      {
+        "added": 4,
+        "baselineLines": 172,
+        "currentLines": 172,
+        "deleted": 4,
+        "file": "pydantic-core/src/serializers/type_serializers/literal.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 18,
+        "baselineLines": 281,
+        "currentLines": 295,
+        "deleted": 4,
+        "file": "pydantic-core/src/serializers/type_serializers/model.rs",
+        "netGrowth": 14
+      },
+      {
+        "added": 7,
+        "baselineLines": 266,
+        "currentLines": 273,
+        "deleted": 0,
+        "file": "pydantic-core/src/serializers/type_serializers/tuple.rs",
+        "netGrowth": 7
+      },
+      {
+        "added": 48,
+        "baselineLines": 463,
+        "currentLines": 446,
+        "deleted": 65,
+        "file": "pydantic-core/src/serializers/type_serializers/union.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 6,
+        "baselineLines": 737,
+        "currentLines": 737,
+        "deleted": 6,
+        "file": "pydantic-core/src/url.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 681,
+        "currentLines": 679,
+        "deleted": 7,
+        "file": "pydantic-core/src/validators/dataclass.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 303,
+        "currentLines": 305,
+        "deleted": 3,
+        "file": "pydantic-core/src/validators/decimal.rs",
+        "netGrowth": 2
+      },
+      {
+        "added": 2,
+        "baselineLines": 246,
+        "currentLines": 246,
+        "deleted": 2,
+        "file": "pydantic-core/src/validators/enum_.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 8,
+        "baselineLines": 583,
+        "currentLines": 583,
+        "deleted": 8,
+        "file": "pydantic-core/src/validators/function.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 6,
+        "baselineLines": 367,
+        "currentLines": 367,
+        "deleted": 6,
+        "file": "pydantic-core/src/validators/generator.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 5,
+        "baselineLines": 372,
+        "currentLines": 375,
+        "deleted": 2,
+        "file": "pydantic-core/src/validators/literal.rs",
+        "netGrowth": 3
+      },
+      {
+        "added": 5,
+        "baselineLines": 893,
+        "currentLines": 865,
+        "deleted": 33,
+        "file": "pydantic-core/src/validators/mod.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 394,
+        "currentLines": 394,
+        "deleted": 2,
+        "file": "pydantic-core/src/validators/model.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 35,
+        "baselineLines": 703,
+        "currentLines": 701,
+        "deleted": 37,
+        "file": "pydantic-core/src/validators/model_fields.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 25,
+        "baselineLines": 326,
+        "currentLines": 310,
+        "deleted": 41,
+        "file": "pydantic-core/src/validators/shared/lookup_tree.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 7,
+        "baselineLines": 334,
+        "currentLines": 341,
+        "deleted": 0,
+        "file": "pydantic-core/src/validators/string.rs",
+        "netGrowth": 7
+      },
+      {
+        "added": 2,
+        "baselineLines": 391,
+        "currentLines": 391,
+        "deleted": 2,
+        "file": "pydantic-core/src/validators/typed_dict.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 15,
+        "baselineLines": 422,
+        "currentLines": 431,
+        "deleted": 6,
+        "file": "pydantic-core/src/validators/union.rs",
+        "netGrowth": 9
+      },
+      {
+        "added": 43,
+        "baselineLines": 276,
+        "currentLines": 306,
+        "deleted": 13,
+        "file": "pydantic-core/src/validators/validation_state.rs",
+        "netGrowth": 30
+      },
+      {
+        "added": 1,
+        "baselineLines": 236,
+        "currentLines": 236,
+        "deleted": 1,
+        "file": "pydantic-core/src/validators/with_default.rs",
+        "netGrowth": 0
+      },
+      {
+        "added": 4,
+        "baselineLines": 383,
+        "currentLines": 386,
+        "deleted": 1,
+        "file": "pydantic/_internal/_config.py",
+        "netGrowth": 3
+      },
+      {
+        "added": 19,
+        "baselineLines": 174,
+        "currentLines": 176,
+        "deleted": 17,
+        "file": "pydantic/_internal/_core_utils.py",
+        "netGrowth": 2
+      },
+      {
+        "added": 5,
+        "baselineLines": 315,
+        "currentLines": 315,
+        "deleted": 5,
+        "file": "pydantic/_internal/_dataclasses.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 14,
+        "baselineLines": 873,
+        "currentLines": 864,
+        "deleted": 23,
+        "file": "pydantic/_internal/_decorators.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 4,
+        "baselineLines": 174,
+        "currentLines": 174,
+        "deleted": 4,
+        "file": "pydantic/_internal/_decorators_v1.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 13,
+        "baselineLines": 483,
+        "currentLines": 494,
+        "deleted": 2,
+        "file": "pydantic/_internal/_discriminated_union.py",
+        "netGrowth": 11
+      },
+      {
+        "added": 31,
+        "baselineLines": 702,
+        "currentLines": 728,
+        "deleted": 5,
+        "file": "pydantic/_internal/_fields.py",
+        "netGrowth": 26
+      },
+      {
+        "added": 2,
+        "baselineLines": 23,
+        "currentLines": 23,
+        "deleted": 2,
+        "file": "pydantic/_internal/_forward_ref.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 92,
+        "baselineLines": 2859,
+        "currentLines": 2922,
+        "deleted": 29,
+        "file": "pydantic/_internal/_generate_schema.py",
+        "netGrowth": 63
+      },
+      {
+        "added": 5,
+        "baselineLines": 530,
+        "currentLines": 527,
+        "deleted": 8,
+        "file": "pydantic/_internal/_generics.py",
+        "netGrowth": 0
+      },
+      {
+        "added": 2,
+        "baselineLines": 401,
+        "currentLines": 403,
+        "deleted": 0,
+        "file": "pydantic/_internal/_known_annotated_metadata.py",
+        "netGrowth": 2
+      }
+    ],
+    "totalAdded": 8302,
+    "totalDeleted": 1158
+  },
+  "changedFilesCount": 257,
+  "changedFilesSample": [
+    ".github/actions/core-build-pgo-wheel/action.yml",
+    ".github/actions/people/action.yml",
+    ".github/actions/people/people.py",
+    ".github/actions/people/pylock.toml",
+    ".github/actions/people/requirements.in",
+    ".github/check_pydantic_core_version.py",
+    ".github/dependabot.yml",
+    ".github/labels/default_pass.yml",
+    ".github/labels/first_pass.yml",
+    ".github/workflows/ci.yml",
+    ".github/workflows/codspeed.yml",
+    ".github/workflows/coverage.yml",
+    ".github/workflows/dependencies-check.yml",
+    ".github/workflows/docs-update.yml",
+    ".github/workflows/integration.yml",
+    ".github/workflows/labeler.yml",
+    ".github/workflows/third-party.yml",
+    ".github/workflows/update-pydantic-people.yml",
+    ".github/workflows/upload-previews.yml",
+    ".github/zizmor.yml",
+    ".pre-commit-config.yaml",
+    "CITATION.cff",
+    "HISTORY.md",
+    "Makefile",
+    "README.md",
+    "docs/api/standard_library_types.md",
+    "docs/concepts/dataclasses.md",
+    "docs/concepts/experimental.md",
+    "docs/concepts/fields.md",
+    "docs/concepts/forward_annotations.md"
+  ],
+  "checks": [
+    {
+      "name": "no-merge-conflict-markers",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-temp-artifacts",
+      "passed": true,
+      "sample": []
+    },
+    {
+      "name": "no-quality-escapes",
+      "passed": false,
+      "sample": [
+        "pydantic-core/src/lookup_key.rs:458",
+        "pydantic-core/src/serializers/polymorphism_trampoline.rs:73",
+        "pydantic-core/tests/test_misc.py:6",
+        "pydantic-core/tests/test_schema_functions.py:7",
+        "pydantic/_internal/_core_utils.py:8",
+        "pydantic/_internal/_fields.py:705",
+        "pydantic/_internal/_fields.py:718",
+        "pydantic/_internal/_fields.py:725",
+        "pydantic/_internal/_forward_ref.py:20",
+        "pydantic/_internal/_forward_ref.py:23"
+      ]
+    },
+    {
+      "name": "no-duplicate-added-blocks",
+      "passed": false,
+      "sample": [
+        {
+          "count": 131,
+          "files": [
+            "pydantic-core/src/self_schema.py"
+          ],
+          "sample": "'alias': {'schema': {'type': 'str'}, 'required': False} | 'metadata': { | 'schema': {"
+        },
+        {
+          "count": 166,
+          "files": [
+            "pydantic-core/src/self_schema.py"
+          ],
+          "sample": "'allow_inf_nan': {'schema': {'type': 'bool'}, 'required': False} | 'ser_json_timedelta': { | 'schema': {'type': 'literal', 'expected': ['iso8601', 'float']}"
+        },
+        {
+          "count": 3,
+          "files": [
+            "pydantic-core/src/self_schema.py"
+          ],
+          "sample": "'choices': [ | {'type': 'bool'} | {'type': 'literal', 'expected': ['all', 'keys', 'none']}"
+        },
+        {
+          "count": 30,
+          "files": [
+            "pydantic-core/src/self_schema.py"
+          ],
+          "sample": "'choices': [{'type': 'str'}, {'type': 'int'}] | 'type': 'list' | 'items_schema': {"
+        }
+      ]
+    },
+    {
+      "name": "reuse-existing-helpers",
+      "passed": true,
+      "sample": [],
+      "warnings": []
+    },
+    {
+      "name": "risk-calibrated-bloat",
+      "passed": false,
+      "warnings": [
+        "large source file pydantic-core/python/pydantic_core/core_schema.py grew by 34 lines",
+        "large source file pydantic/_internal/_generate_schema.py grew by 63 lines",
+        "large source file pydantic/fields.py grew by 31 lines",
+        "large source file pydantic/json_schema.py grew by 40 lines",
+        "large source file pydantic/main.py grew by 5 lines",
+        "large source file pydantic/types.py grew by 6 lines"
+      ]
+    }
+  ],
+  "errors": [
+    "quality escapes detected in 53 changed location(s)",
+    "duplicate added code blocks detected: 18",
+    "source file pydantic-core/src/self_schema.py grew by 6851 lines without same-directory shrink",
+    "changed source diff is heavily additive: added=8302 deleted=1158"
+  ],
+  "hardRules": {
+    "anticipateConsequences": {
+      "checks": [
+        "no-merge-conflict-markers"
+      ],
+      "passed": true
+    },
+    "cleanup": {
+      "checks": [
+        "no-quality-escapes",
+        "no-temp-artifacts"
+      ],
+      "passed": false
+    },
+    "codeVolume": {
+      "checks": [
+        "risk-calibrated-bloat"
+      ],
+      "passed": false
+    },
+    "noDuplication": {
+      "checks": [
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "shortestPath": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    },
+    "simplicity": {
+      "checks": [
+        "risk-calibrated-bloat",
+        "no-duplicate-added-blocks",
+        "reuse-existing-helpers"
+      ],
+      "passed": false
+    }
+  },
+  "ok": false,
+  "repo": "pydantic/_50commit_window",
+  "reuseFindings": [],
+  "sourceFilesCount": 93,
+  "version": "3.0.0",
+  "warnings": [
+    "large source file pydantic-core/python/pydantic_core/core_schema.py grew by 34 lines",
+    "large source file pydantic/_internal/_generate_schema.py grew by 63 lines",
+    "large source file pydantic/fields.py grew by 31 lines",
+    "large source file pydantic/json_schema.py grew by 40 lines",
+    "large source file pydantic/main.py grew by 5 lines",
+    "large source file pydantic/types.py grew by 6 lines"
+  ]
+}
