@@ -2,3 +2,4 @@ LEAN_CODE_GATE_V3_CALIBRATION_GUIDE.md
 *:Zone.Identifier
 .claude/
 /.agent/
+__pycache__/
