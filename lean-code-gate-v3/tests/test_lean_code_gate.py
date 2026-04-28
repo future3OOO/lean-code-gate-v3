@@ -512,6 +512,23 @@ def _load_gate_module() -> object:
     return mod
 
 
+def test_run_process_tolerates_non_utf8_output() -> None:
+    # Regression: subprocess.Popen(text=True) decodes with strict utf-8 and
+    # crashes on non-utf-8 bytes (surfaced by gate.py running git diff over
+    # a 100-commit TypeScript window with binary patches). The fixed
+    # run_process uses errors='replace' so non-utf-8 bytes become �
+    # rather than raising UnicodeDecodeError.
+    mod = _load_gate_module()
+    with tempfile.TemporaryDirectory() as tmp:
+        result = mod.run_process(
+            ["python3", "-c", r"import sys; sys.stdout.buffer.write(b'hello \xc3\x28 world')"],
+            Path(tmp),
+        )
+        assert result.returncode == 0, result.stderr
+        # \xc3\x28 is invalid utf-8; with errors='replace' it becomes �
+        assert "hello" in result.stdout and "world" in result.stdout
+
+
 def test_high_confidence_reuse_respects_r2_r3_suppression() -> None:
     # Regression: high_confidence_reuse used to duplicate same_behavior_name's
     # name+token check and bypass R-2/R-3 suppression. Surfaced in calibration
@@ -678,6 +695,7 @@ TESTS = [
     test_large_existing_file_small_growth_warns_but_does_not_fail_by_default,
     test_large_existing_file_big_growth_fails,
     test_min_duplicate_count_suppresses_two_instance_hit,
+    test_run_process_tolerates_non_utf8_output,
     test_high_confidence_reuse_respects_r2_r3_suppression,
     test_design_re_catches_go_factory_function,
     test_design_re_catches_rust_pub_type_alias,
