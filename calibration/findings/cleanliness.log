@@ -1,8 +1,0 @@
-clean: fastapi
-clean: pydantic
-clean: grpc
-clean: django
-clean: aws-sdk-js
-clean: nextjs
-clean: sentry
-clean: typescript
