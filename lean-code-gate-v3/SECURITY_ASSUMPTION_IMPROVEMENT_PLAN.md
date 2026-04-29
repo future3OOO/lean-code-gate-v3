@@ -72,35 +72,58 @@ The original repo identity design used the origin URL as identity material, then
 
 ## Slop Scan Lessons
 
-Slop Scan's strongest benchmark separation came from direct implementation habits, not broad size metrics: promise/default fallbacks, generic status envelopes, swallowed or obscured errors, stringified unknown errors, pass-through wrappers, generic record casts, and duplicated test mock setup. Lean Gate should not port that scanner wholesale. It should use those signals to improve pre-writing pressure before code is added.
+Slop Scan's useful signal is not "AI code is bigger." Its benchmark separates cohorts through repeated local implementation habits, then normalizes by file, KLOC, and function. The best isolated rule signals are promise/default fallbacks, generic status envelopes, log-and-continue catches, stringified unknown errors, generic record casts, pass-through wrappers, and duplicated test mock setup.
 
-Low-bloat slices:
+Lean Gate should not port that scanner wholesale. It should extract the structural habits that fit a pre-writing tool and use them to pressure the contract before code is added.
+
+Evidence-backed observations from the Slop Scan repo:
+
+- The full benchmark separates explicit-AI repos from mature OSS by normalized ratios, not raw counts: median blended score is about `6.9x`, score/file about `8.8x`, and score/KLOC about `7.4x`.
+- The per-rule benchmark is the better guide for Lean Gate. `defensive.promise-default-fallbacks` ranks first in isolation; `api.generic-status-envelopes`, `defensive.error-swallowing`, and `defensive.stringified-unknown-errors` follow.
+- High-volume rules are not automatically first-class gate rules. Empty catches, pass-through wrappers, and error-obscuring also appear in mature OSS, so they need contract context, boundary exemptions, and delta/touched-line scoping before any hard failure.
+- Slop Scan's repo-wide view catches accumulated habits. Lean Gate works at edit time, so its first integration should be touched-surface warnings and contract prompts, not whole-repo shape scoring.
+
+Fundamental takeaways:
 
 1. Preserve failure information
 
-   Contract guidance should challenge changed code that catches, rejects, or logs an error and then returns a default value. The first question is whether the caller should see the failure instead. A narrow later warning can target added `catch` or promise-rejection branches that return `null`, `undefined`, empty collections, `false`, or generic success values.
+   The strongest shared pattern is information erasure: caught or rejected failures become `null`, `undefined`, empty collections, `false`, generic success values, generic replacement errors, or plain strings. Contract guidance should ask what failure contract the caller needs before any fallback is written.
 
-2. Require wrapper value
+   Low-bloat detector slice: warn on added promise `.catch(...)` or `catch` branches that only log, return a cheap default, or stringify an unknown error. Hard-fail only after calibration proves the added-line signal is precise.
 
-   Pass-through wrappers should be justified by behavior, normalization, instrumentation, or a stable compatibility boundary. If a wrapper only renames a call, the lean fix is to remove it or call the existing function directly.
+2. Keep boundary shapes domain-specific
 
-3. Keep result envelopes contractual
+   Generic `{ success, data, error, message }` envelopes and `Record<string, unknown>` casts both flatten domain meaning into shallow bags. They are not always wrong, but the contract should name the boundary that requires them. Internal code should prefer existing domain results, typed error variants, or explicit validation/narrowing.
 
-   Generic `{ success, data, error, message }` envelopes should exist only when an API boundary or established local contract requires that shape. Internal code should prefer the existing domain result, exception, or typed error path.
+   Low-bloat detector slice: warn when added code introduces a boolean status envelope or vague `Record<string, unknown>` cast outside an existing API/config boundary.
 
-4. Share test setup only after real duplication
+3. Require wrapper value
 
-   Duplicated mock setup is a useful slop signal, but the Lean Gate rule stays narrow: if changed tests repeat the same mock wiring, prefer the existing fixture or add a helper only when there are at least two current call sites. Do not introduce speculative test factories.
+   Pass-through wrappers, async pass-throughs, and barrel-only files create call-graph weight without behavior. They also have legitimate boundary and compatibility uses, so the Lean contract should require the value: validation, normalization, instrumentation, retry, compatibility, or external integration boundary.
 
-5. Calibrate with touched-surface metrics
+   Low-bloat detector slice: warn only on newly added one-line forwarding functions with no nearby compatibility comment and no known boundary target. Do not start with directory fanout or barrel-density scoring.
 
-   The next calibration pass should report rule-family hits per touched file, touched function, and KLOC, not only findings per PR. Slop Scan's repo-wide ratios explain why broad pre/post averages can look flat when the real signal sits in specific rule families.
+4. Share repeated scaffolding only after real duplication
+
+   Duplicated mock setup and near-identical helper shapes are useful accumulated-slop signals. For Lean Gate, the edit-time rule is narrower: if changed tests repeat existing mock wiring, use the existing fixture; add a new helper only when there are at least two current call sites. Do not introduce speculative factories.
+
+5. Calibrate by rule family and touched surface
+
+   The current calibration can look flat when it reports findings per PR and mixes rule families. The next pass should report rule-family hits per touched file, touched function, and KLOC, and distinguish added, resolved, worsened, and improved findings. Slop Scan's delta identity model is the useful lesson here, not its full scanner.
+
+Recommended integration order:
+
+1. Contract prompts first: failure contract, boundary shape, wrapper value, and input validation/narrowing.
+2. Narrow added-line warnings second: promise/default fallbacks, log-and-continue catches, stringified unknown errors, generic envelopes, and vague record casts.
+3. Delta reporting third: added/resolved/worsened/improved counts by rule family on touched files.
+4. Policy escalation last: hard failures only after calibration shows low false-positive rates on touched code.
 
 ## Slop Rules Not To Build First
 
 - Do not add directory fanout, barrel-density, or over-fragmentation rules until lower-noise slices are measured.
 - Do not add a broad AST framework or dependency-heavy scanner for this plan.
 - Do not create a separate "slop gate"; these checks belong in the Lean Change Contract and existing quality pass.
+- Do not treat high full-repo frequency as proof a pattern should be a hard PR-time blocker.
 
 ## Future Placement
 
