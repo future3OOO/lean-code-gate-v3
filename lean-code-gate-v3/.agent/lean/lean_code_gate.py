@@ -14,8 +14,9 @@ import hashlib
 import json
 import os
 import re
-import subprocess
 import signal
+import shlex
+import subprocess
 import sys
 import time
 from dataclasses import dataclass
@@ -515,12 +516,16 @@ def sh(cmd: list[str], cwd: Path, timeout: int = 15) -> subprocess.CompletedProc
 def repo_root(cwd: str | None = None) -> Path:
     configured = os.environ.get("LEAN_CODE_GATE_REPO_ROOT")
     start = Path(configured or cwd or os.getcwd()).expanduser()
+    if configured and not start.exists():
+        raise SystemExit(f"LEAN_CODE_GATE_REPO_ROOT does not exist: {start}")
     if not configured and not start.exists():
         start = Path(os.getcwd())
     start = start.resolve()
     result = sh(["git", "rev-parse", "--show-toplevel"], start)
     if result.returncode == 0 and result.stdout.strip():
         return Path(result.stdout.strip()).resolve()
+    if configured:
+        raise SystemExit(f"LEAN_CODE_GATE_REPO_ROOT is not a git repository: {start}")
     return start
 
 
@@ -640,7 +645,7 @@ def deny(event: str, reason: str) -> None:
 
 def command_hint() -> str:
     script = os.environ.get("LEAN_CODE_GATE_SCRIPT_PATH") or ".agent/lean/lean_code_gate.py"
-    return f"PYTHONDONTWRITEBYTECODE=1 python3 -B -S {json.dumps(script)}"
+    return f"PYTHONDONTWRITEBYTECODE=1 python3 -B -S {shlex.quote(script)}"
 
 
 def context(event: str) -> None:
