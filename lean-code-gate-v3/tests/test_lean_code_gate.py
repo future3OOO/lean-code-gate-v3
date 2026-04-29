@@ -359,7 +359,17 @@ def test_internal_lean_runtime_files_are_ignored_without_contract() -> None:
 
         code, data = check_json(repo)
         assert code == 0
+        assert data["changedFilesCount"] == 0
         assert all(not str(path).startswith(".agent/lean/") for path in data["changedFilesSample"])
+
+        git(repo, "add", ".agent/lean/state/contract.json", ".agent/lean/__pycache__/lean_code_gate.cpython-312.pyc")
+        git(repo, "commit", "--no-gpg-sign", "-m", "runtime state")
+
+        for args in (("--base-ref", "HEAD~1"), ()):
+            code, data = check_json(repo, *args)
+            assert code == 0
+            assert data["changedFilesCount"] == 0
+            assert all(not str(path).startswith(".agent/lean/") for path in data["changedFilesSample"])
 
 
 def test_minimal_preflight_rejects_wide_budget_and_escape_hatches() -> None:

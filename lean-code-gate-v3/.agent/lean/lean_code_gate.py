@@ -934,6 +934,7 @@ def collect_scope(repo: Path, base_ref: str | None) -> GateContext:
             numstats = parse_numstat(git_text(repo, ["diff", "--numstat", "HEAD~1..HEAD"]))
             base_for_file = "HEAD~1"
     changed |= {path for path in untracked if not internal_gate_path(path)}
+    changed = {path for path in changed if not internal_gate_path(path)}
     untracked = {path for path in untracked if not internal_gate_path(path)}
     numstats = [record for record in numstats if not internal_gate_path(record.path)]
     raw_diff = "\n".join(part for part in raw_diffs if part)
