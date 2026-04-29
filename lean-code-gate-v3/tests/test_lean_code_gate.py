@@ -270,6 +270,27 @@ def test_repo_root_env_rejects_non_git_target_repo() -> None:
         assert "LEAN_CODE_GATE_REPO_ROOT is not a git repository" in result.stderr
 
 
+def test_repo_identity_does_not_persist_origin_url_credentials() -> None:
+    with repo_fixture() as repo:
+        git(repo, "remote", "add", "origin", "https://user:old-token@example.com/org/repo.git?token=old-token")
+        declare_minimal(repo)
+        path = repo / ".agent" / "lean" / "state" / "contract.json"
+        contract = json.loads(path.read_text(encoding="utf-8"))
+        assert "origin_url" not in contract
+        assert "old-token" not in path.read_text(encoding="utf-8")
+
+        git(repo, "remote", "set-url", "origin", "https://user:new-token@example.com/org/repo.git?token=new-token")
+        status = json.loads(run_gate(repo, "status").stdout)
+        assert "origin_url" not in status["runtime"]
+        assert "new-token" not in json.dumps(status)
+        assert status["runtime"]["repo_id"] == contract["repo_id"]
+        assert status["runtime"]["contract_matches_repo"] is True
+
+        events = (repo / ".agent" / "lean" / "state" / "events.jsonl").read_text(encoding="utf-8")
+        assert "old-token" not in events
+        assert "new-token" not in events
+
+
 def test_contract_for_different_repo_is_rejected() -> None:
     with repo_fixture() as repo_a:
         declare_minimal(repo_a)
@@ -1056,6 +1077,10 @@ TESTS = [
     test_repo_root_env_keeps_state_in_target_repo_from_controller_cwd,
     test_repo_root_env_rejects_missing_target_repo,
     test_repo_root_env_rejects_non_git_target_repo,
+    test_repo_identity_does_not_persist_origin_url_credentials,
+    test_contract_for_different_repo_is_rejected,
+    test_unstamped_contract_is_rejected_with_redeclare_hint,
+    test_internal_lean_runtime_files_are_ignored_without_contract,
     test_minimal_preflight_rejects_wide_budget_and_escape_hatches,
     test_edit_rewrite_counts_as_changed_lines,
     test_pretool_blocks_out_of_scope_patch,
