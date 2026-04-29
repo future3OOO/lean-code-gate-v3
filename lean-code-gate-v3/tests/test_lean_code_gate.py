@@ -313,11 +313,42 @@ def test_stop_from_controller_checks_nested_repo_without_tool_workdir() -> None:
         init_repo_fixture(nested)
         declare_minimal(nested)
 
+        result = run_gate(
+            controller,
+            "pretool",
+            payload={
+                "cwd": str(controller),
+                "hook_event_name": "PreToolUse",
+                "tool_name": "Edit",
+                "tool_input": {
+                    "file_path": str(nested / "src" / "app.py"),
+                    "old_string": "def add(a: int, b: int) -> int:\n    return a + b\n",
+                    "new_string": "def add(a: int, b: int) -> int:\n    return a + b\n",
+                },
+            },
+        )
+        assert result.returncode == 0
+        assert result.stdout == ""
+
         result = run_gate(controller, "stop", payload={"cwd": str(controller), "hook_event_name": "Stop"})
 
         assert result.returncode == 0
         assert result.stdout == ""
-        assert not (controller / ".agent" / "lean" / "state").exists()
+
+
+def test_stop_from_controller_ignores_untargeted_dirty_nested_repo() -> None:
+    with tempfile.TemporaryDirectory(prefix="gate-controller-") as tmp:
+        controller = Path(tmp)
+        nested = controller / "calibration-slopscan"
+        init_repo_fixture(nested)
+        declare_minimal(nested)
+        (nested / "analysis").mkdir()
+        (nested / "analysis" / "slopscan_comparison.csv").write_text("repo,score\nx,1\n", encoding="utf-8")
+
+        result = run_gate(controller, "stop", payload={"cwd": str(controller), "hook_event_name": "Stop"})
+
+        assert result.returncode == 0
+        assert result.stdout == ""
 
 
 def test_repo_root_env_rejects_missing_target_repo() -> None:
@@ -1163,6 +1194,7 @@ TESTS = [
     test_hook_resolves_nested_repo_from_changed_path_without_workdir,
     test_hook_fails_closed_when_controller_target_is_ambiguous,
     test_stop_from_controller_checks_nested_repo_without_tool_workdir,
+    test_stop_from_controller_ignores_untargeted_dirty_nested_repo,
     test_repo_root_env_rejects_missing_target_repo,
     test_repo_root_env_rejects_non_git_target_repo,
     test_repo_identity_does_not_persist_origin_url_credentials,

@@ -602,14 +602,30 @@ def stop_roots(payload: dict[str, object]) -> list[Path]:
     nested = nested_git_roots(root)
     if not nested:
         return [root]
-    roots: list[Path] = []
-    for candidate in nested:
-        has_contract = (candidate / STATE_DIR / "contract.json").exists()
-        if has_contract or final_errors(candidate, {}, policy(candidate)):
-            roots.append(candidate)
-    if roots:
-        return roots
+    targets = active_state(root).get("target_roots")
+    if isinstance(targets, list):
+        roots = []
+        for target in targets:
+            if isinstance(target, str):
+                found = git_toplevel(Path(target).expanduser().resolve())
+                if found is not None and found != root and root in found.parents:
+                    roots.append(found)
+        if roots:
+            return sorted(set(roots))
     return [root] if git_toplevel(root) == root else []
+
+
+def remember_target_root(payload: dict[str, object], root: Path) -> None:
+    controller = repo_root(str(payload.get("cwd") or "") or None)
+    if controller == root or not has_nested_git_repo(controller):
+        return
+    active = active_state(controller)
+    existing = active.get("target_roots")
+    roots = {str(root.resolve())}
+    if isinstance(existing, list):
+        roots.update(str(value) for value in existing if isinstance(value, str))
+    active["target_roots"] = sorted(roots)
+    write_json(active_path(controller), active)
 
 
 def git_common_dir(root: Path) -> Path:
@@ -669,6 +685,11 @@ def policy(root: Path) -> dict[str, object]:
 
 def active_path(root: Path) -> Path:
     return state_dir(root) / "active.json"
+
+
+def active_state(root: Path) -> dict[str, object]:
+    loaded = read_json(active_path(root), {})
+    return loaded if isinstance(loaded, dict) else {}
 
 
 def contract_path(root: Path) -> Path:
@@ -2136,6 +2157,7 @@ def pretool(payload: dict[str, object]) -> None:
     if errors:
         deny("PreToolUse", "Lean Code Gate blocked over-broad or low-quality mutation:\n- " + "\n- ".join(errors))
         return
+    remember_target_root(payload, root)
     log_event(root, {"event": "mutation_allowed", "tool": tool, **{key: change_facts[key] for key in ("paths", "added", "deleted")}})
 
 
