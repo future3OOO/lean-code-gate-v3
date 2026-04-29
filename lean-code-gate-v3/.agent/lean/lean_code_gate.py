@@ -19,7 +19,6 @@ import shlex
 import subprocess
 import sys
 import time
-import urllib.parse
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
@@ -538,27 +537,10 @@ def git_common_dir(root: Path) -> Path:
     return (value if value.is_absolute() else root / value).resolve()
 
 
-def origin_identity_value(origin: str) -> str:
-    if not origin:
-        return ""
-    parsed = urllib.parse.urlsplit(origin)
-    if parsed.scheme and parsed.netloc:
-        host = parsed.hostname or ""
-        if parsed.port is not None:
-            host = f"{host}:{parsed.port}"
-        return urllib.parse.urlunsplit((parsed.scheme, host, parsed.path, "", ""))
-    if "@" in origin and not origin.startswith(("/", ".")):
-        suffix = origin.split("@", 1)[1]
-        if ":" in suffix or "/" in suffix:
-            return suffix
-    return origin
-
-
 def repo_identity(root: Path) -> dict[str, str]:
     resolved_root = root.resolve()
     common_dir = git_common_dir(resolved_root)
-    origin = git_text(resolved_root, ["remote", "get-url", "origin"]).strip()
-    material = "\0".join((str(resolved_root), str(common_dir), origin_identity_value(origin)))
+    material = "\0".join((str(resolved_root), str(common_dir)))
     return {
         "repo_id": hashlib.sha256(material.encode("utf-8")).hexdigest()[:12],
         "repo_root": str(resolved_root),
