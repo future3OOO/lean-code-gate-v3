@@ -212,7 +212,10 @@ def test_repo_root_env_keeps_state_in_target_repo_from_controller_cwd() -> None:
                 env={"LEAN_CODE_GATE_REPO_ROOT": str(repo)},
             )
             assert result.returncode == 0, result.stderr
-            assert json.loads((repo / ".agent" / "lean" / "state" / "contract.json").read_text(encoding="utf-8"))["intent"] == "fix small add bug"
+            contract = json.loads((repo / ".agent" / "lean" / "state" / "contract.json").read_text(encoding="utf-8"))
+            assert contract["intent"] == "fix small add bug"
+            assert contract["repo_root"] == str(repo.resolve())
+            assert contract["repo_id"]
             assert not (controller / ".agent" / "lean" / "state" / "contract.json").exists()
 
             result = run_gate(
@@ -220,7 +223,26 @@ def test_repo_root_env_keeps_state_in_target_repo_from_controller_cwd() -> None:
                 "status",
                 env={"LEAN_CODE_GATE_REPO_ROOT": str(repo)},
             )
-            assert json.loads(result.stdout)["contract"]["intent"] == "fix small add bug"
+            status = json.loads(result.stdout)
+            assert status["contract"]["intent"] == "fix small add bug"
+            assert status["runtime"]["repo_id"] == contract["repo_id"]
+            assert status["runtime"]["contract_matches_repo"] is True
+
+            result = run_gate(
+                controller,
+                "pretool",
+                payload={
+                    "cwd": str(controller),
+                    "hook_event_name": "PreToolUse",
+                    "tool_name": "apply_patch",
+                    "tool_input": {
+                        "command": "*** Begin Patch\n*** Update File: src/app.py\n@@\n-def add(a: int, b: int) -> int:\n+def add(a: int, b: int) -> int:\n*** End Patch"
+                    },
+                },
+                env={"LEAN_CODE_GATE_REPO_ROOT": str(repo)},
+            )
+            assert result.returncode == 0
+            assert result.stdout == ""
 
 
 def test_repo_root_env_rejects_missing_target_repo() -> None:
@@ -244,8 +266,52 @@ def test_repo_root_env_rejects_non_git_target_repo() -> None:
                 "status",
                 env={"LEAN_CODE_GATE_REPO_ROOT": other},
             )
-            assert result.returncode != 0
-            assert "LEAN_CODE_GATE_REPO_ROOT is not a git repository" in result.stderr
+        assert result.returncode != 0
+        assert "LEAN_CODE_GATE_REPO_ROOT is not a git repository" in result.stderr
+
+
+def test_contract_for_different_repo_is_rejected() -> None:
+    with repo_fixture() as repo_a:
+        declare_minimal(repo_a)
+        with repo_fixture() as repo_b:
+            state = repo_b / ".agent" / "lean" / "state"
+            state.mkdir(parents=True)
+            shutil.copy2(repo_a / ".agent" / "lean" / "state" / "contract.json", state / "contract.json")
+
+            result = run_gate(
+                repo_b,
+                "pretool",
+                payload={
+                    "cwd": str(repo_b),
+                    "hook_event_name": "PreToolUse",
+                    "tool_name": "apply_patch",
+                    "tool_input": {
+                        "command": "*** Begin Patch\n*** Update File: src/app.py\n@@\n-def add(a: int, b: int) -> int:\n+def add(a: int, b: int) -> int:\n*** End Patch"
+                    },
+                },
+            )
+            data = json.loads(result.stdout)
+            assert data["decision"] == "block"
+            assert "belongs to repo_id" in data["reason"]
+            assert str(repo_b.resolve()) in data["reason"]
+
+
+def test_internal_lean_runtime_files_are_ignored_without_contract() -> None:
+    with repo_fixture() as repo:
+        state = repo / ".agent" / "lean" / "state"
+        cache = repo / ".agent" / "lean" / "__pycache__"
+        state.mkdir(parents=True)
+        cache.mkdir(parents=True)
+        (state / "contract.json").write_text("{not json", encoding="utf-8")
+        (cache / "lean_code_gate.cpython-312.pyc").write_bytes(b"runtime")
+
+        result = run_gate(repo, "stop", payload={"cwd": str(repo), "hook_event_name": "Stop"})
+        assert result.returncode == 0
+        assert result.stdout == ""
+
+        code, data = check_json(repo)
+        assert code == 0
+        assert all(not str(path).startswith(".agent/lean/") for path in data["changedFilesSample"])
 
 
 def test_minimal_preflight_rejects_wide_budget_and_escape_hatches() -> None:
