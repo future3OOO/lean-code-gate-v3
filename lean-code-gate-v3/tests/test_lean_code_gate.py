@@ -294,6 +294,33 @@ def test_contract_for_different_repo_is_rejected() -> None:
             assert data["decision"] == "block"
             assert "belongs to repo_id" in data["reason"]
             assert str(repo_b.resolve()) in data["reason"]
+            assert "declare ..." in data["reason"]
+
+
+def test_unstamped_contract_is_rejected_with_redeclare_hint() -> None:
+    with repo_fixture() as repo:
+        declare_minimal(repo)
+        path = repo / ".agent" / "lean" / "state" / "contract.json"
+        contract = json.loads(path.read_text(encoding="utf-8"))
+        contract.pop("repo_id")
+        path.write_text(json.dumps(contract), encoding="utf-8")
+
+        result = run_gate(
+            repo,
+            "pretool",
+            payload={
+                "cwd": str(repo),
+                "hook_event_name": "PreToolUse",
+                "tool_name": "apply_patch",
+                "tool_input": {
+                    "command": "*** Begin Patch\n*** Update File: src/app.py\n@@\n-def add(a: int, b: int) -> int:\n+def add(a: int, b: int) -> int:\n*** End Patch"
+                },
+            },
+        )
+        data = json.loads(result.stdout)
+        assert data["decision"] == "block"
+        assert "missing repo_id" in data["reason"]
+        assert "declare ..." in data["reason"]
 
 
 def test_internal_lean_runtime_files_are_ignored_without_contract() -> None:

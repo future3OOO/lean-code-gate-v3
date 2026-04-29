@@ -530,7 +530,7 @@ def repo_root(cwd: str | None = None) -> Path:
 
 
 def git_common_dir(root: Path) -> Path:
-    result = run_process(["git", "rev-parse", "--git-common-dir"], root, timeout=10)
+    result = sh(["git", "rev-parse", "--git-common-dir"], root, timeout=10)
     if result.returncode != 0 or not result.stdout.strip():
         return (root / ".git").resolve()
     value = Path(result.stdout.strip())
@@ -1797,7 +1797,8 @@ def contract_identity_errors(root: Path, current_contract: dict[str, object]) ->
         return [
             "Lean Change Contract is missing repo_id. "
             f"Redeclare for target repo_id {identity['repo_id']} at {identity['repo_root']}. "
-            f"State path: {contract_path(root)}"
+            f"State path: {contract_path(root)}. "
+            f"Run `{command_hint(root)} declare ...` to redeclare for the current repo."
         ]
     if stored_id != identity["repo_id"]:
         stored_root = str(current_contract.get("repo_root") or "unknown")
@@ -1805,7 +1806,8 @@ def contract_identity_errors(root: Path, current_contract: dict[str, object]) ->
             "Lean Change Contract belongs to "
             f"repo_id {stored_id} at {stored_root}, but current target is "
             f"repo_id {identity['repo_id']} at {identity['repo_root']}. "
-            f"State path: {contract_path(root)}"
+            f"State path: {contract_path(root)}. "
+            f"Run `{command_hint(root)} declare ...` to redeclare for the current repo."
         ]
     return []
 
