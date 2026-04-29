@@ -306,6 +306,20 @@ def test_hook_fails_closed_when_controller_target_is_ambiguous() -> None:
         assert "No active Lean Change Contract" not in data["reason"]
 
 
+def test_stop_from_controller_checks_nested_repo_without_tool_workdir() -> None:
+    with tempfile.TemporaryDirectory(prefix="gate-controller-") as tmp:
+        controller = Path(tmp)
+        nested = controller / "calibration"
+        init_repo_fixture(nested)
+        declare_minimal(nested)
+
+        result = run_gate(controller, "stop", payload={"cwd": str(controller), "hook_event_name": "Stop"})
+
+        assert result.returncode == 0
+        assert result.stdout == ""
+        assert not (controller / ".agent" / "lean" / "state").exists()
+
+
 def test_repo_root_env_rejects_missing_target_repo() -> None:
     with repo_fixture() as repo:
         missing = repo.parent / "missing-target"
@@ -1148,6 +1162,7 @@ TESTS = [
     test_repo_root_env_keeps_state_in_target_repo_from_controller_cwd,
     test_hook_resolves_nested_repo_from_changed_path_without_workdir,
     test_hook_fails_closed_when_controller_target_is_ambiguous,
+    test_stop_from_controller_checks_nested_repo_without_tool_workdir,
     test_repo_root_env_rejects_missing_target_repo,
     test_repo_root_env_rejects_non_git_target_repo,
     test_repo_identity_does_not_persist_origin_url_credentials,

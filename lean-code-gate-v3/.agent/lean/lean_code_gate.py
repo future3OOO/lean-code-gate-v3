@@ -551,6 +551,10 @@ def has_nested_git_repo(root: Path) -> bool:
     return any(path.exists() for path in root.glob("*/.git"))
 
 
+def nested_git_roots(root: Path) -> list[Path]:
+    return sorted(path.parent.resolve() for path in root.glob("*/.git") if path.exists())
+
+
 def checked_hook_root(event: str | None, payload: dict[str, object], tool: str, tool_input: dict[str, object], *, require_unambiguous: bool = False) -> Path | None:
     try:
         return hook_root(payload, tool, tool_input, require_unambiguous=require_unambiguous)
@@ -591,6 +595,21 @@ def hook_root(payload: dict[str, object], tool: str, tool_input: dict[str, objec
         )
 
     return root
+
+
+def stop_roots(payload: dict[str, object]) -> list[Path]:
+    root = repo_root(str(payload.get("cwd") or "") or None)
+    nested = nested_git_roots(root)
+    if not nested:
+        return [root]
+    roots: list[Path] = []
+    for candidate in nested:
+        has_contract = (candidate / STATE_DIR / "contract.json").exists()
+        if has_contract or final_errors(candidate, {}, policy(candidate)):
+            roots.append(candidate)
+    if roots:
+        return roots
+    return [root] if git_toplevel(root) == root else []
 
 
 def git_common_dir(root: Path) -> Path:
@@ -2149,27 +2168,33 @@ def posttool(payload: dict[str, object], failed: bool = False) -> None:
 
 
 def stop(payload: dict[str, object]) -> None:
-    root = checked_hook_root("Stop", payload, "", {}, require_unambiguous=True)
-    if root is None:
+    roots = stop_roots(payload)
+    if not roots:
         return
+    all_errors: list[str] = []
     if payload.get("stop_hook_active"):
-        issues = final_errors(root, contract(root), policy(root))
+        for root in roots:
+            issues = final_errors(root, contract(root), policy(root))
+            all_errors.extend(f"{root}: {issue}" if len(roots) > 1 else issue for issue in issues)
+        issues = all_errors
         if issues:
             emit({"systemMessage": "Lean Code Gate still has unresolved issues after a Stop continuation: " + " | ".join(issues[:8])})
         return
-    current_contract = contract(root)
-    active_policy = policy(root)
-    errors = final_errors(root, current_contract, active_policy)
-    if active_policy["run_quality_gate_on_stop"]:
-        fail_warnings = bool(active_policy["fail_on_quality_warnings"]) and not (current_contract or {}).get("allow_quality_warnings")
-        quality = run_quality_gate(root, str((current_contract or {}).get("base_ref") or "") or None, fail_warnings)
-        if not quality["ok"]:
-            errors.extend(["Quality gate failed: " + error for error in quality["errors"]])
-    if errors:
+    for root in roots:
+        current_contract = contract(root)
+        active_policy = policy(root)
+        errors = final_errors(root, current_contract, active_policy)
+        if active_policy["run_quality_gate_on_stop"]:
+            fail_warnings = bool(active_policy["fail_on_quality_warnings"]) and not (current_contract or {}).get("allow_quality_warnings")
+            quality = run_quality_gate(root, str((current_contract or {}).get("base_ref") or "") or None, fail_warnings)
+            if not quality["ok"]:
+                errors.extend(["Quality gate failed: " + error for error in quality["errors"]])
+        all_errors.extend(f"{root}: {error}" if len(roots) > 1 else error for error in errors)
+    if all_errors:
         deny(
             "Stop",
             "Lean Code Gate final check failed:\n- "
-            + "\n- ".join(errors)
+            + "\n- ".join(all_errors)
             + "\nReduce the diff, remove bloat/escapes/duplication, run verification, or widen with a concrete reason.",
         )
 
