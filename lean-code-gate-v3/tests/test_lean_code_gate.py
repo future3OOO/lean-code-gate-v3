@@ -403,6 +403,187 @@ def test_reimplemented_dedupe_loop_fails_as_high_confidence_reuse() -> None:
         assert any(item["existingSymbol"] == "dedupe_items" for item in data["reuseFindings"])
 
 
+def _seed_then_modify(repo: Path, rel_path: str, seed: str, modified: str) -> None:
+    target = repo / rel_path
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(seed, encoding="utf-8")
+    git(repo, "add", ".")
+    git(repo, "commit", "--no-gpg-sign", "-m", f"seed {rel_path}")
+    target.write_text(modified, encoding="utf-8")
+    git(repo, "add", rel_path)
+
+
+def test_python_exact_name_duplicate_across_files_fires_on_tracked_diff() -> None:
+    # New symbol with same name as an existing one in another file. The
+    # tracked diff puts the def line into ctx.added_lines, where the bug
+    # used to suppress reuse via self-call detection. With the
+    # SYMBOL_PATTERNS-based filter, the def line is recognised as the
+    # searched symbol's own def and skipped, so the candidate stays alive.
+    with repo_fixture() as repo:
+        (repo / "src" / "parser.py").write_text(
+            "def parse_html_payload(blob):\n    return blob.decode('utf-8').strip()\n",
+            encoding="utf-8",
+        )
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed parser")
+        _seed_then_modify(
+            repo,
+            "src/parsers.py",
+            "# placeholder\n",
+            "# placeholder\n"
+            "def parse_html_payload(blob):\n"
+            "    text = blob.decode('utf-8')\n"
+            "    return text.strip()\n",
+        )
+        code, data = check_json(repo)
+        assert code == 2, data
+        assert any(
+            f["newSymbol"] == "parse_html_payload" and f["existingSymbol"] == "parse_html_payload"
+            for f in data["reuseFindings"]
+        ), data["reuseFindings"]
+
+
+def test_go_receiver_method_duplicate_fires_on_tracked_diff() -> None:
+    # Same-name receiver methods across two .go files; SYMBOL_PATTERNS["go"]
+    # extracts the method name even when a `(r *Repo)` receiver sits between
+    # `func` and the name, so line_defines_symbol matches and the def line
+    # is skipped — the candidate fires.
+    with repo_fixture() as repo:
+        (repo / "src" / "parser.go").write_text(
+            "package main\n\ntype Repo struct{}\n\n"
+            "func (r *Repo) ParseHTMLPayload(blob []byte) string {\n"
+            "    return string(blob)\n"
+            "}\n",
+            encoding="utf-8",
+        )
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed go parser")
+        _seed_then_modify(
+            repo,
+            "src/extra.go",
+            "package main\n\ntype Other struct{}\n",
+            "package main\n\ntype Other struct{}\n\n"
+            "func (o *Other) ParseHTMLPayload(blob []byte) string {\n"
+            "    txt := string(blob)\n"
+            "    return txt\n"
+            "}\n",
+        )
+        code, data = check_json(repo)
+        assert code == 2, data
+        assert any(
+            f.get("newSymbol") == "ParseHTMLPayload"
+            and f.get("existingSymbol") == "ParseHTMLPayload"
+            for f in data.get("reuseFindings", [])
+        ), data.get("reuseFindings")
+
+
+def test_shell_function_duplicate_fires_on_tracked_diff() -> None:
+    # SYMBOL_PATTERNS["shell"] extracts both `function name() {` and bare
+    # `name() {`. Earlier hand-rolled def regex required `def|function|...`
+    # keywords and silently missed bare shell defs, so a duplicate shell
+    # function across files passed through the gate as ok=true.
+    with repo_fixture() as repo:
+        (repo / "scripts").mkdir()
+        (repo / "scripts" / "userlib.sh").write_text(
+            "normalize_user_id() {\n    local id=$1\n    echo \"${id,,}\"\n}\n",
+            encoding="utf-8",
+        )
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed shell lib")
+        _seed_then_modify(
+            repo,
+            "scripts/extra.sh",
+            "# placeholder\n",
+            "# placeholder\n"
+            "normalize_user_id() {\n"
+            "    local raw=$1\n"
+            "    echo \"$(echo \"$raw\" | tr 'A-Z' 'a-z')\"\n"
+            "}\n",
+        )
+        code, data = check_json(repo)
+        assert code == 2, data
+        assert any(
+            f.get("newSymbol") == "normalize_user_id"
+            and f.get("existingSymbol") == "normalize_user_id"
+            for f in data.get("reuseFindings", [])
+        ), data.get("reuseFindings")
+
+
+def test_rust_tuple_struct_duplicate_fires_on_tracked_diff() -> None:
+    # SYMBOL_PATTERNS["rust"] extracts struct/enum/trait names, and a tuple
+    # struct definition `pub struct Name(T);` self-matches the call regex
+    # `\bName\s*\(` on its own def line. Reusing SYMBOL_PATTERNS in
+    # line_defines_symbol covers this for free.
+    with repo_fixture() as repo:
+        (repo / "src" / "lib.rs").write_text(
+            "pub struct ParseHTMLPayload(pub Vec<u8>);\n\nimpl ParseHTMLPayload {\n    pub fn raw(&self) -> &[u8] { &self.0 }\n}\n",
+            encoding="utf-8",
+        )
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed rust lib")
+        _seed_then_modify(
+            repo,
+            "src/extra.rs",
+            "// placeholder\n",
+            "// placeholder\n"
+            "pub struct ParseHTMLPayload(pub String);\n\n"
+            "impl ParseHTMLPayload {\n"
+            "    pub fn text(&self) -> &str { &self.0 }\n"
+            "}\n",
+        )
+        code, data = check_json(repo)
+        assert code == 2, data
+        assert any(
+            f.get("newSymbol") == "ParseHTMLPayload"
+            and f.get("existingSymbol") == "ParseHTMLPayload"
+            for f in data.get("reuseFindings", [])
+        ), data.get("reuseFindings")
+
+
+def test_default_arg_call_on_def_line_does_not_falsely_suppress_reuse() -> None:
+    # Precision: a def line for symbol B that calls existing symbol A in a
+    # default arg must not be treated as a "self def" of A. The filter
+    # skips only the def of the searched symbol.
+    #
+    # Names share tokens so same_behavior_name returns nonzero — making
+    # the candidate eligible to reach symbol_is_called_nearby's decision.
+    # If the def-line filter were blanket ("any def line skipped"), the
+    # default-arg call to format_currency_amount would be hidden; the
+    # detector would then see no call, treat it as reuse, and fire a false
+    # finding for format_currency_label vs format_currency_amount.
+    mod = _load_gate_module()
+    score, _reason = mod.same_behavior_name(
+        mod.SymbolDef(name="format_currency_label", path="src/wrapper.py", line=1, kind="function", language="python", tokens=mod.split_name_tokens("format_currency_label"), source="added"),
+        mod.SymbolDef(name="format_currency_amount", path="src/format.py", line=1, kind="function", language="python", tokens=mod.split_name_tokens("format_currency_amount"), source="baseline"),
+    )
+    assert score > 0, f"test precondition failed: same_behavior_name returned {score}; choose names with more shared tokens"
+
+    with repo_fixture() as repo:
+        (repo / "src" / "format.py").write_text(
+            "def format_currency_amount(amount):\n"
+            "    return f\"${amount:.2f}\"\n",
+            encoding="utf-8",
+        )
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed format")
+        _seed_then_modify(
+            repo,
+            "src/wrapper.py",
+            "# placeholder\n",
+            "# placeholder\n"
+            "from src.format import format_currency_amount\n"
+            "def format_currency_label(amount, prefix=format_currency_amount()):\n"
+            "    return f\"Total: {prefix}\"\n",
+        )
+        code, data = check_json(repo)
+        assert code in (0, 2), data
+        assert not any(
+            f.get("newSymbol") == "format_currency_label"
+            and f.get("existingSymbol") == "format_currency_amount"
+            for f in data.get("reuseFindings", [])
+        ), data.get("reuseFindings")
+
+
 def test_reuse_detector_suppresses_generic_same_name_false_positive() -> None:
     with repo_fixture() as repo:
         (repo / "src" / "task_a.py").write_text("def run() -> str:\n    return 'a'\n", encoding="utf-8")
@@ -701,6 +882,11 @@ TESTS = [
     test_quality_check_detects_production_type_escape_but_allows_test_any,
     test_quality_check_detects_reimplemented_existing_helper_name,
     test_reimplemented_dedupe_loop_fails_as_high_confidence_reuse,
+    test_python_exact_name_duplicate_across_files_fires_on_tracked_diff,
+    test_go_receiver_method_duplicate_fires_on_tracked_diff,
+    test_shell_function_duplicate_fires_on_tracked_diff,
+    test_rust_tuple_struct_duplicate_fires_on_tracked_diff,
+    test_default_arg_call_on_def_line_does_not_falsely_suppress_reuse,
     test_reuse_detector_suppresses_generic_same_name_false_positive,
     test_reuse_detector_suppresses_same_tokens_different_domain,
     test_reuse_detector_ignores_deleted_then_recreated_helper,
