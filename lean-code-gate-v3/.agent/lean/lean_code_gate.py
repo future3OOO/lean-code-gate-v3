@@ -514,7 +514,7 @@ def sh(cmd: list[str], cwd: Path, timeout: int = 15) -> subprocess.CompletedProc
 
 
 def git_toplevel(start: Path) -> Path | None:
-    result = sh(["git", "rev-parse", "--show-toplevel"], start)
+    result = sh(["git", "rev-parse", "--show-toplevel"], start if start.is_dir() else start.parent)
     if result.returncode == 0 and result.stdout.strip():
         return Path(result.stdout.strip()).resolve()
     return None
