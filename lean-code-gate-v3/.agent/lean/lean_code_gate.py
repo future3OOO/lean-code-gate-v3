@@ -513,20 +513,42 @@ def sh(cmd: list[str], cwd: Path, timeout: int = 15) -> subprocess.CompletedProc
     return run_process(cmd, cwd, timeout)
 
 
+def git_toplevel(start: Path) -> Path | None:
+    result = sh(["git", "rev-parse", "--show-toplevel"], start)
+    if result.returncode == 0 and result.stdout.strip():
+        return Path(result.stdout.strip()).resolve()
+    return None
+
+
 def repo_root(cwd: str | None = None) -> Path:
     configured = os.environ.get("LEAN_CODE_GATE_REPO_ROOT")
+    if cwd:
+        payload_start = Path(cwd).expanduser()
+        if payload_start.exists():
+            payload_root = git_toplevel(payload_start.resolve())
+            if payload_root is not None:
+                return payload_root
+
     start = Path(configured or cwd or os.getcwd()).expanduser()
     if configured and not start.exists():
         raise SystemExit(f"LEAN_CODE_GATE_REPO_ROOT does not exist: {start}")
     if not configured and not start.exists():
         start = Path(os.getcwd())
     start = start.resolve()
-    result = sh(["git", "rev-parse", "--show-toplevel"], start)
-    if result.returncode == 0 and result.stdout.strip():
-        return Path(result.stdout.strip()).resolve()
+    configured_root = git_toplevel(start)
+    if configured_root is not None:
+        return configured_root
     if configured:
         raise SystemExit(f"LEAN_CODE_GATE_REPO_ROOT is not a git repository: {start}")
     return start
+
+
+def tool_command(tool_input: dict[str, object]) -> str:
+    return str(tool_input.get("command") or tool_input.get("cmd") or "")
+
+
+def hook_cwd(payload: dict[str, object], tool_input: dict[str, object]) -> str | None:
+    return str(tool_input.get("workdir") or tool_input.get("cwd") or payload.get("cwd") or "") or None
 
 
 def git_common_dir(root: Path) -> Path:
@@ -979,7 +1001,7 @@ def facts(root: Path, tool: str, tool_input: dict[str, object]) -> dict[str, obj
     if tool in {"apply_patch", "ApplyPatch"}:
         return parse_patch(root, str(tool_input.get("command") or tool_input.get("patch") or ""))
     if tool == "Bash":
-        command = str(tool_input.get("command") or "")
+        command = tool_command(tool_input)
         if "apply_patch" in command or "*** Begin Patch" in command or "diff --git" in command:
             return parse_patch(root, command)
         return {"paths": [], "added": 0, "deleted": 0, "text": "", "add_file": False, "delete_file": False, "patch_like": False}
@@ -1016,7 +1038,7 @@ def guard_command(command: str) -> bool:
 def mutating(tool: str, tool_input: dict[str, object]) -> bool:
     if tool in MUTATING_TOOLS:
         return True
-    command = str(tool_input.get("command") or "")
+    command = tool_command(tool_input)
     return tool == "Bash" and not guard_command(command) and not ("apply_patch" in command or "*** Begin Patch" in command or "diff --git" in command) and bool(HIDDEN_WRITE_RE.search(command))
 
 
@@ -2030,9 +2052,9 @@ def declare(args: argparse.Namespace) -> None:
 
 
 def pretool(payload: dict[str, object]) -> None:
-    root = repo_root(str(payload.get("cwd") or "") or None)
     tool = str(payload.get("tool_name") or "")
     tool_input = payload.get("tool_input") if isinstance(payload.get("tool_input"), dict) else {}
+    root = repo_root(hook_cwd(payload, tool_input))
     if not mutating(tool, tool_input):
         return
     current_contract = contract(root)
@@ -2042,7 +2064,7 @@ def pretool(payload: dict[str, object]) -> None:
     if errors:
         deny("PreToolUse", "Lean Code Gate blocked mutation before contract:\n- " + "\n- ".join(errors))
         return
-    command = str(tool_input.get("command") or "")
+    command = tool_command(tool_input)
     if tool == "Bash" and active_policy["block_hidden_bash_writes"] and not ("apply_patch" in command or "*** Begin Patch" in command or "diff --git" in command) and not current_contract.get("allow_bash_writes"):
         deny("PreToolUse", "Hidden file-changing Bash blocked. Use Edit/apply_patch or redeclare --allow-bash-writes with a reason.")
         return
@@ -2055,9 +2077,9 @@ def pretool(payload: dict[str, object]) -> None:
 
 
 def permission_request(payload: dict[str, object]) -> None:
-    root = repo_root(str(payload.get("cwd") or "") or None)
     tool = str(payload.get("tool_name") or "")
     tool_input = payload.get("tool_input") if isinstance(payload.get("tool_input"), dict) else {}
+    root = repo_root(hook_cwd(payload, tool_input))
     if mutating(tool, tool_input):
         errors = contract_errors(contract(root), policy(root), root)
         if errors:
@@ -2065,16 +2087,17 @@ def permission_request(payload: dict[str, object]) -> None:
 
 
 def posttool(payload: dict[str, object], failed: bool = False) -> None:
-    root = repo_root(str(payload.get("cwd") or "") or None)
     tool = str(payload.get("tool_name") or "")
     tool_input = payload.get("tool_input") if isinstance(payload.get("tool_input"), dict) else {}
+    root = repo_root(hook_cwd(payload, tool_input))
     if mutating(tool, tool_input):
         log_event(root, {"event": "mutation_failed" if failed else "mutation_finished", "tool": tool, **facts(root, tool, tool_input)})
-    if tool == "Bash" and verify_cmd(str(tool_input.get("command") or "")):
+    command = tool_command(tool_input)
+    if tool == "Bash" and verify_cmd(command):
         response = payload.get("tool_response")
         exit_code = response_exit_code(response)
         command_failed = failed or (exit_code is not None and exit_code != 0)
-        log_event(root, {"event": "verify_failed" if command_failed else "verify_passed", "command": str(tool_input.get("command") or ""), "exit_code": exit_code})
+        log_event(root, {"event": "verify_failed" if command_failed else "verify_passed", "command": command, "exit_code": exit_code})
 
 
 def stop(payload: dict[str, object]) -> None:
