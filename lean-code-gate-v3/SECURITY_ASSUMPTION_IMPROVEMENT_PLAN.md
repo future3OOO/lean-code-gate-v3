@@ -83,23 +83,9 @@ Evidence-backed observations from the Slop Scan repo:
 - High-volume rules are not automatically first-class gate rules. Empty catches, pass-through wrappers, and error-obscuring also appear in mature OSS, so they need contract context, boundary exemptions, and delta/touched-line scoping before any hard failure.
 - Slop Scan's repo-wide view catches accumulated habits. Lean Gate works at edit time, so its first integration should be touched-surface warnings and contract prompts, not whole-repo shape scoring.
 
-Methodology corrections before runtime work:
+Runtime boundary:
 
-1. Run a Step Zero comparison
-
-   Before porting any rule, run Slop Scan against the calibration corpus's TS/JS repos at fixed SHAs and place its blended score beside Lean Gate's current per-PR rates. This answers whether Lean Gate's flat cohort results come from weak detectors, PR-only measurement, corpus choice, or normalization.
-
-2. Separate calibration modes
-
-   Keep PR-time measurement for "what would the gate catch in review." Add whole-repo-at-SHA measurement for "is this codebase already slop-heavy." Do not use one mode to justify policy claims for the other.
-
-3. Pin the mature baseline
-
-   Cohort comparisons need a pre-2025 mature-OSS baseline, or the "pre_ai" label remains contaminated by recent AI-assisted PRs. Recent mature repos can stay as a separate operational cohort, but they should not be used as the clean historical comparator.
-
-4. Name the language and dependency boundary
-
-   Slop Scan's highest-signal rules are TS/JS-specific and use the TypeScript compiler API. Lean Gate's runtime is a dependency-free Python script. First implementation should therefore be a TS/JS warning pack using small changed-line string/regex heuristics. Multi-language equivalents and TypeScript AST parsing are out of scope until calibration proves the simpler path is insufficient.
+Slop Scan's highest-signal rules are TS/JS-specific and use the TypeScript compiler API. Lean Gate's runtime is a dependency-free Python script. First implementation should therefore be a TS/JS warning pack using small changed-line string/regex heuristics. Multi-language equivalents and TypeScript AST parsing are out of scope until calibration proves the simpler path is insufficient.
 
 Fundamental takeaways:
 
@@ -125,17 +111,16 @@ Fundamental takeaways:
 
    Duplicated mock setup and near-identical helper shapes are useful accumulated-slop signals. For Lean Gate, the edit-time rule is narrower: if changed tests repeat existing mock wiring, use the existing fixture; add a new helper only when there are at least two current call sites. Do not introduce speculative factories.
 
-5. Calibrate by rule family and touched surface
+5. Track added findings by rule family
 
-   The current calibration can look flat when it reports findings per PR and mixes rule families. The next pass should report rule-family hits per touched file, touched function, and KLOC, and distinguish added, resolved, worsened, and improved findings. Slop Scan's delta identity model is the useful lesson here, not its full scanner.
+   The runtime lesson from Slop Scan's delta model is to report whether a touched change added, resolved, worsened, or improved a finding. The calibration-specific table and cohort work belongs in `SLOP_SCAN_CALIBRATION_PLAN.md`.
 
 Recommended integration order:
 
-1. Step Zero experiment first: Slop Scan the TS/JS calibration repos at fixed SHAs and compare against Lean Gate's current PR-time rates.
-2. Calibration reporting second: add whole-repo-at-SHA output, per-function and per-KLOC columns, and rule-family added/resolved/worsened/improved counts alongside existing findings/PR.
-3. Contract prompts third: failure contract, boundary shape, wrapper value, and input validation/narrowing.
-4. Narrow added-line warnings fourth: TS/JS promise/default fallbacks, log-and-continue catches, stringified unknown errors, generic envelopes, and vague record casts.
-5. Policy escalation last: hard failures only after calibration shows low false-positive rates on touched code.
+1. Contract prompts first: failure contract, boundary shape, wrapper value, and input validation/narrowing.
+2. Narrow added-line warnings second: TS/JS promise/default fallbacks, log-and-continue catches, stringified unknown errors, generic envelopes, and vague record casts.
+3. Touched-change delta reporting third: added/resolved/worsened/improved counts by rule family.
+4. Policy escalation last: hard failures only after calibration shows low false-positive rates on touched code.
 
 ## Slop Rules Not To Build First
 
@@ -156,8 +141,6 @@ This file is a planning artifact. If the rule is implemented, the core principle
 - Reviewer comments about secret exposure are resolved by eliminating unnecessary inputs when possible.
 - Runtime state, logs, and status output avoid raw sensitive values.
 - Any Slop Scan-inspired detector starts narrow, explainable, and tied to touched code.
-- Calibration tables report findings/PR, findings/KLOC, findings/function, and whole-repo-at-SHA scores separately.
-- TS/JS Slop Scan comparison explains whether Lean Gate's flat cohort signal is detector weakness, PR-only measurement, baseline contamination, or corpus choice.
 - False positives remain low enough that developers do not bypass the gate.
 
 ## Open Questions
@@ -167,4 +150,3 @@ This file is a planning artifact. If the rule is implemented, the core principle
 - Should contracts get a `--sensitive-input` field, or should this stay inside `--risk-check`?
 - Should the rule be policy-overridable for repos that legitimately handle credential-bearing inputs, or hardcoded?
 - Should wrapper/fallback/envelope checks stay inside `--risk-check`, or become structured contract prompts after calibration?
-- Should whole-repo Slop Scan-style calibration live in the calibration repo only, or should Lean Gate expose a dependency-free whole-repo report mode?
