@@ -1508,7 +1508,7 @@ def best_existing_match(new_item: SymbolDef, existing: list[SymbolDef], added_by
             continue
         if existing_item.language != new_item.language and new_item.kind != "block":
             continue
-        if symbol_is_called_nearby(existing_item.name, added_by_file.get(new_item.path, []), new_item.line):
+        if symbol_is_called_nearby(existing_item.name, added_by_file.get(new_item.path, []), new_item.line, new_item.language):
             continue
         base_score, reason = same_behavior_name(new_item, existing_item)
         if new_item.kind == "block":
@@ -1529,26 +1529,25 @@ def best_existing_match(new_item: SymbolDef, existing: list[SymbolDef], added_by
     return best
 
 
-def symbol_is_called_nearby(symbol: str, lines: list[tuple[int, str]], new_line: int) -> bool:
-    # Skip lines that *define* `symbol` (so the def itself isn't read as a
-    # call to itself); keep lines that define a *different* symbol but call
-    # this one, e.g. `def wrap(x, fn=parse_html_payload()):` is a def of
-    # `wrap` and a real call to `parse_html_payload`.
-    #
-    # Covers def syntax across the languages SYMBOL_PATTERNS supports:
-    # Python/Ruby `def`, JS/TS `function` (with optional `export`,
-    # `export default`, `async`), `class`, Go `func`, Rust `fn` (with
-    # optional `pub`, `async`), PHP `function` (with optional visibility
-    # `public`/`private`/`protected` and `static`).
-    escaped = re.escape(symbol)
-    self_def = re.compile(
-        rf"^\s*(?:export\s+default\s+|export\s+)?(?:public\s+|private\s+|protected\s+)?"
-        rf"(?:static\s+)?(?:pub\s+)?(?:async\s+)?(?:def|function|class|func|fn)\s+"
-        rf"(?:\([^)]*\)\s+)?{escaped}\b"
-    )
-    call_pattern = re.compile(rf"\b{escaped}\s*\(")
+def line_defines_symbol(language: str, text: str, symbol: str) -> bool:
+    # SYMBOL_PATTERNS is the source of truth for what counts as a definition
+    # in each supported language. Reusing it here keeps the def-line filter
+    # in lockstep with extraction; adding a new language to SYMBOL_PATTERNS
+    # automatically extends this filter without a parallel regex table.
     return any(
-        not self_def.match(text)
+        (found := pattern.search(text)) is not None and found.group(1) == symbol
+        for _, pattern in SYMBOL_PATTERNS.get(language, [])
+    )
+
+
+def symbol_is_called_nearby(symbol: str, lines: list[tuple[int, str]], new_line: int, language: str) -> bool:
+    # Skip lines that *define* the searched symbol so its own def isn't
+    # read as a call to itself. Lines that define a *different* symbol but
+    # call this one stay visible: `def wrap(x, fn=parse_html_payload()):`
+    # is wrap's def line and a real call site for parse_html_payload.
+    call_pattern = re.compile(rf"\b{re.escape(symbol)}\s*\(")
+    return any(
+        not line_defines_symbol(language, text, symbol)
         and max(0, new_line - 8) <= line_no <= new_line + 20
         and call_pattern.search(text)
         for line_no, text in lines
