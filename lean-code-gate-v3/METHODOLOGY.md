@@ -101,9 +101,19 @@ Recommended rollout:
 
 The default Codex config assumes the gate script is installed in the target repo at `.agent/lean/lean_code_gate.py`.
 
-If Codex hooks call a shared/global copy instead, set `LEAN_CODE_GATE_SCRIPT_PATH` to that script path in the hook environment. Hook reminders and blocked-mutation messages will then show the configured path instead of the repo-local default.
+If Codex hooks call a shared/global copy instead, set `LEAN_CODE_GATE_SCRIPT_PATH` to that script path in the hook environment and call that same script directly. Do not set `LEAN_CODE_GATE_REPO_ROOT` in the normal global hook template; hard-coding it pins every controller-session mutation to one repo and prevents nested target repos from owning their own `.agent/lean/state`.
 
-If Codex starts from a controller folder while the target repo is nested, set `LEAN_CODE_GATE_REPO_ROOT` to the target repo path. Policy, state, diff checks, and verification status then stay anchored to that repo. Repo-local `.agent/lean/policy.json` remains optional for per-project policy overrides.
+Minimal global Codex hook command shape:
+
+```toml
+command = 'LEAN_CODE_GATE_SCRIPT_PATH="$HOME/.codex/lean-code-gate-v3/lean_code_gate.py" PYTHONDONTWRITEBYTECODE=1 python3 -B -S "$HOME/.codex/lean-code-gate-v3/lean_code_gate.py" pretool'
+```
+
+Use the same prefix and script path for `session-start`, `user-prompt`, `permission-request`, `posttool`, and `stop`. Keep the bundled repo-local `.codex/config.toml` shape when installing inside a single target repo; it resolves the repo-local script with `git rev-parse --show-toplevel` and also does not set `LEAN_CODE_GATE_REPO_ROOT`.
+
+For existing Codex installs, remove any hard-coded `LEAN_CODE_GATE_REPO_ROOT` from the hook commands and restart the Codex session so the edited config is reloaded.
+
+When hooks include a target working directory, the runtime prefers that repo over `LEAN_CODE_GATE_REPO_ROOT`; Codex `cmd`/`workdir` and Claude `command`/`cwd` payloads are both supported. If a controller folder contains nested git repos but the hook payload omits the target workdir, the gate infers from changed file paths when possible and otherwise fails closed instead of writing controller state. Set `LEAN_CODE_GATE_REPO_ROOT` only as a fallback for hooks or runtimes that cannot provide the target working directory. Policy, state, diff checks, and verification status then stay anchored to the resolved target repo. Repo-local `.agent/lean/policy.json` remains optional for per-project policy overrides.
 
 The gate stores runtime state under the resolved target repo at `.agent/lean/state/`. Contracts are stamped with a repo id derived from the repo root and git common dir; the raw origin URL is not read or persisted. A contract from another repo or from an older unstamped runtime is rejected instead of being reused silently. Moving a clone or switching worktrees intentionally requires redeclaring the active contract for that target. Runtime state and Python bytecode under `.agent/lean/` are ignored by diff and final checks, but should not be deleted during active work because they record the current contract and verification events. Use `status` to see the target repo, repo id, state path, and whether the active contract matches.
 

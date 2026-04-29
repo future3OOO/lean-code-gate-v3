@@ -513,20 +513,113 @@ def sh(cmd: list[str], cwd: Path, timeout: int = 15) -> subprocess.CompletedProc
     return run_process(cmd, cwd, timeout)
 
 
+def git_toplevel(start: Path) -> Path | None:
+    result = sh(["git", "rev-parse", "--show-toplevel"], start if start.is_dir() else start.parent)
+    if result.returncode == 0 and result.stdout.strip():
+        return Path(result.stdout.strip()).resolve()
+    return None
+
+
 def repo_root(cwd: str | None = None) -> Path:
     configured = os.environ.get("LEAN_CODE_GATE_REPO_ROOT")
+    if cwd:
+        payload_start = Path(cwd).expanduser()
+        if payload_start.exists():
+            payload_root = git_toplevel(payload_start.resolve())
+            if payload_root is not None:
+                return payload_root
+
     start = Path(configured or cwd or os.getcwd()).expanduser()
     if configured and not start.exists():
         raise SystemExit(f"LEAN_CODE_GATE_REPO_ROOT does not exist: {start}")
     if not configured and not start.exists():
         start = Path(os.getcwd())
     start = start.resolve()
-    result = sh(["git", "rev-parse", "--show-toplevel"], start)
-    if result.returncode == 0 and result.stdout.strip():
-        return Path(result.stdout.strip()).resolve()
+    configured_root = git_toplevel(start)
+    if configured_root is not None:
+        return configured_root
     if configured:
         raise SystemExit(f"LEAN_CODE_GATE_REPO_ROOT is not a git repository: {start}")
     return start
+
+
+def tool_command(tool_input: dict[str, object]) -> str:
+    return str(tool_input.get("command") or tool_input.get("cmd") or "")
+
+
+def nested_git_roots(root: Path) -> list[Path]:
+    return sorted(path.parent.resolve() for path in root.rglob(".git") if path.resolve() != (root / ".git").resolve())
+
+
+def checked_hook_root(event: str | None, payload: dict[str, object], tool: str, tool_input: dict[str, object], *, require_unambiguous: bool = False) -> Path | None:
+    try:
+        return hook_root(payload, tool, tool_input, require_unambiguous=require_unambiguous)
+    except ValueError as error:
+        if event:
+            deny(event, str(error))
+        return None
+
+
+def hook_root(payload: dict[str, object], tool: str, tool_input: dict[str, object], *, require_unambiguous: bool = False) -> Path:
+    tool_cwd = str(tool_input.get("workdir") or tool_input.get("cwd") or "") or None
+    if tool_cwd:
+        return repo_root(tool_cwd)
+
+    root = repo_root(str(payload.get("cwd") or "") or None)
+    is_mutating = mutating(tool, tool_input)
+    if not is_mutating and not require_unambiguous:
+        return root
+
+    if is_mutating:
+        path_roots: set[Path] = set()
+        for value in facts(root, tool, tool_input).get("paths", []):
+            if isinstance(value, str):
+                path = (root / value).resolve()
+                found = git_toplevel(path if path.is_dir() else path.parent)
+                if found is not None and found != root and root in found.parents:
+                    path_roots.add(found)
+        if len(path_roots) == 1:
+            return next(iter(path_roots))
+        if len(path_roots) > 1:
+            raise ValueError("Lean Code Gate could not choose between nested target repos: " + ", ".join(str(path) for path in sorted(path_roots)))
+
+    if nested_git_roots(root):
+        raise ValueError(
+            "Lean Code Gate cannot resolve a unique target repo from controller folder "
+            f"{root}. Hook payload did not include tool workdir/cwd. Start the session "
+            "inside the target repo or use a hook runtime that passes tool workdir."
+        )
+
+    return root
+
+
+def stop_roots(payload: dict[str, object]) -> list[Path]:
+    root = repo_root(str(payload.get("cwd") or "") or None)
+    nested = nested_git_roots(root)
+    if not nested:
+        return [root]
+    target = active_state(root).get("target_root")
+    if isinstance(target, str) and (found := git_toplevel(Path(target).expanduser().resolve())) is not None and found != root and root in found.parents:
+        return [found]
+    return [root] if git_toplevel(root) == root else []
+
+
+def remember_target_root(payload: dict[str, object], root: Path) -> None:
+    controller = repo_root(str(payload.get("cwd") or "") or None)
+    if controller == root:
+        return
+    active = active_state(controller)
+    active["target_root"] = str(root.resolve())
+    write_json(active_path(controller), active)
+
+
+def hook_facts(payload: dict[str, object], root: Path, tool: str, tool_input: dict[str, object]) -> dict[str, object]:
+    change_facts = facts(root, tool, tool_input)
+    controller = repo_root(str(payload.get("cwd") or "") or None)
+    if controller != root and controller in root.parents:
+        prefix = root.relative_to(controller).as_posix() + "/"
+        change_facts["paths"] = [path.removeprefix(prefix) if isinstance(path, str) else path for path in change_facts.get("paths", [])]
+    return change_facts
 
 
 def git_common_dir(root: Path) -> Path:
@@ -586,6 +679,11 @@ def policy(root: Path) -> dict[str, object]:
 
 def active_path(root: Path) -> Path:
     return state_dir(root) / "active.json"
+
+
+def active_state(root: Path) -> dict[str, object]:
+    loaded = read_json(active_path(root), {})
+    return loaded if isinstance(loaded, dict) else {}
 
 
 def contract_path(root: Path) -> Path:
@@ -979,7 +1077,7 @@ def facts(root: Path, tool: str, tool_input: dict[str, object]) -> dict[str, obj
     if tool in {"apply_patch", "ApplyPatch"}:
         return parse_patch(root, str(tool_input.get("command") or tool_input.get("patch") or ""))
     if tool == "Bash":
-        command = str(tool_input.get("command") or "")
+        command = tool_command(tool_input)
         if "apply_patch" in command or "*** Begin Patch" in command or "diff --git" in command:
             return parse_patch(root, command)
         return {"paths": [], "added": 0, "deleted": 0, "text": "", "add_file": False, "delete_file": False, "patch_like": False}
@@ -1016,7 +1114,7 @@ def guard_command(command: str) -> bool:
 def mutating(tool: str, tool_input: dict[str, object]) -> bool:
     if tool in MUTATING_TOOLS:
         return True
-    command = str(tool_input.get("command") or "")
+    command = tool_command(tool_input)
     return tool == "Bash" and not guard_command(command) and not ("apply_patch" in command or "*** Begin Patch" in command or "diff --git" in command) and bool(HIDDEN_WRITE_RE.search(command))
 
 
@@ -2030,9 +2128,11 @@ def declare(args: argparse.Namespace) -> None:
 
 
 def pretool(payload: dict[str, object]) -> None:
-    root = repo_root(str(payload.get("cwd") or "") or None)
     tool = str(payload.get("tool_name") or "")
     tool_input = payload.get("tool_input") if isinstance(payload.get("tool_input"), dict) else {}
+    root = checked_hook_root("PreToolUse", payload, tool, tool_input)
+    if root is None:
+        return
     if not mutating(tool, tool_input):
         return
     current_contract = contract(root)
@@ -2042,22 +2142,25 @@ def pretool(payload: dict[str, object]) -> None:
     if errors:
         deny("PreToolUse", "Lean Code Gate blocked mutation before contract:\n- " + "\n- ".join(errors))
         return
-    command = str(tool_input.get("command") or "")
+    command = tool_command(tool_input)
     if tool == "Bash" and active_policy["block_hidden_bash_writes"] and not ("apply_patch" in command or "*** Begin Patch" in command or "diff --git" in command) and not current_contract.get("allow_bash_writes"):
         deny("PreToolUse", "Hidden file-changing Bash blocked. Use Edit/apply_patch or redeclare --allow-bash-writes with a reason.")
         return
-    change_facts = facts(root, tool, tool_input)
+    change_facts = hook_facts(payload, root, tool, tool_input)
     errors = check_change(change_facts, current_contract, active_policy, tool)
     if errors:
         deny("PreToolUse", "Lean Code Gate blocked over-broad or low-quality mutation:\n- " + "\n- ".join(errors))
         return
+    remember_target_root(payload, root)
     log_event(root, {"event": "mutation_allowed", "tool": tool, **{key: change_facts[key] for key in ("paths", "added", "deleted")}})
 
 
 def permission_request(payload: dict[str, object]) -> None:
-    root = repo_root(str(payload.get("cwd") or "") or None)
     tool = str(payload.get("tool_name") or "")
     tool_input = payload.get("tool_input") if isinstance(payload.get("tool_input"), dict) else {}
+    root = checked_hook_root("PermissionRequest", payload, tool, tool_input)
+    if root is None:
+        return
     if mutating(tool, tool_input):
         errors = contract_errors(contract(root), policy(root), root)
         if errors:
@@ -2065,38 +2168,50 @@ def permission_request(payload: dict[str, object]) -> None:
 
 
 def posttool(payload: dict[str, object], failed: bool = False) -> None:
-    root = repo_root(str(payload.get("cwd") or "") or None)
     tool = str(payload.get("tool_name") or "")
     tool_input = payload.get("tool_input") if isinstance(payload.get("tool_input"), dict) else {}
+    root = checked_hook_root(None, payload, tool, tool_input)
+    if root is None:
+        return
     if mutating(tool, tool_input):
-        log_event(root, {"event": "mutation_failed" if failed else "mutation_finished", "tool": tool, **facts(root, tool, tool_input)})
-    if tool == "Bash" and verify_cmd(str(tool_input.get("command") or "")):
+        log_event(root, {"event": "mutation_failed" if failed else "mutation_finished", "tool": tool, **hook_facts(payload, root, tool, tool_input)})
+    command = tool_command(tool_input)
+    if tool == "Bash" and verify_cmd(command):
         response = payload.get("tool_response")
         exit_code = response_exit_code(response)
         command_failed = failed or (exit_code is not None and exit_code != 0)
-        log_event(root, {"event": "verify_failed" if command_failed else "verify_passed", "command": str(tool_input.get("command") or ""), "exit_code": exit_code})
+        for verify_root in stop_roots(payload):
+            log_event(verify_root, {"event": "verify_failed" if command_failed else "verify_passed", "command": command, "exit_code": exit_code})
 
 
 def stop(payload: dict[str, object]) -> None:
-    root = repo_root(str(payload.get("cwd") or "") or None)
+    roots = stop_roots(payload)
+    if not roots:
+        return
+    all_errors: list[str] = []
     if payload.get("stop_hook_active"):
-        issues = final_errors(root, contract(root), policy(root))
+        for root in roots:
+            issues = final_errors(root, contract(root), policy(root))
+            all_errors.extend(f"{root}: {issue}" if len(roots) > 1 else issue for issue in issues)
+        issues = all_errors
         if issues:
             emit({"systemMessage": "Lean Code Gate still has unresolved issues after a Stop continuation: " + " | ".join(issues[:8])})
         return
-    current_contract = contract(root)
-    active_policy = policy(root)
-    errors = final_errors(root, current_contract, active_policy)
-    if active_policy["run_quality_gate_on_stop"]:
-        fail_warnings = bool(active_policy["fail_on_quality_warnings"]) and not (current_contract or {}).get("allow_quality_warnings")
-        quality = run_quality_gate(root, str((current_contract or {}).get("base_ref") or "") or None, fail_warnings)
-        if not quality["ok"]:
-            errors.extend(["Quality gate failed: " + error for error in quality["errors"]])
-    if errors:
+    for root in roots:
+        current_contract = contract(root)
+        active_policy = policy(root)
+        errors = final_errors(root, current_contract, active_policy)
+        if active_policy["run_quality_gate_on_stop"]:
+            fail_warnings = bool(active_policy["fail_on_quality_warnings"]) and not (current_contract or {}).get("allow_quality_warnings")
+            quality = run_quality_gate(root, str((current_contract or {}).get("base_ref") or "") or None, fail_warnings)
+            if not quality["ok"]:
+                errors.extend(["Quality gate failed: " + error for error in quality["errors"]])
+        all_errors.extend(f"{root}: {error}" if len(roots) > 1 else error for error in errors)
+    if all_errors:
         deny(
             "Stop",
             "Lean Code Gate final check failed:\n- "
-            + "\n- ".join(errors)
+            + "\n- ".join(all_errors)
             + "\nReduce the diff, remove bloat/escapes/duplication, run verification, or widen with a concrete reason.",
         )
 
