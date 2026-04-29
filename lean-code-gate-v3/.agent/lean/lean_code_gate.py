@@ -513,8 +513,9 @@ def sh(cmd: list[str], cwd: Path, timeout: int = 15) -> subprocess.CompletedProc
 
 
 def repo_root(cwd: str | None = None) -> Path:
-    start = Path(cwd or os.getcwd()).expanduser()
-    if not start.exists():
+    configured = os.environ.get("LEAN_CODE_GATE_REPO_ROOT")
+    start = Path(configured or cwd or os.getcwd()).expanduser()
+    if not configured and not start.exists():
         start = Path(os.getcwd())
     start = start.resolve()
     result = sh(["git", "rev-parse", "--show-toplevel"], start)
@@ -637,10 +638,15 @@ def deny(event: str, reason: str) -> None:
         emit({"decision": "block", "reason": reason})
 
 
+def command_hint() -> str:
+    script = os.environ.get("LEAN_CODE_GATE_SCRIPT_PATH") or ".agent/lean/lean_code_gate.py"
+    return f"PYTHONDONTWRITEBYTECODE=1 python3 -B -S {json.dumps(script)}"
+
+
 def context(event: str) -> None:
     message = (
         "Lean Code Gate v3 active. Inspect first, then declare the smallest Lean Change Contract before mutating files. "
-        "Micro-fix form: `PYTHONDONTWRITEBYTECODE=1 python3 -B -S .agent/lean/lean_code_gate.py declare "
+        f"Micro-fix form: `{command_hint()} declare "
         "--minimal-preflight --intent \"...\" --scope \"file1,file2\" --task-type bugfix --verify \"pytest path/to/test.py\"`. "
         "Full production form adds --affected-surface, --authoritative-contract, --invariant, --reuse-path or --no-reuse-reason, "
         "--proof-plan, and --risk-check. Stop runs the quality gate: no fake-green suppressions, duplicate blocks, "
@@ -1749,7 +1755,7 @@ def minimal_preflight_errors(current_contract: dict[str, object], active_policy:
 def contract_errors(current_contract: dict[str, object], active_policy: dict[str, object]) -> list[str]:
     errors: list[str] = []
     if not current_contract:
-        return ["No active Lean Change Contract. Run `PYTHONDONTWRITEBYTECODE=1 python3 -B -S .agent/lean/lean_code_gate.py declare ...` before editing."]
+        return [f"No active Lean Change Contract. Run `{command_hint()} declare ...` before editing."]
     if not meaningful(current_contract.get("intent")):
         errors.append("Missing or placeholder intent.")
     scope = current_contract.get("scope") or []

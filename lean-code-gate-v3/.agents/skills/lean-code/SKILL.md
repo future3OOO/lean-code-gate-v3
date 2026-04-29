@@ -9,6 +9,8 @@ Use this skill for every task that may modify code, tests, build files, config, 
 
 The goal is the smallest correct production diff. The gate script is authoritative; the prose is just here because apparently agents still need a bedtime story before not ruining a repository.
 
+For global installs, use the gate script path shown by the hook reminder. The default repo-local path is `.agent/lean/lean_code_gate.py`. If Codex starts from a controller folder outside the target repo, the hook environment should set `LEAN_CODE_GATE_REPO_ROOT` to that repo.
+
 ## Required order
 
 1. Inspect before editing.

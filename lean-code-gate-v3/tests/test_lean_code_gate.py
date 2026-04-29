@@ -13,7 +13,12 @@ ROOT = Path(__file__).resolve().parents[1]
 GATE = ROOT / ".agent" / "lean" / "lean_code_gate.py"
 
 
-def run_gate(repo: Path, *args: str, payload: dict[str, object] | None = None) -> subprocess.CompletedProcess[str]:
+def run_gate(
+    repo: Path,
+    *args: str,
+    payload: dict[str, object] | None = None,
+    env: dict[str, str] | None = None,
+) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         ["python3", "-B", "-S", str(GATE), *args],
         cwd=repo,
@@ -22,6 +27,7 @@ def run_gate(repo: Path, *args: str, payload: dict[str, object] | None = None) -
         capture_output=True,
         check=False,
         timeout=20,
+        env={**os.environ, **(env or {})},
     )
 
 
@@ -156,6 +162,62 @@ def test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight() -> No
         result = run_gate(repo, "declare", "--intent", "edit app", "--scope", "src/app.py", "--verify", "pytest tests/test_app.py")
         assert result.returncode == 2
         assert "explicit --task-type" in result.stderr
+
+
+def test_global_script_path_env_updates_hook_guidance() -> None:
+    with repo_fixture() as repo:
+        script_path = "custom/gate script.py"
+        result = run_gate(
+            repo,
+            "session-start",
+            payload={"cwd": str(repo), "hook_event_name": "SessionStart"},
+            env={"LEAN_CODE_GATE_SCRIPT_PATH": script_path},
+        )
+        data = json.loads(result.stdout)
+        assert script_path in data["hookSpecificOutput"]["additionalContext"]
+
+        result = run_gate(
+            repo,
+            "pretool",
+            payload={
+                "cwd": str(repo),
+                "hook_event_name": "PreToolUse",
+                "tool_name": "apply_patch",
+                "tool_input": {"command": "*** Begin Patch\n*** Add File: src/new.py\n+value = 1\n*** End Patch"},
+            },
+            env={"LEAN_CODE_GATE_SCRIPT_PATH": script_path},
+        )
+        data = json.loads(result.stdout)
+        assert script_path in data["reason"]
+
+
+def test_repo_root_env_keeps_state_in_target_repo_from_controller_cwd() -> None:
+    with repo_fixture() as repo:
+        controller = repo.parent
+        result = run_gate(
+            controller,
+            "declare",
+            "--minimal-preflight",
+            "--intent",
+            "fix small add bug",
+            "--scope",
+            "src/app.py,tests/test_app.py",
+            "--task-type",
+            "bugfix",
+            "--verify",
+            "pytest tests/test_app.py",
+            env={"LEAN_CODE_GATE_REPO_ROOT": str(repo)},
+        )
+        assert result.returncode == 0, result.stderr
+        assert json.loads((repo / ".agent" / "lean" / "state" / "contract.json").read_text(encoding="utf-8"))["intent"] == "fix small add bug"
+        assert not (controller / ".agent" / "lean" / "state" / "contract.json").exists()
+
+        result = run_gate(
+            controller,
+            "status",
+            env={"LEAN_CODE_GATE_REPO_ROOT": str(repo)},
+        )
+        assert json.loads(result.stdout)["contract"]["intent"] == "fix small add bug"
 
 
 def test_minimal_preflight_rejects_wide_budget_and_escape_hatches() -> None:
@@ -869,6 +931,8 @@ TESTS = [
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
     test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight,
+    test_global_script_path_env_updates_hook_guidance,
+    test_repo_root_env_keeps_state_in_target_repo_from_controller_cwd,
     test_minimal_preflight_rejects_wide_budget_and_escape_hatches,
     test_edit_rewrite_counts_as_changed_lines,
     test_pretool_blocks_out_of_scope_patch,

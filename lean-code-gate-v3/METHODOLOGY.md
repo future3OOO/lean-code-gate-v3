@@ -97,6 +97,14 @@ Recommended rollout:
 5. Tune policy only for measured false positives.
 6. Add the `check` command to CI or pre-commit for bypass resistance.
 
+### Codex global script and target root
+
+The default Codex config assumes the gate script is installed in the target repo at `.agent/lean/lean_code_gate.py`.
+
+If Codex hooks call a shared/global copy instead, set `LEAN_CODE_GATE_SCRIPT_PATH` to that script path in the hook environment. Hook reminders and blocked-mutation messages will then show the configured path instead of the repo-local default.
+
+If Codex starts from a controller folder while the target repo is nested, set `LEAN_CODE_GATE_REPO_ROOT` to the target repo path. Policy, state, diff checks, and verification status then stay anchored to that repo. Repo-local `.agent/lean/policy.json` remains optional for per-project policy overrides.
+
 ## Limits
 
 The gate is deterministic, not omniscient. It does not prove semantic correctness or global design optimality. It prevents common failure modes that correlate with bloated agent diffs: wide scope, hidden writes, duplicate code, fake green, unverified edits, and unchecked growth. That is not magic, which is rude, but it is enforceable.
