@@ -70,6 +70,38 @@ Concrete first pass:
 
 The original repo identity design used the origin URL as identity material, then added parsing to strip credentials. This plan would have forced the earlier question: is the origin URL necessary at all? For PR #21, repo root plus git common dir already carried the required identity, so the lean fix was to drop origin URL handling entirely.
 
+## Slop Scan Lessons
+
+Slop Scan's strongest benchmark separation came from direct implementation habits, not broad size metrics: promise/default fallbacks, generic status envelopes, swallowed or obscured errors, stringified unknown errors, pass-through wrappers, generic record casts, and duplicated test mock setup. Lean Gate should not port that scanner wholesale. It should use those signals to improve pre-writing pressure before code is added.
+
+Low-bloat slices:
+
+1. Preserve failure information
+
+   Contract guidance should challenge changed code that catches, rejects, or logs an error and then returns a default value. The first question is whether the caller should see the failure instead. A narrow later warning can target added `catch` or promise-rejection branches that return `null`, `undefined`, empty collections, `false`, or generic success values.
+
+2. Require wrapper value
+
+   Pass-through wrappers should be justified by behavior, normalization, instrumentation, or a stable compatibility boundary. If a wrapper only renames a call, the lean fix is to remove it or call the existing function directly.
+
+3. Keep result envelopes contractual
+
+   Generic `{ success, data, error, message }` envelopes should exist only when an API boundary or established local contract requires that shape. Internal code should prefer the existing domain result, exception, or typed error path.
+
+4. Share test setup only after real duplication
+
+   Duplicated mock setup is a useful slop signal, but the Lean Gate rule stays narrow: if changed tests repeat the same mock wiring, prefer the existing fixture or add a helper only when there are at least two current call sites. Do not introduce speculative test factories.
+
+5. Calibrate with touched-surface metrics
+
+   The next calibration pass should report rule-family hits per touched file, touched function, and KLOC, not only findings per PR. Slop Scan's repo-wide ratios explain why broad pre/post averages can look flat when the real signal sits in specific rule families.
+
+## Slop Rules Not To Build First
+
+- Do not add directory fanout, barrel-density, or over-fragmentation rules until lower-noise slices are measured.
+- Do not add a broad AST framework or dependency-heavy scanner for this plan.
+- Do not create a separate "slop gate"; these checks belong in the Lean Change Contract and existing quality pass.
+
 ## Future Placement
 
 This file is a planning artifact. If the rule is implemented, the core principle should move into `METHODOLOGY.md` beside the other gate rules, while implementation notes can stay in a plan or issue. The security rule should not become conceptually separate from the rest of the Lean Change Contract.
@@ -77,8 +109,10 @@ This file is a planning artifact. If the rule is implemented, the core principle
 ## Acceptance Criteria
 
 - Agents are prompted to ask "can this value be removed?" before sanitizing it.
+- Agents are prompted to ask "should this wrapper, fallback, or generic envelope exist?" before implementing it.
 - Reviewer comments about secret exposure are resolved by eliminating unnecessary inputs when possible.
 - Runtime state, logs, and status output avoid raw sensitive values.
+- Any Slop Scan-inspired detector starts narrow, explainable, and tied to touched code.
 - False positives remain low enough that developers do not bypass the gate.
 
 ## Open Questions
@@ -87,3 +121,4 @@ This file is a planning artifact. If the rule is implemented, the core principle
 - Which sensitive source patterns are high confidence enough for deterministic blocking?
 - Should contracts get a `--sensitive-input` field, or should this stay inside `--risk-check`?
 - Should the rule be policy-overridable for repos that legitimately handle credential-bearing inputs, or hardcoded?
+- Should wrapper/fallback/envelope checks stay inside `--risk-check`, or become structured contract prompts after calibration?
