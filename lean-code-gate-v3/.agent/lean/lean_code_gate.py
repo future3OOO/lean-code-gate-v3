@@ -529,6 +529,26 @@ def repo_root(cwd: str | None = None) -> Path:
     return start
 
 
+def git_common_dir(root: Path) -> Path:
+    result = sh(["git", "rev-parse", "--git-common-dir"], root, timeout=10)
+    if result.returncode != 0 or not result.stdout.strip():
+        return (root / ".git").resolve()
+    value = Path(result.stdout.strip())
+    return (value if value.is_absolute() else root / value).resolve()
+
+
+def repo_identity(root: Path) -> dict[str, str]:
+    resolved_root = root.resolve()
+    common_dir = git_common_dir(resolved_root)
+    material = "\0".join((str(resolved_root), str(common_dir)))
+    return {
+        "repo_id": hashlib.sha256(material.encode("utf-8")).hexdigest()[:12],
+        "repo_root": str(resolved_root),
+        "git_common_dir": str(common_dir),
+        "state_dir": str(resolved_root / STATE_DIR),
+    }
+
+
 def state_dir(root: Path) -> Path:
     path = root / STATE_DIR
     path.mkdir(parents=True, exist_ok=True)
@@ -643,9 +663,12 @@ def deny(event: str, reason: str) -> None:
         emit({"decision": "block", "reason": reason})
 
 
-def command_hint() -> str:
+def command_hint(root: Path | None = None) -> str:
     script = os.environ.get("LEAN_CODE_GATE_SCRIPT_PATH") or ".agent/lean/lean_code_gate.py"
-    return f"PYTHONDONTWRITEBYTECODE=1 python3 -B -S {shlex.quote(script)}"
+    command = f"PYTHONDONTWRITEBYTECODE=1 python3 -B -S {shlex.quote(script)}"
+    if root is not None and os.environ.get("LEAN_CODE_GATE_REPO_ROOT"):
+        return f"LEAN_CODE_GATE_REPO_ROOT={shlex.quote(str(root))} {command}"
+    return command
 
 
 def context(event: str) -> None:
@@ -690,7 +713,13 @@ def match(path: str, globs: list[str]) -> bool:
 
 def internal_gate_path(path: str) -> bool:
     normalized = norm_path(path)
-    return normalized == STATE_DIR or normalized.startswith(STATE_DIR + "/")
+    return (
+        normalized == STATE_DIR
+        or normalized.startswith(STATE_DIR + "/")
+        or normalized == ".agent/lean/__pycache__"
+        or normalized.startswith(".agent/lean/__pycache__/")
+        or (normalized.startswith(".agent/lean/") and normalized.endswith(".pyc"))
+    )
 
 
 def run_git(repo: Path, args: list[str]) -> subprocess.CompletedProcess[str]:
@@ -905,6 +934,7 @@ def collect_scope(repo: Path, base_ref: str | None) -> GateContext:
             numstats = parse_numstat(git_text(repo, ["diff", "--numstat", "HEAD~1..HEAD"]))
             base_for_file = "HEAD~1"
     changed |= {path for path in untracked if not internal_gate_path(path)}
+    changed = {path for path in changed if not internal_gate_path(path)}
     untracked = {path for path in untracked if not internal_gate_path(path)}
     numstats = [record for record in numstats if not internal_gate_path(record.path)]
     raw_diff = "\n".join(part for part in raw_diffs if part)
@@ -1757,10 +1787,37 @@ def minimal_preflight_errors(current_contract: dict[str, object], active_policy:
     return errors
 
 
-def contract_errors(current_contract: dict[str, object], active_policy: dict[str, object]) -> list[str]:
+def contract_identity_errors(root: Path, current_contract: dict[str, object]) -> list[str]:
+    if not current_contract:
+        return []
+    identity = repo_identity(root)
+    stored_id = str(current_contract.get("repo_id") or "")
+    if not stored_id:
+        return [
+            "Lean Change Contract is missing repo_id. "
+            f"Redeclare for target repo_id {identity['repo_id']} at {identity['repo_root']}. "
+            f"State path: {contract_path(root)}. "
+            f"Run `{command_hint(root)} declare ...` to redeclare for the current repo."
+        ]
+    if stored_id != identity["repo_id"]:
+        stored_root = str(current_contract.get("repo_root") or "unknown")
+        return [
+            "Lean Change Contract belongs to "
+            f"repo_id {stored_id} at {stored_root}, but current target is "
+            f"repo_id {identity['repo_id']} at {identity['repo_root']}. "
+            f"State path: {contract_path(root)}. "
+            f"Run `{command_hint(root)} declare ...` to redeclare for the current repo."
+        ]
+    return []
+
+
+def contract_errors(current_contract: dict[str, object], active_policy: dict[str, object], root: Path | None = None) -> list[str]:
     errors: list[str] = []
     if not current_contract:
-        return [f"No active Lean Change Contract. Run `{command_hint()} declare ...` before editing."]
+        target = f" Target repo: {root.resolve()}. State path: {contract_path(root)}." if root is not None else ""
+        return [f"No active Lean Change Contract.{target} Run `{command_hint(root)} declare ...` before editing."]
+    if root is not None:
+        errors.extend(contract_identity_errors(root, current_contract))
     if not meaningful(current_contract.get("intent")):
         errors.append("Missing or placeholder intent.")
     scope = current_contract.get("scope") or []
@@ -1852,7 +1909,7 @@ def final_errors(root: Path, current_contract: dict[str, object], active_policy:
         )
         return ["Files changed but no Lean Change Contract exists: " + ", ".join(changed[:20])] if changed else []
     current_delta = delta(root, current_contract)
-    errors = contract_errors(current_contract, active_policy)
+    errors = contract_errors(current_contract, active_policy, root)
     files = list(current_delta["files"])
     new_files = sorted(path for path in added_file_paths(root) if path in files)
     if new_files and not current_contract.get("allow_new_files"):
@@ -1924,8 +1981,10 @@ def declare(args: argparse.Namespace) -> None:
     default_max_files = active_policy["minimal_preflight_max_files"] if args.minimal_preflight else active_policy["default_max_files"]
     default_max_added = active_policy["minimal_preflight_max_added_lines"] if args.minimal_preflight else active_policy["default_max_added_lines"]
     default_max_changed = active_policy["minimal_preflight_max_changed_lines"] if args.minimal_preflight else active_policy["default_max_changed_lines"]
+    identity = repo_identity(root)
     current_contract = {
         "version": VERSION,
+        **identity,
         "intent": args.intent,
         "scope": norm_list(args.scope),
         "task_type": args.task_type,
@@ -1961,7 +2020,7 @@ def declare(args: argparse.Namespace) -> None:
         "baseline": baseline(root),
         "widened_from": old or None,
     }
-    errors = contract_errors(current_contract, active_policy)
+    errors = contract_errors(current_contract, active_policy, root)
     if errors:
         print("Lean Change Contract rejected:\n- " + "\n- ".join(errors), file=sys.stderr)
         raise SystemExit(2)
@@ -1979,7 +2038,7 @@ def pretool(payload: dict[str, object]) -> None:
     current_contract = contract(root)
     active_policy = policy(root)
     apply_active_policy(active_policy)
-    errors = contract_errors(current_contract, active_policy)
+    errors = contract_errors(current_contract, active_policy, root)
     if errors:
         deny("PreToolUse", "Lean Code Gate blocked mutation before contract:\n- " + "\n- ".join(errors))
         return
@@ -1999,8 +2058,10 @@ def permission_request(payload: dict[str, object]) -> None:
     root = repo_root(str(payload.get("cwd") or "") or None)
     tool = str(payload.get("tool_name") or "")
     tool_input = payload.get("tool_input") if isinstance(payload.get("tool_input"), dict) else {}
-    if mutating(tool, tool_input) and not contract(root):
-        deny("PermissionRequest", "Mutation approval denied because no Lean Change Contract is active.")
+    if mutating(tool, tool_input):
+        errors = contract_errors(contract(root), policy(root), root)
+        if errors:
+            deny("PermissionRequest", "Mutation approval denied:\n- " + "\n- ".join(errors))
 
 
 def posttool(payload: dict[str, object], failed: bool = False) -> None:
@@ -2043,7 +2104,16 @@ def stop(payload: dict[str, object]) -> None:
 def status(args: argparse.Namespace) -> None:
     root = repo_root(args.cwd)
     current_contract = contract(root)
-    print(json.dumps({"contract": current_contract, "delta": delta(root, current_contract) if current_contract else {}, "policy": policy(root)}, indent=2, sort_keys=True))
+    identity = repo_identity(root)
+    runtime = {
+        "cwd": os.getcwd(),
+        "env_repo_root": os.environ.get("LEAN_CODE_GATE_REPO_ROOT") or "",
+        "contract_path": str(contract_path(root)),
+        "contract_repo_id": str(current_contract.get("repo_id") or "") if current_contract else "",
+        "contract_matches_repo": not contract_identity_errors(root, current_contract) if current_contract else False,
+        **identity,
+    }
+    print(json.dumps({"runtime": runtime, "contract": current_contract, "delta": delta(root, current_contract) if current_contract else {}, "policy": policy(root)}, indent=2, sort_keys=True))
 
 
 def reset(args: argparse.Namespace) -> None:

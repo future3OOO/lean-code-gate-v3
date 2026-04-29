@@ -11,6 +11,10 @@ The goal is the smallest correct production diff. The gate script is authoritati
 
 For global installs, set `LEAN_CODE_GATE_SCRIPT_PATH` to the gate script path shown by the hook reminder; the default repo-local path is `.agent/lean/lean_code_gate.py`. If Codex starts from a controller folder outside the target repo, the hook environment should set `LEAN_CODE_GATE_REPO_ROOT` to that repo.
 
+The gate keeps runtime state in the target repo at `.agent/lean/state/`. That state is intentionally repo-local, stamped with a repo id, ignored by gate diff checks, and should not be deleted during active work. Run `status` when root selection is unclear; it prints the resolved repo root, repo id, state path, and whether the active contract matches.
+
+After upgrading to repo-id state, older unstamped contracts must be redeclared once.
+
 ## Required order
 
 1. Inspect before editing.
