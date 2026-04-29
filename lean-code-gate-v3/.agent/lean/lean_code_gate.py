@@ -2180,7 +2180,8 @@ def posttool(payload: dict[str, object], failed: bool = False) -> None:
         response = payload.get("tool_response")
         exit_code = response_exit_code(response)
         command_failed = failed or (exit_code is not None and exit_code != 0)
-        log_event(root, {"event": "verify_failed" if command_failed else "verify_passed", "command": command, "exit_code": exit_code})
+        for verify_root in stop_roots(payload):
+            log_event(verify_root, {"event": "verify_failed" if command_failed else "verify_passed", "command": command, "exit_code": exit_code})
 
 
 def stop(payload: dict[str, object]) -> None:
