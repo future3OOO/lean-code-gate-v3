@@ -547,8 +547,50 @@ def tool_command(tool_input: dict[str, object]) -> str:
     return str(tool_input.get("command") or tool_input.get("cmd") or "")
 
 
-def hook_cwd(payload: dict[str, object], tool_input: dict[str, object]) -> str | None:
-    return str(tool_input.get("workdir") or tool_input.get("cwd") or payload.get("cwd") or "") or None
+def has_nested_git_repo(root: Path) -> bool:
+    return any(path.exists() for path in root.glob("*/.git"))
+
+
+def checked_hook_root(event: str | None, payload: dict[str, object], tool: str, tool_input: dict[str, object], *, require_unambiguous: bool = False) -> Path | None:
+    try:
+        return hook_root(payload, tool, tool_input, require_unambiguous=require_unambiguous)
+    except ValueError as error:
+        if event:
+            deny(event, str(error))
+        return None
+
+
+def hook_root(payload: dict[str, object], tool: str, tool_input: dict[str, object], *, require_unambiguous: bool = False) -> Path:
+    tool_cwd = str(tool_input.get("workdir") or tool_input.get("cwd") or "") or None
+    if tool_cwd:
+        return repo_root(tool_cwd)
+
+    root = repo_root(str(payload.get("cwd") or "") or None)
+    is_mutating = mutating(tool, tool_input)
+    if not is_mutating and not require_unambiguous:
+        return root
+
+    if is_mutating:
+        path_roots: set[Path] = set()
+        for value in facts(root, tool, tool_input).get("paths", []):
+            if isinstance(value, str):
+                path = (root / value).resolve()
+                found = git_toplevel(path if path.is_dir() else path.parent)
+                if found is not None and found != root and root in found.parents:
+                    path_roots.add(found)
+        if len(path_roots) == 1:
+            return next(iter(path_roots))
+        if len(path_roots) > 1:
+            raise ValueError("Lean Code Gate could not choose between nested target repos: " + ", ".join(str(path) for path in sorted(path_roots)))
+
+    if has_nested_git_repo(root):
+        raise ValueError(
+            "Lean Code Gate cannot resolve a unique target repo from controller folder "
+            f"{root}. Hook payload did not include tool workdir/cwd. Start the session "
+            "inside the target repo, set LEAN_CODE_GATE_REPO_ROOT as a fallback, or use a hook runtime that passes tool workdir."
+        )
+
+    return root
 
 
 def git_common_dir(root: Path) -> Path:
@@ -2054,7 +2096,9 @@ def declare(args: argparse.Namespace) -> None:
 def pretool(payload: dict[str, object]) -> None:
     tool = str(payload.get("tool_name") or "")
     tool_input = payload.get("tool_input") if isinstance(payload.get("tool_input"), dict) else {}
-    root = repo_root(hook_cwd(payload, tool_input))
+    root = checked_hook_root("PreToolUse", payload, tool, tool_input)
+    if root is None:
+        return
     if not mutating(tool, tool_input):
         return
     current_contract = contract(root)
@@ -2079,7 +2123,9 @@ def pretool(payload: dict[str, object]) -> None:
 def permission_request(payload: dict[str, object]) -> None:
     tool = str(payload.get("tool_name") or "")
     tool_input = payload.get("tool_input") if isinstance(payload.get("tool_input"), dict) else {}
-    root = repo_root(hook_cwd(payload, tool_input))
+    root = checked_hook_root("PermissionRequest", payload, tool, tool_input)
+    if root is None:
+        return
     if mutating(tool, tool_input):
         errors = contract_errors(contract(root), policy(root), root)
         if errors:
@@ -2089,7 +2135,9 @@ def permission_request(payload: dict[str, object]) -> None:
 def posttool(payload: dict[str, object], failed: bool = False) -> None:
     tool = str(payload.get("tool_name") or "")
     tool_input = payload.get("tool_input") if isinstance(payload.get("tool_input"), dict) else {}
-    root = repo_root(hook_cwd(payload, tool_input))
+    root = checked_hook_root(None, payload, tool, tool_input)
+    if root is None:
+        return
     if mutating(tool, tool_input):
         log_event(root, {"event": "mutation_failed" if failed else "mutation_finished", "tool": tool, **facts(root, tool, tool_input)})
     command = tool_command(tool_input)
@@ -2101,7 +2149,9 @@ def posttool(payload: dict[str, object], failed: bool = False) -> None:
 
 
 def stop(payload: dict[str, object]) -> None:
-    root = repo_root(str(payload.get("cwd") or "") or None)
+    root = checked_hook_root("Stop", payload, "", {}, require_unambiguous=True)
+    if root is None:
+        return
     if payload.get("stop_hook_active"):
         issues = final_errors(root, contract(root), policy(root))
         if issues:

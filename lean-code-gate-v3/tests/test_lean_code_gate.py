@@ -57,21 +57,26 @@ def git(repo: Path, *args: str) -> None:
 def repo_fixture() -> Iterator[Path]:
     with tempfile.TemporaryDirectory() as tmp:
         repo = Path(tmp)
-        (repo / ".agent" / "lean").mkdir(parents=True)
-        shutil.copy2(GATE, repo / ".agent" / "lean" / "lean_code_gate.py")
-        (repo / "src").mkdir()
-        (repo / "tests").mkdir()
-        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\n", encoding="utf-8")
-        (repo / "tests" / "test_app.py").write_text(
-            "from src.app import add\n\ndef test_add():\n    assert add(1, 2) == 3\n",
-            encoding="utf-8",
-        )
-        git(repo, "init")
-        git(repo, "config", "user.email", "test@example.com")
-        git(repo, "config", "user.name", "Test User")
-        git(repo, "add", ".")
-        git(repo, "commit", "--no-gpg-sign", "-m", "init")
+        init_repo_fixture(repo)
         yield repo
+
+
+def init_repo_fixture(repo: Path) -> None:
+    repo.mkdir(parents=True, exist_ok=True)
+    (repo / ".agent" / "lean").mkdir(parents=True)
+    shutil.copy2(GATE, repo / ".agent" / "lean" / "lean_code_gate.py")
+    (repo / "src").mkdir()
+    (repo / "tests").mkdir()
+    (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\n", encoding="utf-8")
+    (repo / "tests" / "test_app.py").write_text(
+        "from src.app import add\n\ndef test_add():\n    assert add(1, 2) == 3\n",
+        encoding="utf-8",
+    )
+    git(repo, "init")
+    git(repo, "config", "user.email", "test@example.com")
+    git(repo, "config", "user.name", "Test User")
+    git(repo, "add", ".")
+    git(repo, "commit", "--no-gpg-sign", "-m", "init")
 
 
 def declare_valid(repo: Path, *, task_type: str = "feature", scope: str = "src/app.py,tests/test_app.py") -> None:
@@ -243,6 +248,62 @@ def test_repo_root_env_keeps_state_in_target_repo_from_controller_cwd() -> None:
             )
             assert result.returncode == 0
             assert result.stdout == ""
+
+
+def test_hook_resolves_nested_repo_from_changed_path_without_workdir() -> None:
+    with tempfile.TemporaryDirectory(prefix="gate-controller-") as tmp:
+        controller = Path(tmp)
+        git(controller, "init")
+        git(controller, "config", "user.email", "test@example.com")
+        git(controller, "config", "user.name", "Test User")
+        nested = controller / "gate"
+        init_repo_fixture(nested)
+        declare_minimal(nested)
+
+        result = run_gate(
+            controller,
+            "pretool",
+            payload={
+                "cwd": str(controller),
+                "hook_event_name": "PreToolUse",
+                "tool_name": "apply_patch",
+                "tool_input": {
+                    "command": "*** Begin Patch\n*** Update File: gate/src/app.py\n@@\n-def add(a: int, b: int) -> int:\n+def add(a: int, b: int) -> int:\n*** End Patch"
+                },
+            },
+        )
+
+        assert result.returncode == 0, result.stdout
+        assert (nested / ".agent" / "lean" / "state" / "events.jsonl").exists()
+        assert not (controller / ".agent" / "lean" / "state" / "events.jsonl").exists()
+
+
+def test_hook_fails_closed_when_controller_target_is_ambiguous() -> None:
+    with tempfile.TemporaryDirectory(prefix="gate-controller-") as tmp:
+        controller = Path(tmp)
+        git(controller, "init")
+        git(controller, "config", "user.email", "test@example.com")
+        git(controller, "config", "user.name", "Test User")
+        nested = controller / "gate"
+        init_repo_fixture(nested)
+        declare_minimal(nested)
+
+        result = run_gate(
+            controller,
+            "pretool",
+            payload={
+                "cwd": str(controller),
+                "hook_event_name": "PreToolUse",
+                "tool_name": "Bash",
+                "tool_input": {"cmd": "git checkout -b test-branch"},
+            },
+        )
+
+        data = json.loads(result.stdout)
+        assert data["decision"] == "block"
+        assert "cannot resolve a unique target repo" in data["reason"]
+        assert "tool workdir/cwd" in data["reason"]
+        assert "No active Lean Change Contract" not in data["reason"]
 
 
 def test_repo_root_env_rejects_missing_target_repo() -> None:
@@ -1085,6 +1146,8 @@ TESTS = [
     test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight,
     test_global_script_path_env_updates_hook_guidance,
     test_repo_root_env_keeps_state_in_target_repo_from_controller_cwd,
+    test_hook_resolves_nested_repo_from_changed_path_without_workdir,
+    test_hook_fails_closed_when_controller_target_is_ambiguous,
     test_repo_root_env_rejects_missing_target_repo,
     test_repo_root_env_rejects_non_git_target_repo,
     test_repo_identity_does_not_persist_origin_url_credentials,
