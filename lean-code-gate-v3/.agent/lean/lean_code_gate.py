@@ -1543,7 +1543,8 @@ def symbol_is_called_nearby(symbol: str, lines: list[tuple[int, str]], new_line:
     escaped = re.escape(symbol)
     self_def = re.compile(
         rf"^\s*(?:export\s+default\s+|export\s+)?(?:public\s+|private\s+|protected\s+)?"
-        rf"(?:static\s+)?(?:pub\s+)?(?:async\s+)?(?:def|function|class|func|fn)\s+{escaped}\b"
+        rf"(?:static\s+)?(?:pub\s+)?(?:async\s+)?(?:def|function|class|func|fn)\s+"
+        rf"(?:\([^)]*\)\s+)?{escaped}\b"
     )
     call_pattern = re.compile(rf"\b{escaped}\s*\(")
     return any(

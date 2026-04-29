@@ -434,6 +434,43 @@ def test_exact_name_reimplementation_across_files_fires() -> None:
         ), data["reuseFindings"]
 
 
+def test_def_line_filter_handles_go_receiver_methods() -> None:
+    # Pins coverage of Go receiver-method def syntax in symbol_is_called_nearby's
+    # self_def regex. Go's `func (r *Repo) ParseHTMLPayload(...)` syntax has the
+    # receiver between `func` and the method name; an earlier regex required
+    # the name immediately after the keyword, so the def line was treated as
+    # a real call and the reuse candidate was wrongly suppressed.
+    with repo_fixture() as repo:
+        (repo / "src" / "parser.go").write_text(
+            "package main\n\n"
+            "type Repo struct{}\n\n"
+            "func (r *Repo) ParseHTMLPayload(blob []byte) string {\n"
+            "    return string(blob)\n"
+            "}\n",
+            encoding="utf-8",
+        )
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed go parser")
+        (repo / "src" / "extra.go").write_text(
+            "package main\n\n"
+            "type Other struct{}\n\n"
+            "func (o *Other) ParseHTMLPayload(blob []byte) string {\n"
+            "    txt := string(blob)\n"
+            "    return txt\n"
+            "}\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        # Same-name reimplementation across files must fire as reuse, even
+        # for Go receiver-method syntax.
+        assert code == 2, data
+        assert any(
+            f.get("newSymbol") == "ParseHTMLPayload"
+            and f.get("existingSymbol") == "ParseHTMLPayload"
+            for f in data.get("reuseFindings", [])
+        ), data.get("reuseFindings")
+
+
 def test_def_line_filter_is_symbol_aware_not_blanket() -> None:
     # Pins the precision form of the def-line filter: it must skip the def
     # line *for the symbol being searched*, not every def line. A blanket
@@ -464,6 +501,7 @@ def test_def_line_filter_is_symbol_aware_not_blanket() -> None:
             encoding="utf-8",
         )
         code, data = check_json(repo)
+        assert code in (0, 2), data
         # The new file legitimately *calls* compute_html_signature on the
         # def line. The symbol-aware filter must keep that call visible so
         # no false reuse finding lists wrap_payload as reimplementing
@@ -775,6 +813,7 @@ TESTS = [
     test_reimplemented_dedupe_loop_fails_as_high_confidence_reuse,
     test_exact_name_reimplementation_across_files_fires,
     test_def_line_filter_is_symbol_aware_not_blanket,
+    test_def_line_filter_handles_go_receiver_methods,
     test_reuse_detector_suppresses_generic_same_name_false_positive,
     test_reuse_detector_suppresses_same_tokens_different_domain,
     test_reuse_detector_ignores_deleted_then_recreated_helper,
