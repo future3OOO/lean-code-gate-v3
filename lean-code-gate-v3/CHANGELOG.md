@@ -35,13 +35,15 @@ Format follows a loose [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Codex / global-install support
 - **Added** two environment variables for Codex global installs and controller-folder workflows (PR [#19](https://github.com/future3OOO/lean-code-gate-v3/pull/19) + hardening commit `027c528`):
   - `LEAN_CODE_GATE_SCRIPT_PATH` — gate script path used in hook reminders and blocked-mutation messages. Default: repo-local `.agent/lean/lean_code_gate.py`.
-  - `LEAN_CODE_GATE_REPO_ROOT` — target repo root when Codex starts from a controller folder outside the repo. Policy, state, diff checks, and verification status anchor to this path.
+  - `LEAN_CODE_GATE_REPO_ROOT` — fallback target repo root for hook runtimes that cannot provide target `workdir`/`cwd`.
 
   Hardening: `LEAN_CODE_GATE_REPO_ROOT` fails closed when set — exits non-zero on missing path or non-git directory. Command hints use `shlex.quote` (not `json.dumps`) so paths containing `$`, backticks, or spaces don't produce shell-unsafe copy-paste hints. Tests clear both env vars by default to isolate from ambient environment.
 
 - **Repo identity stamped into runtime state.** Lean Change Contracts now record a short `repo_id` derived from the resolved repo root and Git common dir, plus the resolved repo paths. Hook-time mutation checks reject contracts from another repo and reject old unstamped contracts with an explicit redeclare hint. This fixes controller-folder and nested-upstream cases where one `.agent/lean/state` directory could be mistaken for another. (PR [#21](https://github.com/future3OOO/lean-code-gate-v3/pull/21) — `2ce81e6`)
 
   Security hardening: repo identity no longer reads or persists the `origin` URL. Credential-bearing remotes, SSH-vs-HTTPS switches, and origin URL changes do not affect `repo_id` and cannot leak through `contract.json`, `status`, or `events.jsonl`.
+
+- **Controller-folder hook resolution hardened.** Hooks now prefer tool-supplied `workdir`/`cwd` and support Codex `cmd` payloads as well as Claude `command` payloads. When the hook runtime omits the tool cwd, mutating file operations can infer the nested target repo from changed paths; pathless mutating commands fail closed instead of silently using the controller repo. Stop and verification events are scoped to the remembered target repo(s), so dirty sibling repos under the same controller folder do not cause false final failures. (PR [#23](https://github.com/future3OOO/lean-code-gate-v3/pull/23) — `74f70c8`)
 
 ### Tests
 - **Added** focused regression tests for the reuse self-match fix that use real tracked diffs (commit a placeholder, modify, `git add` — so the def line lands in `ctx.added_lines`):
@@ -61,6 +63,10 @@ Format follows a loose [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
   - internal `.agent/lean/state` and `__pycache__` artifacts are ignored without a contract, including committed diff cases
 
   Verified by reverting the reuse self-match fix in-place: the buggy version fails on `test_python_exact_name_duplicate...`. With PR #21 merged, all 49 tests pass. Tests are not vacuous.
+- **Added** controller-folder hook regressions for PR #23:
+  - nested target repo inference from changed file paths when the hook payload has no tool `workdir`/`cwd`
+  - fail-closed behavior for ambiguous pathless mutating commands from a controller folder
+  - stop-hook checks scoped to remembered target repos, ignoring dirty unrelated nested repos
 
 ---
 
@@ -113,7 +119,7 @@ For an architectural review:
 1. **Start with PR [#15](https://github.com/future3OOO/lean-code-gate-v3/pull/15) (reuse self-match fix).** It's the only behavior change in `[Unreleased]` that is likely to shift findings on existing repos. The fix is small and well-tested, but the calibration corpus has not yet been re-run against it.
 2. **Then look at PR [#10](https://github.com/future3OOO/lean-code-gate-v3/pull/10) (bloat thresholds).** That's where the most policy values changed at once and where the gate's "what counts as bloat" judgement is most calibrated to the corpus.
 3. **PR [#7](https://github.com/future3OOO/lean-code-gate-v3/pull/7) and PR [#8](https://github.com/future3OOO/lean-code-gate-v3/pull/8)** define `excluded_path_globs` and `framework_override_names` — both maintained allowlists the agent has shown a tendency to grow. Worth reviewing whether the entries are principled or whether some belong in a more general detector (see open question below).
-4. **PR [#19](https://github.com/future3OOO/lean-code-gate-v3/pull/19) and PR [#21](https://github.com/future3OOO/lean-code-gate-v3/pull/21)** — Codex/controller env-var support plus repo-bound runtime state. Independent of detector calibration; review for whether `LEAN_CODE_GATE_REPO_ROOT` and `repo_id` semantics fit the rest of the project's idioms.
+4. **PR [#19](https://github.com/future3OOO/lean-code-gate-v3/pull/19), PR [#21](https://github.com/future3OOO/lean-code-gate-v3/pull/21), and PR [#23](https://github.com/future3OOO/lean-code-gate-v3/pull/23)** — Codex/controller env-var support, repo-bound runtime state, and hook target-root resolution. Independent of detector calibration; review for whether fallback `LEAN_CODE_GATE_REPO_ROOT`, `repo_id`, and controller-folder semantics fit the rest of the project's idioms.
 
 For a calibration data review, see the `lean-code-gate-calibration` repo's [`HANDOVER.md`](https://github.com/future3OOO/lean-code-gate-calibration/blob/main/HANDOVER.md), [`MAP.md`](https://github.com/future3OOO/lean-code-gate-calibration/blob/main/MAP.md), and [`IMPROVEMENT_PLAN.md`](https://github.com/future3OOO/lean-code-gate-calibration/blob/main/IMPROVEMENT_PLAN.md). Those are the agent's record of what was measured, what was learned, and what's still open.
 
