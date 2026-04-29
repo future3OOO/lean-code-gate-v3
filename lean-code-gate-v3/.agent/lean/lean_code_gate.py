@@ -1529,21 +1529,27 @@ def best_existing_match(new_item: SymbolDef, existing: list[SymbolDef], added_by
     return best
 
 
-_DEF_LINE = re.compile(r"^\s*(?:export\s+)?(?:async\s+)?(?:def|function|class)\b")
-
-
 def symbol_is_called_nearby(symbol: str, lines: list[tuple[int, str]], new_line: int) -> bool:
-    # Skip def lines themselves: the new symbol's own def line
-    # ("def foo(...)" / "function foo(...)" / "class Foo(...)") matches
-    # `\bfoo\s*\(` even though it's a definition not a call. Filtering by
-    # _DEF_LINE rather than `line_no == new_line` preserves detection for
-    # default-arg calls on the def line itself, e.g.
-    # `def wrap(x, fn=parse_html_payload()):` — that call is real.
-    pattern = re.compile(rf"\b{re.escape(symbol)}\s*\(")
+    # Skip lines that *define* `symbol` (so the def itself isn't read as a
+    # call to itself); keep lines that define a *different* symbol but call
+    # this one, e.g. `def wrap(x, fn=parse_html_payload()):` is a def of
+    # `wrap` and a real call to `parse_html_payload`.
+    #
+    # Covers def syntax across the languages SYMBOL_PATTERNS supports:
+    # Python/Ruby `def`, JS/TS `function` (with optional `export`,
+    # `export default`, `async`), `class`, Go `func`, Rust `fn` (with
+    # optional `pub`, `async`), PHP `function` (with optional visibility
+    # `public`/`private`/`protected` and `static`).
+    escaped = re.escape(symbol)
+    self_def = re.compile(
+        rf"^\s*(?:export\s+default\s+|export\s+)?(?:public\s+|private\s+|protected\s+)?"
+        rf"(?:static\s+)?(?:pub\s+)?(?:async\s+)?(?:def|function|class|func|fn)\s+{escaped}\b"
+    )
+    call_pattern = re.compile(rf"\b{escaped}\s*\(")
     return any(
-        not _DEF_LINE.match(text)
+        not self_def.match(text)
         and max(0, new_line - 8) <= line_no <= new_line + 20
-        and pattern.search(text)
+        and call_pattern.search(text)
         for line_no, text in lines
     )
 

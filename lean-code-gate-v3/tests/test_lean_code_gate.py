@@ -434,30 +434,43 @@ def test_exact_name_reimplementation_across_files_fires() -> None:
         ), data["reuseFindings"]
 
 
-def test_default_arg_call_on_def_line_still_counts_as_use() -> None:
-    # Pins the precision form of the def-line filter in symbol_is_called_nearby.
-    # A line-number exclusion would suppress this default-arg call ("fn=parse_html_payload()"
-    # appears on the def line). The _DEF_LINE regex skips lines that *are* defs
-    # but keeps the call detection alive when the def line itself contains a
-    # legitimate call to an existing symbol.
+def test_def_line_filter_is_symbol_aware_not_blanket() -> None:
+    # Pins the precision form of the def-line filter: it must skip the def
+    # line *for the symbol being searched*, not every def line. A blanket
+    # "any def line" filter would incorrectly suppress a real call on a
+    # *different* symbol's def line (e.g. default-arg call), causing false
+    # reuse findings.
+    #
+    # Setup: existing `compute_html_signature` with its real (non-generic)
+    # implementation tokens. New file defines `wrap_payload` whose default
+    # arg is `fn=compute_html_signature()` — a real call. That call must
+    # be visible to `symbol_is_called_nearby("compute_html_signature", ...)`
+    # so the candidate is suppressed and no false reuse finding fires for
+    # `wrap_payload` against `compute_html_signature`.
     with repo_fixture() as repo:
-        (repo / "src" / "parser.py").write_text(
-            "def parse_html_payload(blob):\n    return blob.decode('utf-8').strip()\n",
+        (repo / "src" / "signature.py").write_text(
+            "def compute_html_signature(blob):\n"
+            "    digest = hashlib.sha256(blob).hexdigest()\n"
+            "    return digest[:16]\n",
             encoding="utf-8",
         )
         git(repo, "add", ".")
-        git(repo, "commit", "--no-gpg-sign", "-m", "seed parser")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed signature")
         (repo / "src" / "wrapper.py").write_text(
-            "from src.parser import parse_html_payload\n"
-            "def wrap_payload(blob, fn=parse_html_payload):\n"
-            "    return fn(blob)\n",
+            "from src.signature import compute_html_signature\n"
+            "def wrap_payload(blob, fn=compute_html_signature()):\n"
+            "    digest = hashlib.sha256(blob).hexdigest()\n"
+            "    return fn or digest[:16]\n",
             encoding="utf-8",
         )
         code, data = check_json(repo)
-        # New file legitimately uses the existing symbol; no reuse finding.
-        assert code == 0, data
+        # The new file legitimately *calls* compute_html_signature on the
+        # def line. The symbol-aware filter must keep that call visible so
+        # no false reuse finding lists wrap_payload as reimplementing
+        # compute_html_signature.
         assert not any(
             f.get("newSymbol") == "wrap_payload"
+            and f.get("existingSymbol") == "compute_html_signature"
             for f in data.get("reuseFindings", [])
         ), data.get("reuseFindings")
 
@@ -761,7 +774,7 @@ TESTS = [
     test_quality_check_detects_reimplemented_existing_helper_name,
     test_reimplemented_dedupe_loop_fails_as_high_confidence_reuse,
     test_exact_name_reimplementation_across_files_fires,
-    test_default_arg_call_on_def_line_still_counts_as_use,
+    test_def_line_filter_is_symbol_aware_not_blanket,
     test_reuse_detector_suppresses_generic_same_name_false_positive,
     test_reuse_detector_suppresses_same_tokens_different_domain,
     test_reuse_detector_ignores_deleted_then_recreated_helper,
