@@ -1111,6 +1111,18 @@ def multiline_hits(path: str, text: str) -> list[str]:
 
 
 def scan_quality_escapes(ctx: GateContext) -> list[str]:
+    # Path filter is is_source_path (not is_production_source_path) by design.
+    # Reuse/duplicate/bloat detectors filter to is_production_source_path
+    # because their findings are scoped to the new code's relationship to
+    # the production codebase. Quality-escape's path filter is broader so
+    # GENERAL_ESCAPE_RULES (TODO/FIXME, # type: ignore, @ts-ignore,
+    # eslint-disable, # noqa, || true) catches escapes in test/fixture
+    # paths too — those locations are particularly prone to vestigial
+    # suppressions (Wen et al. FSE 2025: 50.8% of suppressions are useless).
+    # Language-typed rules (PYTHON_ESCAPE_RULES, TS_ESCAPE_RULES — `: Any`,
+    # `as any`, bare `except:`) DO restrict to production via
+    # is_production_source_path inside rules_for_path; mocks in tests
+    # legitimately use `as any` and shouldn't trip this layer.
     hits: list[str] = []
     for rel_path, lines in ctx.added_lines.items():
         if is_source_path(rel_path):
