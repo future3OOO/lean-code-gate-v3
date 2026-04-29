@@ -547,12 +547,8 @@ def tool_command(tool_input: dict[str, object]) -> str:
     return str(tool_input.get("command") or tool_input.get("cmd") or "")
 
 
-def has_nested_git_repo(root: Path) -> bool:
-    return any(path.exists() for path in root.glob("*/.git"))
-
-
 def nested_git_roots(root: Path) -> list[Path]:
-    return sorted(path.parent.resolve() for path in root.glob("*/.git") if path.exists())
+    return sorted(path.parent.resolve() for path in root.rglob(".git") if path.resolve() != (root / ".git").resolve())
 
 
 def checked_hook_root(event: str | None, payload: dict[str, object], tool: str, tool_input: dict[str, object], *, require_unambiguous: bool = False) -> Path | None:
@@ -587,11 +583,11 @@ def hook_root(payload: dict[str, object], tool: str, tool_input: dict[str, objec
         if len(path_roots) > 1:
             raise ValueError("Lean Code Gate could not choose between nested target repos: " + ", ".join(str(path) for path in sorted(path_roots)))
 
-    if has_nested_git_repo(root):
+    if nested_git_roots(root):
         raise ValueError(
             "Lean Code Gate cannot resolve a unique target repo from controller folder "
             f"{root}. Hook payload did not include tool workdir/cwd. Start the session "
-            "inside the target repo, set LEAN_CODE_GATE_REPO_ROOT as a fallback, or use a hook runtime that passes tool workdir."
+            "inside the target repo or use a hook runtime that passes tool workdir."
         )
 
     return root
@@ -602,30 +598,28 @@ def stop_roots(payload: dict[str, object]) -> list[Path]:
     nested = nested_git_roots(root)
     if not nested:
         return [root]
-    targets = active_state(root).get("target_roots")
-    if isinstance(targets, list):
-        roots = []
-        for target in targets:
-            if isinstance(target, str):
-                found = git_toplevel(Path(target).expanduser().resolve())
-                if found is not None and found != root and root in found.parents:
-                    roots.append(found)
-        if roots:
-            return sorted(set(roots))
+    target = active_state(root).get("target_root")
+    if isinstance(target, str) and (found := git_toplevel(Path(target).expanduser().resolve())) is not None and found != root and root in found.parents:
+        return [found]
     return [root] if git_toplevel(root) == root else []
 
 
 def remember_target_root(payload: dict[str, object], root: Path) -> None:
     controller = repo_root(str(payload.get("cwd") or "") or None)
-    if controller == root or not has_nested_git_repo(controller):
+    if controller == root:
         return
     active = active_state(controller)
-    existing = active.get("target_roots")
-    roots = {str(root.resolve())}
-    if isinstance(existing, list):
-        roots.update(str(value) for value in existing if isinstance(value, str))
-    active["target_roots"] = sorted(roots)
+    active["target_root"] = str(root.resolve())
     write_json(active_path(controller), active)
+
+
+def hook_facts(payload: dict[str, object], root: Path, tool: str, tool_input: dict[str, object]) -> dict[str, object]:
+    change_facts = facts(root, tool, tool_input)
+    controller = repo_root(str(payload.get("cwd") or "") or None)
+    if controller != root and controller in root.parents:
+        prefix = root.relative_to(controller).as_posix() + "/"
+        change_facts["paths"] = [path.removeprefix(prefix) if isinstance(path, str) else path for path in change_facts.get("paths", [])]
+    return change_facts
 
 
 def git_common_dir(root: Path) -> Path:
@@ -2152,7 +2146,7 @@ def pretool(payload: dict[str, object]) -> None:
     if tool == "Bash" and active_policy["block_hidden_bash_writes"] and not ("apply_patch" in command or "*** Begin Patch" in command or "diff --git" in command) and not current_contract.get("allow_bash_writes"):
         deny("PreToolUse", "Hidden file-changing Bash blocked. Use Edit/apply_patch or redeclare --allow-bash-writes with a reason.")
         return
-    change_facts = facts(root, tool, tool_input)
+    change_facts = hook_facts(payload, root, tool, tool_input)
     errors = check_change(change_facts, current_contract, active_policy, tool)
     if errors:
         deny("PreToolUse", "Lean Code Gate blocked over-broad or low-quality mutation:\n- " + "\n- ".join(errors))
@@ -2180,7 +2174,7 @@ def posttool(payload: dict[str, object], failed: bool = False) -> None:
     if root is None:
         return
     if mutating(tool, tool_input):
-        log_event(root, {"event": "mutation_failed" if failed else "mutation_finished", "tool": tool, **facts(root, tool, tool_input)})
+        log_event(root, {"event": "mutation_failed" if failed else "mutation_finished", "tool": tool, **hook_facts(payload, root, tool, tool_input)})
     command = tool_command(tool_input)
     if tool == "Bash" and verify_cmd(command):
         response = payload.get("tool_response")
