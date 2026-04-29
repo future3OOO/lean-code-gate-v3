@@ -101,7 +101,17 @@ Recommended rollout:
 
 The default Codex config assumes the gate script is installed in the target repo at `.agent/lean/lean_code_gate.py`.
 
-If Codex hooks call a shared/global copy instead, set `LEAN_CODE_GATE_SCRIPT_PATH` to that script path in the hook environment. Hook reminders and blocked-mutation messages will then show the configured path instead of the repo-local default.
+If Codex hooks call a shared/global copy instead, set `LEAN_CODE_GATE_SCRIPT_PATH` to that script path in the hook environment and call that same script directly. Do not set `LEAN_CODE_GATE_REPO_ROOT` in the normal global hook template; hard-coding it pins every controller-session mutation to one repo and prevents nested target repos from owning their own `.agent/lean/state`.
+
+Minimal global Codex hook command shape:
+
+```toml
+command = 'LEAN_CODE_GATE_SCRIPT_PATH="$HOME/.codex/lean-code-gate-v3/lean_code_gate.py" PYTHONDONTWRITEBYTECODE=1 python3 -B -S "$HOME/.codex/lean-code-gate-v3/lean_code_gate.py" pretool'
+```
+
+Use the same prefix and script path for `session-start`, `user-prompt`, `permission-request`, `posttool`, and `stop`. Keep the bundled repo-local `.codex/config.toml` shape when installing inside a single target repo; it resolves the repo-local script with `git rev-parse --show-toplevel` and also does not set `LEAN_CODE_GATE_REPO_ROOT`.
+
+For existing Codex installs, remove any hard-coded `LEAN_CODE_GATE_REPO_ROOT` from the hook commands and restart the Codex session so the edited config is reloaded.
 
 When hooks include a target working directory, the runtime prefers that repo over `LEAN_CODE_GATE_REPO_ROOT`; Codex `cmd`/`workdir` and Claude `command`/`cwd` payloads are both supported. Set `LEAN_CODE_GATE_REPO_ROOT` only as a fallback for hooks or runtimes that cannot provide the target working directory. Policy, state, diff checks, and verification status then stay anchored to the resolved target repo. Repo-local `.agent/lean/policy.json` remains optional for per-project policy overrides.
 
