@@ -434,6 +434,34 @@ def test_exact_name_reimplementation_across_files_fires() -> None:
         ), data["reuseFindings"]
 
 
+def test_default_arg_call_on_def_line_still_counts_as_use() -> None:
+    # Pins the precision form of the def-line filter in symbol_is_called_nearby.
+    # A line-number exclusion would suppress this default-arg call ("fn=parse_html_payload()"
+    # appears on the def line). The _DEF_LINE regex skips lines that *are* defs
+    # but keeps the call detection alive when the def line itself contains a
+    # legitimate call to an existing symbol.
+    with repo_fixture() as repo:
+        (repo / "src" / "parser.py").write_text(
+            "def parse_html_payload(blob):\n    return blob.decode('utf-8').strip()\n",
+            encoding="utf-8",
+        )
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed parser")
+        (repo / "src" / "wrapper.py").write_text(
+            "from src.parser import parse_html_payload\n"
+            "def wrap_payload(blob, fn=parse_html_payload):\n"
+            "    return fn(blob)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        # New file legitimately uses the existing symbol; no reuse finding.
+        assert code == 0, data
+        assert not any(
+            f.get("newSymbol") == "wrap_payload"
+            for f in data.get("reuseFindings", [])
+        ), data.get("reuseFindings")
+
+
 def test_reuse_detector_suppresses_generic_same_name_false_positive() -> None:
     with repo_fixture() as repo:
         (repo / "src" / "task_a.py").write_text("def run() -> str:\n    return 'a'\n", encoding="utf-8")
@@ -733,6 +761,7 @@ TESTS = [
     test_quality_check_detects_reimplemented_existing_helper_name,
     test_reimplemented_dedupe_loop_fails_as_high_confidence_reuse,
     test_exact_name_reimplementation_across_files_fires,
+    test_default_arg_call_on_def_line_still_counts_as_use,
     test_reuse_detector_suppresses_generic_same_name_false_positive,
     test_reuse_detector_suppresses_same_tokens_different_domain,
     test_reuse_detector_ignores_deleted_then_recreated_helper,

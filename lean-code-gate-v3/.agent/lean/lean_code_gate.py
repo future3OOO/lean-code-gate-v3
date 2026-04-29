@@ -1529,15 +1529,23 @@ def best_existing_match(new_item: SymbolDef, existing: list[SymbolDef], added_by
     return best
 
 
+_DEF_LINE = re.compile(r"^\s*(?:export\s+)?(?:async\s+)?(?:def|function|class)\b")
+
+
 def symbol_is_called_nearby(symbol: str, lines: list[tuple[int, str]], new_line: int) -> bool:
-    # Excludes new_line itself: the new symbol's own def line ("def foo(...)")
-    # matches `\bfoo\s*\(` even though it's a definition not a call. Without
-    # this exclusion, exact-name reuse across files (existing foo at one path,
-    # new foo at another) is silently invisible to the reuse detector because
-    # best_existing_match treats the new def line as proof the existing symbol
-    # is already in use here.
+    # Skip def lines themselves: the new symbol's own def line
+    # ("def foo(...)" / "function foo(...)" / "class Foo(...)") matches
+    # `\bfoo\s*\(` even though it's a definition not a call. Filtering by
+    # _DEF_LINE rather than `line_no == new_line` preserves detection for
+    # default-arg calls on the def line itself, e.g.
+    # `def wrap(x, fn=parse_html_payload()):` — that call is real.
     pattern = re.compile(rf"\b{re.escape(symbol)}\s*\(")
-    return any(line_no != new_line and max(0, new_line - 8) <= line_no <= new_line + 20 and pattern.search(text) for line_no, text in lines)
+    return any(
+        not _DEF_LINE.match(text)
+        and max(0, new_line - 8) <= line_no <= new_line + 20
+        and pattern.search(text)
+        for line_no, text in lines
+    )
 
 
 def warning_is_actionable(new_item: SymbolDef, existing_item: SymbolDef) -> bool:
