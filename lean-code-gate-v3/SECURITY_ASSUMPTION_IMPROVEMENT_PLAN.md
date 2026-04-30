@@ -122,6 +122,32 @@ Recommended integration order:
 3. Touched-change delta reporting third: added/resolved/worsened/improved counts by rule family.
 4. Policy escalation last: hard failures only after calibration shows low false-positive rates on touched code.
 
+## Verification Shape Lessons
+
+The useful lesson from `future3OOO/skills` is that proof quality is part of code quality. The gate should pressure agents to describe the shape of the feedback loop before they write code, without forcing one workflow onto every task.
+
+Low-bloat additions:
+
+1. Name the verification mode
+
+   The `proof_plan` should say whether the work is `red-green-refactor`, `green-refactor-green`, or `smoke-check`. Bug fixes and behavior changes should prefer red-green-refactor: reproduce the failure, make the smallest fix, rerun the same proof, then keep only the regression surface that proves the behavior. Refactors should establish green first, change one behavior-preserving slice, and rerun the same proof. Docs, config, and hook-runtime smoke checks can use smoke-check when a failing test would be artificial.
+
+2. Test through the public interface
+
+   Tests should verify observable behavior through the interface that callers use. Avoid tests that only assert private methods, internal call order, or internal collaborator calls. If a real bug cannot be tested through a correct interface, that is architecture evidence to record in `risk_check`, not a reason to add a shallow fake-green test.
+
+3. Mock only real boundaries
+
+   Mock external systems, time, randomness, filesystem, or network boundaries when needed. Do not mock owned internal modules just to make a test easier. Repeated mock wiring should reuse an existing fixture; add a helper only when at least two current call sites need it.
+
+4. Keep slices vertical
+
+   Prefer one behavior-level test or runnable check, then the minimum implementation for that behavior, then the next behavior. Bulk-writing all tests first encourages imagined interfaces and wide diffs. For larger work, contract guidance should ask for thin end-to-end slices instead of layer-by-layer implementation batches.
+
+5. Treat shallow interfaces as risk evidence
+
+   Pass-through wrappers, one-adapter seams, and modules whose tests need to reach past the interface are signs that the interface may not be earning its keep. The lean response is not an architecture scanner first; it is a contract prompt asking what value the wrapper, seam, or interface adds now.
+
 ## Slop Rules Not To Build First
 
 - Do not add directory fanout, barrel-density, or over-fragmentation rules until lower-noise slices are measured.
@@ -129,6 +155,7 @@ Recommended integration order:
 - Do not create a separate "slop gate"; these checks belong in the Lean Change Contract and existing quality pass.
 - Do not treat high full-repo frequency as proof a pattern should be a hard PR-time blocker.
 - Do not add a TypeScript runtime dependency to the gate unless regex/string warnings fail calibration and the deployment cost is explicitly accepted.
+- Do not add a broad test-smell scanner first. Verification-shape problems should start as `proof_plan` and `risk_check` prompts; deterministic warnings can follow only for narrow, high-confidence patterns.
 
 ## Future Placement
 
@@ -138,6 +165,8 @@ This file is a planning artifact. If the rule is implemented, the core principle
 
 - Agents are prompted to ask "can this value be removed?" before sanitizing it.
 - Agents are prompted to ask "should this wrapper, fallback, or generic envelope exist?" before implementing it.
+- Agents are prompted to name the verification mode and use red-green-refactor for bug fixes and behavior changes when a real failing proof is available.
+- Tests added under the plan verify public-interface behavior and avoid mocks of owned internal modules unless the contract explains the seam.
 - Reviewer comments about secret exposure are resolved by eliminating unnecessary inputs when possible.
 - Runtime state, logs, and status output avoid raw sensitive values.
 - Any Slop Scan-inspired detector starts narrow, explainable, and tied to touched code.
@@ -150,3 +179,4 @@ This file is a planning artifact. If the rule is implemented, the core principle
 - Should contracts get a `--sensitive-input` field, or should this stay inside `--risk-check`?
 - Should the rule be policy-overridable for repos that legitimately handle credential-bearing inputs, or hardcoded?
 - Should wrapper/fallback/envelope checks stay inside `--risk-check`, or become structured contract prompts after calibration?
+- Should verification mode stay as `proof_plan` prose, or become a structured field after enough real contracts show the categories are stable?
