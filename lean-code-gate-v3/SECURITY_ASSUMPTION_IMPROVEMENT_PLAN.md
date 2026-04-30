@@ -76,16 +76,36 @@ Slop Scan's useful signal is not "AI code is bigger." Its benchmark separates co
 
 Lean Gate should not port that scanner wholesale. It should extract the structural habits that fit a pre-writing tool and use them to pressure the contract before code is added.
 
-Evidence-backed observations from the Slop Scan repo:
+Evidence-backed observations from the Slop Scan repo and our own head-to-head experiments (`lean-code-gate-calibration` PR #2):
 
-- The full benchmark separates explicit-AI repos from mature OSS by normalized ratios, not raw counts: median blended score is about `6.9x`, score/file about `8.8x`, and score/KLOC about `7.4x`.
-- The per-rule benchmark is the better guide for Lean Gate. `defensive.promise-default-fallbacks` ranks first in isolation; `api.generic-status-envelopes`, `defensive.error-swallowing`, and `defensive.stringified-unknown-errors` follow.
+- Slop Scan's full benchmark separates explicit-AI from mature OSS by normalized ratios, not raw counts: median blended score `6.9x`, score/file `8.8x`, score/KLOC `7.4x`.
+- We re-ran our gate against slop-scan's own 18-repo pinned benchmark (whole-repo mode). Our cohort separation came out at **1.18x per find/KLOC vs their 5.39x**. Our gate fires fewer raw findings on AI-coded repos than mature OSS in this set because the AI repos are smaller; the size correlation dominates.
+- Per-PR head-to-head on the same 458 TS/JS PRs in our regular calibration corpus: cross-tool Spearman `0.40–0.63`, Pearson `0.66–0.94` against slop's `addedCount`. Where the scope matches, the tools agree on volume. Where it doesn't (whole-repo per-KLOC), they only weakly agree because the rule sets target different patterns.
+- **Zero rule-family overlap on the 10 highest-signal slop-scan rules.** R-1..R-6 are general structural detectors. Slop Scan catches AI-idiom patterns (placeholder comments, generic envelopes, `as any` casts, error swallowing, etc.). The detector-coverage gap, not threshold calibration, is the load-bearing cause of the cohort-separation gap.
+- Per-rule signal in slop-scan's own published benchmark: `defensive.promise-default-fallbacks` ranks first in isolation, then `api.generic-status-envelopes`, `defensive.error-swallowing`, `defensive.stringified-unknown-errors`. In our 18-repo run, the actual top per-repo firers were `tests.duplicate-mock-setup` (25 hits in openusage) and `comments.placeholder-comments` (consistently fires on every explicit-AI repo, near-zero on mature-oss).
+- `comments.placeholder-comments` is missing from earlier integration drafts and is the cheapest-to-port, highest-specificity, lowest-FP-risk rule available. It should ship first.
 - High-volume rules are not automatically first-class gate rules. Empty catches, pass-through wrappers, and error-obscuring also appear in mature OSS, so they need contract context, boundary exemptions, and delta/touched-line scoping before any hard failure.
-- Slop Scan's repo-wide view catches accumulated habits. Lean Gate works at edit time, so its first integration should be touched-surface warnings and contract prompts, not whole-repo shape scoring.
+- Slop Scan's repo-wide view catches accumulated habits. Lean Gate works at edit time, so PR-time integration should be touched-surface warnings and contract prompts, not whole-repo shape scoring. Don't try to match slop-scan's whole-repo cohort separation at PR-time gate; that's a scope-of-measurement difference, not a detector-quality goal.
 
-Runtime boundary:
+Language scope:
 
-Slop Scan's highest-signal rules are TS/JS-specific and use the TypeScript compiler API. Lean Gate's runtime is a dependency-free Python script. First implementation should therefore be a TS/JS warning pack using small changed-line string/regex heuristics. Multi-language equivalents and TypeScript AST parsing are out of scope until calibration proves the simpler path is insufficient.
+Earlier drafts treated this whole bundle as "TS/JS only." That was over-narrow. The honest split:
+
+- **Language-agnostic** (universal AI-tic patterns, per-language regex tier sufficient):
+  - `comments.placeholder-comments` — natural-language phrases in any comment style (`//`, `#`, `--`, docstrings).
+  - `defensive.empty-catch` — empty exception handlers across languages (JS empty catch block, Python bare-except with no body, Go `if err != nil` block with no body, Rust `if let Err(_)` empty arm, Ruby `rescue` with no body).
+  - `defensive.error-swallowing` — catch-and-only-log (per-language conventions).
+  - `defensive.error-obscuring` — catch-and-return-generic-default (per-language conventions).
+  - `structure.pass-through-wrappers` — single-call forwarding functions (per-language regex/AST tier).
+- **TS/JS only** (genuinely language-specific syntax):
+  - `defensive.promise-default-fallbacks` — `.catch(() => null|[])` is JS Promise syntax.
+  - `defensive.stringified-unknown-errors` — `String(error)` after `unknown` catch is a TS-idiom (Python's `str(e)` is normal usage).
+  - `structure.generic-record-casts` — `as any`, `as Record<string, unknown>` are TS syntax.
+  - `tests.duplicate-mock-setup` — `vi.mock()`/`jest.mock()` are JS framework idioms.
+- **Higher-FP-risk in dynamic langs** (defer):
+  - `api.generic-status-envelopes` — the `{success, data, error}` shape is heavily used in legitimate API/RPC code; needs careful boundary exemption logic per language.
+
+First implementation can therefore start with two language-agnostic rules (placeholder-comments first, error-swallowing/empty-catch pair second) and one TS/JS pack (promise-default-fallbacks, generic-record-casts) without taking a TypeScript runtime dependency. Multi-language regex tier is the right shape; AST parsing is out of scope until calibration proves the simpler path is insufficient.
 
 Fundamental takeaways:
 
@@ -117,22 +137,28 @@ Fundamental takeaways:
 
 Recommended integration order:
 
-1. Contract prompts first: failure contract, boundary shape, wrapper value, and input validation/narrowing.
-2. Narrow added-line warnings second: TS/JS promise/default fallbacks, log-and-continue catches, stringified unknown errors, generic envelopes, and vague record casts.
-3. Touched-change delta reporting third: added/resolved/worsened/improved counts by rule family.
-4. Policy escalation last: hard failures only after calibration shows low false-positive rates on touched code.
+1. **Contract prompts first**: failure contract, boundary shape, wrapper value, and input validation/narrowing. No new detector code; just contract-text checks.
+2. **Placeholder-comments second** (language-agnostic, lowest FP risk). One regex helper in `quality_checks(...)`. Single PR. Calibrate against the corpus, expect near-zero firing on `recent_mature_oss` and consistent firing on `post_ai_public` and `private_own`.
+3. **Universal failure-contract pair third**: empty-catch + error-swallowing across the languages we already extract symbols from (Python, JS/TS, Go, Rust, Ruby, PHP, shell). Per-language regex tier driven by `language_for_path(...)`. Calibrate before any hard failure.
+4. **TS/JS pack fourth**: promise-default-fallbacks, generic-record-casts, stringified-unknown-errors. JS-syntax-specific; cannot generalize.
+5. **Wrapper-value warning fifth** (universal with per-language regex). Higher FP risk than the failure-contract pair; defer until that pair shows calibrated behavior.
+6. **Touched-change delta reporting** alongside step 5: added/resolved/worsened/improved counts by rule family in `run_quality_gate(...)` JSON output.
+7. **Policy escalation last**: hard failures only after calibration shows low false-positive rates on touched code. Generic status envelopes deferred indefinitely until boundary-path allowlist work is done.
 
 ## Implementation Mapping
 
 These changes should land in `lean_code_gate.py` by extending existing contract and quality surfaces, not by adding a parallel gate.
 
-| Plan item | Script surface | First implementation |
-|---|---|---|
-| Sensitive input justification | `check_change(...)`, `run_quality_gate(...)`, new small helpers called from `GateContext.added_lines` | Detect added sensitive-source tokens and persistence/output sinks. Emit warnings first unless the same added line path clearly writes a sensitive value to gate state, logs, status, or snapshots. Use existing `risk_check` text as the justification surface before adding a new CLI field. |
-| Eliminate before redact/hash | `check_change(...)` for proposed text, `scan_quality_escapes(...)`-style changed-line scan for final checks | Warn when added code both reads sensitive input and adds sanitizer/redaction/hash plumbing. Message should ask whether the input can be removed from the data flow. Do not add credential-format regexes. |
-| Failure-contract and fallback pressure | `run_quality_gate(...)`, `quality_checks(...)`, additive JSON warning fields | Add a changed-line warning family for promise `.catch(...)`, `catch` branches, or error paths that only log, stringify, or return cheap defaults. Keep TS/JS string/regex heuristics only. |
-| Generic boundary shapes | `proposed_quality_hits(...)`/new sibling helper for proposed text, final warning helper over `ctx.added_lines` | Warn on newly added `{ success, data, error, message }` style envelopes or vague `Record<string, unknown>` casts outside existing API/config boundary paths. |
-| Wrapper value | `check_change(...)` for fast proposed-patch feedback, `detect_reuse_issues(...)` or a sibling final warning helper | Warn on newly added one-line forwarding functions with no validation, normalization, instrumentation, compatibility, retry, or external-boundary evidence. Do not scan directory fanout first. |
+| Plan item | Language scope | Script surface | First implementation |
+|---|---|---|---|
+| Sensitive input justification | universal | `check_change(...)`, `run_quality_gate(...)`, new small helpers called from `GateContext.added_lines` | Detect added sensitive-source tokens and persistence/output sinks. Emit warnings first unless the same added line path clearly writes a sensitive value to gate state, logs, status, or snapshots. Use existing `risk_check` text as the justification surface before adding a new CLI field. |
+| Eliminate before redact/hash | universal | `check_change(...)` for proposed text, `scan_quality_escapes(...)`-style changed-line scan for final checks | Warn when added code both reads sensitive input and adds sanitizer/redaction/hash plumbing. Message should ask whether the input can be removed from the data flow. Do not add credential-format regexes. |
+| Placeholder comments | **language-agnostic** (highest priority, ship first) | new `placeholder_comment_warnings(ctx)` helper called from `quality_checks(...)` | Regex match against AI-tic phrases ("add more validation," "implement here," "extend this function," "future enhancement," "customize this", etc.) in `//`, `#`, `--`, and docstring comments across all `is_source_path` files. Lift slop-scan's `PLACEHOLDER_PATTERNS` list verbatim. Near-zero FP risk on mature OSS. |
+| Failure-contract / fallback pressure (universal) | language-agnostic with per-language regex tier | `run_quality_gate(...)`, `quality_checks(...)`, additive JSON warning fields | Warn on newly added empty exception handlers, catch-and-only-log, and catch-and-return-generic-default. Per-language regex tier: JS `catch \(.*\) {\s*}`, Python `except[^:]*:\s*pass`, Go `if err != nil \{\s*\}`, Rust `if let Err\(_\) = .*\{\s*\}`. Match by file extension via `language_for_path(...)`. |
+| Failure-contract / fallback pressure (TS/JS) | TS/JS only | same surface | Warn on Promise default-fallbacks (`.catch(() => null|[]|{}|false)`) and stringified-unknown-error patterns (`String(error)`, `${err}`). Both are JS-syntax-specific so cannot be language-agnostic. |
+| Generic record casts | TS/JS only | `proposed_quality_hits(...)` / sibling helper | Warn on newly added `as any`, `as Record<string, unknown>`, or `as unknown as ...` outside existing API/config/boundary paths. Genuine TS syntax — no language-agnostic equivalent because Python's `Dict[str, Any]` is idiomatic. |
+| Generic status envelopes | defer (high FP risk in every language) | not implemented in first wave | The `{ success, data, error }` shape is legitimate at API/RPC boundaries in JS, Python (FastAPI), Go (HTTP handlers). Needs explicit boundary-path allowlist before warning. Do not implement until placeholder-comments + error-swallowing calibrate cleanly. |
+| Wrapper value (pass-through) | language-agnostic with per-language regex tier | `check_change(...)` for fast proposed-patch feedback, `detect_reuse_issues(...)` or a sibling final warning helper | Warn on newly added one-line forwarding functions: JS `function name(args) { return other(args); }`, Python `def name(...): return other(...)`, Go `func name(args) { return other(args) }`. Per-language match. Do not scan directory fanout first. |
 | Verification mode | `contract_errors(...)`, possibly `parser()`/`declare(...)` only after calibration | First pass: require `proof_plan` prose to name `red-green-refactor`, `green-refactor-green`, or `smoke-check` for non-minimal code work. Later pass, if stable, add `--verification-mode` and store it in `declare(...)`. |
 | Production-shaped proof | `final_errors(...)`, `run_quality_gate(...)` warning helper over changed test files | For bugfixes and behavior changes, warn when tests changed but no added test line appears to call a production entrypoint, CLI/hook command, local server, parser, or production-shaped fixture. Keep as warning because language-specific precision varies. |
 | Wasteful test bulk | `run_quality_gate(...)`, new `test_shape_warnings(ctx)` helper, `quality_checks(...)` | Warn only on high-confidence combinations: large added test block, high mock/setup token ratio, weak assertion count, and no visible production entrypoint call. Avoid line-count-only failures. |
@@ -188,9 +214,12 @@ Low-bloat additions:
 - Do not add a broad AST framework or dependency-heavy scanner for this plan.
 - Do not create a separate "slop gate"; these checks belong in the Lean Change Contract and existing quality pass.
 - Do not treat high full-repo frequency as proof a pattern should be a hard PR-time blocker.
+- Do not chase slop-scan's whole-repo cohort-separation magnitude (5–7×) at PR-time gate. PR-time and whole-repo are different scopes; the first measures intent on a diff, the second measures accumulated state. Don't conflate them.
+- Do not implement the generic-status-envelope detector before the rest of the pack calibrates. The shape is too common in legitimate API/RPC code in every language; needs an explicit boundary-path allowlist first.
 - Do not add a TypeScript runtime dependency to the gate unless regex/string warnings fail calibration and the deployment cost is explicitly accepted.
 - Do not add a broad test-smell scanner first. Verification-shape problems should start as `proof_plan` and `risk_check` prompts; deterministic warnings can follow only for narrow, high-confidence patterns.
 - Do not reward tests by volume. A small production-shaped repro is better than a long mock scaffold that does not exercise the changed code path.
+- Do not assume a rule is TS/JS-only because slop-scan implements it as TS/JS. Re-evaluate per the language-scope split in "Slop Scan Lessons" — placeholder-comments, error-swallowing, empty-catch, error-obscuring, and pass-through wrappers all generalize.
 
 ## Future Placement
 
@@ -218,3 +247,7 @@ This file is a planning artifact. If the rule is implemented, the core principle
 - Should wrapper/fallback/envelope checks stay inside `--risk-check`, or become structured contract prompts after calibration?
 - Should verification mode stay as `proof_plan` prose, or become a structured field after enough real contracts show the categories are stable?
 - Which wasteful-test signals are precise enough to warn on: added test size, mock/setup ratio, missing production entrypoint call, weak assertions, or repeated fixture wiring?
+- Should placeholder-comments fire on documentation files (`*.md`, `*.rst`) or only on source-code comments? The slop-scan rule fires on source comments only; mature OSS docs frequently use phrases like "for future enhancement" without it being a defect signal.
+- Which languages should the universal error-swallowing detector cover at first ship? The minimum-viable set is the languages we already extract symbols from (Python, JS/TS, Go, Rust, Ruby, PHP, shell). Adding more later is incremental.
+- Should the calibration corpus be re-run with the new detectors enabled to measure cohort-separation lift? If so, target metrics are: explicit-AI vs mature-OSS per-PR finding rate ratio, and Spearman ρ vs slop-scan addedCount on the per-PR head-to-head.
+- Should generic-status-envelopes ever ship, or is the FP risk too high in practice? The slop-scan TS/JS calibration suggests it can work with boundary exemptions; replicating that across languages is more research than the rest of this plan.
