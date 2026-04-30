@@ -156,6 +156,14 @@ Low-bloat additions:
 
    Pass-through wrappers, one-adapter seams, and modules whose tests need to reach past the interface are signs that the interface may not be earning its keep. The lean response is not an architecture scanner first; it is a contract prompt asking what value the wrapper, seam, or interface adds now.
 
+8. Keep contracts behavioral
+
+   Contract fields should describe current behavior, desired behavior, key interfaces, acceptance criteria, and explicit out-of-scope boundaries. Avoid procedural instructions tied to file paths, line numbers, or "edit this function" steps; those go stale and encourage agents to follow instructions instead of rechecking the code.
+
+9. Make helpers and probes earn their place
+
+   Add helper scripts only for deterministic, repeated, or error-prone operations that would otherwise be regenerated. Temporary debug logs, probes, and harnesses should be tagged or isolated so they can be removed before completion.
+
 ## Slop Rules Not To Build First
 
 - Do not add directory fanout, barrel-density, or over-fragmentation rules until lower-noise slices are measured.
@@ -175,6 +183,7 @@ This file is a planning artifact. If the rule is implemented, the core principle
 - Agents are prompted to ask "can this value be removed?" before sanitizing it.
 - Agents are prompted to ask "should this wrapper, fallback, or generic envelope exist?" before implementing it.
 - Agents are prompted to name the verification mode and use red-green-refactor for bug fixes and behavior changes when a real failing proof is available.
+- Contracts describe behavior, key interfaces, acceptance criteria, and out-of-scope boundaries rather than brittle implementation steps.
 - Tests added under the plan verify public-interface behavior and avoid mocks of owned internal modules unless the contract explains the seam.
 - Test additions use production-shaped payloads or setups where practical, and any mock-heavy test must explain the real boundary it replaces.
 - Reviewer comments about secret exposure are resolved by eliminating unnecessary inputs when possible.
