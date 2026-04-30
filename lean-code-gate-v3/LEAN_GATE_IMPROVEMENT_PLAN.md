@@ -1,4 +1,4 @@
-# Security Assumption Improvement Plan
+# Lean Gate Improvement Plan
 
 ## Problem
 

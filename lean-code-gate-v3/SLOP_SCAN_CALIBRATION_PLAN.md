@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This plan covers calibration methodology only. Runtime Lean Gate detector implementations belong in `SECURITY_ASSUMPTION_IMPROVEMENT_PLAN.md`.
+This plan covers calibration methodology only. Runtime Lean Gate detector implementations belong in `LEAN_GATE_IMPROVEMENT_PLAN.md`.
 
 Slop Scan's benchmark suggested our flat pre/post results might be a measurement problem, not just a detector problem. The Step Zero work below confirmed that; this plan now governs the follow-up calibration work needed before porting detectors.
 
@@ -20,7 +20,7 @@ All three are the canonical cross-references for any future calibration work in 
 
 The plan's earlier `Explain flat signals` question is answered: Lean Gate's flat cohort signal has **all four** of the causes the original plan listed, in roughly this order of impact.
 
-1. **Detector coverage gap (largest cause).** Zero rule-family overlap on the 10 highest-signal slop-scan rules. Slop Scan catches AI-idioms (placeholder comments, generic envelopes, `as any` casts, error swallowing, etc.). Our R-1..R-6 are general structural detectors. Different target sets. This is the load-bearing cause and is being tracked in `SECURITY_ASSUMPTION_IMPROVEMENT_PLAN.md`.
+1. **Detector coverage gap (largest cause).** Zero rule-family overlap on the 10 highest-signal slop-scan rules. Slop Scan catches AI-idioms (placeholder comments, generic envelopes, `as any` casts, error swallowing, etc.). Our R-1..R-6 are general structural detectors. Different target sets. This is the load-bearing cause and is being tracked in `LEAN_GATE_IMPROVEMENT_PLAN.md`.
 
 2. **Scope-of-measurement gap (PR-diff vs whole-repo).** Slop Scan accumulates findings across the whole codebase; our gate sees only what each PR touched. AI-coded repos accumulate slop across many files; PR-diff sampling sees a thin slice. The same 458 PRs scored by both tools agree at ρ = 0.40–0.63 (volume); whole-repo per-KLOC density only weakly agrees at ρ = 0.25 because the rule sets target different patterns.
 
@@ -46,7 +46,7 @@ In rough priority order:
 
 3. **`--whole-repo` mode as a real gate flag.** The `lean_on_slopscan_benchmark.sh` script currently uses a `sed`-patched gate (`...HEAD` → `..HEAD`) plus a synthetic empty-commit base. Promote this to a real flag in `lean_code_gate.py` so the calibration pipeline can swap modes without patching. Spec: `--whole-repo` swaps three-dot for two-dot diff and accepts an empty-tree base when `--base-ref` is omitted. Single-PR change on the gate repo. Tests: pin the existing `lodash` whole-repo result (160 changed files, 113 findings).
 
-4. **Detector-port verification loop.** When `placeholder-comments` (or any other rule from `SECURITY_ASSUMPTION_IMPROVEMENT_PLAN.md`) ships:
+4. **Detector-port verification loop.** When `placeholder-comments` (or any other rule from `LEAN_GATE_IMPROVEMENT_PLAN.md`) ships:
    - Re-run the calibration corpus against the new gate version.
    - Re-run the slop-scan per-PR head-to-head to measure new ρ vs `addedCount`.
    - Re-run the slop-scan-benchmark (18 repos whole-repo) to measure new cohort-separation ratio.
@@ -67,6 +67,6 @@ In rough priority order:
 
 ## Cross-references
 
-- **Runtime detector plan**: `SECURITY_ASSUMPTION_IMPROVEMENT_PLAN.md` (this repo).
+- **Runtime detector plan**: `LEAN_GATE_IMPROVEMENT_PLAN.md` (this repo).
 - **Step Zero experiments**: calibration repo PR #2, `experiment/slopscan-comparison` branch.
 - **Calibration handover docs**: `HANDOVER.md`, `MAP.md`, `IMPROVEMENT_PLAN.md` in the calibration repo. The improvement plan there is the master pickup list; this file is the slop-scan-comparison sub-plan within it.
