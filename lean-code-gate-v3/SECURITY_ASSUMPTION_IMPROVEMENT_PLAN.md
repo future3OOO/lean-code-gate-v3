@@ -140,11 +140,19 @@ Low-bloat additions:
 
    Mock external systems, time, randomness, filesystem, or network boundaries when needed. Do not mock owned internal modules just to make a test easier. Repeated mock wiring should reuse an existing fixture; add a helper only when at least two current call sites need it.
 
-4. Keep slices vertical
+4. Use production-shaped proof
+
+   Prefer tests or smoke checks that run the underlying production code in a realistic setup: real CLI commands, real hook payloads, real config/state paths, real parsers, real HTTP requests against a local server, or production-shaped fixtures. Avoid large tests that mostly assemble mocks, synthetic objects, or invented payloads without proving the changed behavior on the path users actually run.
+
+5. Keep slices vertical
 
    Prefer one behavior-level test or runnable check, then the minimum implementation for that behavior, then the next behavior. Bulk-writing all tests first encourages imagined interfaces and wide diffs. For larger work, contract guidance should ask for thin end-to-end slices instead of layer-by-layer implementation batches.
 
-5. Treat shallow interfaces as risk evidence
+6. Warn on wasteful test bulk
+
+   A future narrow warning can flag added tests that are large, mock-heavy, and assertion-light while never invoking the changed production entrypoint. The warning should point to the missing production-shaped proof, not reward deleting useful regression coverage. Calibrate before blocking.
+
+7. Treat shallow interfaces as risk evidence
 
    Pass-through wrappers, one-adapter seams, and modules whose tests need to reach past the interface are signs that the interface may not be earning its keep. The lean response is not an architecture scanner first; it is a contract prompt asking what value the wrapper, seam, or interface adds now.
 
@@ -156,6 +164,7 @@ Low-bloat additions:
 - Do not treat high full-repo frequency as proof a pattern should be a hard PR-time blocker.
 - Do not add a TypeScript runtime dependency to the gate unless regex/string warnings fail calibration and the deployment cost is explicitly accepted.
 - Do not add a broad test-smell scanner first. Verification-shape problems should start as `proof_plan` and `risk_check` prompts; deterministic warnings can follow only for narrow, high-confidence patterns.
+- Do not reward tests by volume. A small production-shaped repro is better than a long mock scaffold that does not exercise the changed code path.
 
 ## Future Placement
 
@@ -167,6 +176,7 @@ This file is a planning artifact. If the rule is implemented, the core principle
 - Agents are prompted to ask "should this wrapper, fallback, or generic envelope exist?" before implementing it.
 - Agents are prompted to name the verification mode and use red-green-refactor for bug fixes and behavior changes when a real failing proof is available.
 - Tests added under the plan verify public-interface behavior and avoid mocks of owned internal modules unless the contract explains the seam.
+- Test additions use production-shaped payloads or setups where practical, and any mock-heavy test must explain the real boundary it replaces.
 - Reviewer comments about secret exposure are resolved by eliminating unnecessary inputs when possible.
 - Runtime state, logs, and status output avoid raw sensitive values.
 - Any Slop Scan-inspired detector starts narrow, explainable, and tied to touched code.
@@ -180,3 +190,4 @@ This file is a planning artifact. If the rule is implemented, the core principle
 - Should the rule be policy-overridable for repos that legitimately handle credential-bearing inputs, or hardcoded?
 - Should wrapper/fallback/envelope checks stay inside `--risk-check`, or become structured contract prompts after calibration?
 - Should verification mode stay as `proof_plan` prose, or become a structured field after enough real contracts show the categories are stable?
+- Which wasteful-test signals are precise enough to warn on: added test size, mock/setup ratio, missing production entrypoint call, weak assertions, or repeated fixture wiring?
