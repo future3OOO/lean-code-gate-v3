@@ -34,10 +34,10 @@ Every active field in `lean-code-gate-v3/.agent/lean/policy.json` came out of th
 
 | Field | Default | Phase | Evidence |
 |---|---|---|---|
-| `excluded_path_globs` | 24 patterns | PR-5 (R-1) | aws-sdk-js fired 91 warnings on `clients/*/src/{commands,models,...}/**` smithy codegen; pydantic on `self_schema.py`; cpython on `**/python_version.py`. Glob list lifted from observed FP paths. |
-| `framework_override_names` | 39 names | PR-6 (R-2/R-3) | django reuse-errors clustered on `validate`, `clean`, `save`, `get_queryset`. React/Vue clustered on `componentDidMount`, `render`, `ngOnInit`. Python dunders fired in every cohort. List built from triaged FP names. |
+| `excluded_path_globs` | 23 patterns | PR-5 (R-1) | aws-sdk-js fired 91 warnings on `clients/*/src/{commands,models,...}/**` smithy codegen; pydantic on `self_schema.py`; cpython on `**/python_version.py`. Glob list lifted from observed FP paths. |
+| `framework_override_names` | 53 names | PR-6 (R-2/R-3) | django reuse-errors clustered on `validate`, `clean`, `save`, `get_queryset`. React/Vue clustered on `componentDidMount`, `render`, `ngOnInit`. Python dunders fired in every cohort. List built from triaged FP names. |
 | `reuse_suppress_private_public_siblings` | true | PR-6 (R-3) | django and similar repos legitimately ship `_foo`/`foo` and `foo`/`Foo` pairs as private/public siblings; reuse-error fired on every one. Suppress when both halves exist in the same module. |
-| `max_design_marker_density_per_100_lines` | 3.0 | PR-7 (R-7) | Raw-count threshold (4 markers) was unreachable on small files where 1–2 markers are dense. Density per 100 lines is the calibrated form. |
+| `max_design_markers` / `max_design_marker_density_per_100_lines` | 4 / 3.0 | PR-7 (R-7) | Raw-count threshold catches larger files with repeated markers; density catches small files where 1–2 markers are dense. Both remain active in policy. |
 | `bloat_new_file_warn_lines` / `bloat_new_file_error_lines` | 500 / 800 | PR-8 (R-4) | Distribution of new-file sizes across the 42 baseline PRs put the 90th percentile of mature-OSS new files at ~500 lines. Errors set above the 99th. |
 | `bloat_total_added_warn_lines` / `bloat_total_added_error_lines` | 500 / 1000 | PR-8 (R-4) | Same distribution analysis on per-PR total added lines. |
 | `bloat_add_delete_warn_ratio` / `bloat_add_delete_error_ratio` | 4 / 6 | PR-8 (R-4) | Add/delete ratio above 4:1 correlated with churn-only PRs (no real refactor). |
