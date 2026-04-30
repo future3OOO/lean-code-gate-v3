@@ -122,6 +122,24 @@ Recommended integration order:
 3. Touched-change delta reporting third: added/resolved/worsened/improved counts by rule family.
 4. Policy escalation last: hard failures only after calibration shows low false-positive rates on touched code.
 
+## Implementation Mapping
+
+These changes should land in `lean_code_gate.py` by extending existing contract and quality surfaces, not by adding a parallel gate.
+
+| Plan item | Script surface | First implementation |
+|---|---|---|
+| Sensitive input justification | `check_change(...)`, `run_quality_gate(...)`, new small helpers called from `GateContext.added_lines` | Detect added sensitive-source tokens and persistence/output sinks. Emit warnings first unless the same added line path clearly writes a sensitive value to gate state, logs, status, or snapshots. Use existing `risk_check` text as the justification surface before adding a new CLI field. |
+| Eliminate before redact/hash | `check_change(...)` for proposed text, `scan_quality_escapes(...)`-style changed-line scan for final checks | Warn when added code both reads sensitive input and adds sanitizer/redaction/hash plumbing. Message should ask whether the input can be removed from the data flow. Do not add credential-format regexes. |
+| Failure-contract and fallback pressure | `run_quality_gate(...)`, `quality_checks(...)`, additive JSON warning fields | Add a changed-line warning family for promise `.catch(...)`, `catch` branches, or error paths that only log, stringify, or return cheap defaults. Keep TS/JS string/regex heuristics only. |
+| Generic boundary shapes | `proposed_quality_hits(...)`/new sibling helper for proposed text, final warning helper over `ctx.added_lines` | Warn on newly added `{ success, data, error, message }` style envelopes or vague `Record<string, unknown>` casts outside existing API/config boundary paths. |
+| Wrapper value | `check_change(...)` for fast proposed-patch feedback, `detect_reuse_issues(...)` or a sibling final warning helper | Warn on newly added one-line forwarding functions with no validation, normalization, instrumentation, compatibility, retry, or external-boundary evidence. Do not scan directory fanout first. |
+| Verification mode | `contract_errors(...)`, possibly `parser()`/`declare(...)` only after calibration | First pass: require `proof_plan` prose to name `red-green-refactor`, `green-refactor-green`, or `smoke-check` for non-minimal code work. Later pass, if stable, add `--verification-mode` and store it in `declare(...)`. |
+| Production-shaped proof | `final_errors(...)`, `run_quality_gate(...)` warning helper over changed test files | For bugfixes and behavior changes, warn when tests changed but no added test line appears to call a production entrypoint, CLI/hook command, local server, parser, or production-shaped fixture. Keep as warning because language-specific precision varies. |
+| Wasteful test bulk | `run_quality_gate(...)`, new `test_shape_warnings(ctx)` helper, `quality_checks(...)` | Warn only on high-confidence combinations: large added test block, high mock/setup token ratio, weak assertion count, and no visible production entrypoint call. Avoid line-count-only failures. |
+| Behavioral contracts and out-of-scope boundaries | `contract_errors(...)` over existing `authoritative_contract`, `affected_surface`, `invariants`, and `risk_check` | Add lightweight text checks for procedural placeholders only after reviewing real contracts. Do not reject file paths categorically; reject contracts that only say "edit file X/line Y" without desired behavior or acceptance criteria. |
+| Deterministic helpers and debug probes | Existing temp-artifact and quality-escape checks plus a small added-line warning helper | Warn on new scripts/harnesses/debug markers unless referenced by `verify`, named in `risk_check`, or clearly temporary and removed before final. Continue relying on final quality gate to catch lingering temp artifacts. |
+| Delta reporting | `run_quality_gate(...)` JSON result | Add additive fields such as `securityAssumptionFindings`, `slopShapeFindings`, and `verificationShapeFindings`, each grouped by `added`, `resolved`, `worsened`, and `improved` when baseline comparison is available. Existing consumers of `ok`, `errors`, `warnings`, and `checks` remain compatible. |
+
 ## Verification Shape Lessons
 
 The useful lesson from `future3OOO/skills` is that proof quality is part of code quality. The gate should pressure agents to describe the shape of the feedback loop before they write code, without forcing one workflow onto every task.
