@@ -161,6 +161,13 @@ def snapshot_paths(repo: Path) -> set[str]:
     return {str(path.relative_to(repo)) for path in repo.rglob("*") if ".git" not in path.relative_to(repo).parts}
 
 
+def reward_events(repo: Path) -> list[dict[str, object]]:
+    path = repo / ".agent" / "lean" / "state" / "events.jsonl"
+    if not path.exists():
+        return []
+    return [item for item in (json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()) if item.get("event") == "reward_telemetry"]
+
+
 
 def test_p0_advisory_groups_are_empty_and_compatible() -> None:
     with repo_fixture() as repo:
@@ -821,6 +828,54 @@ def test_delta_reporting_verification_shape_line_drift_is_not_resolved() -> None
         assert group["resolved"] == []
         assert group["improved"] == []
         assert group["worsened"] == []
+
+
+def test_reward_telemetry_disabled_by_default() -> None:
+    with repo_fixture() as repo:
+        declare_valid(repo)
+        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b + 0\n", encoding="utf-8")
+        run_gate(repo, "posttool", payload={"cwd": str(repo), "tool_name": "Bash", "tool_input": {"command": "pytest tests/test_app.py"}, "tool_response": {"exit_code": 0}})
+        result = run_gate(repo, "stop", payload={"cwd": str(repo), "hook_event_name": "Stop"})
+        assert result.returncode == 0, result.stdout
+        assert reward_events(repo) == []
+
+
+def test_reward_telemetry_enabled_logs_aggregate_shape_only() -> None:
+    with repo_fixture() as repo:
+        (repo / ".agent" / "lean" / "policy.json").write_text(json.dumps({"reward_telemetry_enabled": True}), encoding="utf-8")
+        git(repo, "add", ".agent/lean/policy.json")
+        git(repo, "commit", "--no-gpg-sign", "-m", "enable telemetry")
+        declare_valid(repo)
+        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b + 0\n", encoding="utf-8")
+        run_gate(repo, "posttool", payload={"cwd": str(repo), "tool_name": "Bash", "tool_input": {"command": "pytest tests/test_app.py"}, "tool_response": {"exit_code": 0}})
+        result = run_gate(repo, "stop", payload={"cwd": str(repo), "hook_event_name": "Stop"})
+        assert result.returncode == 0, result.stdout
+        events = reward_events(repo)
+        assert len(events) == 1
+        event = events[0]
+        assert event["quality_ok"] is True
+        assert event["final_error_count"] == 0
+        assert event["quality_error_count"] == 0
+        assert event["changed_files_count"] >= 1
+        assert set(event["advisory_counts"]) == {"securityAssumptionFindings", "slopShapeFindings", "verificationShapeFindings"}
+        assert not {"score", "verdict", "critique", "contract", "contract_id", "challenge", "leaderboard"} & set(event)
+        assert "src/app.py" not in json.dumps(event, sort_keys=True)
+
+
+def test_reward_telemetry_skips_when_quality_gate_disabled() -> None:
+    with repo_fixture() as repo:
+        (repo / ".agent" / "lean" / "policy.json").write_text(
+            json.dumps({"reward_telemetry_enabled": True, "run_quality_gate_on_stop": False}),
+            encoding="utf-8",
+        )
+        git(repo, "add", ".agent/lean/policy.json")
+        git(repo, "commit", "--no-gpg-sign", "-m", "disable quality telemetry")
+        declare_valid(repo)
+        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b + 0\n", encoding="utf-8")
+        run_gate(repo, "posttool", payload={"cwd": str(repo), "tool_name": "Bash", "tool_input": {"command": "pytest tests/test_app.py"}, "tool_response": {"exit_code": 0}})
+        result = run_gate(repo, "stop", payload={"cwd": str(repo), "hook_event_name": "Stop"})
+        assert result.returncode == 0, result.stdout
+        assert reward_events(repo) == []
 
 
 def test_declare_rejects_code_contract_without_preflight() -> None:
@@ -1913,6 +1968,9 @@ TESTS = [
     test_delta_reporting_worsened_security_advisory,
     test_delta_reporting_resolved_slop_shape_advisory,
     test_delta_reporting_verification_shape_line_drift_is_not_resolved,
+    test_reward_telemetry_disabled_by_default,
+    test_reward_telemetry_enabled_logs_aggregate_shape_only,
+    test_reward_telemetry_skips_when_quality_gate_disabled,
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
     test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight,

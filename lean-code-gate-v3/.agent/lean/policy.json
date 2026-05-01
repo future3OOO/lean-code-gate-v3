@@ -18,6 +18,7 @@
   "block_hidden_bash_writes": true,
   "run_quality_gate_on_stop": true,
   "fail_on_quality_warnings": false,
+  "reward_telemetry_enabled": false,
   "max_design_markers": 4,
   "max_design_marker_density_per_100_lines": 3.0,
   "allowed_broad_globs": ["src/**", "lib/**", "app/**", "tests/**", "test/**"],
