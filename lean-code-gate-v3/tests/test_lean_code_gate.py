@@ -154,6 +154,279 @@ def test_p0_advisory_groups_are_empty_and_compatible() -> None:
         assert promoted.returncode == 0
         assert promoted_data["errors"] == []
 
+
+def _advisory_added(data: dict[str, object], group: str) -> list[dict[str, object]]:
+    return list(data[group]["added"])
+
+
+def test_sensitive_input_source_only_is_advisory() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "secrets.py").write_text("import os\nTOKEN = os.environ['API_KEY']\n", encoding="utf-8")
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "warning"
+        assert findings[0]["evidence"] == "source=environment-read"
+        assert data["warnings"] == []
+        assert all(item["passed"] for item in data["checks"])
+
+
+def test_sensitive_input_source_and_sink_is_stronger_advisory() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "secrets.py").write_text(
+            "import os\nTOKEN = os.getenv('API_KEY')\nprint(TOKEN)\n", encoding="utf-8"
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "high"
+        assert "sink=log-or-console" in findings[0]["evidence"]
+        assert "API_KEY" not in findings[0]["evidence"]
+        assert "API_KEY" not in findings[0]["message"]
+
+
+def test_sensitive_input_high_requires_same_line_or_source_identifier_flow() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "flow.py").write_text(
+            "import os\n"
+            "TOKEN = os.getenv('API_KEY')\n"
+            "print('starting')\n"
+            "status = 200\n"
+            "print(TOKEN)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "high"
+        assert "sink=log-or-console" in findings[0]["evidence"]
+
+    with repo_fixture() as repo:
+        (repo / "src" / "unrelated.py").write_text(
+            "import os\n"
+            "TOKEN = os.getenv('API_KEY'); print('ready')\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "warning"
+        assert "sink=" not in findings[0]["evidence"]
+
+
+def test_sensitive_input_unchanged_and_broad_secret_names_do_not_hit() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "seed.py").write_text("import os\nTOKEN = os.environ['API_KEY']\n", encoding="utf-8")
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed sensitive read")
+        (repo / "src" / "seed.py").write_text(
+            "import os\nTOKEN = os.environ['API_KEY']\nVALUE = 1\n", encoding="utf-8"
+        )
+        (repo / "src" / "names.py").write_text(
+            "secret_payload = load_user_setting()\n"
+            "if os.environ:\n"
+            "    value = 1\n",
+            encoding="utf-8",
+        )
+        (repo / "src" / "headers.ts").write_text("const AUTH_HEADER = 'Authorization';\n", encoding="utf-8")
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert _advisory_added(data, "securityAssumptionFindings") == []
+
+
+def test_sensitive_input_test_fixtures_do_not_hit() -> None:
+    with repo_fixture() as repo:
+        (repo / "tests" / "test_secrets.py").write_text(
+            "import os\ndef test_fake_secret(tmp_path):\n"
+            "    token = os.environ['API_KEY']\n"
+            "    (tmp_path / 'out.txt').write_text(token)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert _advisory_added(data, "securityAssumptionFindings") == []
+
+
+def test_sensitive_input_credential_paths_require_read_call() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "paths.py").write_text(
+            "DEFAULT_KEY = '.ssh/id_ed25519'\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert _advisory_added(data, "securityAssumptionFindings") == []
+        (repo / "src" / "paths.py").write_text(
+            "open('.ssh/id_ed25519', 'w').write(key)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "warning"
+        assert "sink=" not in findings[0]["evidence"]
+        (repo / "src" / "paths.py").write_text(
+            "KEY = open('.ssh/id_ed25519').read()\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["evidence"] == "source=credential-file-read"
+
+
+def test_sensitive_input_added_source_escalates_to_existing_sink() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "existing.py").write_text(
+            "def load():\n"
+            "    print(TOKEN)\n",
+            encoding="utf-8",
+        )
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed sink")
+        (repo / "src" / "existing.py").write_text(
+            "import os\n"
+            "def load():\n"
+            "    TOKEN = os.getenv('API_KEY')\n"
+            "    print(TOKEN)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "high"
+        assert "sink=log-or-console" in findings[0]["evidence"]
+
+
+def test_sensitive_input_indented_python_assignment_escalates_via_identifier_flow() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "indented.py").write_text(
+            "import os\n"
+            "def load():\n"
+            "    TOKEN = os.getenv('API_KEY')\n"
+            "    print('starting')\n"
+            "    print(TOKEN)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "high"
+        assert "sink=log-or-console" in findings[0]["evidence"]
+
+
+def test_sensitive_input_typed_python_assignment_escalates_via_identifier_flow() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "typed.py").write_text(
+            "import os\n"
+            "from typing import Optional\n"
+            "TOKEN: Optional[str] = os.getenv('API_KEY')\n"
+            "print(TOKEN)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "high"
+        assert "sink=log-or-console" in findings[0]["evidence"]
+
+
+def test_sensitive_input_comparison_does_not_escalate() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "compare.py").write_text(
+            "import os\n"
+            "def check(TOKEN):\n"
+            "    if TOKEN == os.getenv('API_KEY'):\n"
+            "        print(TOKEN)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "warning"
+        assert "sink=" not in findings[0]["evidence"]
+
+
+def test_sensitive_input_git_remote_subprocess_is_advisory() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "remotes.py").write_text(
+            "import subprocess\n"
+            "def origin():\n"
+            "    return subprocess.run(['git', 'remote', 'get-url', 'origin']).stdout\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["evidence"] == "source=git-remote-url-read"
+
+
+def test_sensitive_input_git_remote_node_execfile_is_advisory() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "remotes.ts").write_text(
+            "import { execFile } from 'child_process';\n"
+            "export const origin = () => execFile('git', ['remote', 'get-url', 'origin']);\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["evidence"] == "source=git-remote-url-read"
+
+
+def test_sensitive_input_python_logger_method_call_escalates() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "logged.py").write_text(
+            "import logging\n"
+            "import os\n"
+            "logger = logging.getLogger(__name__)\n"
+            "def load():\n"
+            "    TOKEN = os.getenv('API_KEY')\n"
+            "    logger.error(TOKEN)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "high"
+        assert "sink=log-or-console" in findings[0]["evidence"]
+
+
+def test_sensitive_input_console_info_method_call_escalates() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "client.ts").write_text(
+            "const TOKEN = process.env.API_KEY; console.info(TOKEN);\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "high"
+        assert "sink=log-or-console" in findings[0]["evidence"]
+
+
+def test_sensitive_input_text_output_is_advisory_only() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "secrets.py").write_text("import os\nTOKEN = os.getenv('API_KEY')\n", encoding="utf-8")
+        result = run_gate(repo, "check", "--repo", str(repo))
+        assert result.returncode == 0
+        assert "Advisory findings" in result.stdout
+        assert "Warnings:\n- none" in result.stdout
+
 def test_declare_rejects_code_contract_without_preflight() -> None:
     with repo_fixture() as repo:
         result = run_gate(
@@ -1208,6 +1481,21 @@ def test_gate_check_creates_no_repo_artifacts() -> None:
 
 TESTS = [
     test_p0_advisory_groups_are_empty_and_compatible,
+    test_sensitive_input_source_only_is_advisory,
+    test_sensitive_input_source_and_sink_is_stronger_advisory,
+    test_sensitive_input_high_requires_same_line_or_source_identifier_flow,
+    test_sensitive_input_unchanged_and_broad_secret_names_do_not_hit,
+    test_sensitive_input_test_fixtures_do_not_hit,
+    test_sensitive_input_credential_paths_require_read_call,
+    test_sensitive_input_added_source_escalates_to_existing_sink,
+    test_sensitive_input_indented_python_assignment_escalates_via_identifier_flow,
+    test_sensitive_input_typed_python_assignment_escalates_via_identifier_flow,
+    test_sensitive_input_comparison_does_not_escalate,
+    test_sensitive_input_git_remote_subprocess_is_advisory,
+    test_sensitive_input_git_remote_node_execfile_is_advisory,
+    test_sensitive_input_python_logger_method_call_escalates,
+    test_sensitive_input_console_info_method_call_escalates,
+    test_sensitive_input_text_output_is_advisory_only,
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
     test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight,

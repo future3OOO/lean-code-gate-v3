@@ -84,6 +84,8 @@ The final quality gate inspects the changed source scope and fails on:
 - high-confidence helper or loop reimplementation
 - risk-calibrated bloat
 
+The advisory surface also reports sensitive-input reads when changed code touches environment values, credential paths, keyrings, auth/cookie headers, private key material, or git remote URLs. It reports stronger evidence when the same touched area logs, serializes, caches, snapshots, or emits that value.
+
 Warnings are emitted for moderate bloat and weaker reuse signals. Projects can promote warnings to failures in `.agent/lean/policy.json`.
 
 ## Operating guidance
