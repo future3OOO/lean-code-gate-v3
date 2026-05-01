@@ -1291,17 +1291,6 @@ def first_rule_match(text: str, rules: list[tuple[re.Pattern[str], str]]) -> str
     return next((label for pattern, label in rules if pattern.search(text)), "")
 
 
-def unique_advisory_findings(findings: list[dict[str, object]]) -> list[dict[str, object]]:
-    seen: set[tuple[object, object, object, object]] = set()
-    out: list[dict[str, object]] = []
-    for finding in findings:
-        key = (finding.get("rule"), finding.get("path"), finding.get("line"), finding.get("evidence"))
-        if key not in seen:
-            seen.add(key)
-            out.append(finding)
-    return out
-
-
 def scan_sensitive_input(ctx: GateContext) -> list[dict[str, object]]:
     findings: list[dict[str, object]] = []
     for rel_path, added_lines in ctx.added_lines_with_untracked(production_only=True).items():
@@ -1374,23 +1363,26 @@ def scan_wrapper_value(ctx: GateContext) -> list[dict[str, object]]:
     findings: list[dict[str, object]] = []
     for rel_path, lines in ctx.added_lines_with_untracked(production_only=True).items():
         if is_production_source_path(rel_path):
-            findings.extend(scan_wrapper_value_lines(rel_path, lines))
-    return unique_advisory_findings(findings)
+            text = read_file(ctx.repo / rel_path)
+            marker_lines = list(enumerate(text.splitlines(), 1)) if text is not None else lines
+            findings.extend(scan_wrapper_value_lines(rel_path, lines, marker_lines))
+    return findings
 
 
-def scan_wrapper_value_lines(path: str, lines: list[tuple[int, str]]) -> list[dict[str, object]]:
+def scan_wrapper_value_lines(path: str, lines: list[tuple[int, str]], marker_lines: list[tuple[int, str]]) -> list[dict[str, object]]:
     findings: list[dict[str, object]] = []
     language = language_for_path(path)
     for index, (line_no, text) in enumerate(lines):
         match_info = wrapper_forwarder(language, text)
-        if not match_info and language in {"python", "go"}:
-            match_info = wrapper_forwarder(language, "\n".join(part.strip() for _, part in lines[index:index + 3]))
+        multiline = lines[index:index + 3]
+        if not match_info and language in {"python", "go"} and len(multiline) > 1 and all(multiline[i + 1][0] == multiline[i][0] + 1 for i in range(len(multiline) - 1)):
+            match_info = wrapper_forwarder(language, "\n".join(part.strip() for _, part in multiline))
         if not match_info:
             continue
         name, target, args, call_args = match_info
         if name in _active_framework_override_names or target.rsplit(".", 1)[-1] == name:
             continue
-        if not same_pass_through_args(args, call_args) or wrapper_has_value_marker(lines, line_no):
+        if not same_pass_through_args(args, call_args) or wrapper_has_value_marker(marker_lines, line_no):
             continue
         findings.append(
             advisory_finding(
@@ -1413,14 +1405,14 @@ def wrapper_forwarder(language: str, text: str) -> tuple[str, str, str, str] | N
         if found:
             return found.group(1), found.group(3), found.group(2), found.group(4)
     elif language == "javascript":
-        found = re.search(r"^(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(([^)]*)\)\s*\{\s*return\s+(?:await\s+)?([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\s*\(([^)]*)\)\s*;?\s*\}\s*$", stripped)
+        found = re.search(r"^(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(([^)]*)\)\s*(?::\s*[^{]+)?\{\s*return\s+(?:await\s+)?([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\s*\(([^)]*)\)\s*;?\s*\}\s*$", stripped)
         if found:
             return found.group(1), found.group(3), found.group(2), found.group(4)
         found = re.search(r"^(?:export\s+)?(?:const|let|var)\s+(\w+)\s*=\s*(?:async\s*)?(.*?)\s*=>\s*(.*?)\s*;?\s*$", stripped)
         if found:
             name, raw_args, body = found.group(1), found.group(2).strip(), found.group(3).strip()
-            if raw_args.startswith("(") and raw_args.endswith(")"):
-                raw_args = raw_args[1:-1]
+            if raw_args.startswith("(") and (close := raw_args.rfind(")")) >= 0:
+                raw_args = raw_args[1:close]
             body_match = re.search(r"^(?:await\s+)?([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\s*\(([^)]*)\)$", body)
             if not body_match and body.startswith("{") and body.endswith("}"):
                 body_match = re.search(r"^\{\s*return\s+(?:await\s+)?([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\s*\(([^)]*)\)\s*;?\s*\}$", body)
@@ -1447,8 +1439,8 @@ def wrapper_has_value_marker(lines: list[tuple[int, str]], line_no: int) -> bool
 def argument_names(raw: str, declaration: bool) -> list[str]:
     names: list[str] = []
     for part in raw.split(","):
-        item = part.strip().lstrip("*").lstrip("&")
-        if not item or item.startswith(("...", "{", "[")):
+        item = part.strip().removeprefix("...").lstrip("*").lstrip("&")
+        if not item or item.startswith(("{", "[")):
             continue
         if declaration:
             item = item.split("=", 1)[0].split(":", 1)[0].strip()
