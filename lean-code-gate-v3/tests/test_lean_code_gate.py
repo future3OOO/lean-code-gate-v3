@@ -751,7 +751,7 @@ def test_delta_reporting_resolved_security_advisory() -> None:
         target = repo / "src" / "secrets.py"
         target.write_text("TOKEN = os.getenv('API_KEY')\n", encoding="utf-8")
         git(repo, "add", "src/secrets.py")
-        git(repo, "commit", "-m", "base secret")
+        git(repo, "commit", "--no-gpg-sign", "-m", "base secret")
         target.write_text("TOKEN = 'public'\n", encoding="utf-8")
         code, data = check_json(repo)
         group = data["securityAssumptionFindings"]
@@ -765,7 +765,7 @@ def test_delta_reporting_improved_security_advisory() -> None:
         target = repo / "src" / "secrets.py"
         target.write_text("TOKEN = os.getenv('API_KEY')\nKEY = open('/home/me/.ssh/id_rsa').read()\n", encoding="utf-8")
         git(repo, "add", "src/secrets.py")
-        git(repo, "commit", "-m", "base secrets")
+        git(repo, "commit", "--no-gpg-sign", "-m", "base secrets")
         target.write_text("TOKEN = os.getenv('API_KEY')\n", encoding="utf-8")
         code, data = check_json(repo)
         improved = data["securityAssumptionFindings"]["improved"]
@@ -780,7 +780,7 @@ def test_delta_reporting_worsened_security_advisory() -> None:
         target = repo / "src" / "secrets.py"
         target.write_text("TOKEN = os.getenv('API_KEY')\n", encoding="utf-8")
         git(repo, "add", "src/secrets.py")
-        git(repo, "commit", "-m", "base secret")
+        git(repo, "commit", "--no-gpg-sign", "-m", "base secret")
         target.write_text("TOKEN = os.getenv('API_KEY')\nKEY = open('/home/me/.ssh/id_rsa').read()\n", encoding="utf-8")
         code, data = check_json(repo)
         group = data["securityAssumptionFindings"]
