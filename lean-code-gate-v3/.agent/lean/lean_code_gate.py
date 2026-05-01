@@ -332,13 +332,12 @@ SENSITIVE_SINK_RULES = [
     (re.compile(r"\b(?:JSON\.stringify|json\.dumps|pickle\.dump|yaml\.dump|serialize|snapshot)\b|\b(?:telemetry|metrics)\.(?:track|emit|record|log)\s*\("), "serialization-or-telemetry"),
     (re.compile(r"""\b(?:write_text|write_bytes|writeFile|appendFile|fs\.(?:writeFile|appendFile)|open\s*\([^)]*['"]w)\b"""), "persistence"),
 ]
-SENSITIVE_IDENTIFIER_RE = re.compile(
-    r"^\s*"
-    r"(?:(?:const|let|var)\s+)?"
-    r"([A-Za-z_$][\w$]*)"
-    r"(?:\s*:\s*[^=]+?)?"
-    r"\s*(?::=|=(?!=))"
-)
+SENSITIVE_IDENTIFIER_RE = re.compile(r"^\s*(?:(?:const|let|var)\s+)?([A-Za-z_$][\w$]*)(?:\s*:\s*[^=]+?)?\s*(?::=|=(?!=))")
+FAILURE_DEFAULT_RE = re.compile(r'(?:\breturn\s+|=>\s*|Promise\.resolve\s*\(\s*)(?:null|undefined|false|\[\]|\{\}|["\']{2})(?=[\s;),}]|$)')
+FAILURE_LOG_RE = re.compile(r"\b(?:console\.(?:log|error|warn|info)|(?:logger|log)\.(?:log|error|warn|info))\s*\(")
+FAILURE_RETHROW_RE = re.compile(r"\b(?:throw|reject)\b")
+FAILURE_STRINGIFY_RE = re.compile(r"\b(?:JSON\.stringify|String)\s*\(\s*(?:e|err|error)\s*\)")
+FAILURE_TRIGGER_RE = re.compile(r"\bcatch\b|\.catch\b|\breturn\b|=>|Promise\.resolve|JSON\.stringify|\bString\s*\(|console\.|(?:logger|log)\.")
 GENERIC_SYMBOLS = {
     "app",
     "config",
@@ -1281,20 +1280,11 @@ def line_hits(path: str, lines: list[tuple[int, str]], rules: list[re.Pattern[st
 
 
 def advisory_finding(rule: str, family: str, path: str, line: int, severity: str, message: str, evidence: str) -> dict[str, object]:
-    return {
-        "rule": rule,
-        "family": family,
-        "path": path,
-        "line": line,
-        "severity": severity,
-        "message": message,
-        "evidence": evidence,
-    }
+    return {"rule": rule, "family": family, "path": path, "line": line, "severity": severity, "message": message, "evidence": evidence}
 
 
 def first_rule_match(text: str, rules: list[tuple[re.Pattern[str], str]]) -> str:
     return next((label for pattern, label in rules if pattern.search(text)), "")
-
 
 def scan_sensitive_input(ctx: GateContext) -> list[dict[str, object]]:
     findings: list[dict[str, object]] = []
@@ -1336,23 +1326,40 @@ def assigned_identifier(text: str) -> str:
     return found.group(1) if found else ""
 
 
+def scan_failure_contract(ctx: GateContext) -> list[dict[str, object]]:
+    return [
+        finding
+        for rel_path, lines in ctx.added_lines_with_untracked(production_only=True).items()
+        if is_production_source_path(rel_path) and language_for_path(rel_path) == "javascript"
+        for finding in scan_failure_contract_lines(rel_path, lines)
+    ]
+
+def scan_failure_contract_lines(path: str, lines: list[tuple[int, str]]) -> list[dict[str, object]]:
+    findings: list[dict[str, object]] = []
+    for line_no, text in lines:
+        if not FAILURE_TRIGGER_RE.search(text):
+            continue
+        window = "\n".join(value for current, value in lines if abs(current - line_no) <= 8)
+        if not re.search(r"\bcatch\b|\.catch\b", window):
+            continue
+        rule = message = ""
+        if FAILURE_STRINGIFY_RE.search(text):
+            rule, message = "failure-contract-stringify", "caught error is stringified instead of preserved or mapped"
+        elif FAILURE_DEFAULT_RE.search(text):
+            rule, message = "failure-contract-cheap-default", "catch path returns a cheap default instead of preserving failure information"
+        elif re.search(r"\bcatch\b|\.catch\b", text) and FAILURE_LOG_RE.search(window) and not FAILURE_RETHROW_RE.search(window) and not re.search(r"\breturn\b", window):
+            rule, message = "failure-contract-log-only", "catch path only logs and then erases the failure"
+        if rule:
+            findings.append(advisory_finding(rule, "failure-contract", path, line_no, "warning", message, "added catch/reject path erases failure shape"))
+    return findings
+
+
 def multiline_hits(path: str, text: str) -> list[str]:
     return [f"{path}:{text[: match.start()].count(chr(10)) + 1}" for rule in EMPTY_CATCH_RULES for match in rule.finditer(text)]
 
 
 def scan_quality_escapes(ctx: GateContext) -> list[str]:
-    # Path filter is is_source_path (not is_production_source_path) by design.
-    # Reuse/duplicate/bloat detectors filter to is_production_source_path
-    # because their findings are scoped to the new code's relationship to
-    # the production codebase. Quality-escape's path filter is broader so
-    # GENERAL_ESCAPE_RULES (TODO/FIXME, # type: ignore, @ts-ignore,
-    # eslint-disable, # noqa, || true) catches escapes in test/fixture
-    # paths too — those locations are particularly prone to vestigial
-    # suppressions (Wen et al. FSE 2025: 50.8% of suppressions are useless).
-    # Language-typed rules (PYTHON_ESCAPE_RULES, TS_ESCAPE_RULES — `: Any`,
-    # `as any`, bare `except:`) DO restrict to production via
-    # is_production_source_path inside rules_for_path; mocks in tests
-    # legitimately use `as any` and shouldn't trip this layer.
+    # General escape rules cover all changed source; language-typed rules stay production-only via rules_for_path().
     hits: list[str] = []
     for rel_path, lines in ctx.added_lines.items():
         if is_source_path(rel_path):
@@ -1497,16 +1504,7 @@ def bloat_file_details(ctx: GateContext) -> tuple[list[dict[str, object]], int, 
         parent = str(Path(rel_path).parent).replace(os.sep, "/")
         if deleted > added:
             shrink_by_dir[parent] = shrink_by_dir.get(parent, 0) + deleted - added
-        details.append(
-            {
-                "file": rel_path,
-                "added": added,
-                "deleted": deleted,
-                "currentLines": current_lines,
-                "baselineLines": baseline_lines,
-                "netGrowth": max(0, added - deleted),
-            }
-        )
+        details.append({"file": rel_path, "added": added, "deleted": deleted, "currentLines": current_lines, "baselineLines": baseline_lines, "netGrowth": max(0, added - deleted)})
     return details, total_added, total_deleted, shrink_by_dir
 
 
@@ -1843,6 +1841,7 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     reuse_warnings = [finding for finding in reuse_findings if finding.severity == "warning"]
     advisory_groups = empty_advisory_groups()
     advisory_groups["securityAssumptionFindings"]["added"].extend(scan_sensitive_input(ctx))
+    advisory_groups["slopShapeFindings"]["added"].extend(scan_failure_contract(ctx))
 
     if conflict_files:
         errors.append(f"merge conflict markers found in {len(conflict_files)} file(s)")
