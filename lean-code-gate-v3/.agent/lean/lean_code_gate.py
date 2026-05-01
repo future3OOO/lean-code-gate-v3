@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Lean Code Gate v3.
-
+"""Lean Code Gate v3.1.
 Deterministic contract, scope, verification, and changed-code quality gates for
 coding agents. The script is intentionally dependency-free so hooks can run in a
 fresh repository without importing project packages.
@@ -23,7 +22,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
-VERSION = "3.0.0"
+VERSION = "3.1.0"
 STATE_DIR = ".agent/lean/state"
 POLICY_FILE = ".agent/lean/policy.json"
 
