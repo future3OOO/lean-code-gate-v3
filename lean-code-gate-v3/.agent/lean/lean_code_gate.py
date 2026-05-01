@@ -373,6 +373,8 @@ GENERIC_MATCH_TOKENS = {
     "wait",
     "with",
 }
+ADVISORY_GROUP_NAMES = ("securityAssumptionFindings", "slopShapeFindings", "verificationShapeFindings")
+ADVISORY_BUCKET_NAMES = ("added", "resolved", "worsened", "improved")
 RISKY_BLOCK_RULE = re.compile(
     r"\b(?:for|while|map|filter|reduce|retry|fetch|read|write|parse|normalize|validate|format|resolve|dedupe|deduplicate)\b",
     re.I,
@@ -1730,6 +1732,11 @@ def apply_active_policy(active_policy: dict[str, object]) -> None:
     _active_min_duplicate_count = max(2, int(active_policy.get("reuse_min_duplicate_count") or 2))
 
 
+
+def empty_advisory_groups() -> dict[str, dict[str, list[dict[str, object]]]]:
+    return {name: {bucket: [] for bucket in ADVISORY_BUCKET_NAMES} for name in ADVISORY_GROUP_NAMES}
+
+
 def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -> dict[str, object]:
     active_policy = policy(repo)
     apply_active_policy(active_policy)
@@ -1778,6 +1785,7 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
         "reuseFindings": [finding.as_dict() for finding in reuse_findings],
         "qualityEscapeLocations": list(quality_escapes),
         "duplicateBlockCandidates": [{"count": int(d["count"]), "files": list(d["files"])} for d in duplicates_all],
+        **empty_advisory_groups(),
     }
 
 

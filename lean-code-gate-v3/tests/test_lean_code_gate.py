@@ -133,6 +133,27 @@ def snapshot_paths(repo: Path) -> set[str]:
     return {str(path.relative_to(repo)) for path in repo.rglob("*") if ".git" not in path.relative_to(repo).parts}
 
 
+
+def test_p0_advisory_groups_are_empty_and_compatible() -> None:
+    with repo_fixture() as repo:
+        code, data = check_json(repo)
+        assert code == 0
+        for name in ("securityAssumptionFindings", "slopShapeFindings", "verificationShapeFindings"):
+            assert data[name] == {"added": [], "resolved": [], "worsened": [], "improved": []}
+        assert data["ok"] is True
+        assert data["warnings"] == []
+        assert all(item["passed"] for item in data["checks"])
+        assert all(item["passed"] for item in data["hardRules"].values())
+
+        text_result = run_gate(repo, "check", "--repo", str(repo))
+        assert text_result.returncode == 0
+        assert "Advisory findings" not in text_result.stdout
+
+        promoted = run_gate(repo, "check", "--repo", str(repo), "--fail-on-warnings", "--json")
+        promoted_data = json.loads(promoted.stdout)
+        assert promoted.returncode == 0
+        assert promoted_data["errors"] == []
+
 def test_declare_rejects_code_contract_without_preflight() -> None:
     with repo_fixture() as repo:
         result = run_gate(
@@ -1186,6 +1207,7 @@ def test_gate_check_creates_no_repo_artifacts() -> None:
 
 
 TESTS = [
+    test_p0_advisory_groups_are_empty_and_compatible,
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
     test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight,
