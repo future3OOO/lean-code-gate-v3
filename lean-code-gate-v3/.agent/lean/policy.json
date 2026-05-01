@@ -39,6 +39,7 @@
   "reuse_warning_score": 45,
   "reuse_min_duplicate_count": 3,
   "reuse_suppress_private_public_siblings": true,
+  "verification_mode_tokens": ["red-green-refactor", "green-refactor-green", "smoke-check"],
   "framework_override_names": [
     "validate", "clean", "save", "save_model", "save_formset",
     "get_queryset", "get_form", "get_form_kwargs", "get_context_data",

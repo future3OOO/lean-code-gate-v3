@@ -124,6 +124,34 @@ def declare_minimal(repo: Path) -> None:
     assert result.returncode == 0, result.stderr
 
 
+def declare_full_with_proof_plan(repo: Path, proof_plan: str, *, task_type: str = "feature", scope: str = "src/app.py") -> None:
+    result = run_gate(
+        repo,
+        "declare",
+        "--intent",
+        "adjust app behavior",
+        "--scope",
+        scope,
+        "--task-type",
+        task_type,
+        "--affected-surface",
+        "app behavior",
+        "--authoritative-contract",
+        "observable behavior remains valid",
+        "--invariant",
+        "callers keep expected behavior",
+        "--reuse-path",
+        "src/app.py add function",
+        "--proof-plan",
+        proof_plan,
+        "--risk-check",
+        "no sensitive data touched",
+        "--verify",
+        "pytest tests/test_app.py",
+    )
+    assert result.returncode == 0, result.stderr
+
+
 def check_json(repo: Path, *args: str) -> tuple[int, dict[str, object]]:
     result = run_gate(repo, "check", "--repo", str(repo), "--json", *args)
     return result.returncode, json.loads(result.stdout)
@@ -588,6 +616,85 @@ def test_wrapper_value_uses_existing_marker_comments_on_tracked_files() -> None:
         code, data = check_json(repo)
         assert code == 0, data
         assert [item for item in _advisory_added(data, "slopShapeFindings") if item["rule"] == "wrapper-value"] == []
+
+
+def test_verification_mode_missing_full_code_contract_is_advisory() -> None:
+    with repo_fixture() as repo:
+        declare_full_with_proof_plan(repo, "pytest tests/test_app.py")
+        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "verificationShapeFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["rule"] == "verification-mode"
+        assert "red-green-refactor" in findings[0]["evidence"]
+        assert data["warnings"] == []
+
+
+def test_verification_mode_tokens_are_accepted_and_negations_rejected() -> None:
+    for token in ("red-green-refactor", "green-refactor-green", "smoke-check"):
+        with repo_fixture() as repo:
+            declare_full_with_proof_plan(repo, f"{token}: pytest tests/test_app.py")
+            (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
+            code, data = check_json(repo)
+            assert code == 0, data
+            assert _advisory_added(data, "verificationShapeFindings") == []
+    negated_plans = (
+        "not doing red-green-refactor; pytest tests/test_app.py",
+        "without any scheduled or planned red-green-refactor; pytest tests/test_app.py",
+        "skip red-green-refactor; pytest tests/test_app.py",
+        "skipping red-green-refactor; pytest tests/test_app.py",
+        "avoid red-green-refactor; pytest tests/test_app.py",
+        "won't run red-green-refactor; pytest tests/test_app.py",
+        "wont run red-green-refactor; pytest tests/test_app.py",
+        "no: red-green-refactor; pytest tests/test_app.py",
+    )
+    for proof_plan in negated_plans:
+        with repo_fixture() as repo:
+            declare_full_with_proof_plan(repo, proof_plan)
+            (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
+            code, data = check_json(repo)
+            assert code == 0, data
+            assert len(_advisory_added(data, "verificationShapeFindings")) == 1
+    with repo_fixture() as repo:
+        declare_full_with_proof_plan(repo, "no red-green-refactor or smoke-check; pytest tests/test_app.py")
+        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert len(_advisory_added(data, "verificationShapeFindings")) == 1
+    with repo_fixture() as repo:
+        declare_full_with_proof_plan(repo, "no smoke-check, using red-green-refactor cycle; pytest tests/test_app.py")
+        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert _advisory_added(data, "verificationShapeFindings") == []
+
+
+def test_verification_mode_policy_tokens_are_configurable() -> None:
+    with repo_fixture() as repo:
+        policy_path = repo / ".agent" / "lean" / "policy.json"
+        policy_path.write_text(json.dumps({"verification_mode_tokens": ["property-check"]}), encoding="utf-8")
+        declare_full_with_proof_plan(repo, "property-check: pytest tests/test_app.py")
+        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
+        code, gate_data = check_json(repo)
+        assert code == 0, gate_data
+        assert _advisory_added(gate_data, "verificationShapeFindings") == []
+
+
+def test_verification_mode_exempts_minimal_and_test_only_work() -> None:
+    with repo_fixture() as repo:
+        declare_minimal(repo)
+        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert _advisory_added(data, "verificationShapeFindings") == []
+
+    with repo_fixture() as repo:
+        declare_full_with_proof_plan(repo, "pytest tests/test_app.py", task_type="test", scope="tests/test_app.py")
+        (repo / "tests" / "test_app.py").write_text("from src.app import add\n\ndef test_add():\n    assert add(1, 2) == 3\n", encoding="utf-8")
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert _advisory_added(data, "verificationShapeFindings") == []
 
 
 def test_declare_rejects_code_contract_without_preflight() -> None:
@@ -1668,6 +1775,10 @@ TESTS = [
     test_wrapper_value_detects_python_ts_and_go_forwarders,
     test_wrapper_value_markers_and_framework_overrides_do_not_hit,
     test_wrapper_value_uses_existing_marker_comments_on_tracked_files,
+    test_verification_mode_missing_full_code_contract_is_advisory,
+    test_verification_mode_tokens_are_accepted_and_negations_rejected,
+    test_verification_mode_policy_tokens_are_configurable,
+    test_verification_mode_exempts_minimal_and_test_only_work,
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
     test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight,

@@ -74,6 +74,7 @@ DEFAULT_POLICY: dict[str, object] = {
     "reuse_warning_score": 45,
     "reuse_min_duplicate_count": 3,
     "reuse_suppress_private_public_siblings": True,
+    "verification_mode_tokens": ["red-green-refactor", "green-refactor-green", "smoke-check"],
     "framework_override_names": [
         "validate", "clean", "save", "save_model", "save_formset",
         "get_queryset", "get_form", "get_form_kwargs", "get_context_data",
@@ -733,6 +734,11 @@ def events_path(root: Path) -> Path:
 
 def contract(root: Path) -> dict[str, object]:
     loaded = read_json(contract_path(root), {})
+    return loaded if isinstance(loaded, dict) else {}
+
+
+def contract_snapshot(root: Path) -> dict[str, object]:
+    loaded = read_json(root / STATE_DIR / "contract.json", {})
     return loaded if isinstance(loaded, dict) else {}
 
 
@@ -1456,6 +1462,56 @@ def same_pass_through_args(args: str, call_args: str) -> bool:
     return argument_names(args, declaration=True) == argument_names(call_args, declaration=False)
 
 
+def scan_verification_mode(ctx: GateContext, current_contract: dict[str, object], active_policy: dict[str, object]) -> list[dict[str, object]]:
+    if not current_contract or minimal_preflight(current_contract):
+        return []
+    task_type = str(current_contract.get("task_type") or "unknown")
+    if not code_task(task_type):
+        return []
+    changed = [path for path in sorted(ctx.changed_files) if not internal_gate_path(path)]
+    if not any(path_type(path) == "prod" and is_source_path(path) for path in changed):
+        return []
+    tokens = verification_mode_tokens(active_policy)
+    if proof_plan_has_verification_mode(current_contract.get("proof_plan"), tokens):
+        return []
+    return [
+        advisory_finding(
+            "verification-mode",
+            "verification",
+            f"{STATE_DIR}/contract.json",
+            0,
+            "warning",
+            "full code work proof_plan must name an explicit verification feedback loop",
+            "proof_plan lacks one of: " + ", ".join(tokens),
+        )
+    ]
+
+
+def verification_mode_tokens(active_policy: dict[str, object]) -> tuple[str, ...]:
+    raw = active_policy.get("verification_mode_tokens")
+    if not isinstance(raw, list):
+        raw = DEFAULT_POLICY["verification_mode_tokens"]
+    tokens = tuple(str(item).strip().lower() for item in raw if isinstance(item, str) and item.strip())
+    return tokens or tuple(str(item) for item in DEFAULT_POLICY["verification_mode_tokens"])
+
+
+def proof_plan_has_verification_mode(proof_plan: object, tokens: tuple[str, ...]) -> bool:
+    if isinstance(proof_plan, str):
+        text = proof_plan
+    elif isinstance(proof_plan, list):
+        text = " ".join(str(item) for item in proof_plan)
+    else:
+        return False
+    lowered = text.lower()
+    for token in tokens:
+        for found in re.finditer(rf"(?<![A-Za-z0-9_]){re.escape(token)}(?![A-Za-z0-9_])", lowered):
+            prefix = lowered[max(0, found.start() - 96):found.start()]
+            phrase = re.split(r"[,.;\n]", prefix)[-1]
+            if not re.search(r"\b(?:no|not|without|skip|skipping|avoid|won't|wont)\b(?:\W+\w+){0,5}\W*$", phrase):
+                return True
+    return False
+
+
 def multiline_hits(path: str, text: str) -> list[str]:
     return [f"{path}:{text[: match.start()].count(chr(10)) + 1}" for rule in EMPTY_CATCH_RULES for match in rule.finditer(text)]
 
@@ -1945,6 +2001,7 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     advisory_groups["securityAssumptionFindings"]["added"].extend(scan_sensitive_input(ctx))
     advisory_groups["slopShapeFindings"]["added"].extend(scan_failure_contract(ctx))
     advisory_groups["slopShapeFindings"]["added"].extend(scan_wrapper_value(ctx))
+    advisory_groups["verificationShapeFindings"]["added"].extend(scan_verification_mode(ctx, contract_snapshot(repo), active_policy))
 
     if conflict_files:
         errors.append(f"merge conflict markers found in {len(conflict_files)} file(s)")
