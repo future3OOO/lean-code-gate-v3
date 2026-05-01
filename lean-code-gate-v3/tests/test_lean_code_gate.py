@@ -746,6 +746,51 @@ def test_production_shaped_proof_allows_entrypoint_fixture_and_assertion_rich_te
         assert [item for item in _advisory_added(data, "verificationShapeFindings") if item["rule"] == "production-shaped-proof"] == []
 
 
+def test_delta_reporting_resolved_security_advisory() -> None:
+    with repo_fixture() as repo:
+        target = repo / "src" / "secrets.py"
+        target.write_text("TOKEN = os.getenv('API_KEY')\n", encoding="utf-8")
+        git(repo, "add", "src/secrets.py")
+        git(repo, "commit", "-m", "base secret")
+        target.write_text("TOKEN = 'public'\n", encoding="utf-8")
+        code, data = check_json(repo)
+        group = data["securityAssumptionFindings"]
+        assert code == 0, data
+        assert len(group["resolved"]) == 1
+        assert group["resolved"][0]["rule"] == "sensitive-input"
+
+
+def test_delta_reporting_improved_security_advisory() -> None:
+    with repo_fixture() as repo:
+        target = repo / "src" / "secrets.py"
+        target.write_text("TOKEN = os.getenv('API_KEY')\nKEY = open('/home/me/.ssh/id_rsa').read()\n", encoding="utf-8")
+        git(repo, "add", "src/secrets.py")
+        git(repo, "commit", "-m", "base secrets")
+        target.write_text("TOKEN = os.getenv('API_KEY')\n", encoding="utf-8")
+        code, data = check_json(repo)
+        improved = data["securityAssumptionFindings"]["improved"]
+        assert code == 0, data
+        assert len(improved) == 1
+        assert improved[0]["line"] == 0
+        assert improved[0]["evidence"] == "2 -> 1"
+
+
+def test_delta_reporting_worsened_security_advisory() -> None:
+    with repo_fixture() as repo:
+        target = repo / "src" / "secrets.py"
+        target.write_text("TOKEN = os.getenv('API_KEY')\n", encoding="utf-8")
+        git(repo, "add", "src/secrets.py")
+        git(repo, "commit", "-m", "base secret")
+        target.write_text("TOKEN = os.getenv('API_KEY')\nKEY = open('/home/me/.ssh/id_rsa').read()\n", encoding="utf-8")
+        code, data = check_json(repo)
+        group = data["securityAssumptionFindings"]
+        assert code == 0, data
+        assert len(group["added"]) == 1
+        assert len(group["worsened"]) == 1
+        assert group["worsened"][0]["line"] == 0
+        assert group["worsened"][0]["evidence"] == "1 -> 2"
+
+
 def test_declare_rejects_code_contract_without_preflight() -> None:
     with repo_fixture() as repo:
         result = run_gate(
@@ -1831,6 +1876,9 @@ TESTS = [
     test_production_shaped_proof_warns_on_mock_heavy_weak_test,
     test_production_shaped_proof_pytest_fixture_name_does_not_exempt_weak_mock_test,
     test_production_shaped_proof_allows_entrypoint_fixture_and_assertion_rich_tests,
+    test_delta_reporting_resolved_security_advisory,
+    test_delta_reporting_improved_security_advisory,
+    test_delta_reporting_worsened_security_advisory,
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
     test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight,

@@ -1562,6 +1562,79 @@ def production_entrypoint_line(text: str) -> bool:
     return bool(PROOF_ENTRY_RE.search(text))
 
 
+def apply_advisory_delta(ctx: GateContext, groups: dict[str, dict[str, list[dict[str, object]]]]) -> None:
+    for rel_path in sorted(ctx.changed_files):
+        if internal_gate_path(rel_path) or is_binary_path(rel_path):
+            continue
+        base_text = read_git_file(ctx.repo, ctx.base_for_file, rel_path)
+        current_text = read_file(ctx.repo / rel_path)
+        for group_name in ADVISORY_GROUP_NAMES:
+            base = advisory_snapshot_findings(rel_path, base_text, group_name)
+            current = advisory_snapshot_findings(rel_path, current_text, group_name)
+            add_advisory_delta(groups[group_name], base, current)
+
+
+def advisory_snapshot_findings(path: str, text: str | None, group_name: str) -> list[dict[str, object]]:
+    if text is None:
+        return []
+    lines = list(enumerate(text.splitlines(), 1))
+    findings: list[dict[str, object]] = []
+    if group_name == "securityAssumptionFindings" and is_production_source_path(path):
+        findings.extend(scan_sensitive_input_lines(path, lines, lines))
+    elif group_name == "slopShapeFindings":
+        if is_production_source_path(path) and language_for_path(path) == "javascript":
+            findings.extend(scan_failure_contract_lines(path, lines))
+        if is_production_source_path(path):
+            findings.extend(scan_wrapper_value_lines(path, lines, lines))
+    elif group_name == "verificationShapeFindings" and (path_type(path) == "test" or is_test_like_path(path)):
+        finding = production_shaped_proof_finding(path, lines)
+        if finding:
+            findings.append(finding)
+    unique: list[dict[str, object]] = []
+    seen: set[tuple[object, ...]] = set()
+    for item in findings:
+        key = advisory_delta_key(item)
+        if key not in seen:
+            unique.append(item)
+            seen.add(key)
+    return unique
+
+
+def add_advisory_delta(bucketed: dict[str, list[dict[str, object]]], base: list[dict[str, object]], current: list[dict[str, object]]) -> None:
+    base_keys = {advisory_delta_key(item) for item in base}
+    current_keys = {advisory_delta_key(item) for item in current}
+    resolved_keys = base_keys - current_keys
+    existing_resolved = {advisory_delta_key(item) for item in bucketed["resolved"]}
+    bucketed["resolved"].extend(item for item in base if advisory_delta_key(item) in resolved_keys and advisory_delta_key(item) not in existing_resolved)
+    for key, base_count in base_count_keys(base).items():
+        current_count = base_count_keys(current).get(key, 0)
+        if current_count > base_count:
+            bucketed["worsened"].append(advisory_delta_summary(key, base_count, current_count))
+        elif 0 < current_count < base_count:
+            bucketed["improved"].append(advisory_delta_summary(key, base_count, current_count))
+
+
+def advisory_delta_key(item: dict[str, object]) -> tuple[object, ...]:
+    return (item.get("rule"), item.get("family"), item.get("path"), item.get("line"), item.get("severity"), item.get("message"), item.get("evidence"))
+
+
+def advisory_count_key(item: dict[str, object]) -> tuple[str, str, str, str]:
+    return (str(item.get("rule") or "advisory"), str(item.get("family") or "advisory"), str(item.get("path") or ""), str(item.get("severity") or "warning"))
+
+
+def base_count_keys(findings: list[dict[str, object]]) -> dict[tuple[str, str, str, str], int]:
+    counts: dict[tuple[str, str, str, str], int] = {}
+    for item in findings:
+        key = advisory_count_key(item)
+        counts[key] = counts.get(key, 0) + 1
+    return counts
+
+
+def advisory_delta_summary(key: tuple[str, str, str, str], before: int, after: int) -> dict[str, object]:
+    rule, family, path, severity = key
+    return advisory_finding(rule, family, path, 0, severity, "advisory finding count changed in touched file", f"{before} -> {after}")
+
+
 def multiline_hits(path: str, text: str) -> list[str]:
     return [f"{path}:{text[: match.start()].count(chr(10)) + 1}" for rule in EMPTY_CATCH_RULES for match in rule.finditer(text)]
 
@@ -2053,6 +2126,7 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     advisory_groups["slopShapeFindings"]["added"].extend(scan_wrapper_value(ctx))
     advisory_groups["verificationShapeFindings"]["added"].extend(scan_verification_mode(ctx, contract_snapshot(repo), active_policy))
     advisory_groups["verificationShapeFindings"]["added"].extend(scan_production_shaped_proof(ctx))
+    apply_advisory_delta(ctx, advisory_groups)
 
     if conflict_files:
         errors.append(f"merge conflict markers found in {len(conflict_files)} file(s)")
