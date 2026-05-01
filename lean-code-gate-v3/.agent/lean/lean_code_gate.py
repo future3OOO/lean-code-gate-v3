@@ -2270,7 +2270,10 @@ def reward_telemetry_event(root: Path, current_contract: dict[str, object], fina
 def maybe_log_reward_telemetry(root: Path, current_contract: dict[str, object], active_policy: dict[str, object], final_error_count: int, quality: dict[str, object] | None) -> None:
     if not active_policy.get("reward_telemetry_enabled") or not current_contract or quality is None:
         return
-    log_event(root, reward_telemetry_event(root, current_contract, final_error_count, quality))
+    try:
+        log_event(root, reward_telemetry_event(root, current_contract, final_error_count, quality))
+    except OSError:
+        return
 
 
 def format_quality_text(result: dict[str, object]) -> str:

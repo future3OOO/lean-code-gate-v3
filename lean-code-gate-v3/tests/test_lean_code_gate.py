@@ -862,6 +862,20 @@ def test_reward_telemetry_enabled_logs_aggregate_shape_only() -> None:
         assert "src/app.py" not in json.dumps(event, sort_keys=True)
 
 
+def test_reward_telemetry_append_failure_does_not_break_stop() -> None:
+    with repo_fixture() as repo:
+        (repo / ".agent" / "lean" / "policy.json").write_text(json.dumps({"reward_telemetry_enabled": True}), encoding="utf-8")
+        git(repo, "add", ".agent/lean/policy.json")
+        git(repo, "commit", "--no-gpg-sign", "-m", "enable telemetry")
+        declare_valid(repo)
+        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b + 0\n", encoding="utf-8")
+        run_gate(repo, "posttool", payload={"cwd": str(repo), "tool_name": "Bash", "tool_input": {"command": "pytest tests/test_app.py"}, "tool_response": {"exit_code": 0}})
+        event_log = repo / ".agent" / "lean" / "state" / "events.jsonl"
+        event_log.chmod(0o400)
+        result = run_gate(repo, "stop", payload={"cwd": str(repo), "hook_event_name": "Stop"})
+        assert result.returncode == 0, result.stderr
+
+
 def test_reward_telemetry_skips_when_quality_gate_disabled() -> None:
     with repo_fixture() as repo:
         (repo / ".agent" / "lean" / "policy.json").write_text(
@@ -1970,6 +1984,7 @@ TESTS = [
     test_delta_reporting_verification_shape_line_drift_is_not_resolved,
     test_reward_telemetry_disabled_by_default,
     test_reward_telemetry_enabled_logs_aggregate_shape_only,
+    test_reward_telemetry_append_failure_does_not_break_stop,
     test_reward_telemetry_skips_when_quality_gate_disabled,
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
