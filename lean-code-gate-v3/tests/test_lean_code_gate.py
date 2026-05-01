@@ -490,6 +490,35 @@ def test_failure_contract_preserved_errors_tests_and_unchanged_catches_do_not_hi
         assert _advisory_added(data, "slopShapeFindings") == []
 
 
+def test_failure_contract_log_only_fires_when_try_block_returns() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "client.ts").write_text(
+            "export async function load() {\n"
+            "  try { return await api.get(); }\n"
+            "  catch (error) { logger.error(error); }\n"
+            "}\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert [item["rule"] for item in _advisory_added(data, "slopShapeFindings")] == ["failure-contract-log-only"]
+
+
+def test_failure_contract_cheap_default_skips_returns_outside_catch_body() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "validate.ts").write_text(
+            "export function validate(x: unknown) {\n"
+            "  try { parse(x); }\n"
+            "  catch (error) { throw mapError(error); }\n"
+            "  return false;\n"
+            "}\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert _advisory_added(data, "slopShapeFindings") == []
+
+
 def test_declare_rejects_code_contract_without_preflight() -> None:
     with repo_fixture() as repo:
         result = run_gate(
@@ -1563,6 +1592,8 @@ TESTS = [
     test_failure_contract_multiline_default_is_advisory,
     test_failure_contract_stringified_unknown_is_advisory,
     test_failure_contract_preserved_errors_tests_and_unchanged_catches_do_not_hit,
+    test_failure_contract_log_only_fires_when_try_block_returns,
+    test_failure_contract_cheap_default_skips_returns_outside_catch_body,
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
     test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight,

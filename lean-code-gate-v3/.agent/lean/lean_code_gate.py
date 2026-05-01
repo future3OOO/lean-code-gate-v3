@@ -1339,19 +1339,31 @@ def scan_failure_contract_lines(path: str, lines: list[tuple[int, str]]) -> list
     for line_no, text in lines:
         if not FAILURE_TRIGGER_RE.search(text):
             continue
-        window = "\n".join(value for current, value in lines if abs(current - line_no) <= 8)
+        window_lines = [(current, value) for current, value in lines if abs(current - line_no) <= 8]
+        window = "\n".join(value for _, value in window_lines)
         if not re.search(r"\bcatch\b|\.catch\b", window):
             continue
+        after_catch = "\n".join(value for current, value in window_lines if current >= line_no)
         rule = message = ""
         if FAILURE_STRINGIFY_RE.search(text):
             rule, message = "failure-contract-stringify", "caught error is stringified instead of preserved or mapped"
-        elif FAILURE_DEFAULT_RE.search(text):
+        elif FAILURE_DEFAULT_RE.search(text) and inside_open_catch(window_lines, line_no, text):
             rule, message = "failure-contract-cheap-default", "catch path returns a cheap default instead of preserving failure information"
-        elif re.search(r"\bcatch\b|\.catch\b", text) and FAILURE_LOG_RE.search(window) and not FAILURE_RETHROW_RE.search(window) and not re.search(r"\breturn\b", window):
+        elif re.search(r"\bcatch\b|\.catch\b", text) and FAILURE_LOG_RE.search(window) and not FAILURE_RETHROW_RE.search(window) and not re.search(r"\breturn\b", after_catch):
             rule, message = "failure-contract-log-only", "catch path only logs and then erases the failure"
         if rule:
             findings.append(advisory_finding(rule, "failure-contract", path, line_no, "warning", message, "added catch/reject path erases failure shape"))
     return findings
+
+
+def inside_open_catch(window_lines: list[tuple[int, str]], line_no: int, text: str) -> bool:
+    if re.search(r"\bcatch\b|\.catch\b", text):
+        return True
+    catch_line = max((current for current, value in window_lines if current < line_no and re.search(r"\bcatch\b|\.catch\b", value)), default=None)
+    if catch_line is None:
+        return False
+    body = "".join(value for current, value in window_lines if catch_line <= current < line_no)
+    return body.count("{") - body.count("}") > 0
 
 
 def multiline_hits(path: str, text: str) -> list[str]:
