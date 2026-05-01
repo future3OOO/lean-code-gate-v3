@@ -142,7 +142,7 @@ Before final completion, the stop hook runs the built-in gate. CI/pre-commit can
 PYTHONDONTWRITEBYTECODE=1 python3 -B -S .agent/lean/lean_code_gate.py check --repo "$PWD"
 ```
 
-The quality gate fails on changed-scope evidence of merge conflict markers, temp artifacts, fake-green suppressions, duplicate added blocks, high-confidence helper reimplementation, and risk-calibrated bloat. Lower-confidence reuse and moderate large-file growth are warnings by default.
+The quality gate fails on changed-scope evidence of merge conflict markers, temp artifacts, fake-green suppressions, duplicate added blocks, high-confidence helper reimplementation, and risk-calibrated bloat. Lower-confidence reuse and moderate large-file growth are warnings by default. Optional reward telemetry is default-off and may log aggregate quality/delta/advisory counts only; it does not score, challenge, rank, or critique work.
 
 ## Final response shape
 

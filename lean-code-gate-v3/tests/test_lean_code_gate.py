@@ -453,6 +453,89 @@ def test_delta_reporting_worsened_security_advisory() -> None:
         assert "1 -> 2" in group["worsened"][0]["message"]
         assert group["worsened"][0]["line"] == 0
 
+
+def _events(repo: Path) -> list[dict[str, object]]:
+    path = repo / ".agent" / "lean" / "state" / "events.jsonl"
+    if not path.exists():
+        return []
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def _reward_events(repo: Path) -> list[dict[str, object]]:
+    return [event for event in _events(repo) if event.get("event") == "reward_telemetry"]
+
+
+def _record_verify_pass(repo: Path) -> None:
+    run_gate(
+        repo,
+        "posttool",
+        payload={"cwd": str(repo), "tool_name": "Bash", "tool_input": {"command": "pytest tests/test_app.py"}, "tool_response": {"exit_code": 0}},
+    )
+
+
+def test_reward_telemetry_disabled_by_default_logs_no_event() -> None:
+    with repo_fixture() as repo:
+        declare_valid(repo)
+        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
+        _record_verify_pass(repo)
+        result = run_gate(repo, "stop", payload={"cwd": str(repo), "hook_event_name": "Stop"})
+        assert result.returncode == 0, result.stdout
+        assert _reward_events(repo) == []
+
+
+def test_reward_telemetry_enabled_logs_shape_without_score_or_critique() -> None:
+    with repo_fixture() as repo:
+        (repo / ".agent" / "lean" / "policy.json").write_text(json.dumps({"reward_enabled": True}), encoding="utf-8")
+        declare_valid(repo)
+        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
+        _record_verify_pass(repo)
+        result = run_gate(repo, "stop", payload={"cwd": str(repo), "hook_event_name": "Stop"})
+        assert result.returncode == 0, result.stdout
+        events = _reward_events(repo)
+        assert len(events) == 1
+        event = events[0]
+        assert event["reward_version"] == "v1.3-telemetry"
+        assert event["final_error_count"] == 0
+        assert event["quality_error_count"] == 0
+        assert set(event["advisory_counts"]) == {"securityAssumptionFindings", "slopShapeFindings", "verificationShapeFindings"}
+        assert set(event["advisory_counts"]["verificationShapeFindings"]) == {"added", "resolved", "worsened", "improved"}
+        assert event["delta"]["changed"] >= 1
+        assert "score" not in event
+        assert "verdict" not in event
+        assert "critique" not in event
+        assert "challenge" not in json.dumps(event).lower()
+
+
+def test_reward_telemetry_skips_when_stop_quality_gate_is_disabled() -> None:
+    with repo_fixture() as repo:
+        (repo / ".agent" / "lean" / "policy.json").write_text(
+            json.dumps({"reward_enabled": True, "run_quality_gate_on_stop": False}), encoding="utf-8"
+        )
+        declare_valid(repo)
+        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
+        _record_verify_pass(repo)
+        result = run_gate(repo, "stop", payload={"cwd": str(repo), "hook_event_name": "Stop"})
+        assert result.returncode == 0, result.stdout
+        assert _reward_events(repo) == []
+
+
+def test_reward_telemetry_final_error_count_includes_quality_errors() -> None:
+    with repo_fixture() as repo:
+        (repo / ".agent" / "lean" / "policy.json").write_text(json.dumps({"reward_enabled": True}), encoding="utf-8")
+        declare_valid(repo)
+        marker = "TO" + "DO"
+        (repo / "src" / "app.py").write_text(
+            f"def add(a: int, b: int) -> int:\n    # {marker} fake future work\n    return a + b\n", encoding="utf-8"
+        )
+        _record_verify_pass(repo)
+        result = run_gate(repo, "stop", payload={"cwd": str(repo), "hook_event_name": "Stop"})
+        assert json.loads(result.stdout)["decision"] == "block"
+        events = _reward_events(repo)
+        assert len(events) == 1
+        assert events[0]["quality_ok"] is False
+        assert events[0]["quality_error_count"] >= 1
+        assert events[0]["final_error_count"] >= events[0]["quality_error_count"]
+
 def test_declare_rejects_code_contract_without_preflight() -> None:
     with repo_fixture() as repo:
         result = run_gate(
@@ -1525,6 +1608,10 @@ TESTS = [
     test_delta_reporting_resolved_security_advisory,
     test_delta_reporting_improved_security_advisory,
     test_delta_reporting_worsened_security_advisory,
+    test_reward_telemetry_disabled_by_default_logs_no_event,
+    test_reward_telemetry_enabled_logs_shape_without_score_or_critique,
+    test_reward_telemetry_skips_when_stop_quality_gate_is_disabled,
+    test_reward_telemetry_final_error_count_includes_quality_errors,
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
     test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight,

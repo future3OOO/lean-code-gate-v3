@@ -47,6 +47,7 @@ DEFAULT_POLICY: dict[str, object] = {
     "block_hidden_bash_writes": True,
     "run_quality_gate_on_stop": True,
     "fail_on_quality_warnings": False,
+    "reward_enabled": False,
     # max_design_markers: 4 (was 2): requires all 4 DESIGN_RE categories to
     # match. Calibrated against Pydantic's _generate_schema.py (2922 lines,
     # density 1.4/100, was firing as FP). Combined with density gating >= 3.0
@@ -2084,6 +2085,47 @@ def empty_advisory_groups() -> dict[str, dict[str, list[dict[str, object]]]]:
     return {name: {bucket: [] for bucket in ADVISORY_BUCKET_NAMES} for name in ADVISORY_GROUP_NAMES}
 
 
+def advisory_count_summary(result: dict[str, object]) -> dict[str, dict[str, int]]:
+    summary: dict[str, dict[str, int]] = {}
+    for group_name in ADVISORY_GROUP_NAMES:
+        group = result.get(group_name)
+        buckets: dict[str, int] = {}
+        if isinstance(group, dict):
+            for bucket in ADVISORY_BUCKET_NAMES:
+                values = group.get(bucket)
+                buckets[bucket] = len(values) if isinstance(values, list) else 0
+        else:
+            buckets = {bucket: 0 for bucket in ADVISORY_BUCKET_NAMES}
+        summary[group_name] = buckets
+    return summary
+
+
+def log_reward_telemetry(root: Path, current_contract: dict[str, object], final_issues: list[str], quality: dict[str, object] | None, active_policy: dict[str, object]) -> None:
+    if not active_policy.get("reward_enabled") or quality is None or not current_contract:
+        return
+    delta_value = delta(root, current_contract)
+    files = delta_value.get("files") if isinstance(delta_value.get("files"), list) else []
+    quality_errors = quality.get("errors") if isinstance(quality.get("errors"), list) else []
+    quality_warnings = quality.get("warnings") if isinstance(quality.get("warnings"), list) else []
+    log_event(root, {
+        "event": "reward_telemetry",
+        "reward_version": "v1.3-telemetry",
+        "task_type": str(current_contract.get("task_type") or "unknown"),
+        "minimal_preflight": minimal_preflight(current_contract),
+        "quality_ok": bool(quality.get("ok")),
+        "quality_error_count": len(quality_errors),
+        "quality_warning_count": len(quality_warnings),
+        "final_error_count": len(final_issues),
+        "advisory_counts": advisory_count_summary(quality),
+        "delta": {
+            "added": int(delta_value.get("added") or 0),
+            "deleted": int(delta_value.get("deleted") or 0),
+            "changed": int(delta_value.get("changed") or 0),
+            "file_count": len(files),
+        },
+    })
+
+
 def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -> dict[str, object]:
     active_policy = policy(repo)
     apply_active_policy(active_policy)
@@ -2596,11 +2638,13 @@ def stop(payload: dict[str, object]) -> None:
         current_contract = contract(root)
         active_policy = policy(root)
         errors = final_errors(root, current_contract, active_policy)
+        quality: dict[str, object] | None = None
         if active_policy["run_quality_gate_on_stop"]:
             fail_warnings = bool(active_policy["fail_on_quality_warnings"]) and not (current_contract or {}).get("allow_quality_warnings")
             quality = run_quality_gate(root, str((current_contract or {}).get("base_ref") or "") or None, fail_warnings)
             if not quality["ok"]:
                 errors.extend(["Quality gate failed: " + error for error in quality["errors"]])
+        log_reward_telemetry(root, current_contract, errors, quality, active_policy)
         all_errors.extend(f"{root}: {error}" if len(roots) > 1 else error for error in errors)
     if all_errors:
         deny(
