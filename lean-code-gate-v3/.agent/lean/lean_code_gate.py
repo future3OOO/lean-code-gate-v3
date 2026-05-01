@@ -1327,12 +1327,7 @@ def assigned_identifier(text: str) -> str:
 
 
 def scan_failure_contract(ctx: GateContext) -> list[dict[str, object]]:
-    return [
-        finding
-        for rel_path, lines in ctx.added_lines_with_untracked(production_only=True).items()
-        if is_production_source_path(rel_path) and language_for_path(rel_path) == "javascript"
-        for finding in scan_failure_contract_lines(rel_path, lines)
-    ]
+    return [finding for rel_path, lines in ctx.added_lines_with_untracked(production_only=True).items() if is_production_source_path(rel_path) and language_for_path(rel_path) == "javascript" for finding in scan_failure_contract_lines(rel_path, lines)]
 
 def scan_failure_contract_lines(path: str, lines: list[tuple[int, str]]) -> list[dict[str, object]]:
     findings: list[dict[str, object]] = []
@@ -1344,26 +1339,19 @@ def scan_failure_contract_lines(path: str, lines: list[tuple[int, str]]) -> list
         if not re.search(r"\bcatch\b|\.catch\b", window):
             continue
         after_catch = "\n".join(value for current, value in window_lines if current >= line_no)
+        catch_here = re.search(r"\bcatch\b|\.catch\b", text)
+        catch_line = max((current for current, value in window_lines if current < line_no and re.search(r"\bcatch\b|\.catch\b", value)), default=None)
+        inside_catch = bool(catch_here) or (catch_line is not None and (body := "".join(value for current, value in window_lines if catch_line <= current < line_no)).count("{") > body.count("}"))
         rule = message = ""
         if FAILURE_STRINGIFY_RE.search(text):
             rule, message = "failure-contract-stringify", "caught error is stringified instead of preserved or mapped"
-        elif FAILURE_DEFAULT_RE.search(text) and inside_open_catch(window_lines, line_no, text):
+        elif FAILURE_DEFAULT_RE.search(text) and inside_catch:
             rule, message = "failure-contract-cheap-default", "catch path returns a cheap default instead of preserving failure information"
-        elif re.search(r"\bcatch\b|\.catch\b", text) and FAILURE_LOG_RE.search(window) and not FAILURE_RETHROW_RE.search(window) and not re.search(r"\breturn\b", after_catch):
+        elif catch_here and FAILURE_LOG_RE.search(window) and not FAILURE_RETHROW_RE.search(window) and not re.search(r"\breturn\b", after_catch):
             rule, message = "failure-contract-log-only", "catch path only logs and then erases the failure"
         if rule:
             findings.append(advisory_finding(rule, "failure-contract", path, line_no, "warning", message, "added catch/reject path erases failure shape"))
     return findings
-
-
-def inside_open_catch(window_lines: list[tuple[int, str]], line_no: int, text: str) -> bool:
-    if re.search(r"\bcatch\b|\.catch\b", text):
-        return True
-    catch_line = max((current for current, value in window_lines if current < line_no and re.search(r"\bcatch\b|\.catch\b", value)), default=None)
-    if catch_line is None:
-        return False
-    body = "".join(value for current, value in window_lines if catch_line <= current < line_no)
-    return body.count("{") - body.count("}") > 0
 
 
 def multiline_hits(path: str, text: str) -> list[str]:
