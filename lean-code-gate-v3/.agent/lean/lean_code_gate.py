@@ -1503,6 +1503,86 @@ def production_shaped_proof_finding(path: str, lines: list[tuple[int, str]]) -> 
     return None
 
 
+def apply_advisory_delta(ctx: GateContext, groups: dict[str, dict[str, list[dict[str, object]]]]) -> None:
+    for rel_path in sorted(ctx.changed_files):
+        if internal_gate_path(rel_path) or is_binary_path(rel_path):
+            continue
+        base_text = read_git_file(ctx.repo, ctx.base_for_file, rel_path)
+        current_text = read_file(ctx.repo / rel_path)
+        for group_name in ADVISORY_GROUP_NAMES:
+            base = advisory_snapshot_findings(rel_path, base_text, group_name)
+            current = advisory_snapshot_findings(rel_path, current_text, group_name)
+            add_advisory_delta(groups[group_name], base, current)
+
+
+def advisory_snapshot_findings(path: str, text: str | None, group_name: str) -> list[dict[str, object]]:
+    if text is None:
+        return []
+    lines = list(enumerate(text.splitlines(), 1))
+    findings: list[dict[str, object]] = []
+    if group_name == "securityAssumptionFindings" and is_production_source_path(path):
+        findings.extend(scan_sensitive_input_lines(path, lines))
+    elif group_name == "slopShapeFindings" and is_source_path(path):
+        if language_for_path(path) == "javascript":
+            findings.extend(scan_failure_contract_lines(path, lines, text))
+        if is_production_source_path(path):
+            findings.extend(scan_wrapper_value_lines(path, lines))
+    elif group_name == "verificationShapeFindings" and (path_type(path) == "test" or is_test_like_path(path)):
+        finding = production_shaped_proof_finding(path, lines)
+        if finding:
+            findings.append(finding)
+    return unique_advisory_findings(findings)
+
+
+def add_advisory_delta(group: dict[str, list[dict[str, object]]], base: list[dict[str, object]], current: list[dict[str, object]]) -> None:
+    base_keys = {advisory_delta_key(finding): finding for finding in base}
+    current_keys = {advisory_delta_key(finding): finding for finding in current}
+    group["resolved"].extend(base_keys[key] for key in sorted(base_keys.keys() - current_keys.keys()))
+    base_counts = advisory_delta_counts(base)
+    current_counts = advisory_delta_counts(current)
+    for key in sorted(set(base_counts) | set(current_counts)):
+        before = base_counts.get(key, 0)
+        after = current_counts.get(key, 0)
+        if before and after and after > before:
+            group["worsened"].append(advisory_delta_summary(key, "worsened", before, after))
+        elif before and after and after < before:
+            group["improved"].append(advisory_delta_summary(key, "improved", before, after))
+
+
+def advisory_delta_key(finding: dict[str, object]) -> tuple[object, ...]:
+    return (finding.get("rule"), finding.get("family"), finding.get("path"), finding.get("line"), finding.get("message"))
+
+
+def advisory_delta_count_key(finding: dict[str, object]) -> tuple[str, str, str, str]:
+    return (
+        str(finding.get("rule") or "advisory-delta"),
+        str(finding.get("family") or "advisory"),
+        str(finding.get("path") or "unknown"),
+        str(finding.get("severity") or "warning"),
+    )
+
+
+def advisory_delta_counts(findings: list[dict[str, object]]) -> dict[tuple[str, str, str, str], int]:
+    counts: dict[tuple[str, str, str, str], int] = {}
+    for finding in findings:
+        key = advisory_delta_count_key(finding)
+        counts[key] = counts.get(key, 0) + 1
+    return counts
+
+
+def advisory_delta_summary(key: tuple[str, str, str, str], bucket: str, before: int, after: int) -> dict[str, object]:
+    rule, family, path, severity = key
+    return advisory_finding(
+        rule,
+        family,
+        path,
+        0,
+        severity,
+        f"advisory finding count {bucket}: {before} -> {after}",
+        f"base_count={before}; current_count={after}",
+    )
+
+
 def unique_advisory_findings(findings: list[dict[str, object]]) -> list[dict[str, object]]:
     seen: set[tuple[object, ...]] = set()
     out: list[dict[str, object]] = []
@@ -2028,6 +2108,7 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     advisory_groups["slopShapeFindings"]["added"].extend(scan_wrapper_value(ctx))
     advisory_groups["verificationShapeFindings"]["added"].extend(scan_verification_mode(ctx, current_contract))
     advisory_groups["verificationShapeFindings"]["added"].extend(scan_production_shaped_proof(ctx))
+    apply_advisory_delta(ctx, advisory_groups)
 
     if conflict_files:
         errors.append(f"merge conflict markers found in {len(conflict_files)} file(s)")

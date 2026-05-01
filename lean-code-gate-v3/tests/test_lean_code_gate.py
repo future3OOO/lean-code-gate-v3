@@ -407,6 +407,52 @@ def test_production_shaped_proof_allows_entrypoint_fixture_and_assertion_rich_te
         assert code == 0, data
         assert [item for item in _advisory_added(data, "verificationShapeFindings") if item["rule"] == "production-shaped-proof"] == []
 
+
+def test_delta_reporting_resolved_security_advisory() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "security.py").write_text("import os\nTOKEN = os.getenv('API_KEY')\n", encoding="utf-8")
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed sensitive")
+        (repo / "src" / "security.py").write_text("VALUE = 1\n", encoding="utf-8")
+        code, data = check_json(repo)
+        group = data["securityAssumptionFindings"]
+        assert code == 0, data
+        assert group["added"] == []
+        assert len(group["resolved"]) == 1
+
+
+def test_delta_reporting_improved_security_advisory() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "security.py").write_text(
+            "import os\nTOKEN = os.getenv('API_KEY')\nKEY = open('/home/user/.ssh/id_rsa').read()\n", encoding="utf-8"
+        )
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed two sensitive")
+        (repo / "src" / "security.py").write_text("import os\nTOKEN = os.getenv('API_KEY')\n", encoding="utf-8")
+        code, data = check_json(repo)
+        group = data["securityAssumptionFindings"]
+        assert code == 0, data
+        assert len(group["improved"]) == 1
+        assert "2 -> 1" in group["improved"][0]["message"]
+        assert group["improved"][0]["line"] == 0
+
+
+def test_delta_reporting_worsened_security_advisory() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "security.py").write_text("import os\nTOKEN = os.getenv('API_KEY')\n", encoding="utf-8")
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed one sensitive")
+        (repo / "src" / "security.py").write_text(
+            "import os\nTOKEN = os.getenv('API_KEY')\nKEY = open('/home/user/.ssh/id_rsa').read()\n", encoding="utf-8"
+        )
+        code, data = check_json(repo)
+        group = data["securityAssumptionFindings"]
+        assert code == 0, data
+        assert len(group["added"]) == 1
+        assert len(group["worsened"]) == 1
+        assert "1 -> 2" in group["worsened"][0]["message"]
+        assert group["worsened"][0]["line"] == 0
+
 def test_declare_rejects_code_contract_without_preflight() -> None:
     with repo_fixture() as repo:
         result = run_gate(
@@ -1476,6 +1522,9 @@ TESTS = [
     test_verification_mode_exempts_minimal_and_test_only_work,
     test_production_shaped_proof_warns_on_mock_heavy_weak_test,
     test_production_shaped_proof_allows_entrypoint_fixture_and_assertion_rich_tests,
+    test_delta_reporting_resolved_security_advisory,
+    test_delta_reporting_improved_security_advisory,
+    test_delta_reporting_worsened_security_advisory,
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
     test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight,
