@@ -1601,11 +1601,11 @@ def advisory_snapshot_findings(path: str, text: str | None, group_name: str) -> 
 
 
 def add_advisory_delta(bucketed: dict[str, list[dict[str, object]]], base: list[dict[str, object]], current: list[dict[str, object]]) -> None:
-    base_keys = {advisory_delta_key(item) for item in base}
-    current_keys = {advisory_delta_key(item) for item in current}
+    base_keys = {advisory_resolved_key(item) for item in base}
+    current_keys = {advisory_resolved_key(item) for item in current}
     resolved_keys = base_keys - current_keys
-    existing_resolved = {advisory_delta_key(item) for item in bucketed["resolved"]}
-    bucketed["resolved"].extend(item for item in base if advisory_delta_key(item) in resolved_keys and advisory_delta_key(item) not in existing_resolved)
+    existing_resolved = {advisory_resolved_key(item) for item in bucketed["resolved"]}
+    bucketed["resolved"].extend(item for item in base if advisory_resolved_key(item) in resolved_keys and advisory_resolved_key(item) not in existing_resolved)
     for key, base_count in base_count_keys(base).items():
         current_count = base_count_keys(current).get(key, 0)
         if current_count > base_count:
@@ -1616,6 +1616,12 @@ def add_advisory_delta(bucketed: dict[str, list[dict[str, object]]], base: list[
 
 def advisory_delta_key(item: dict[str, object]) -> tuple[object, ...]:
     return (item.get("rule"), item.get("family"), item.get("path"), item.get("line"), item.get("severity"), item.get("message"), item.get("evidence"))
+
+
+def advisory_resolved_key(item: dict[str, object]) -> tuple[object, ...]:
+    if item.get("rule") == "production-shaped-proof":
+        return (item.get("rule"), item.get("family"), item.get("path"), item.get("severity"), item.get("message"))
+    return advisory_delta_key(item)
 
 
 def advisory_count_key(item: dict[str, object]) -> tuple[str, str, str, str]:
