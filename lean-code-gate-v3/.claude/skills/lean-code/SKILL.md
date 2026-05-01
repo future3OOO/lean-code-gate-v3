@@ -53,7 +53,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 -B -S .agent/lean/lean_code_gate.py declare \
   --authoritative-contract "observable invariant, API contract, or external requirement" \
   --invariant "observable condition proving the contract" \
   --reuse-path "existing helper/module/pattern to extend" \
-  --proof-plan "focused regression test plus adjacent invariant check" \
+  --proof-plan "red-green-refactor: focused regression test plus adjacent invariant check" \
   --risk-check "specific regression or failure mode being guarded" \
   --max-files 2 \
   --max-added-lines 80 \
@@ -118,6 +118,8 @@ Escape hatches need evidence:
 - Do not clean unrelated legacy debt unless the user asked.
 
 ## Verification rules
+
+For full non-minimal bugfix, feature, and refactor work, include one feedback-loop token in `--proof-plan`: `red-green-refactor`, `green-refactor-green`, or `smoke-check`.
 
 For bug fixes:
 

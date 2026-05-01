@@ -65,7 +65,7 @@ Those may be useful in one stack but are brittle as a portable baseline. V3 acce
 
 Minimal preflight binds the agent to exact intent, exact scope, explicit task type, small budgets, and focused verification. It is intended for micro-fixes only.
 
-Full preflight additionally binds the agent to affected surface, authoritative contract, invariant, reuse path or no-reuse reason, proof plan, and risk checks.
+Full preflight additionally binds the agent to affected surface, authoritative contract, invariant, reuse path or no-reuse reason, proof plan, and risk checks. For non-minimal bugfix, feature, and refactor work, the proof plan should name `red-green-refactor`, `green-refactor-green`, or `smoke-check` so the feedback loop is mechanical instead of decorative.
 
 Widening must redeclare the contract with `--widen --reason "..."`.
 

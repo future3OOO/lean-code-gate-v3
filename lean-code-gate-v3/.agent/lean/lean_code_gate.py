@@ -329,6 +329,7 @@ WRAPPER_VALUE_MARKER_RE = re.compile(
     r"\b(?:compat|deprecated|deprecation|alias|public\s+api|validate|validation|normalize|normalise|sanitize|instrument|metric|trace|log|retry|timeout|boundary|external|adapter|hook|override)\b",
     re.I,
 )
+VERIFICATION_MODE_TOKENS = ("red-green-refactor", "green-refactor-green", "smoke-check")
 GENERIC_SYMBOLS = {
     "app",
     "config",
@@ -1440,6 +1441,31 @@ def same_pass_through_args(args: str, call_args: str) -> bool:
     return arg_names(args) == call_arg_names(call_args)
 
 
+def scan_verification_mode(ctx: GateContext, current_contract: dict[str, object]) -> list[dict[str, object]]:
+    if not current_contract or minimal_preflight(current_contract):
+        return []
+    task_type = str(current_contract.get("task_type") or "unknown")
+    if task_type not in {"bugfix", "feature", "refactor"}:
+        return []
+    changed = [path for path in sorted(ctx.changed_files) if not internal_gate_path(path)]
+    if not any(path_type(path) == "prod" and is_source_path(path) for path in changed):
+        return []
+    proof = " ".join(str(item).lower() for item in current_contract.get("proof_plan") or [])
+    if any(token in proof for token in VERIFICATION_MODE_TOKENS):
+        return []
+    return [
+        advisory_finding(
+            "verification-mode",
+            "verification",
+            f"{STATE_DIR}/contract.json",
+            1,
+            "warning",
+            "full code work proof_plan must name red-green-refactor, green-refactor-green, or smoke-check",
+            "proof_plan lacks required feedback-loop token",
+        )
+    ]
+
+
 def unique_advisory_findings(findings: list[dict[str, object]]) -> list[dict[str, object]]:
     seen: set[tuple[object, ...]] = set()
     out: list[dict[str, object]] = []
@@ -1945,6 +1971,9 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     active_policy = policy(repo)
     apply_active_policy(active_policy)
     ctx = collect_scope(repo, base_ref)
+    current_contract = read_json(repo / STATE_DIR / "contract.json", {})
+    if not isinstance(current_contract, dict):
+        current_contract = {}
     changed_files = set(ctx.changed_files)
     errors: list[str] = []
     warnings: list[str] = []
@@ -1960,6 +1989,7 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     advisory_groups["securityAssumptionFindings"]["added"].extend(scan_sensitive_input(ctx))
     advisory_groups["slopShapeFindings"]["added"].extend(scan_failure_contract(ctx))
     advisory_groups["slopShapeFindings"]["added"].extend(scan_wrapper_value(ctx))
+    advisory_groups["verificationShapeFindings"]["added"].extend(scan_verification_mode(ctx, current_contract))
 
     if conflict_files:
         errors.append(f"merge conflict markers found in {len(conflict_files)} file(s)")
