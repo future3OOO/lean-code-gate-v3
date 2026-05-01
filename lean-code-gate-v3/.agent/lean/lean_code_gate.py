@@ -307,11 +307,12 @@ EMPTY_CATCH_RULES = [
     re.compile(r"except\s+Exception\s*:\s*\n\s*pass\b", re.S),
     re.compile(r"except\s*:\s*\n\s*pass\b", re.S),
 ]
+CREDENTIAL_PATH_RE_FRAGMENT = r"(?:\.netrc|\.ssh|\.aws|id_rsa|id_ed25519|known_hosts)"
 SENSITIVE_SOURCE_RULES = [
     (re.compile(r"\b(?:os\.getenv|os\.environ\s*(?:\.get|\[)|process\.env\s*(?:\.|\[)|Deno\.env\.get|std::env::var|os\.Getenv|getenv\s*\()"), "environment-read"),
     (re.compile(r"\bgit\s+(?:remote\s+get-url|config\s+--get\s+remote\.)"), "git-remote-url-read"),
     (re.compile(r"""\b(?:subprocess\.(?:run|Popen|check_output|check_call)|child_process\.(?:execFile|spawn)|execFile|spawn|ProcessBuilder)\s*\(\s*\[?\s*['"]git['"]\s*,\s*(?:\[\s*)?['"]remote['"]\s*,\s*['"]get-url['"]"""), "git-remote-url-read"),
-    (re.compile(r"(?:^|[/\\])(?:\.netrc|\.ssh|\.aws)(?:[/\\]|$)|\b(?:id_rsa|id_ed25519|known_hosts)\b"), "credential-file-read"),
+    (re.compile(rf"""\b(?:open|io\.open|os\.open|(?:fs\.)?readFile(?:Sync)?)\s*\([^)\n]*{CREDENTIAL_PATH_RE_FRAGMENT}|\b(?:Path|pathlib\.Path)\s*\([^)\n]*{CREDENTIAL_PATH_RE_FRAGMENT}[^)\n]*\)\s*\.\s*(?:open|read_text|read_bytes)\s*\("""), "credential-file-read"),
     (re.compile(r"\b(?:keyring\.|keytar\.|SecretStorage|security\s+find-generic-password)"), "keyring-read"),
     (re.compile(r"""(?:\b(?:req|request)\.headers|\bheaders)\s*(?:\.get\s*\(\s*['"](?:authorization|cookie|set-cookie)['"]|\[\s*['"](?:Authorization|Cookie|Set-Cookie)['"]\s*\])|\bgetHeader\s*\(\s*['"](?:Authorization|Cookie|Set-Cookie)['"]""", re.I), "auth-header-read"),
     (re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"), "private-key-material"),
@@ -1297,16 +1298,18 @@ def first_rule_match(text: str, rules: list[tuple[re.Pattern[str], str]]) -> str
 
 def scan_sensitive_input(ctx: GateContext) -> list[dict[str, object]]:
     findings: list[dict[str, object]] = []
-    for rel_path, lines in ctx.added_lines_with_untracked(production_only=True).items():
+    for rel_path, added_lines in ctx.added_lines_with_untracked(production_only=True).items():
         if is_production_source_path(rel_path):
-            findings.extend(scan_sensitive_input_lines(rel_path, lines))
+            text = read_file(ctx.repo / rel_path)
+            sink_lines = list(enumerate(text.splitlines(), 1)) if text is not None else added_lines
+            findings.extend(scan_sensitive_input_lines(rel_path, added_lines, sink_lines))
     return findings
 
 
-def scan_sensitive_input_lines(path: str, lines: list[tuple[int, str]]) -> list[dict[str, object]]:
+def scan_sensitive_input_lines(path: str, added_lines: list[tuple[int, str]], sink_lines: list[tuple[int, str]]) -> list[dict[str, object]]:
     findings: list[dict[str, object]] = []
-    sinks = [(line_no, text, first_rule_match(text, SENSITIVE_SINK_RULES)) for line_no, text in lines]
-    for line_no, text in lines:
+    sinks = [(line_no, text, first_rule_match(text, SENSITIVE_SINK_RULES)) for line_no, text in sink_lines]
+    for line_no, text in added_lines:
         source = first_rule_match(text, SENSITIVE_SOURCE_RULES)
         if not source:
             continue

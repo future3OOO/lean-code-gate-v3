@@ -253,6 +253,51 @@ def test_sensitive_input_test_fixtures_do_not_hit() -> None:
         assert code == 0, data
         assert _advisory_added(data, "securityAssumptionFindings") == []
 
+
+def test_sensitive_input_credential_paths_require_read_call() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "paths.py").write_text(
+            "DEFAULT_KEY = '.ssh/id_ed25519'\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert _advisory_added(data, "securityAssumptionFindings") == []
+        (repo / "src" / "paths.py").write_text(
+            "KEY = open('.ssh/id_ed25519').read()\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["evidence"] == "source=credential-file-read"
+
+
+def test_sensitive_input_added_source_escalates_to_existing_sink() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "existing.py").write_text(
+            "def load():\n"
+            "    print(TOKEN)\n",
+            encoding="utf-8",
+        )
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed sink")
+        (repo / "src" / "existing.py").write_text(
+            "import os\n"
+            "def load():\n"
+            "    TOKEN = os.getenv('API_KEY')\n"
+            "    print(TOKEN)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "high"
+        assert "sink=log-or-console" in findings[0]["evidence"]
+
+
 def test_sensitive_input_indented_python_assignment_escalates_via_identifier_flow() -> None:
     with repo_fixture() as repo:
         (repo / "src" / "indented.py").write_text(
@@ -1435,6 +1480,8 @@ TESTS = [
     test_sensitive_input_high_requires_same_line_or_source_identifier_flow,
     test_sensitive_input_unchanged_and_broad_secret_names_do_not_hit,
     test_sensitive_input_test_fixtures_do_not_hit,
+    test_sensitive_input_credential_paths_require_read_call,
+    test_sensitive_input_added_source_escalates_to_existing_sink,
     test_sensitive_input_indented_python_assignment_escalates_via_identifier_flow,
     test_sensitive_input_typed_python_assignment_escalates_via_identifier_flow,
     test_sensitive_input_comparison_does_not_escalate,
