@@ -317,7 +317,17 @@ SENSITIVE_SOURCE_RULES = [
     (re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"), "private-key-material"),
 ]
 SENSITIVE_SINK_RULES = [
-    (re.compile(r"\b(?:console\.(?:log|error|warn)|print|fmt\.Print(?:f|ln)?|println!|eprintln!|logger?\.|log\.)\s*\("), "log-or-console"),
+    (
+        re.compile(
+            r"\b(?:console\.(?:log|error|warn|info|debug|trace)"
+            r"|print"
+            r"|fmt\.Print(?:f|ln)?"
+            r"|println!|eprintln!"
+            r"|(?:logging|logger|log)\.[A-Za-z_][\w]*"
+            r")\s*\("
+        ),
+        "log-or-console",
+    ),
     (re.compile(r"\b(?:JSON\.stringify|json\.dumps|pickle\.dump|yaml\.dump|serialize|snapshot)\b|\b(?:telemetry|metrics)\.(?:track|emit|record|log)\s*\("), "serialization-or-telemetry"),
     (re.compile(r"""\b(?:write_text|write_bytes|writeFile|appendFile|fs\.(?:writeFile|appendFile)|open\s*\([^)]*['"]w)\b"""), "persistence"),
 ]

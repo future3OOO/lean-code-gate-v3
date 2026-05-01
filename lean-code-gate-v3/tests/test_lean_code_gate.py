@@ -334,6 +334,40 @@ def test_sensitive_input_git_remote_node_execfile_is_advisory() -> None:
         assert findings[0]["evidence"] == "source=git-remote-url-read"
 
 
+def test_sensitive_input_python_logger_method_call_escalates() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "logged.py").write_text(
+            "import logging\n"
+            "import os\n"
+            "logger = logging.getLogger(__name__)\n"
+            "def load():\n"
+            "    TOKEN = os.getenv('API_KEY')\n"
+            "    logger.error(TOKEN)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "high"
+        assert "sink=log-or-console" in findings[0]["evidence"]
+
+
+def test_sensitive_input_console_info_method_call_escalates() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "client.ts").write_text(
+            "const TOKEN = process.env.API_KEY;\n"
+            "console.info(TOKEN);\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "high"
+        assert "sink=log-or-console" in findings[0]["evidence"]
+
+
 def test_sensitive_input_text_output_is_advisory_only() -> None:
     with repo_fixture() as repo:
         (repo / "src" / "secrets.py").write_text("import os\nTOKEN = os.getenv('API_KEY')\n", encoding="utf-8")
@@ -1401,6 +1435,13 @@ TESTS = [
     test_sensitive_input_high_requires_same_line_or_source_identifier_flow,
     test_sensitive_input_unchanged_and_broad_secret_names_do_not_hit,
     test_sensitive_input_test_fixtures_do_not_hit,
+    test_sensitive_input_indented_python_assignment_escalates_via_identifier_flow,
+    test_sensitive_input_typed_python_assignment_escalates_via_identifier_flow,
+    test_sensitive_input_comparison_does_not_escalate,
+    test_sensitive_input_git_remote_subprocess_is_advisory,
+    test_sensitive_input_git_remote_node_execfile_is_advisory,
+    test_sensitive_input_python_logger_method_call_escalates,
+    test_sensitive_input_console_info_method_call_escalates,
     test_sensitive_input_text_output_is_advisory_only,
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
