@@ -519,6 +519,35 @@ def test_failure_contract_cheap_default_skips_returns_outside_catch_body() -> No
         assert _advisory_added(data, "slopShapeFindings") == []
 
 
+def test_wrapper_value_detects_python_ts_and_go_forwarders() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "wrap.py").write_text("def get_user(user_id):\n    return load_user(user_id)\n", encoding="utf-8")
+        (repo / "src" / "wrap.ts").write_text("export const getAccount = (id: string) => loadAccount(id);\n", encoding="utf-8")
+        (repo / "src" / "wrap.go").write_text("package main\nfunc ReadUser(id string) User {\n    return GetUser(id)\n}\n", encoding="utf-8")
+        code, data = check_json(repo)
+        findings = [item for item in _advisory_added(data, "slopShapeFindings") if item["rule"] == "wrapper-value"]
+        assert code == 0, data
+        assert len(findings) == 3
+        assert {item["path"] for item in findings} == {"src/wrap.py", "src/wrap.ts", "src/wrap.go"}
+
+
+def test_wrapper_value_markers_and_framework_overrides_do_not_hit() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "compat.py").write_text(
+            "# deprecated compatibility shim for old public API\n"
+            "def old_user(user_id): return load_user(user_id)\n"
+            "# instrumentation boundary keeps metrics stable\n"
+            "def traced_user(user_id): return load_user(user_id)\n"
+            "# retry adapter for external boundary\n"
+            "def fetch_user(user_id): return load_user(user_id)\n"
+            "def render(self): return base_render(self)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert [item for item in _advisory_added(data, "slopShapeFindings") if item["rule"] == "wrapper-value"] == []
+
+
 def test_declare_rejects_code_contract_without_preflight() -> None:
     with repo_fixture() as repo:
         result = run_gate(
@@ -1594,6 +1623,8 @@ TESTS = [
     test_failure_contract_preserved_errors_tests_and_unchanged_catches_do_not_hit,
     test_failure_contract_log_only_fires_when_try_block_returns,
     test_failure_contract_cheap_default_skips_returns_outside_catch_body,
+    test_wrapper_value_detects_python_ts_and_go_forwarders,
+    test_wrapper_value_markers_and_framework_overrides_do_not_hit,
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
     test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight,
