@@ -216,6 +216,63 @@ def test_sensitive_input_text_output_is_advisory_only() -> None:
         assert "Warnings:\n- none" in result.stdout
 
 
+
+def test_failure_contract_promise_default_is_advisory() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "client.ts").write_text("export const load = () => fetch('/x').catch(() => null);\n", encoding="utf-8")
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "slopShapeFindings")
+        assert code == 0, data
+        assert any(item["rule"] == "failure-contract-cheap-default" for item in findings)
+        assert data["warnings"] == []
+
+
+def test_failure_contract_multiline_log_and_default_is_advisory() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "client.ts").write_text(
+            "export async function load() {\n"
+            "  try { return await fetch('/x'); }\n"
+            "  catch (error) {\n"
+            "    console.error(error);\n"
+            "    return undefined;\n"
+            "  }\n"
+            "}\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "slopShapeFindings")
+        assert code == 0, data
+        assert any(item["rule"] == "failure-contract-cheap-default" for item in findings)
+
+
+def test_failure_contract_stringified_unknown_is_advisory() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "client.ts").write_text(
+            "export function load() {\n"
+            "  try { return read(); } catch (error) { return JSON.stringify(error); }\n"
+            "}\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert any(item["rule"] == "failure-contract-stringify" for item in _advisory_added(data, "slopShapeFindings"))
+
+
+def test_failure_contract_preserving_errors_and_unchanged_catches_do_not_hit() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "seed.ts").write_text("export function load() { try { return read(); } catch (error) { return null; } }\n", encoding="utf-8")
+        git(repo, "add", ".")
+        git(repo, "commit", "--no-gpg-sign", "-m", "seed catch")
+        (repo / "src" / "seed.ts").write_text("export function load() { try { return read(); } catch (error) { return null; } }\nexport const ok = 1;\n", encoding="utf-8")
+        (repo / "src" / "safe.ts").write_text(
+            "export function safe() { try { return read(); } catch (error) { throw mapDomainError(error); } }\n"
+            "export function boundary() { return read().catch((error) => ({ ok: false, error })); }\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert _advisory_added(data, "slopShapeFindings") == []
+
 def test_declare_rejects_code_contract_without_preflight() -> None:
     with repo_fixture() as repo:
         result = run_gate(
@@ -1274,6 +1331,10 @@ TESTS = [
     test_sensitive_input_source_and_sink_is_stronger_advisory,
     test_sensitive_input_unchanged_broad_names_and_test_fixtures_do_not_hit,
     test_sensitive_input_text_output_is_advisory_only,
+    test_failure_contract_promise_default_is_advisory,
+    test_failure_contract_multiline_log_and_default_is_advisory,
+    test_failure_contract_stringified_unknown_is_advisory,
+    test_failure_contract_preserving_errors_and_unchanged_catches_do_not_hit,
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
     test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight,

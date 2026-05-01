@@ -321,6 +321,10 @@ SENSITIVE_SINK_RULES = [
     (re.compile(r"\b(?:write_text|write_bytes|writeFile|appendFile|open\s*\([^)]*['\"]w|cache|state)\b"), "persistence"),
     (re.compile(r"\b(?:status|error|message|response)\s*[=:]"), "status-or-error-text"),
 ]
+FAILURE_DEFAULT_RE = re.compile(r'(?:\breturn\s+|=>\s*)(?:null|undefined|false|\[\]|\{\}|["\']{2})\b')
+FAILURE_LOG_RE = re.compile(r"\b(?:console\.(?:log|error|warn)|logger?\.(?:log|error|warn)|log\.(?:error|warn|info))\s*\(")
+FAILURE_RETHROW_RE = re.compile(r"\b(?:throw|reject|raise)\b")
+FAILURE_STRINGIFY_RE = re.compile(r"\b(?:JSON\.stringify|String)\s*\(\s*(?:e|err|error)\s*\)")
 GENERIC_SYMBOLS = {
     "app",
     "config",
@@ -1301,6 +1305,62 @@ def scan_sensitive_input_lines(path: str, lines: list[tuple[int, str]]) -> list[
     return findings
 
 
+def text_window(text: str | None, line_no: int, radius: int = 8) -> str:
+    if not text:
+        return ""
+    lines = text.splitlines()
+    start = max(0, line_no - radius - 1)
+    end = min(len(lines), line_no + radius)
+    return "\n".join(lines[start:end])
+
+
+def added_line_window(lines: list[tuple[int, str]], line_no: int, radius: int = 8) -> str:
+    return "\n".join(text for current, text in lines if abs(current - line_no) <= radius)
+
+
+def scan_failure_contract(ctx: GateContext) -> list[dict[str, object]]:
+    findings: list[dict[str, object]] = []
+    for rel_path, lines in ctx.added_lines_with_untracked(production_only=False).items():
+        if is_source_path(rel_path) and language_for_path(rel_path) == "javascript":
+            findings.extend(scan_failure_contract_lines(rel_path, lines, read_file(ctx.repo / rel_path)))
+    return unique_advisory_findings(findings)
+
+
+def scan_failure_contract_lines(path: str, lines: list[tuple[int, str]], current_text: str | None = None) -> list[dict[str, object]]:
+    findings: list[dict[str, object]] = []
+    for line_no, text in lines:
+        if not re.search(r"\bcatch\b|\.catch\b|\breturn\b|=>|JSON\.stringify|\bString\s*\(|console\.|logger?\.|log\.", text):
+            continue
+        window = text_window(current_text, line_no) or added_line_window(lines, line_no)
+        if not re.search(r"\bcatch\b|\.catch\b", window):
+            continue
+        rule = ""
+        message = ""
+        if FAILURE_STRINGIFY_RE.search(window) and FAILURE_STRINGIFY_RE.search(text):
+            rule = "failure-contract-stringify"
+            message = "caught error is stringified instead of preserved or mapped"
+        elif FAILURE_DEFAULT_RE.search(window) and FAILURE_DEFAULT_RE.search(text + "\n" + window):
+            rule = "failure-contract-cheap-default"
+            message = "catch path returns a cheap default instead of preserving failure information"
+        elif FAILURE_LOG_RE.search(window) and not FAILURE_RETHROW_RE.search(window) and not re.search(r'(?:\breturn\s+(?!null|undefined|false|\[\]|\{\}|["\']{2}))' , window):
+            rule = "failure-contract-log-only"
+            message = "catch path only logs and then erases the failure"
+        if rule:
+            findings.append(advisory_finding(rule, "failure-contract", path, line_no, "warning", message, "added catch/reject path erases failure shape"))
+    return unique_advisory_findings(findings)
+
+
+def unique_advisory_findings(findings: list[dict[str, object]]) -> list[dict[str, object]]:
+    seen: set[tuple[object, ...]] = set()
+    out: list[dict[str, object]] = []
+    for finding in findings:
+        key = (finding.get("rule"), finding.get("path"), finding.get("line"), finding.get("message"))
+        if key not in seen:
+            seen.add(key)
+            out.append(finding)
+    return out
+
+
 def multiline_hits(path: str, text: str) -> list[str]:
     return [f"{path}:{text[: match.start()].count(chr(10)) + 1}" for rule in EMPTY_CATCH_RULES for match in rule.finditer(text)]
 
@@ -1808,6 +1868,7 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     reuse_warnings = [finding for finding in reuse_findings if finding.severity == "warning"]
     advisory_groups = empty_advisory_groups()
     advisory_groups["securityAssumptionFindings"]["added"].extend(scan_sensitive_input(ctx))
+    advisory_groups["slopShapeFindings"]["added"].extend(scan_failure_contract(ctx))
 
     if conflict_files:
         errors.append(f"merge conflict markers found in {len(conflict_files)} file(s)")

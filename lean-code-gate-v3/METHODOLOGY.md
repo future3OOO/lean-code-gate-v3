@@ -84,7 +84,7 @@ The final quality gate inspects the changed source scope and fails on:
 - high-confidence helper or loop reimplementation
 - risk-calibrated bloat
 
-The advisory surface also reports sensitive-input reads when changed production code touches environment values, credential paths, keyrings, auth/cookie headers, private key material, or git remote URLs. It reports stronger evidence when the same touched area logs, serializes, caches, snapshots, or emits that value.
+The advisory surface also reports sensitive-input reads when changed production code touches environment values, credential paths, keyrings, auth/cookie headers, private key material, or git remote URLs. It reports stronger evidence when the same touched area logs, serializes, caches, snapshots, or emits that value. TypeScript and JavaScript catch/reject paths are advisory findings when they only log, stringify unknown errors, or return cheap defaults such as `null`, `undefined`, `false`, empty arrays, empty objects, or empty strings.
 
 Warnings are emitted for moderate bloat and weaker reuse signals. Projects can promote warnings to failures in `.agent/lean/policy.json`.
 
