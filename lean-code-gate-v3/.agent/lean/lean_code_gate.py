@@ -47,6 +47,7 @@ DEFAULT_POLICY: dict[str, object] = {
     "block_hidden_bash_writes": True,
     "run_quality_gate_on_stop": True,
     "fail_on_quality_warnings": False,
+    "reward_telemetry_enabled": False,
     # max_design_markers: 4 (was 2): requires all 4 DESIGN_RE categories to
     # match. Calibrated against Pydantic's _generate_schema.py (2922 lines,
     # density 1.4/100, was firing as FP). Combined with density gating >= 3.0
@@ -2239,6 +2240,42 @@ def format_advisory_sample(finding: dict[str, object]) -> str:
     return f"- {severity} {rule} at {location}: {message}"
 
 
+def advisory_bucket_counts(quality: dict[str, object]) -> dict[str, dict[str, int]]:
+    counts: dict[str, dict[str, int]] = {}
+    for group_name in ADVISORY_GROUP_NAMES:
+        group = quality.get(group_name)
+        counts[group_name] = {bucket: len(group.get(bucket, [])) if isinstance(group, dict) and isinstance(group.get(bucket), list) else 0 for bucket in ADVISORY_BUCKET_NAMES}
+    return counts
+
+
+def reward_telemetry_event(root: Path, current_contract: dict[str, object], final_error_count: int, quality: dict[str, object]) -> dict[str, object]:
+    delta_value = delta(root, current_contract)
+    quality_errors = quality.get("errors") if isinstance(quality.get("errors"), list) else []
+    quality_warnings = quality.get("warnings") if isinstance(quality.get("warnings"), list) else []
+    files = delta_value.get("files") if isinstance(delta_value.get("files"), list) else []
+    return {
+        "event": "reward_telemetry",
+        "quality_ok": bool(quality.get("ok")),
+        "final_error_count": final_error_count,
+        "quality_error_count": len(quality_errors),
+        "quality_warning_count": len(quality_warnings),
+        "advisory_counts": advisory_bucket_counts(quality),
+        "changed_files_count": len(files),
+        "added": int(delta_value.get("added") or 0),
+        "deleted": int(delta_value.get("deleted") or 0),
+        "changed": int(delta_value.get("changed") or 0),
+    }
+
+
+def maybe_log_reward_telemetry(root: Path, current_contract: dict[str, object], active_policy: dict[str, object], final_error_count: int, quality: dict[str, object] | None) -> None:
+    if not active_policy.get("reward_telemetry_enabled") or not current_contract or quality is None:
+        return
+    try:
+        log_event(root, reward_telemetry_event(root, current_contract, final_error_count, quality))
+    except OSError:
+        return
+
+
 def format_quality_text(result: dict[str, object]) -> str:
     lines = [
         "Lean Code Quality Gate",
@@ -2620,11 +2657,13 @@ def stop(payload: dict[str, object]) -> None:
         current_contract = contract(root)
         active_policy = policy(root)
         errors = final_errors(root, current_contract, active_policy)
+        quality: dict[str, object] | None = None
         if active_policy["run_quality_gate_on_stop"]:
             fail_warnings = bool(active_policy["fail_on_quality_warnings"]) and not (current_contract or {}).get("allow_quality_warnings")
             quality = run_quality_gate(root, str((current_contract or {}).get("base_ref") or "") or None, fail_warnings)
             if not quality["ok"]:
                 errors.extend(["Quality gate failed: " + error for error in quality["errors"]])
+        maybe_log_reward_telemetry(root, current_contract, active_policy, len(errors), quality)
         all_errors.extend(f"{root}: {error}" if len(roots) > 1 else error for error in errors)
     if all_errors:
         deny(

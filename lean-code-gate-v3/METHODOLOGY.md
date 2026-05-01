@@ -87,6 +87,8 @@ The final quality gate inspects the changed source scope and fails on:
 The advisory surface also reports sensitive-input reads when changed code touches environment values, credential paths, keyrings, auth/cookie headers, private key material, or git remote URLs. It reports stronger evidence when the same touched area logs, serializes, caches, snapshots, or emits that value. TypeScript and JavaScript catch/reject paths are advisory findings when they only log, stringify unknown errors, or return cheap defaults such as `null`, `undefined`, `false`, empty arrays, empty objects, or empty strings. One-body forwarding wrappers are advisory findings when no validation, normalization, instrumentation, retry, compatibility, deprecation, or boundary value is visible nearby. Full non-minimal code work also reports an advisory when `proof_plan` omits a named verification loop such as `red-green-refactor`, `green-refactor-green`, or `smoke-check`. Large mock-heavy tests with weak assertions and no visible production entrypoint are advisory proof-shape findings.
 Advisory findings are bucketed as added, resolved, improved, or worsened for touched files only. Delta buckets are reviewer ergonomics and calibration inputs; they are not blocker attribution and do not change legacy warnings, hard rules, or exit behavior.
 
+Reward telemetry is default-off. When `reward_telemetry_enabled` is true, Stop appends aggregate `reward_telemetry` events only; it does not score, challenge, expose weights, or log raw contract text.
+
 Warnings are emitted for moderate bloat and weaker reuse signals. Projects can promote warnings to failures in `.agent/lean/policy.json`.
 
 ## Operating guidance
