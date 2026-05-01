@@ -253,6 +253,87 @@ def test_sensitive_input_test_fixtures_do_not_hit() -> None:
         assert code == 0, data
         assert _advisory_added(data, "securityAssumptionFindings") == []
 
+def test_sensitive_input_indented_python_assignment_escalates_via_identifier_flow() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "indented.py").write_text(
+            "import os\n"
+            "def load():\n"
+            "    TOKEN = os.getenv('API_KEY')\n"
+            "    print('starting')\n"
+            "    print(TOKEN)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "high"
+        assert "sink=log-or-console" in findings[0]["evidence"]
+
+
+def test_sensitive_input_typed_python_assignment_escalates_via_identifier_flow() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "typed.py").write_text(
+            "import os\n"
+            "from typing import Optional\n"
+            "TOKEN: Optional[str] = os.getenv('API_KEY')\n"
+            "print(TOKEN)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "high"
+        assert "sink=log-or-console" in findings[0]["evidence"]
+
+
+def test_sensitive_input_comparison_does_not_escalate() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "compare.py").write_text(
+            "import os\n"
+            "def check(TOKEN):\n"
+            "    if TOKEN == os.getenv('API_KEY'):\n"
+            "        print(TOKEN)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "warning"
+        assert "sink=" not in findings[0]["evidence"]
+
+
+def test_sensitive_input_git_remote_subprocess_is_advisory() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "remotes.py").write_text(
+            "import subprocess\n"
+            "def origin():\n"
+            "    return subprocess.run(['git', 'remote', 'get-url', 'origin']).stdout\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["evidence"] == "source=git-remote-url-read"
+
+
+def test_sensitive_input_git_remote_node_execfile_is_advisory() -> None:
+    with repo_fixture() as repo:
+        (repo / "src" / "remotes.ts").write_text(
+            "import { execFile } from 'child_process';\n"
+            "export const origin = () => execFile('git', ['remote', 'get-url', 'origin']);\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["evidence"] == "source=git-remote-url-read"
+
+
 def test_sensitive_input_text_output_is_advisory_only() -> None:
     with repo_fixture() as repo:
         (repo / "src" / "secrets.py").write_text("import os\nTOKEN = os.getenv('API_KEY')\n", encoding="utf-8")

@@ -310,6 +310,7 @@ EMPTY_CATCH_RULES = [
 SENSITIVE_SOURCE_RULES = [
     (re.compile(r"\b(?:os\.getenv|os\.environ\s*(?:\.get|\[)|process\.env\s*(?:\.|\[)|Deno\.env\.get|std::env::var|os\.Getenv|getenv\s*\()"), "environment-read"),
     (re.compile(r"\bgit\s+(?:remote\s+get-url|config\s+--get\s+remote\.)"), "git-remote-url-read"),
+    (re.compile(r"""\b(?:subprocess\.(?:run|Popen|check_output|check_call)|child_process\.(?:execFile|spawn)|execFile|spawn|ProcessBuilder)\s*\(\s*\[?\s*['"]git['"]\s*,\s*(?:\[\s*)?['"]remote['"]\s*,\s*['"]get-url['"]"""), "git-remote-url-read"),
     (re.compile(r"(?:^|[/\\])(?:\.netrc|\.ssh|\.aws)(?:[/\\]|$)|\b(?:id_rsa|id_ed25519|known_hosts)\b"), "credential-file-read"),
     (re.compile(r"\b(?:keyring\.|keytar\.|SecretStorage|security\s+find-generic-password)"), "keyring-read"),
     (re.compile(r"""(?:\b(?:req|request)\.headers|\bheaders)\s*(?:\.get\s*\(\s*['"](?:authorization|cookie|set-cookie)['"]|\[\s*['"](?:Authorization|Cookie|Set-Cookie)['"]\s*\])|\bgetHeader\s*\(\s*['"](?:Authorization|Cookie|Set-Cookie)['"]""", re.I), "auth-header-read"),
@@ -320,7 +321,13 @@ SENSITIVE_SINK_RULES = [
     (re.compile(r"\b(?:JSON\.stringify|json\.dumps|pickle\.dump|yaml\.dump|serialize|snapshot)\b|\b(?:telemetry|metrics)\.(?:track|emit|record|log)\s*\("), "serialization-or-telemetry"),
     (re.compile(r"""\b(?:write_text|write_bytes|writeFile|appendFile|fs\.(?:writeFile|appendFile)|open\s*\([^)]*['"]w)\b"""), "persistence"),
 ]
-SENSITIVE_IDENTIFIER_RE = re.compile(r"^(?:\s*(?:const|let|var)\s+)?([A-Za-z_$][\w$]*)\s*(?::=|=)")
+SENSITIVE_IDENTIFIER_RE = re.compile(
+    r"^\s*"
+    r"(?:(?:const|let|var)\s+)?"
+    r"([A-Za-z_$][\w$]*)"
+    r"(?:\s*:\s*[^=]+?)?"
+    r"\s*(?::=|=(?!=))"
+)
 GENERIC_SYMBOLS = {
     "app",
     "config",
