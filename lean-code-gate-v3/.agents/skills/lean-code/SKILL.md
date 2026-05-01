@@ -107,7 +107,7 @@ Escape hatches need evidence:
 
 - Minimum code that solves the requested behavior.
 - Extend existing implementation before adding a parallel one.
-- No single-use factories, managers, registries, adapters, strategies, plugins, feature flags, or configuration knobs.
+- No single-use factories, managers, registries, adapters, strategies, plugins, feature flags, configuration knobs, or one-line forwarding wrappers unless they provide validation, normalization, instrumentation, retry, compatibility, deprecation, or external-boundary value.
 - No new package if standard library or an existing package solves the problem cleanly.
 - No second package manager or second lockfile.
 - No broad error handling for impossible scenarios, log-only catches, stringified unknown errors, or catch paths that return `null`, `undefined`, `false`, empty arrays, empty objects, or empty strings.

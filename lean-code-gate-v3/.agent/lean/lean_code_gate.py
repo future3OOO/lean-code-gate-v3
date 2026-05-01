@@ -325,6 +325,10 @@ FAILURE_DEFAULT_RE = re.compile(r'(?:\breturn\s+|=>\s*)(?:null|undefined|false|\
 FAILURE_LOG_RE = re.compile(r"\b(?:console\.(?:log|error|warn)|logger?\.(?:log|error|warn)|log\.(?:error|warn|info))\s*\(")
 FAILURE_RETHROW_RE = re.compile(r"\b(?:throw|reject|raise)\b")
 FAILURE_STRINGIFY_RE = re.compile(r"\b(?:JSON\.stringify|String)\s*\(\s*(?:e|err|error)\s*\)")
+WRAPPER_VALUE_MARKER_RE = re.compile(
+    r"\b(?:compat|deprecated|deprecation|alias|public\s+api|validate|validation|normalize|normalise|sanitize|instrument|metric|trace|log|retry|timeout|boundary|external|adapter|hook|override)\b",
+    re.I,
+)
 GENERIC_SYMBOLS = {
     "app",
     "config",
@@ -1350,6 +1354,92 @@ def scan_failure_contract_lines(path: str, lines: list[tuple[int, str]], current
     return unique_advisory_findings(findings)
 
 
+def scan_wrapper_value(ctx: GateContext) -> list[dict[str, object]]:
+    findings: list[dict[str, object]] = []
+    for rel_path, lines in ctx.added_lines_with_untracked(production_only=True).items():
+        if is_production_source_path(rel_path):
+            findings.extend(scan_wrapper_value_lines(rel_path, lines))
+    return unique_advisory_findings(findings)
+
+
+def scan_wrapper_value_lines(path: str, lines: list[tuple[int, str]]) -> list[dict[str, object]]:
+    findings: list[dict[str, object]] = []
+    language = language_for_path(path)
+    for line_no, text in lines:
+        match_info = wrapper_forwarder(language, text)
+        if not match_info:
+            continue
+        name, target, args, call_args = match_info
+        if name in _active_framework_override_names or target.rsplit(".", 1)[-1] == name:
+            continue
+        if not same_pass_through_args(args, call_args) or WRAPPER_VALUE_MARKER_RE.search(added_line_window(lines, line_no, 3)):
+            continue
+        findings.append(
+            advisory_finding(
+                "wrapper-value",
+                "wrapper",
+                path,
+                line_no,
+                "warning",
+                "one-line forwarding function adds indirection without visible boundary value",
+                f"{name} forwards to {target} with pass-through arguments",
+            )
+        )
+    return findings
+
+
+def wrapper_forwarder(language: str, text: str) -> tuple[str, str, str, str] | None:
+    stripped = text.strip()
+    if language == "python":
+        found = re.search(r"^(?:async\s+)?def\s+(\w+)\s*\(([^)]*)\)\s*:\s*return\s+(?:await\s+)?([A-Za-z_][\w.]*)\s*\(([^)]*)\)\s*$", stripped)
+        if found:
+            return found.group(1), found.group(3), found.group(2), found.group(4)
+    elif language == "javascript":
+        found = re.search(r"^(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(([^)]*)\)\s*\{\s*return\s+(?:await\s+)?([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\s*\(([^)]*)\)\s*;?\s*\}\s*$", stripped)
+        if found:
+            return found.group(1), found.group(3), found.group(2), found.group(4)
+        found = re.search(r"^(?:export\s+)?(?:const|let|var)\s+(\w+)\s*=\s*(?:async\s*)?(.*?)\s*=>\s*(.*?)\s*;?\s*$", stripped)
+        if found:
+            name, raw_args, body = found.group(1), found.group(2).strip(), found.group(3).strip()
+            if raw_args.startswith("(") and raw_args.endswith(")"):
+                raw_args = raw_args[1:-1]
+            body_match = re.search(r"^(?:await\s+)?([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\s*\(([^)]*)\)$", body)
+            if not body_match and body.startswith("{") and body.endswith("}"):
+                body_match = re.search(r"^\{\s*return\s+(?:await\s+)?([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\s*\(([^)]*)\)\s*;?\s*\}$", body)
+            if body_match:
+                return name, body_match.group(1), raw_args, body_match.group(2)
+    elif language == "go":
+        found = re.search(r"^func\s+(?:\([^)]*\)\s*)?(\w+)\s*\(([^)]*)\)[^{]*\{\s*return\s+([A-Za-z_][\w.]*)\s*\(([^)]*)\)\s*\}\s*$", stripped)
+        if found:
+            return found.group(1), found.group(3), found.group(2), found.group(4)
+    return None
+
+def arg_names(raw: str) -> list[str]:
+    names: list[str] = []
+    for part in raw.split(","):
+        item = part.strip().lstrip("*").lstrip("&")
+        if not item or item.startswith("...") or item.startswith("{") or item.startswith("["):
+            continue
+        item = item.split("=", 1)[0].split(":", 1)[0].strip()
+        tokens = re.findall(r"[A-Za-z_$][\w$]*", item)
+        if tokens:
+            names.append(tokens[0])
+    return [name for name in names if name not in {"self", "this", "cls"}]
+
+
+def call_arg_names(raw: str) -> list[str]:
+    names: list[str] = []
+    for part in raw.split(","):
+        item = part.strip()
+        if re.match(r"^[A-Za-z_$][\w$]*$", item):
+            names.append(item)
+    return [name for name in names if name not in {"self", "this", "cls"}]
+
+
+def same_pass_through_args(args: str, call_args: str) -> bool:
+    return arg_names(args) == call_arg_names(call_args)
+
+
 def unique_advisory_findings(findings: list[dict[str, object]]) -> list[dict[str, object]]:
     seen: set[tuple[object, ...]] = set()
     out: list[dict[str, object]] = []
@@ -1869,6 +1959,7 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     advisory_groups = empty_advisory_groups()
     advisory_groups["securityAssumptionFindings"]["added"].extend(scan_sensitive_input(ctx))
     advisory_groups["slopShapeFindings"]["added"].extend(scan_failure_contract(ctx))
+    advisory_groups["slopShapeFindings"]["added"].extend(scan_wrapper_value(ctx))
 
     if conflict_files:
         errors.append(f"merge conflict markers found in {len(conflict_files)} file(s)")
