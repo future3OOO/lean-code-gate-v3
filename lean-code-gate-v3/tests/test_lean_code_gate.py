@@ -697,6 +697,55 @@ def test_verification_mode_exempts_minimal_and_test_only_work() -> None:
         assert _advisory_added(data, "verificationShapeFindings") == []
 
 
+def test_production_shaped_proof_warns_on_mock_heavy_weak_test() -> None:
+    with repo_fixture() as repo:
+        body = "from unittest.mock import MagicMock\n\n" + "\n".join(
+            f"mock_{idx} = MagicMock()" for idx in range(16)
+        ) + "\n\n# from src.app import add\n# assert mock_1 is not None\n\ndef test_fake_surface():\n    result = mock_1()\n    assert result is not None\n"
+        (repo / "tests" / "test_fake_surface.py").write_text(body, encoding="utf-8")
+        code, data = check_json(repo)
+        findings = [item for item in _advisory_added(data, "verificationShapeFindings") if item["rule"] == "production-shaped-proof"]
+        assert code == 0, data
+        assert len(findings) == 1
+        assert "mock_setup_lines" in findings[0]["evidence"]
+
+
+def test_production_shaped_proof_pytest_fixture_name_does_not_exempt_weak_mock_test() -> None:
+    with repo_fixture() as repo:
+        body = "import pytest\nfrom unittest.mock import MagicMock\n\n@pytest.fixture\ndef user_fixture():\n    return object()\n" + "\n".join(
+            f"mock_{idx} = MagicMock()" for idx in range(14)
+        ) + "\n\ndef test_fake_surface(user_fixture):\n    result = mock_1()\n    assert result is not None\n"
+        (repo / "tests" / "test_fixture_name.py").write_text(body, encoding="utf-8")
+        code, data = check_json(repo)
+        findings = [item for item in _advisory_added(data, "verificationShapeFindings") if item["rule"] == "production-shaped-proof"]
+        assert code == 0, data
+        assert len(findings) == 1
+
+
+def test_production_shaped_proof_allows_entrypoint_fixture_and_assertion_rich_tests() -> None:
+    with repo_fixture() as repo:
+        rich = "from unittest.mock import MagicMock\n\n" + "\n".join(
+            f"mock_{idx} = MagicMock()" for idx in range(10)
+        ) + "\n\ndef test_mock_behavior():\n" + "\n".join(
+            f"    assert mock_{idx}.call_count == 0" for idx in range(8)
+        ) + "\n"
+        (repo / "tests" / "test_behavior.py").write_text(rich, encoding="utf-8")
+        boundary = "\n".join([
+            "def test_cli_payload_fixture():",
+            "    payload = {'hook': 'stop'}",
+            "    # external boundary fixture keeps the protocol real",
+            *[f"    mock_{idx} = object()" for idx in range(14)],
+            "    result = run_gate_payload(payload)",
+            "    assert result == {'ok': True}",
+        ]) + "\n"
+        (repo / "tests" / "test_cli_payload.py").write_text(boundary, encoding="utf-8")
+        small = "def test_small():\n    fake = object()\n    assert fake is not None\n"
+        (repo / "tests" / "test_small.py").write_text(small, encoding="utf-8")
+        code, data = check_json(repo)
+        assert code == 0, data
+        assert [item for item in _advisory_added(data, "verificationShapeFindings") if item["rule"] == "production-shaped-proof"] == []
+
+
 def test_declare_rejects_code_contract_without_preflight() -> None:
     with repo_fixture() as repo:
         result = run_gate(
@@ -1779,6 +1828,9 @@ TESTS = [
     test_verification_mode_tokens_are_accepted_and_negations_rejected,
     test_verification_mode_policy_tokens_are_configurable,
     test_verification_mode_exempts_minimal_and_test_only_work,
+    test_production_shaped_proof_warns_on_mock_heavy_weak_test,
+    test_production_shaped_proof_pytest_fixture_name_does_not_exempt_weak_mock_test,
+    test_production_shaped_proof_allows_entrypoint_fixture_and_assertion_rich_tests,
     test_declare_rejects_code_contract_without_preflight,
     test_minimal_preflight_allows_micro_bugfix_without_cargo_fields,
     test_unknown_task_type_is_rejected_instead_of_forcing_full_preflight,
