@@ -1322,14 +1322,13 @@ def scan_sensitive_input_lines(path: str, added_lines: list[tuple[int, str]], si
 
 
 def sensitive_sink_for_source(line_no: int, text: str, sinks: list[tuple[int, str, str]]) -> str:
-    same_line = first_rule_match(text, SENSITIVE_SINK_RULES)
-    if same_line:
-        return same_line
+    source_match = next((match for pattern, _label in SENSITIVE_SOURCE_RULES if (match := pattern.search(text))), None)
+    same_line = next(((match, label) for pattern, label in SENSITIVE_SINK_RULES if (match := pattern.search(text))), None)
     identifier = assigned_identifier(text)
-    if not identifier:
-        return ""
-    use_re = re.compile(rf"\b{re.escape(identifier)}\b")
-    return next((label for sink_line, sink_text, label in sinks if label and 0 < sink_line - line_no <= 8 and use_re.search(sink_text)), "")
+    use_re = re.compile(rf"\b{re.escape(identifier)}\b") if identifier else None
+    if source_match and same_line and ((use_re and use_re.search(text[source_match.end():])) or (use_re is None and same_line[1] != "persistence" and same_line[0].start() <= source_match.start())):
+        return same_line[1]
+    return next((label for sink_line, sink_text, label in sinks if use_re and label and 0 < sink_line - line_no <= 8 and use_re.search(sink_text)), "")
 
 
 def assigned_identifier(text: str) -> str:

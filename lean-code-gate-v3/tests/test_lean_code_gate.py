@@ -207,10 +207,7 @@ def test_sensitive_input_high_requires_same_line_or_source_identifier_flow() -> 
     with repo_fixture() as repo:
         (repo / "src" / "unrelated.py").write_text(
             "import os\n"
-            "print('booting')\n"
-            "TOKEN = os.getenv('API_KEY')\n"
-            "print('ready')\n"
-            "message = 'ok'\n",
+            "TOKEN = os.getenv('API_KEY'); print('ready')\n",
             encoding="utf-8",
         )
         code, data = check_json(repo)
@@ -263,6 +260,16 @@ def test_sensitive_input_credential_paths_require_read_call() -> None:
         code, data = check_json(repo)
         assert code == 0, data
         assert _advisory_added(data, "securityAssumptionFindings") == []
+        (repo / "src" / "paths.py").write_text(
+            "open('.ssh/id_ed25519', 'w').write(key)\n",
+            encoding="utf-8",
+        )
+        code, data = check_json(repo)
+        findings = _advisory_added(data, "securityAssumptionFindings")
+        assert code == 0, data
+        assert len(findings) == 1
+        assert findings[0]["severity"] == "warning"
+        assert "sink=" not in findings[0]["evidence"]
         (repo / "src" / "paths.py").write_text(
             "KEY = open('.ssh/id_ed25519').read()\n",
             encoding="utf-8",
@@ -401,8 +408,7 @@ def test_sensitive_input_python_logger_method_call_escalates() -> None:
 def test_sensitive_input_console_info_method_call_escalates() -> None:
     with repo_fixture() as repo:
         (repo / "src" / "client.ts").write_text(
-            "const TOKEN = process.env.API_KEY;\n"
-            "console.info(TOKEN);\n",
+            "const TOKEN = process.env.API_KEY; console.info(TOKEN);\n",
             encoding="utf-8",
         )
         code, data = check_json(repo)
