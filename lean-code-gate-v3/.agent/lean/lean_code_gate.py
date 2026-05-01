@@ -330,6 +330,10 @@ WRAPPER_VALUE_MARKER_RE = re.compile(
     re.I,
 )
 VERIFICATION_MODE_TOKENS = ("red-green-refactor", "green-refactor-green", "smoke-check")
+PROOF_MOCK_RE = re.compile(r"\b(?:mock|stub|fake|spy|MagicMock|Mock\(|jest\.fn|vi\.fn|monkeypatch|patch\(|beforeEach|setUp|fixture)\b", re.I)
+PROOF_ASSERT_RE = re.compile(r"\b(?:assert|expect\s*\(|should\.|toEqual|toBe|toStrictEqual)\b")
+PROOF_WEAK_ASSERT_RE = re.compile(r"\b(?:assert\s+(?:True|.+(?:is\s+not\s+None|is\s+None))|toBeTruthy|toBeDefined|not\.toBeNull)\b")
+PROOF_ENTRY_RE = re.compile(r'\b(?:from\s+src\.|import\s+src\.|require\(["\']\.\.?/src|run_gate|main\s*\(|cli|parser|parse_|hook|payload|public\s+api|fixture|external\s+boundary|boundary\s+fixture)\b', re.I)
 GENERIC_SYMBOLS = {
     "app",
     "config",
@@ -1466,6 +1470,39 @@ def scan_verification_mode(ctx: GateContext, current_contract: dict[str, object]
     ]
 
 
+def scan_production_shaped_proof(ctx: GateContext) -> list[dict[str, object]]:
+    findings: list[dict[str, object]] = []
+    for rel_path, lines in ctx.added_lines_with_untracked(production_only=False).items():
+        if path_type(rel_path) == "test" or is_test_like_path(rel_path):
+            finding = production_shaped_proof_finding(rel_path, lines)
+            if finding:
+                findings.append(finding)
+    return findings
+
+
+def production_shaped_proof_finding(path: str, lines: list[tuple[int, str]]) -> dict[str, object] | None:
+    useful_lines = [(line_no, text) for line_no, text in lines if text.strip()]
+    if len(useful_lines) < 18:
+        return None
+    mock_lines = [(line_no, text) for line_no, text in useful_lines if PROOF_MOCK_RE.search(text)]
+    assertions = [(line_no, text) for line_no, text in useful_lines if PROOF_ASSERT_RE.search(text)]
+    weak_assertions = [(line_no, text) for line_no, text in assertions if PROOF_WEAK_ASSERT_RE.search(text)]
+    has_entrypoint = any(PROOF_ENTRY_RE.search(text) for _, text in useful_lines)
+    mock_ratio = len(mock_lines) / max(1, len(useful_lines))
+    weak = not assertions or len(assertions) <= 1 or len(weak_assertions) == len(assertions)
+    if len(mock_lines) >= 6 and mock_ratio >= 0.35 and weak and not has_entrypoint:
+        return advisory_finding(
+            "production-shaped-proof",
+            "verification",
+            path,
+            mock_lines[0][0],
+            "warning",
+            "large mock-heavy test block has weak assertions and no visible production entrypoint",
+            f"added_lines={len(useful_lines)}; mock_setup_lines={len(mock_lines)}; assertions={len(assertions)}",
+        )
+    return None
+
+
 def unique_advisory_findings(findings: list[dict[str, object]]) -> list[dict[str, object]]:
     seen: set[tuple[object, ...]] = set()
     out: list[dict[str, object]] = []
@@ -1990,6 +2027,7 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     advisory_groups["slopShapeFindings"]["added"].extend(scan_failure_contract(ctx))
     advisory_groups["slopShapeFindings"]["added"].extend(scan_wrapper_value(ctx))
     advisory_groups["verificationShapeFindings"]["added"].extend(scan_verification_mode(ctx, current_contract))
+    advisory_groups["verificationShapeFindings"]["added"].extend(scan_production_shaped_proof(ctx))
 
     if conflict_files:
         errors.append(f"merge conflict markers found in {len(conflict_files)} file(s)")

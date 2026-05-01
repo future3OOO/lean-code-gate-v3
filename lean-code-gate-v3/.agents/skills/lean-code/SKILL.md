@@ -126,7 +126,8 @@ For bug fixes:
 1. Add or update the smallest test that reproduces the bug.
 2. Make it pass with the smallest production change.
 3. Run the declared focused verification.
-4. Run broader checks only when the affected surface requires them.
+4. Keep tests production-shaped: exercise the changed entrypoint, parser, CLI, hook payload, public API, or production fixture; do not prove only mocks and setup.
+5. Run broader checks only when the affected surface requires them.
 
 For refactors:
 
