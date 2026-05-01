@@ -338,6 +338,10 @@ FAILURE_LOG_RE = re.compile(r"\b(?:console\.(?:log|error|warn|info)|(?:logger|lo
 FAILURE_RETHROW_RE = re.compile(r"\b(?:throw|reject)\b")
 FAILURE_STRINGIFY_RE = re.compile(r"\b(?:JSON\.stringify|String)\s*\(\s*(?:e|err|error)\s*\)")
 FAILURE_TRIGGER_RE = re.compile(r"\bcatch\b|\.catch\b|\breturn\b|=>|Promise\.resolve|JSON\.stringify|\bString\s*\(|console\.|(?:logger|log)\.")
+WRAPPER_VALUE_MARKER_RE = re.compile(
+    r"\b(?:compat|deprecated|deprecation|alias|public\s+api|validate|validation|normalize|normalise|sanitize|instrument(?:ation)?|metric|trace|retry|timeout|boundary|external|adapter)\b",
+    re.I,
+)
 GENERIC_SYMBOLS = {
     "app",
     "config",
@@ -1286,6 +1290,7 @@ def advisory_finding(rule: str, family: str, path: str, line: int, severity: str
 def first_rule_match(text: str, rules: list[tuple[re.Pattern[str], str]]) -> str:
     return next((label for pattern, label in rules if pattern.search(text)), "")
 
+
 def scan_sensitive_input(ctx: GateContext) -> list[dict[str, object]]:
     findings: list[dict[str, object]] = []
     for rel_path, added_lines in ctx.added_lines_with_untracked(production_only=True).items():
@@ -1352,6 +1357,103 @@ def scan_failure_contract_lines(path: str, lines: list[tuple[int, str]]) -> list
         if rule:
             findings.append(advisory_finding(rule, "failure-contract", path, line_no, "warning", message, "added catch/reject path erases failure shape"))
     return findings
+
+
+def scan_wrapper_value(ctx: GateContext) -> list[dict[str, object]]:
+    findings: list[dict[str, object]] = []
+    for rel_path, lines in ctx.added_lines_with_untracked(production_only=True).items():
+        if is_production_source_path(rel_path):
+            text = read_file(ctx.repo / rel_path)
+            marker_lines = list(enumerate(text.splitlines(), 1)) if text is not None else lines
+            findings.extend(scan_wrapper_value_lines(rel_path, lines, marker_lines))
+    return findings
+
+
+def scan_wrapper_value_lines(path: str, lines: list[tuple[int, str]], marker_lines: list[tuple[int, str]]) -> list[dict[str, object]]:
+    findings: list[dict[str, object]] = []
+    language = language_for_path(path)
+    for index, (line_no, text) in enumerate(lines):
+        match_info = wrapper_forwarder(language, text)
+        multiline = lines[index:index + 3]
+        if not match_info and language in {"python", "go"} and len(multiline) > 1 and all(multiline[i + 1][0] == multiline[i][0] + 1 for i in range(len(multiline) - 1)):
+            match_info = wrapper_forwarder(language, "\n".join(part.strip() for _, part in multiline))
+        if not match_info:
+            continue
+        name, target, args, call_args = match_info
+        if name in _active_framework_override_names or target.rsplit(".", 1)[-1] == name:
+            continue
+        if not same_pass_through_args(args, call_args) or wrapper_has_value_marker(marker_lines, line_no):
+            continue
+        findings.append(
+            advisory_finding(
+                "wrapper-value",
+                "wrapper",
+                path,
+                line_no,
+                "warning",
+                "one-body forwarding function adds indirection without visible boundary value",
+                f"{name} forwards to {target} with pass-through arguments",
+            )
+        )
+    return findings
+
+
+def wrapper_forwarder(language: str, text: str) -> tuple[str, str, str, str] | None:
+    stripped = text.strip()
+    if language == "python":
+        found = re.search(r"^(?:async\s+)?def\s+(\w+)\s*\(([^)]*)\)\s*:\s*(?:\n\s*)?return\s+(?:await\s+)?([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)\s*\(([^)]*)\)\s*$", stripped)
+        if found:
+            return found.group(1), found.group(3), found.group(2), found.group(4)
+    elif language == "javascript":
+        found = re.search(r"^(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(([^)]*)\)\s*(?::\s*[^{]+)?\{\s*return\s+(?:await\s+)?([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\s*\(([^)]*)\)\s*;?\s*\}\s*$", stripped)
+        if found:
+            return found.group(1), found.group(3), found.group(2), found.group(4)
+        found = re.search(r"^(?:export\s+)?(?:const|let|var)\s+(\w+)\s*=\s*(?:async\s*)?(.*?)\s*=>\s*(.*?)\s*;?\s*$", stripped)
+        if found:
+            name, raw_args, body = found.group(1), found.group(2).strip(), found.group(3).strip()
+            if raw_args.startswith("(") and (close := raw_args.rfind(")")) >= 0:
+                raw_args = raw_args[1:close]
+            body_match = re.search(r"^(?:await\s+)?([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\s*\(([^)]*)\)$", body)
+            if not body_match and body.startswith("{") and body.endswith("}"):
+                body_match = re.search(r"^\{\s*return\s+(?:await\s+)?([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\s*\(([^)]*)\)\s*;?\s*\}$", body)
+            if body_match:
+                return name, body_match.group(1), raw_args, body_match.group(2)
+    elif language == "go":
+        found = re.search(r"^func\s+(?:\([^)]*\)\s*)?(\w+)\s*\(([^)]*)\)[^{]*\{\s*(?:\n\s*)?return\s+([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)\s*\(([^)]*)\)\s*(?:\n\s*)?\}\s*$", stripped)
+        if found:
+            return found.group(1), found.group(3), found.group(2), found.group(4)
+    return None
+
+
+def wrapper_has_value_marker(lines: list[tuple[int, str]], line_no: int) -> bool:
+    for current, text in lines:
+        if abs(current - line_no) > 2:
+            continue
+        stripped = text.strip()
+        if current == line_no or stripped.startswith(("#", "//", "/*", "*")):
+            if WRAPPER_VALUE_MARKER_RE.search(stripped):
+                return True
+    return False
+
+
+def argument_names(raw: str, declaration: bool) -> list[str]:
+    names: list[str] = []
+    for part in raw.split(","):
+        item = part.strip().removeprefix("...").lstrip("*").lstrip("&")
+        if not item or item.startswith(("{", "[")):
+            continue
+        if declaration:
+            item = item.split("=", 1)[0].split(":", 1)[0].strip()
+            tokens = re.findall(r"[A-Za-z_$][\w$]*", item)
+            if tokens:
+                names.append(tokens[0])
+        elif re.match(r"^[A-Za-z_$][\w$]*$", item):
+            names.append(item)
+    return [name for name in names if name not in {"self", "this", "cls"}]
+
+
+def same_pass_through_args(args: str, call_args: str) -> bool:
+    return argument_names(args, declaration=True) == argument_names(call_args, declaration=False)
 
 
 def multiline_hits(path: str, text: str) -> list[str]:
@@ -1842,6 +1944,7 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     advisory_groups = empty_advisory_groups()
     advisory_groups["securityAssumptionFindings"]["added"].extend(scan_sensitive_input(ctx))
     advisory_groups["slopShapeFindings"]["added"].extend(scan_failure_contract(ctx))
+    advisory_groups["slopShapeFindings"]["added"].extend(scan_wrapper_value(ctx))
 
     if conflict_files:
         errors.append(f"merge conflict markers found in {len(conflict_files)} file(s)")
