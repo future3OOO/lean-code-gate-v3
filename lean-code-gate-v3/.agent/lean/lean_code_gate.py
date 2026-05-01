@@ -343,6 +343,13 @@ WRAPPER_VALUE_MARKER_RE = re.compile(
     r"\b(?:compat|deprecated|deprecation|alias|public\s+api|validate|validation|normalize|normalise|sanitize|instrument(?:ation)?|metric|trace|retry|timeout|boundary|external|adapter)\b",
     re.I,
 )
+PROOF_MOCK_RE = re.compile(r"\b(?:mock\w*|stub\w*|fake\w*|spy\w*|MagicMock|Mock|jest\.fn|vi\.fn|monkeypatch|patch)\b", re.I)
+PROOF_ASSERT_RE = re.compile(r"\b(?:assert|expect\s*\(|should\.|toEqual|toBe|toStrictEqual)\b")
+PROOF_WEAK_ASSERT_RE = re.compile(r"\b(?:assert\s+(?:True|False)\b|assert\s+[^\n]+\s+is\s+(?:not\s+)?None\b|toBeTruthy|toBeDefined|not\.toBeNull)\b")
+PROOF_ENTRY_RE = re.compile(
+    r'''(?:^\s*(?:from\s+src\.|import\s+src\.)|require\(["']\.\.?/src|\b(?:run_gate|main|parse_[A-Za-z_]\w*|public_api[A-Za-z_]\w*)\s*\(|\b[A-Za-z_]\w*(?:cli|parser|hook|payload)[A-Za-z_]\w*\s*\(|\b(?:production|boundary)[ _-]fixture\b|\bexternal[ _-]boundary\b)''',
+    re.I,
+)
 GENERIC_SYMBOLS = {
     "app",
     "config",
@@ -1512,6 +1519,49 @@ def proof_plan_has_verification_mode(proof_plan: object, tokens: tuple[str, ...]
     return False
 
 
+def scan_production_shaped_proof(ctx: GateContext) -> list[dict[str, object]]:
+    findings: list[dict[str, object]] = []
+    for rel_path, lines in ctx.added_lines_with_untracked(production_only=False).items():
+        if path_type(rel_path) == "test" or is_test_like_path(rel_path):
+            finding = production_shaped_proof_finding(rel_path, lines)
+            if finding:
+                findings.append(finding)
+    return findings
+
+
+def production_shaped_proof_finding(path: str, lines: list[tuple[int, str]]) -> dict[str, object] | None:
+    useful_lines = [(line_no, text) for line_no, text in lines if text.strip() and not re.match(r"^\s*(?:#|//|/\*|\*)", text)]
+    if len(useful_lines) < 18:
+        return None
+    mock_lines = [(line_no, text) for line_no, text in useful_lines if PROOF_MOCK_RE.search(text)]
+    assertions = [(line_no, text) for line_no, text in useful_lines if PROOF_ASSERT_RE.search(text)]
+    weak_assertions = [(line_no, text) for line_no, text in assertions if PROOF_WEAK_ASSERT_RE.search(text)]
+    has_entrypoint = any(production_entrypoint_line(text) for _, text in useful_lines)
+    mock_ratio = len(mock_lines) / max(1, len(useful_lines))
+    weak = not assertions or (bool(weak_assertions) and len(weak_assertions) == len(assertions))
+    if len(mock_lines) >= 6 and mock_ratio >= 0.35 and weak and not has_entrypoint:
+        line = weak_assertions[0][0] if weak_assertions else mock_lines[0][0]
+        return advisory_finding(
+            "production-shaped-proof",
+            "verification",
+            path,
+            line,
+            "warning",
+            "large mock-heavy test block has weak assertions and no visible production entrypoint",
+            f"added_lines={len(useful_lines)}; mock_setup_lines={len(mock_lines)}; assertions={len(assertions)}",
+        )
+    return None
+
+
+def production_entrypoint_line(text: str) -> bool:
+    stripped = text.strip()
+    if re.match(r"^(?:#|//|/\*|\*)", stripped):
+        return False
+    if re.match(r"(?:def\s+test_|(?:it|test|describe)\s*\()", stripped):
+        return False
+    return bool(PROOF_ENTRY_RE.search(text))
+
+
 def multiline_hits(path: str, text: str) -> list[str]:
     return [f"{path}:{text[: match.start()].count(chr(10)) + 1}" for rule in EMPTY_CATCH_RULES for match in rule.finditer(text)]
 
@@ -2002,6 +2052,7 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     advisory_groups["slopShapeFindings"]["added"].extend(scan_failure_contract(ctx))
     advisory_groups["slopShapeFindings"]["added"].extend(scan_wrapper_value(ctx))
     advisory_groups["verificationShapeFindings"]["added"].extend(scan_verification_mode(ctx, contract_snapshot(repo), active_policy))
+    advisory_groups["verificationShapeFindings"]["added"].extend(scan_production_shaped_proof(ctx))
 
     if conflict_files:
         errors.append(f"merge conflict markers found in {len(conflict_files)} file(s)")
