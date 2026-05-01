@@ -111,6 +111,7 @@ Escape hatches need evidence:
 - No new package if standard library or an existing package solves the problem cleanly.
 - No second package manager or second lockfile.
 - No broad error handling for impossible scenarios.
+- Treat reads from environment, credential files, keyrings, auth/cookie headers, private keys, or git remote URLs as sensitive input; name the risk in `--risk-check` and never log, serialize, cache, snapshot, or emit the values.
 - No fake-green patterns: `|| true`, blanket suppressions, broad catch/pass, empty catch, `eslint-disable`, `@ts-ignore`, `@ts-expect-error`, `# type: ignore`, `# noqa`.
 - No `TODO`, `FIXME`, `HACK`, placeholders, dummy adapters, temporary bypasses, or unfinished stubs in changed source.
 - Delete only orphans created by your own change.

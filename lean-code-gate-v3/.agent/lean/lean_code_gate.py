@@ -307,6 +307,20 @@ EMPTY_CATCH_RULES = [
     re.compile(r"except\s+Exception\s*:\s*\n\s*pass\b", re.S),
     re.compile(r"except\s*:\s*\n\s*pass\b", re.S),
 ]
+SENSITIVE_SOURCE_RULES = [
+    (re.compile(r"\b(?:os\.getenv|os\.environ\s*(?:\.get|\[)|process\.env\s*(?:\.|\[)|Deno\.env\.get|std::env::var|os\.Getenv|getenv\s*\()"), "environment-read"),
+    (re.compile(r"\bgit\s+(?:remote\s+get-url|config\s+--get\s+remote\.)"), "git-remote-url-read"),
+    (re.compile(r"(?:^|[/\\])(?:\.netrc|\.ssh|\.aws)(?:[/\\]|$)|\b(?:id_rsa|id_ed25519|known_hosts)\b"), "credential-file-read"),
+    (re.compile(r"\b(?:keyring\.|keytar\.|SecretStorage|security\s+find-generic-password)"), "keyring-read"),
+    (re.compile(r"""(?:\b(?:req|request)\.headers|\bheaders)\s*(?:\.get\s*\(\s*['"](?:authorization|cookie|set-cookie)['"]|\[\s*['"](?:Authorization|Cookie|Set-Cookie)['"]\s*\])|\bgetHeader\s*\(\s*['"](?:Authorization|Cookie|Set-Cookie)['"]""", re.I), "auth-header-read"),
+    (re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"), "private-key-material"),
+]
+SENSITIVE_SINK_RULES = [
+    (re.compile(r"\b(?:console\.(?:log|error|warn)|print|fmt\.Print(?:f|ln)?|println!|eprintln!|logger?\.|log\.)\s*\("), "log-or-console"),
+    (re.compile(r"\b(?:JSON\.stringify|json\.dumps|pickle\.dump|yaml\.dump|serialize|snapshot)\b|\b(?:telemetry|metrics)\.(?:track|emit|record|log)\s*\("), "serialization-or-telemetry"),
+    (re.compile(r"""\b(?:write_text|write_bytes|writeFile|appendFile|fs\.(?:writeFile|appendFile)|open\s*\([^)]*['"]w)\b"""), "persistence"),
+]
+SENSITIVE_IDENTIFIER_RE = re.compile(r"^(?:\s*(?:const|let|var)\s+)?([A-Za-z_$][\w$]*)\s*(?::=|=)")
 GENERIC_SYMBOLS = {
     "app",
     "config",
@@ -1247,6 +1261,62 @@ def line_hits(path: str, lines: list[tuple[int, str]], rules: list[re.Pattern[st
     return hits
 
 
+
+def advisory_finding(rule: str, family: str, path: str, line: int, severity: str, message: str, evidence: str) -> dict[str, object]:
+    return {
+        "rule": rule,
+        "family": family,
+        "path": path,
+        "line": line,
+        "severity": severity,
+        "message": message,
+        "evidence": evidence,
+    }
+
+
+def first_rule_match(text: str, rules: list[tuple[re.Pattern[str], str]]) -> str:
+    return next((label for pattern, label in rules if pattern.search(text)), "")
+
+
+def scan_sensitive_input(ctx: GateContext) -> list[dict[str, object]]:
+    findings: list[dict[str, object]] = []
+    for rel_path, lines in ctx.added_lines_with_untracked(production_only=True).items():
+        if is_production_source_path(rel_path):
+            findings.extend(scan_sensitive_input_lines(rel_path, lines))
+    return findings
+
+
+def scan_sensitive_input_lines(path: str, lines: list[tuple[int, str]]) -> list[dict[str, object]]:
+    findings: list[dict[str, object]] = []
+    sinks = [(line_no, text, first_rule_match(text, SENSITIVE_SINK_RULES)) for line_no, text in lines]
+    for line_no, text in lines:
+        source = first_rule_match(text, SENSITIVE_SOURCE_RULES)
+        if not source:
+            continue
+        sink = sensitive_sink_for_source(line_no, text, sinks)
+        severity = "high" if sink else "warning"
+        evidence = f"source={source}" + (f"; sink={sink}" if sink else "")
+        message = "added code reads sensitive input" + (" and exposes or persists it nearby" if sink else "; keep it out of logs, persistence, and telemetry")
+        findings.append(advisory_finding("sensitive-input", "security", path, line_no, severity, message, evidence))
+    return findings
+
+
+def sensitive_sink_for_source(line_no: int, text: str, sinks: list[tuple[int, str, str]]) -> str:
+    same_line = first_rule_match(text, SENSITIVE_SINK_RULES)
+    if same_line:
+        return same_line
+    identifier = assigned_identifier(text)
+    if not identifier:
+        return ""
+    use_re = re.compile(rf"\b{re.escape(identifier)}\b")
+    return next((label for sink_line, sink_text, label in sinks if label and 0 < sink_line - line_no <= 8 and use_re.search(sink_text)), "")
+
+
+def assigned_identifier(text: str) -> str:
+    found = SENSITIVE_IDENTIFIER_RE.search(text)
+    return found.group(1) if found else ""
+
+
 def multiline_hits(path: str, text: str) -> list[str]:
     return [f"{path}:{text[: match.start()].count(chr(10)) + 1}" for rule in EMPTY_CATCH_RULES for match in rule.finditer(text)]
 
@@ -1752,6 +1822,8 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     reuse_findings = detect_reuse_issues(ctx, active_policy)
     reuse_errors = [finding for finding in reuse_findings if finding.severity == "error"]
     reuse_warnings = [finding for finding in reuse_findings if finding.severity == "warning"]
+    advisory_groups = empty_advisory_groups()
+    advisory_groups["securityAssumptionFindings"]["added"].extend(scan_sensitive_input(ctx))
 
     if conflict_files:
         errors.append(f"merge conflict markers found in {len(conflict_files)} file(s)")
@@ -1785,7 +1857,7 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
         "reuseFindings": [finding.as_dict() for finding in reuse_findings],
         "qualityEscapeLocations": list(quality_escapes),
         "duplicateBlockCandidates": [{"count": int(d["count"]), "files": list(d["files"])} for d in duplicates_all],
-        **empty_advisory_groups(),
+        **advisory_groups,
     }
 
 
@@ -1835,6 +1907,29 @@ def hard_rules(checks: list[dict[str, object]]) -> dict[str, dict[str, object]]:
     }
 
 
+def advisory_findings(result: dict[str, object]) -> list[dict[str, object]]:
+    findings: list[dict[str, object]] = []
+    for group_name in ADVISORY_GROUP_NAMES:
+        group = result.get(group_name)
+        if not isinstance(group, dict):
+            continue
+        for bucket in ADVISORY_BUCKET_NAMES:
+            values = group.get(bucket)
+            if isinstance(values, list):
+                findings.extend(item for item in values if isinstance(item, dict))
+    return findings
+
+
+def format_advisory_sample(finding: dict[str, object]) -> str:
+    path = str(finding.get("path") or "unknown")
+    line = int(finding.get("line") or 0)
+    severity = str(finding.get("severity") or "warning")
+    rule = str(finding.get("rule") or "advisory")
+    message = str(finding.get("message") or "advisory finding")
+    location = f"{path}:{line}" if line else path
+    return f"- {severity} {rule} at {location}: {message}"
+
+
 def format_quality_text(result: dict[str, object]) -> str:
     lines = [
         "Lean Code Quality Gate",
@@ -1852,6 +1947,13 @@ def format_quality_text(result: dict[str, object]) -> str:
     lines.append("")
     lines.append("Warnings:")
     lines.extend([f"- {warning}" for warning in result["warnings"]] if result["warnings"] else ["- none"])
+    findings = advisory_findings(result)
+    if findings:
+        lines.append("")
+        lines.append("Advisory findings:")
+        lines.extend(format_advisory_sample(finding) for finding in findings[:8])
+        if len(findings) > 8:
+            lines.append(f"- ... {len(findings) - 8} more advisory finding(s)")
     return "\n".join(lines)
 
 
