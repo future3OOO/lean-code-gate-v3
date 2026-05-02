@@ -1080,6 +1080,155 @@ def test_hook_fails_closed_when_controller_target_is_ambiguous() -> None:
         assert "No active Lean Change Contract" not in data["reason"]
 
 
+def test_pathless_bash_uses_remembered_target_and_still_blocks_hidden_write() -> None:
+    with tempfile.TemporaryDirectory(prefix="gate-controller-") as tmp:
+        controller = Path(tmp)
+        git(controller, "init")
+        git(controller, "config", "user.email", "test@example.com")
+        git(controller, "config", "user.name", "Test User")
+        (controller / ".gitignore").write_text(".agent/\nnested/\n", encoding="utf-8")
+        (controller / "README.md").write_text("outer repo\n", encoding="utf-8")
+        git(controller, "add", ".")
+        git(controller, "commit", "--no-gpg-sign", "-m", "init")
+        nested = controller / "nested"
+        init_repo_fixture(nested)
+        declare_minimal(nested)
+
+        result = run_gate(
+            controller,
+            "session-start",
+            payload={"cwd": str(controller), "hook_event_name": "SessionStart", "session_id": "s1", "turn_id": "t1"},
+        )
+        assert result.returncode == 0
+        result = run_gate(
+            controller,
+            "pretool",
+            payload={
+                "cwd": str(controller),
+                "hook_event_name": "PreToolUse",
+                "tool_name": "Edit",
+                "tool_input": {
+                    "file_path": str(nested / "src" / "app.py"),
+                    "old_string": "def add(a: int, b: int) -> int:\n    return a + b\n",
+                    "new_string": "def add(a: int, b: int) -> int:\n    return a + b\n",
+                },
+            },
+        )
+        assert result.returncode == 0
+        assert result.stdout == ""
+
+        result = run_gate(
+            controller,
+            "user-prompt",
+            payload={"cwd": str(controller), "hook_event_name": "UserPromptSubmit", "session_id": "s1", "turn_id": "t2", "prompt": "next"},
+        )
+        assert result.returncode == 0
+        result = run_gate(
+            controller,
+            "session-start",
+            payload={"cwd": str(controller), "hook_event_name": "SessionStart", "session_id": "s1", "turn_id": "t3"},
+        )
+        assert result.returncode == 0
+
+        result = run_gate(
+            controller,
+            "pretool",
+            payload={
+                "cwd": str(controller),
+                "hook_event_name": "PreToolUse",
+                "tool_name": "Bash",
+                "tool_input": {"cmd": "cp src/app.py src/app2.py"},
+            },
+        )
+
+        data = json.loads(result.stdout)
+        assert data["decision"] == "block"
+        assert "Hidden file-changing Bash blocked" in data["reason"]
+        assert "cannot resolve a unique target repo" not in data["reason"]
+
+
+def test_pathless_bash_ignores_stale_remembered_target() -> None:
+    with tempfile.TemporaryDirectory(prefix="gate-controller-") as tmp:
+        controller = Path(tmp) / "controller"
+        controller.mkdir()
+        git(controller, "init")
+        git(controller, "config", "user.email", "test@example.com")
+        git(controller, "config", "user.name", "Test User")
+        nested = controller / "nested"
+        stale = Path(tmp) / "outside"
+        init_repo_fixture(nested)
+        init_repo_fixture(stale)
+        active = controller / ".agent" / "lean" / "state" / "active.json"
+        active.parent.mkdir(parents=True)
+        active.write_text(json.dumps({"session_id": "s1", "target_root": str(stale)}), encoding="utf-8")
+
+        result = run_gate(
+            controller,
+            "pretool",
+            payload={
+                "cwd": str(controller),
+                "hook_event_name": "PreToolUse",
+                "tool_name": "Bash",
+                "tool_input": {"cmd": "cp src/app.py src/app2.py"},
+            },
+        )
+
+        data = json.loads(result.stdout)
+        assert data["decision"] == "block"
+        assert "cannot resolve a unique target repo" in data["reason"]
+
+
+def test_path_bearing_edit_uses_actual_nested_repo_over_remembered_target() -> None:
+    with tempfile.TemporaryDirectory(prefix="gate-controller-") as tmp:
+        controller = Path(tmp)
+        git(controller, "init")
+        git(controller, "config", "user.email", "test@example.com")
+        git(controller, "config", "user.name", "Test User")
+        first = controller / "first"
+        second = controller / "second"
+        init_repo_fixture(first)
+        init_repo_fixture(second)
+        declare_minimal(first)
+        declare_minimal(second)
+
+        result = run_gate(
+            controller,
+            "pretool",
+            payload={
+                "cwd": str(controller),
+                "hook_event_name": "PreToolUse",
+                "tool_name": "Edit",
+                "tool_input": {
+                    "file_path": str(first / "src" / "app.py"),
+                    "old_string": "def add(a: int, b: int) -> int:\n    return a + b\n",
+                    "new_string": "def add(a: int, b: int) -> int:\n    return a + b\n",
+                },
+            },
+        )
+        assert result.returncode == 0
+
+        before_first_events = (first / ".agent" / "lean" / "state" / "events.jsonl").read_text(encoding="utf-8")
+        result = run_gate(
+            controller,
+            "pretool",
+            payload={
+                "cwd": str(controller),
+                "hook_event_name": "PreToolUse",
+                "tool_name": "Edit",
+                "tool_input": {
+                    "file_path": str(second / "src" / "app.py"),
+                    "old_string": "def add(a: int, b: int) -> int:\n    return a + b\n",
+                    "new_string": "def add(a: int, b: int) -> int:\n    return a + b\n",
+                },
+            },
+        )
+
+        assert result.returncode == 0
+        assert result.stdout == ""
+        assert (first / ".agent" / "lean" / "state" / "events.jsonl").read_text(encoding="utf-8") == before_first_events
+        assert (second / ".agent" / "lean" / "state" / "events.jsonl").exists()
+
+
 def test_stop_from_controller_checks_nested_repo_without_tool_workdir() -> None:
     with tempfile.TemporaryDirectory(prefix="gate-controller-") as tmp:
         controller = Path(tmp)
@@ -2061,6 +2210,9 @@ TESTS = [
     test_repo_root_env_keeps_state_in_target_repo_from_controller_cwd,
     test_hook_resolves_nested_repo_from_changed_path_without_workdir,
     test_hook_fails_closed_when_controller_target_is_ambiguous,
+    test_pathless_bash_uses_remembered_target_and_still_blocks_hidden_write,
+    test_pathless_bash_ignores_stale_remembered_target,
+    test_path_bearing_edit_uses_actual_nested_repo_over_remembered_target,
     test_stop_from_controller_checks_nested_repo_without_tool_workdir,
     test_stop_from_git_controller_prefers_remembered_nested_target,
     test_stop_from_controller_ignores_untargeted_dirty_nested_repo,
