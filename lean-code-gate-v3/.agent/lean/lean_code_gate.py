@@ -640,13 +640,12 @@ def hook_root(payload: dict[str, object], tool: str, tool_input: dict[str, objec
 
 def stop_roots(payload: dict[str, object]) -> list[Path]:
     root = repo_root(str(payload.get("cwd") or "") or None)
-    nested = nested_git_roots(root)
-    if not nested:
+    if git_toplevel(root) == root:
         return [root]
     target = active_state(root).get("target_root")
     if isinstance(target, str) and (found := git_toplevel(Path(target).expanduser().resolve())) is not None and found != root and root in found.parents:
         return [found]
-    return [root] if git_toplevel(root) == root else []
+    return []
 
 
 def remember_target_root(payload: dict[str, object], root: Path) -> None:

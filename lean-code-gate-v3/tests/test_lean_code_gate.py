@@ -1,13 +1,16 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import shlex
 import shutil
 import subprocess
+import sys
 import tempfile
 from contextlib import contextmanager
 from pathlib import Path
+from types import ModuleType
 from typing import Iterator
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -167,6 +170,18 @@ def reward_events(repo: Path) -> list[dict[str, object]]:
         return []
     return [item for item in (json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()) if item.get("event") == "reward_telemetry"]
 
+
+def load_gate_module() -> ModuleType:
+    spec = importlib.util.spec_from_file_location("lean_code_gate_under_test", GATE)
+    assert spec is not None
+    assert spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    try:
+        spec.loader.exec_module(module)
+    finally:
+        sys.modules.pop(spec.name, None)
+    return module
 
 
 def test_p0_advisory_groups_are_empty_and_compatible() -> None:
@@ -1110,6 +1125,20 @@ def test_stop_from_controller_ignores_untargeted_dirty_nested_repo() -> None:
         assert result.stdout == ""
 
 
+def test_stop_roots_non_git_controller_does_not_scan_nested_repos() -> None:
+    with tempfile.TemporaryDirectory(prefix="gate-controller-") as tmp:
+        controller = Path(tmp)
+        init_repo_fixture(controller / "nested")
+        gate = load_gate_module()
+
+        def fail_scan(root: Path) -> list[Path]:
+            raise AssertionError(f"unexpected nested repo scan under {root}")
+
+        gate.nested_git_roots = fail_scan
+
+        assert gate.stop_roots({"cwd": str(controller)}) == []
+
+
 def test_repo_root_env_rejects_missing_target_repo() -> None:
     with repo_fixture() as repo:
         missing = repo.parent / "missing-target"
@@ -1995,6 +2024,7 @@ TESTS = [
     test_hook_fails_closed_when_controller_target_is_ambiguous,
     test_stop_from_controller_checks_nested_repo_without_tool_workdir,
     test_stop_from_controller_ignores_untargeted_dirty_nested_repo,
+    test_stop_roots_non_git_controller_does_not_scan_nested_repos,
     test_repo_root_env_rejects_missing_target_repo,
     test_repo_root_env_rejects_non_git_target_repo,
     test_repo_identity_does_not_persist_origin_url_credentials,
