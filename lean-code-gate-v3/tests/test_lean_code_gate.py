@@ -1110,6 +1110,45 @@ def test_stop_from_controller_checks_nested_repo_without_tool_workdir() -> None:
         assert result.stdout == ""
 
 
+def test_stop_from_git_controller_prefers_remembered_nested_target() -> None:
+    with tempfile.TemporaryDirectory(prefix="gate-controller-") as tmp:
+        controller = Path(tmp)
+        git(controller, "init")
+        git(controller, "config", "user.email", "test@example.com")
+        git(controller, "config", "user.name", "Test User")
+        (controller / ".gitignore").write_text(".agent/\nnested/\n", encoding="utf-8")
+        (controller / "README.md").write_text("outer repo\n", encoding="utf-8")
+        git(controller, "add", ".")
+        git(controller, "commit", "--no-gpg-sign", "-m", "init")
+        nested = controller / "nested"
+        init_repo_fixture(nested)
+        declare_minimal(nested)
+
+        result = run_gate(
+            controller,
+            "pretool",
+            payload={
+                "cwd": str(controller),
+                "hook_event_name": "PreToolUse",
+                "tool_name": "Edit",
+                "tool_input": {
+                    "file_path": str(nested / "src" / "app.py"),
+                    "old_string": "def add(a: int, b: int) -> int:\n    return a + b\n",
+                    "new_string": "def add(a: int, b: int) -> int:\n    return a + b\n",
+                },
+            },
+        )
+        assert result.returncode == 0
+        assert result.stdout == ""
+
+        (nested / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a - b\n", encoding="utf-8")
+        result = run_gate(controller, "stop", payload={"cwd": str(controller), "hook_event_name": "Stop"})
+
+        data = json.loads(result.stdout)
+        assert data["decision"] == "block"
+        assert "Declared verification has not passed" in data["reason"]
+
+
 def test_stop_from_controller_ignores_untargeted_dirty_nested_repo() -> None:
     with tempfile.TemporaryDirectory(prefix="gate-controller-") as tmp:
         controller = Path(tmp)
@@ -2023,6 +2062,7 @@ TESTS = [
     test_hook_resolves_nested_repo_from_changed_path_without_workdir,
     test_hook_fails_closed_when_controller_target_is_ambiguous,
     test_stop_from_controller_checks_nested_repo_without_tool_workdir,
+    test_stop_from_git_controller_prefers_remembered_nested_target,
     test_stop_from_controller_ignores_untargeted_dirty_nested_repo,
     test_stop_roots_non_git_controller_does_not_scan_nested_repos,
     test_repo_root_env_rejects_missing_target_repo,
