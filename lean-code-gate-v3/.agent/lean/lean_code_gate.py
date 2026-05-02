@@ -617,16 +617,19 @@ def hook_root(payload: dict[str, object], tool: str, tool_input: dict[str, objec
 
     if is_mutating:
         path_roots: set[Path] = set()
-        for value in facts(root, tool, tool_input).get("paths", []):
+        path_values = facts(root, tool, tool_input).get("paths", [])
+        for value in path_values:
             if isinstance(value, str):
                 path = (root / value).resolve()
                 found = git_toplevel(path if path.is_dir() else path.parent)
-                if found is not None and found != root and root in found.parents:
+                if found is not None and (found == root or root in found.parents):
                     path_roots.add(found)
         if len(path_roots) == 1:
             return next(iter(path_roots))
         if len(path_roots) > 1:
             raise ValueError("Lean Code Gate could not choose between nested target repos: " + ", ".join(str(path) for path in sorted(path_roots)))
+        if not path_values and (target := remembered_target_root(root)) is not None:
+            return target
 
     if nested_git_roots(root):
         raise ValueError(
@@ -640,12 +643,8 @@ def hook_root(payload: dict[str, object], tool: str, tool_input: dict[str, objec
 
 def stop_roots(payload: dict[str, object]) -> list[Path]:
     root = repo_root(str(payload.get("cwd") or "") or None)
-    nested = nested_git_roots(root)
-    if not nested:
-        return [root]
-    target = active_state(root).get("target_root")
-    if isinstance(target, str) and (found := git_toplevel(Path(target).expanduser().resolve())) is not None and found != root and root in found.parents:
-        return [found]
+    if (target := remembered_target_root(root)) is not None:
+        return [target]
     return [root] if git_toplevel(root) == root else []
 
 
@@ -729,6 +728,13 @@ def active_path(root: Path) -> Path:
 def active_state(root: Path) -> dict[str, object]:
     loaded = read_json(active_path(root), {})
     return loaded if isinstance(loaded, dict) else {}
+
+
+def remembered_target_root(controller: Path) -> Path | None:
+    target = active_state(controller).get("target_root")
+    if isinstance(target, str) and (found := git_toplevel(Path(target).expanduser().resolve())) is not None and found != controller and controller in found.parents:
+        return found
+    return None
 
 
 def contract_path(root: Path) -> Path:
@@ -2509,7 +2515,9 @@ def user_prompt(payload: dict[str, object]) -> None:
     root = repo_root(str(payload.get("cwd") or "") or None)
     prompt_hash = hashlib.sha256(str(payload.get("prompt") or "").encode()).hexdigest()[:16]
     old = contract(root)
-    write_json(active_path(root), {"session_id": payload.get("session_id"), "turn_id": payload.get("turn_id"), "prompt_hash": prompt_hash, "at": time.time()})
+    active = active_state(root) if active_state(root).get("session_id") == payload.get("session_id") else {}
+    active.update({"session_id": payload.get("session_id"), "turn_id": payload.get("turn_id"), "prompt_hash": prompt_hash, "at": time.time()})
+    write_json(active_path(root), active)
     if old and old.get("prompt_hash") != prompt_hash:
         write_json(state_dir(root) / "previous_contract.json", old)
         contract_path(root).unlink(missing_ok=True)
@@ -2518,7 +2526,9 @@ def user_prompt(payload: dict[str, object]) -> None:
 
 def session_start(payload: dict[str, object]) -> None:
     root = repo_root(str(payload.get("cwd") or "") or None)
-    write_json(active_path(root), {"session_id": payload.get("session_id"), "turn_id": payload.get("turn_id"), "at": time.time()})
+    active = active_state(root) if active_state(root).get("session_id") == payload.get("session_id") else {}
+    active.update({"session_id": payload.get("session_id"), "turn_id": payload.get("turn_id"), "at": time.time()})
+    write_json(active_path(root), active)
     context(str(payload.get("hook_event_name") or "SessionStart"))
 
 
