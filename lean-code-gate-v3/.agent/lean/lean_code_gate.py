@@ -793,9 +793,26 @@ def emit(value: dict[str, object]) -> None:
 
 def deny(event: str, reason: str) -> None:
     if event == "PreToolUse":
-        emit({"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "deny", "permissionDecisionReason": reason}, "decision": "block", "reason": reason})
+        emit(
+            {
+                "hookSpecificOutput": {
+                    "hookEventName": "PreToolUse",
+                    "permissionDecision": "deny",
+                    "permissionDecisionReason": reason,
+                },
+                "decision": "block",
+                "reason": reason,
+            }
+        )
     elif event == "PermissionRequest":
-        emit({"hookSpecificOutput": {"hookEventName": "PermissionRequest", "decision": {"behavior": "deny", "message": reason}}})
+        emit(
+            {
+                "hookSpecificOutput": {
+                    "hookEventName": "PermissionRequest",
+                    "decision": {"behavior": "deny", "message": reason},
+                }
+            }
+        )
     else:
         emit({"decision": "block", "reason": reason})
 
@@ -811,9 +828,11 @@ def command_hint(root: Path | None = None) -> str:
 def context(event: str) -> None:
     message = (
         "Lean Code Gate v3 active. Inspect first, then declare the smallest Lean Change Contract before mutating files. "
-        f"Micro-fix form: `{command_hint()} declare --minimal-preflight --intent \"...\" --scope \"file1,file2\" --task-type bugfix --verify \"pytest path/to/test.py\"`. "
-        "Full production form adds --affected-surface, --authoritative-contract, --invariant, --reuse-path or --no-reuse-reason, --proof-plan, and --risk-check. "
-        "Stop runs the quality gate: no fake-green suppressions, duplicate blocks, high-confidence helper reimplementation, temp artifacts, or bloat."
+        f"Micro-fix form: `{command_hint()} declare "
+        "--minimal-preflight --intent \"...\" --scope \"file1,file2\" --task-type bugfix --verify \"pytest path/to/test.py\"`. "
+        "Full production form adds --affected-surface, --authoritative-contract, --invariant, --reuse-path or --no-reuse-reason, "
+        "--proof-plan, and --risk-check. Stop runs the quality gate: no fake-green suppressions, duplicate blocks, "
+        "high-confidence helper reimplementation, temp artifacts, or bloat."
     )
     emit({"hookSpecificOutput": {"hookEventName": event, "additionalContext": message}})
 
