@@ -750,11 +750,6 @@ def contract(root: Path) -> dict[str, object]:
     return loaded if isinstance(loaded, dict) else {}
 
 
-def contract_snapshot(root: Path) -> dict[str, object]:
-    loaded = read_json(root / STATE_DIR / "contract.json", {})
-    return loaded if isinstance(loaded, dict) else {}
-
-
 def log_event(root: Path, event: dict[str, object]) -> None:
     item = {"time": time.time(), **event}
     with events_path(root).open("a", encoding="utf-8") as file:
@@ -775,6 +770,8 @@ def events(root: Path, limit: int = 200) -> list[dict[str, object]]:
             out.append(value)
     return out
 
+def stop_and_redesign_errors(errors: list[str]) -> bool:
+    return any(any(marker in error for marker in ("Adds about ", "Changes about ", "Touches ", "Possible abstraction bloat", "quality escapes")) for error in errors)
 
 def hook_input() -> dict[str, object]:
     raw = sys.stdin.read()
@@ -1475,31 +1472,6 @@ def same_pass_through_args(args: str, call_args: str) -> bool:
     return argument_names(args, declaration=True) == argument_names(call_args, declaration=False)
 
 
-def scan_verification_mode(ctx: GateContext, current_contract: dict[str, object], active_policy: dict[str, object]) -> list[dict[str, object]]:
-    if not current_contract or minimal_preflight(current_contract):
-        return []
-    task_type = str(current_contract.get("task_type") or "unknown")
-    if not code_task(task_type):
-        return []
-    changed = [path for path in sorted(ctx.changed_files) if not internal_gate_path(path)]
-    if not any(path_type(path) == "prod" and is_source_path(path) for path in changed):
-        return []
-    tokens = verification_mode_tokens(active_policy)
-    if proof_plan_has_verification_mode(current_contract.get("proof_plan"), tokens):
-        return []
-    return [
-        advisory_finding(
-            "verification-mode",
-            "verification",
-            f"{STATE_DIR}/contract.json",
-            0,
-            "warning",
-            "full code work proof_plan must name an explicit verification feedback loop",
-            "proof_plan lacks one of: " + ", ".join(tokens),
-        )
-    ]
-
-
 def verification_mode_tokens(active_policy: dict[str, object]) -> tuple[str, ...]:
     raw = active_policy.get("verification_mode_tokens")
     if not isinstance(raw, list):
@@ -2136,7 +2108,6 @@ def run_quality_gate(repo: Path, base_ref: str | None, fail_on_warnings: bool) -
     advisory_groups["securityAssumptionFindings"]["added"].extend(scan_sensitive_input(ctx))
     advisory_groups["slopShapeFindings"]["added"].extend(scan_failure_contract(ctx))
     advisory_groups["slopShapeFindings"]["added"].extend(scan_wrapper_value(ctx))
-    advisory_groups["verificationShapeFindings"]["added"].extend(scan_verification_mode(ctx, contract_snapshot(repo), active_policy))
     advisory_groups["verificationShapeFindings"]["added"].extend(scan_production_shaped_proof(ctx))
     apply_advisory_delta(ctx, advisory_groups)
 
@@ -2404,6 +2375,10 @@ def contract_errors(current_contract: dict[str, object], active_policy: dict[str
         for field, flag in required_fields:
             if not meaningful(current_contract.get(field)):
                 errors.append(f"Code work requires {flag}.")
+        proof_text = " ".join(str(item) for key in ("proof_plan", "verify") for item in (current_contract.get(key) if isinstance(current_contract.get(key), list) else [current_contract.get(key) or ""])).lower()
+        tokens = tuple(token for token in verification_mode_tokens(active_policy) if token != "smoke-check" or not re.search(r"\b(pytest|unittest|nose|tox|jest|vitest|mocha|go test|cargo test|npm test|pnpm test|yarn test)\b", proof_text))
+        if meaningful(current_contract.get("proof_plan")) and not proof_plan_has_verification_mode(current_contract.get("proof_plan"), tokens):
+            errors.append("Code work proof_plan must name a TDD feedback loop: " + ", ".join(tokens) + ".")
     if active_policy["require_reuse_path_for_code"] and task_type in {"bugfix", "feature", "refactor"}:
         if not meaningful(current_contract.get("reuse_path")) and not meaningful(current_contract.get("no_reuse_reason")):
             errors.append("Code work requires --reuse-path naming the existing path to extend, or --no-reuse-reason with evidence.")
@@ -2540,6 +2515,15 @@ def declare(args: argparse.Namespace) -> None:
     if args.widen and not args.reason:
         print("Widening requires --reason.", file=sys.stderr)
         raise SystemExit(2)
+    if args.widen and old:
+        declared_at = float(old.get("declared_at", 0))
+        if any(event.get("event") == "mutation_rejected" and float(event.get("time", 0)) >= declared_at for event in events(root, limit=1000000)):
+            print(
+                "Lean Change Contract rejected:\n- Previous gate rejection is a stop-and-redesign event; "
+                "do not bypass it with --widen. Start a fresh contract after reducing the diff.",
+                file=sys.stderr,
+            )
+            raise SystemExit(2)
     preflight_level = "minimal" if args.minimal_preflight else "full"
     default_max_files = active_policy["minimal_preflight_max_files"] if args.minimal_preflight else active_policy["default_max_files"]
     default_max_added = active_policy["minimal_preflight_max_added_lines"] if args.minimal_preflight else active_policy["default_max_added_lines"]
@@ -2614,6 +2598,8 @@ def pretool(payload: dict[str, object]) -> None:
     change_facts = hook_facts(payload, root, tool, tool_input)
     errors = check_change(change_facts, current_contract, active_policy, tool)
     if errors:
+        if stop_and_redesign_errors(errors):
+            log_event(root, {"event": "mutation_rejected", "tool": tool, **{key: change_facts[key] for key in ("paths", "added", "deleted")}})
         deny("PreToolUse", "Lean Code Gate blocked over-broad or low-quality mutation:\n- " + "\n- ".join(errors))
         return
     remember_target_root(payload, root)
