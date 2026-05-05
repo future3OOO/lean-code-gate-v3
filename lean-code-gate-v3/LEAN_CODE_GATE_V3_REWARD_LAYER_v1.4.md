@@ -14,6 +14,8 @@ This v1.4 design implements the reward layer inside `.agent/lean/lean_code_gate.
 
 The implementation target is production feedback for LLM coding agents: reward small correct diffs, reuse existing code, punish fake-green shortcuts, never trade correctness for brevity, and keep every signal deterministic.
 
+Architectural stance: the near-term product is a **challenge layer**, not a genuine ML reward model. The challenge layer counters instruction drift after long edits by reasserting the lean-production standard at Stop time, after correctness checks pass but before the agent declares completion. A genuine ML reward layer can come later only if logged challenge outcomes prove that the deterministic score correlates with accepted, production-quality code.
+
 
 v1.4 keeps the v1.1 corrections: `specific_next_action()` ranks reuse and bloat suggestions by expected leanness gain rather than fixed rule order, and event ordering treats wall-clock time as best-effort while preserving deterministic append-chain order.
 
@@ -80,6 +82,97 @@ Important correction to the previous draft:
 13. **No bounded reward history.** Prior scores, challenge counts, and leaderboard aggregation must read all relevant score events, not just the last 200 JSONL lines.
 14. **No unsupported chain platform.** If `reward_chain_enabled=true` and the runtime has no supported file-lock implementation, the hook/CLI must reject the configuration with an actionable message before writing.
 15. **No Windows sidecar artifacts.** `*:Zone.Identifier` files must be excluded from repo commits, generated artifacts, and release packages.
+
+## Evaluation strategy
+
+The prototype should be evaluated as a behavior-shaping challenge layer before it is treated as a reward model.
+
+### Hypothesis
+
+Markdown standards decay during long editing loops. A deterministic Stop-time challenge should reduce sloppy final diffs by forcing one more lean pass when the code is correct but still bloated, duplicative, weakly verified, or near its declared budget.
+
+The reasoning layer can add a second, semantic challenge signal before any true reward-model work. In the Property Partner Ops workflow, Repo Context Forge fixes the initial surface, GitNexus checks graph impact, and Claude Advisor then acts as a consolidated read-only challenger before preflight and again before commit. The current advisor shape is **CASS: Claude Advisor Stable Sessions**. CASS uses a stable semantic session slug, keeps phase as metadata, and keeps phase-specific prompt packaging outside Lean Gate.
+
+### Phase 1: challenge layer
+
+Goal: improve the final diff inside the current session.
+
+- Keep challenge mode opt-in and repo-local.
+- Challenge only after final correctness and quality gates pass.
+- Emit one concrete next action, not a list of coaching advice.
+- Cap challenge loops per contract.
+- Allow correctness to win after the cap; preserve the low score in telemetry instead of trapping the agent.
+- Keep Claude Advisor outside the hook hot path. When used, call it from the delivery workflow after GitNexus and before preflight, then again before commit for non-trivial diffs.
+
+Success signals:
+
+- challenged attempts usually shrink added/changed lines or remove duplicate/reuse findings on the next pass
+- no increase in failed tests, missing verification, or out-of-scope edits after a challenge
+- low false-positive rate from human review of challenge denials
+- agents complete within the challenge cap without needing manual escape hatches
+
+### Phase 2: reward telemetry
+
+Goal: measure whether challenge feedback is useful before it blocks more broadly.
+
+- Log score, verdict, critique, delta, budget usage, quality counts, and challenge count.
+- Compare pre-challenge and post-challenge attempts for the same contract.
+- Track whether human reviewers accepted the final diff without lean-code comments.
+- Keep the score observational by default; do not rank agents operationally from early data.
+
+Useful metrics:
+
+- challenge improvement rate
+- average added/changed-line reduction after challenge
+- duplicate/reuse/bloat finding resolution rate
+- verification preservation rate
+- human-review agreement with the challenge outcome
+- false challenge rate
+- advisor agreement rate with Lean Gate and human review
+
+### Advisor challenge signal
+
+Claude Advisor is external semantic advice, not a Lean Gate event stream and not a deterministic rule result. It is useful because it can challenge issue interpretation, slice ownership, architecture fit, TDD proof, no-change surfaces, reviewer coverage, and whether the code deepens the owning module instead of creating shallow helper/service/wrapper splits.
+
+Current CASS contract:
+
+- `preflight-advice` runs after Repo Context Forge and packet-scoped GitNexus, before production preflight and edits. Its evidence package must explicitly name the Repo Context Forge packet target surface and coverage plan, plus packet-scoped GitNexus findings.
+- `precommit-challenge` runs after Codex has made and verified the code changes, before commit/push. It challenges the live diff, TDD proof, reviewer/PRD coverage, module shape, minimality, and no-change surfaces.
+- Freeform advisor calls stay freeform. The precommit verdict/action shape belongs only to the `precommit-challenge` phase, and the preflight evidence checklist belongs only to `preflight-advice`.
+- Stable verdicts or focus tags may be useful as optional local summaries, but they must not restrict what Claude can say, become hook inputs, or weaken the semantic advice signal.
+- Lean Gate v1.4 does not log advisor events, parse advisor verdicts, or block deterministic Stop success because Claude is unavailable.
+- Treat advisor output as evidence for Codex to validate against code, tests, GitNexus, reviewer text, and deterministic gate results.
+
+### Phase 3: evaluation dataset
+
+Goal: build a dataset that can later support model or prompt evaluation.
+
+Each accepted/rejected attempt should be linkable to:
+
+- prompt or task summary
+- Lean Change Contract
+- pre-challenge diff summary
+- post-challenge diff summary when present
+- verification outcomes
+- gate findings and reward signal
+- advisor challenge event and Codex judgment when present
+- human review outcome or merge outcome when available
+
+Do not store secrets, full environment dumps, raw remote URLs, or unnecessary command output in the reward event. If richer training data is needed, store it in an explicit offline evaluation artifact, not the Stop-hook hot path.
+
+### Phase 4: ML reward model candidate
+
+A genuine ML reward model is only justified after deterministic telemetry has enough reviewed examples to prove predictive value.
+
+Use gate output as features, not as ground truth. The target label should come from accepted/rejected review outcomes, human lean-code judgments, or production-quality outcomes. The deterministic score can seed the dataset, but it must not become the only definition of quality.
+
+Minimum bar before ML work:
+
+- enough examples across multiple repos and task types
+- measured correlation between score/challenge result and human acceptance
+- known false-positive families documented and reduced
+- no evidence that agents improve the score by weakening tests, over-declaring budgets, or avoiding necessary code
+- stable rule IDs so model features do not shift under the dataset
 
 ## Implementation summary
 
