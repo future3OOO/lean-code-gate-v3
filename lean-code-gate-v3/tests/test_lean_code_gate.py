@@ -82,10 +82,8 @@ def init_repo_fixture(repo: Path) -> None:
     git(repo, "commit", "--no-gpg-sign", "-m", "init")
 
 
-def declare_valid(repo: Path, *, task_type: str = "feature", scope: str = "src/app.py,tests/test_app.py") -> None:
-    result = run_gate(
-        repo,
-        "declare",
+def valid_contract_args(task_type: str = "feature", scope: str = "src/app.py,tests/test_app.py") -> tuple[str, ...]:
+    return (
         "--intent",
         "adjust add behavior",
         "--scope",
@@ -101,12 +99,16 @@ def declare_valid(repo: Path, *, task_type: str = "feature", scope: str = "src/a
         "--reuse-path",
         "src/app.py add function",
         "--proof-plan",
-        "pytest tests/test_app.py",
+        "red-green-refactor: pytest tests/test_app.py",
         "--risk-check",
         "addition behavior regression",
         "--verify",
         "pytest tests/test_app.py",
     )
+
+
+def declare_valid(repo: Path, *, task_type: str = "feature", scope: str = "src/app.py,tests/test_app.py") -> None:
+    result = run_gate(repo, "declare", *valid_contract_args(task_type, scope))
     assert result.returncode == 0, result.stderr
 
 
@@ -127,8 +129,8 @@ def declare_minimal(repo: Path) -> None:
     assert result.returncode == 0, result.stderr
 
 
-def declare_full_with_proof_plan(repo: Path, proof_plan: str, *, task_type: str = "feature", scope: str = "src/app.py") -> None:
-    result = run_gate(
+def declare_full_with_proof_plan_result(repo: Path, proof_plan: str, *, task_type: str = "feature", scope: str = "src/app.py") -> subprocess.CompletedProcess[str]:
+    return run_gate(
         repo,
         "declare",
         "--intent",
@@ -152,6 +154,10 @@ def declare_full_with_proof_plan(repo: Path, proof_plan: str, *, task_type: str 
         "--verify",
         "pytest tests/test_app.py",
     )
+
+
+def declare_full_with_proof_plan(repo: Path, proof_plan: str, *, task_type: str = "feature", scope: str = "src/app.py") -> None:
+    result = declare_full_with_proof_plan_result(repo, proof_plan, task_type=task_type, scope=scope)
     assert result.returncode == 0, result.stderr
 
 
@@ -640,27 +646,30 @@ def test_wrapper_value_uses_existing_marker_comments_on_tracked_files() -> None:
         assert [item for item in _advisory_added(data, "slopShapeFindings") if item["rule"] == "wrapper-value"] == []
 
 
-def test_verification_mode_missing_full_code_contract_is_advisory() -> None:
+def test_full_code_contract_requires_tdd_verification_mode() -> None:
     with repo_fixture() as repo:
-        declare_full_with_proof_plan(repo, "pytest tests/test_app.py")
-        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
-        code, data = check_json(repo)
-        findings = _advisory_added(data, "verificationShapeFindings")
-        assert code == 0, data
-        assert len(findings) == 1
-        assert findings[0]["rule"] == "verification-mode"
-        assert "red-green-refactor" in findings[0]["evidence"]
-        assert data["warnings"] == []
+        result = declare_full_with_proof_plan_result(repo, "pytest tests/test_app.py")
+        assert result.returncode == 2
+        assert "TDD" in result.stderr
+        assert "red-green-refactor" in result.stderr
 
 
 def test_verification_mode_tokens_are_accepted_and_negations_rejected() -> None:
-    for token in ("red-green-refactor", "green-refactor-green", "smoke-check"):
+    for token in ("red-green-refactor", "green-refactor-green"):
         with repo_fixture() as repo:
             declare_full_with_proof_plan(repo, f"{token}: pytest tests/test_app.py")
             (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
             code, data = check_json(repo)
             assert code == 0, data
             assert _advisory_added(data, "verificationShapeFindings") == []
+    with repo_fixture() as repo:
+        result = declare_full_with_proof_plan_result(repo, "smoke-check: pytest tests/test_app.py")
+        assert result.returncode == 2
+        assert "red-green-refactor" in result.stderr
+    with repo_fixture() as repo:
+        result = declare_full_with_proof_plan_result(repo, "smoke-check: manual CLI check before edit")
+        assert result.returncode == 2
+        assert "red-green-refactor" in result.stderr
     negated_plans = (
         "not doing red-green-refactor; pytest tests/test_app.py",
         "without any scheduled or planned red-green-refactor; pytest tests/test_app.py",
@@ -673,17 +682,13 @@ def test_verification_mode_tokens_are_accepted_and_negations_rejected() -> None:
     )
     for proof_plan in negated_plans:
         with repo_fixture() as repo:
-            declare_full_with_proof_plan(repo, proof_plan)
-            (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
-            code, data = check_json(repo)
-            assert code == 0, data
-            assert len(_advisory_added(data, "verificationShapeFindings")) == 1
+            result = declare_full_with_proof_plan_result(repo, proof_plan)
+            assert result.returncode == 2
+            assert "red-green-refactor" in result.stderr
     with repo_fixture() as repo:
-        declare_full_with_proof_plan(repo, "no red-green-refactor or smoke-check; pytest tests/test_app.py")
-        (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
-        code, data = check_json(repo)
-        assert code == 0, data
-        assert len(_advisory_added(data, "verificationShapeFindings")) == 1
+        result = declare_full_with_proof_plan_result(repo, "no red-green-refactor or smoke-check; pytest tests/test_app.py")
+        assert result.returncode == 2
+        assert "red-green-refactor" in result.stderr
     with repo_fixture() as repo:
         declare_full_with_proof_plan(repo, "no smoke-check, using red-green-refactor cycle; pytest tests/test_app.py")
         (repo / "src" / "app.py").write_text("def add(a: int, b: int) -> int:\n    return a + b\nVALUE = 1\n", encoding="utf-8")
@@ -1497,7 +1502,7 @@ def test_edit_rewrite_counts_as_changed_lines() -> None:
             "--reuse-path",
             "src/app.py add function",
             "--proof-plan",
-            "pytest tests/test_app.py",
+            "red-green-refactor: pytest tests/test_app.py",
             "--risk-check",
             "line rewrite risk",
             "--verify",
@@ -1554,6 +1559,19 @@ def test_pretool_blocks_fake_green_before_edit() -> None:
         data = json.loads(result.stdout)
         assert data["hookSpecificOutput"]["permissionDecision"] == "deny"
         assert "quality escapes" in data["reason"]
+        with (repo / ".agent" / "lean" / "state" / "events.jsonl").open("a", encoding="utf-8") as file:
+            for index in range(201):
+                file.write(json.dumps({"event": "mutation_allowed", "time": index}) + "\n")
+        widened = run_gate(
+            repo,
+            "declare",
+            "--widen",
+            "--reason",
+            "try larger budget after rejection",
+            *valid_contract_args(),
+        )
+        assert widened.returncode == 2
+        assert "stop-and-redesign" in widened.stderr
 
 
 def test_stop_blocks_quality_escape_in_changed_source() -> None:
@@ -2187,7 +2205,7 @@ TESTS = [
     test_wrapper_value_detects_python_ts_and_go_forwarders,
     test_wrapper_value_markers_and_framework_overrides_do_not_hit,
     test_wrapper_value_uses_existing_marker_comments_on_tracked_files,
-    test_verification_mode_missing_full_code_contract_is_advisory,
+    test_full_code_contract_requires_tdd_verification_mode,
     test_verification_mode_tokens_are_accepted_and_negations_rejected,
     test_verification_mode_policy_tokens_are_configurable,
     test_verification_mode_exempts_minimal_and_test_only_work,
