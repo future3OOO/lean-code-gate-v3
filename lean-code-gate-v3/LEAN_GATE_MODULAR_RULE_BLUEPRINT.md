@@ -16,7 +16,15 @@ lean-code-gate            -> contract storage, hook enforcement, rule reporting
 
 Lean Gate should block deterministic violations. Skills should explain how to reason through the work and recover correctly.
 
-Claude Advisor belongs in the reasoning layer, not the deterministic gate core. It can replace or supplement sub-agent delegation as a consolidated read-only challenger after Repo Context Forge and GitNexus have fixed the surface. Lean Gate may record externally supplied advisor events later, but hooks must not call Claude, GitNexus, Repo Context Forge, or any LLM-dependent process.
+Claude Advisor belongs in the reasoning layer, not the deterministic gate core. CASS, the current Claude Advisor Stable Sessions design, keeps one stable semantic session slug and treats `preflight-advice` and `precommit-challenge` as prompt phases. Hooks must not call Claude, GitNexus, Repo Context Forge, or any LLM-dependent process.
+
+Advisor phase boundary:
+
+- `preflight-advice`: after Repo Context Forge and packet-scoped GitNexus, before production preflight and edits; the prompt package must preserve the exact Repo Context Forge packet target surface, coverage plan, and packet-scoped GitNexus findings.
+- `precommit-challenge`: after code edits and verification, before commit/push; the prompt package challenges the live diff, TDD proof, reviewer/PRD coverage, module shape, minimality, regression risk, and next action.
+- Freeform advisor calls are not forced into either rubric.
+- Stable verdicts and focus tags may help local summaries later, but they are not Lean Gate rule IDs, hook inputs, or constraints on Claude's advice.
+- Lean Gate should not log advisor events in this plan. If future evaluation needs advisor telemetry, add it as an explicit offline evaluation artifact, not in hook enforcement.
 
 ## Target Module Shape
 
@@ -268,4 +276,4 @@ Avoid mixed modes that make root and state resolution ambiguous. Do not hard-cod
 
 Lean Gate must stay deterministic. Skill references explain recovery, but hard blocks should not depend on LLM judgment.
 
-Advisor output is evidence for Codex to validate, not a rule result. If future telemetry records advisor verdicts, store them as separate challenge events and keep deterministic rule failures independent of advisor availability, auth state, model output, or network state.
+Advisor output is evidence for Codex to validate, not a rule result. Deterministic rule failures stay independent of advisor availability, auth state, model output, network state, verdict tags, and focus tags.

@@ -91,7 +91,7 @@ The prototype should be evaluated as a behavior-shaping challenge layer before i
 
 Markdown standards decay during long editing loops. A deterministic Stop-time challenge should reduce sloppy final diffs by forcing one more lean pass when the code is correct but still bloated, duplicative, weakly verified, or near its declared budget.
 
-The reasoning layer can add a second, semantic challenge signal before any true reward-model work. In the Property Partner Ops workflow, Repo Context Forge fixes the initial surface, GitNexus checks graph impact, and Claude Advisor then acts as a consolidated read-only challenger before preflight and again before commit. This can replace or supplement sub-agent delegation without making Lean Gate itself depend on another model.
+The reasoning layer can add a second, semantic challenge signal before any true reward-model work. In the Property Partner Ops workflow, Repo Context Forge fixes the initial surface, GitNexus checks graph impact, and Claude Advisor then acts as a consolidated read-only challenger before preflight and again before commit. The current advisor shape is **CASS: Claude Advisor Stable Sessions**. CASS uses a stable semantic session slug, keeps phase as metadata, and keeps phase-specific prompt packaging outside Lean Gate.
 
 ### Phase 1: challenge layer
 
@@ -132,29 +132,16 @@ Useful metrics:
 
 ### Advisor challenge signal
 
-Claude Advisor should be modeled as an external semantic challenge event, not a deterministic rule result. It is useful because it can challenge issue interpretation, slice ownership, architecture fit, TDD proof, no-change surfaces, and reviewer coverage in ways the deterministic gate should not infer.
+Claude Advisor is external semantic advice, not a Lean Gate event stream and not a deterministic rule result. It is useful because it can challenge issue interpretation, slice ownership, architecture fit, TDD proof, no-change surfaces, reviewer coverage, and whether the code deepens the owning module instead of creating shallow helper/service/wrapper splits.
 
-Example event:
+Current CASS contract:
 
-```json
-{
-  "event": "advisor_challenge",
-  "source": "claude-advisor",
-  "phase": "pre-commit",
-  "verdict": "fix-before-commit",
-  "focus": ["minimality", "tdd", "regression-risk"],
-  "codex_judgment": "accepted",
-  "followup_mutation": true
-}
-```
-
-Rules:
-
-- Do not call Claude from Lean Gate hooks.
-- Do not block deterministic Stop success solely because Claude is unavailable.
-- Record advisor verdict, phase, focus tags, Codex judgment, and whether a follow-up mutation happened.
-- Treat advisor output as evidence to validate against code, tests, GitNexus, reviewer text, and deterministic gate results.
-- Use advisor agreement with later human review as an evaluation signal for future reward-model work.
+- `preflight-advice` runs after Repo Context Forge and packet-scoped GitNexus, before production preflight and edits. Its evidence package must explicitly name the Repo Context Forge packet target surface and coverage plan, plus packet-scoped GitNexus findings.
+- `precommit-challenge` runs after Codex has made and verified the code changes, before commit/push. It challenges the live diff, TDD proof, reviewer/PRD coverage, module shape, minimality, and no-change surfaces.
+- Freeform advisor calls stay freeform. The precommit verdict/action shape belongs only to the `precommit-challenge` phase, and the preflight evidence checklist belongs only to `preflight-advice`.
+- Stable verdicts or focus tags may be useful as optional local summaries, but they must not restrict what Claude can say, become hook inputs, or weaken the semantic advice signal.
+- Lean Gate v1.4 does not log advisor events, parse advisor verdicts, or block deterministic Stop success because Claude is unavailable.
+- Treat advisor output as evidence for Codex to validate against code, tests, GitNexus, reviewer text, and deterministic gate results.
 
 ### Phase 3: evaluation dataset
 
