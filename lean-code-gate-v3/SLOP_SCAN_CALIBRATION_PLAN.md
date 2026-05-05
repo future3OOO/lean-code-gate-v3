@@ -11,7 +11,7 @@ Slop Scan's benchmark suggested our flat pre/post results might be a measurement
 The Step Zero comparison is **complete**. Calibration repo PR #2 (`experiment/slopscan-comparison`) ships three experiments:
 
 1. **`analysis/slopscan_comparison.md`** — slop-scan whole-repo scan vs our gate per-PR rates on 15 TS/JS repos in our regular calibration corpus. Original framing reported a near-zero cross-tool correlation (~0.07–0.19) which was withdrawn — that comparison correlated incommensurable scopes (whole-repo state vs per-PR diff).
-2. **`analysis/slopscan_per_pr_comparison.md`** — slop-scan delta per PR vs our gate per PR on the same 458 TS/JS PRs. Spearman ρ = 0.40–0.63, Pearson r = 0.66–0.94 against slop-scan's `addedCount`. Strongest cross-tool agreement metric.
+2. **`analysis/slopscan_per_pr_comparison.md`** — slop-scan delta per PR vs our gate per PR on the corrected structured join: 207 parsed PRs, tied-rank Spearman ρ = 0.089–0.463, and Pearson r = 0.250–0.383. Pattern-overlap evidence only; not independent calibration ground truth.
 3. **`analysis/lean_on_slopscan_benchmark.md`** — our gate run against slop-scan's own 18-repo pinned benchmark in whole-repo mode (using a `sed`-patched gate variant). Cohort separation: our 1.18× per-KLOC vs slop-scan's 5.39×.
 
 All three are the canonical cross-references for any future calibration work in this area.
@@ -22,7 +22,7 @@ The plan's earlier `Explain flat signals` question is answered: Lean Gate's flat
 
 1. **Detector coverage gap (largest cause).** Zero rule-family overlap on the 10 highest-signal slop-scan rules. Slop Scan catches AI-idioms (placeholder comments, generic envelopes, `as any` casts, error swallowing, etc.). Our R-1..R-6 are general structural detectors. Different target sets. This is the load-bearing cause and is being tracked in `LEAN_GATE_IMPROVEMENT_PLAN.md`.
 
-2. **Scope-of-measurement gap (PR-diff vs whole-repo).** Slop Scan accumulates findings across the whole codebase; our gate sees only what each PR touched. AI-coded repos accumulate slop across many files; PR-diff sampling sees a thin slice. The same 458 PRs scored by both tools agree at ρ = 0.40–0.63 (volume); whole-repo per-KLOC density only weakly agrees at ρ = 0.25 because the rule sets target different patterns.
+2. **Scope-of-measurement gap (PR-diff vs whole-repo).** Slop Scan accumulates findings across the whole codebase; our gate sees only what each PR touched. AI-coded repos accumulate slop across many files; PR-diff sampling sees a thin slice. The corrected per-PR join shows pattern overlap, strongest on `addedCount` (ρ = 0.463), while whole-repo per-KLOC density only weakly agrees at ρ = 0.25 because the rule sets target different patterns.
 
 3. **Baseline contamination.** Earlier drafts called this "pre_ai cohort baseline." The label was renamed to `recent_mature_oss` after the data showed the sampled PRs are 67% from 2026, not historical. A real pre-AI baseline requires sampling PRs that pre-date Copilot's mainstream use (~2022). This is unfinished work (A12 — within-repo temporal split).
 
@@ -32,7 +32,7 @@ The plan's earlier `Explain flat signals` question is answered: Lean Gate's flat
 
 The cross-tool experiments give us concrete numbers to track as detectors are ported:
 
-- **Per-PR addedCount agreement** (`slopscan_per_pr.csv`): current ρ = 0.630, r = 0.911. Should rise as we port the highest-volume slop-scan rules.
+- **Per-PR addedCount overlap** (`slopscan_per_pr.csv`): current ρ = 0.463, r = 0.383 on the corrected parsed-PR join. Track as detector-overlap telemetry, not as a calibration success criterion.
 - **Whole-repo per-KLOC agreement** (`lean_on_slopscan_benchmark.csv`): current ρ = 0.255. Should rise as we close detector coverage gaps. A target value isn't appropriate — slop-scan's 6.9× cohort separation is on their own corpus and shouldn't be set as a goal on ours.
 - **Cohort separation lift on `recent_mature_oss` vs `post_ai_public` + `private_own`** (`COHORT_TABLE.csv`): currently 1.18× per-KLOC equivalent. Should rise as language-agnostic detectors (placeholder-comments, error-swallowing) ship.
 
